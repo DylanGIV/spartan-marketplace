@@ -1,0 +1,20 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-spartansystemsmarket-staging-182313-authRole",
+      "UnauthRoleArn": "arn:aws:iam::868723647444:role/amplify-spartansystemsmarket-staging-182313-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::868723647444:role/amplify-spartansystemsmarket-staging-182313-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-spartansystemsmarket-staging-182313-deployment",
+      "UnauthRoleName": "amplify-spartansystemsmarket-staging-182313-unauthRole",
+      "StackName": "amplify-spartansystemsmarket-staging-182313",
+      "StackId": "arn:aws:cloudformation:us-west-2:868723647444:stack/amplify-spartansystemsmarket-staging-182313/d6d55130-95ca-11ed-9dbf-06f355d99193",
+      "AmplifyAppId": "d1i12m7n5isiqt"
+    },
+    "categories": {
+      "auth": {
+        "spartansystemsmarketplace": {}
+      }
+    }
+  }
+}

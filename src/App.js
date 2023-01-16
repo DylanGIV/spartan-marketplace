@@ -1,25 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
 
+import { Auth } from 'aws-amplify';
+
+import { CompanyCreateForm } from './ui-components';
+import { useState } from 'react';
+import { withAuthenticator } from '@aws-amplify/ui-react';
+
 function App() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const signUpHandler = async () => {
+    try {
+      const { user } = await Auth.signUp({ username, password });
+      console.log(user);
+    } catch (error) {
+      console.log('error signing up:', error);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <CompanyCreateForm />
     </div>
   );
 }
 
-export default App;
+export default withAuthenticator(App);
