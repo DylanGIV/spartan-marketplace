@@ -36,6 +36,7 @@ export declare type CompanyCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: CompanyCreateFormInputValues) => CompanyCreateFormInputValues;
     onSuccess?: (fields: CompanyCreateFormInputValues) => void;
     onError?: (fields: CompanyCreateFormInputValues, errorMessage: string) => void;
+    onCancel?: () => void;
     onChange?: (fields: CompanyCreateFormInputValues) => CompanyCreateFormInputValues;
     onValidate?: CompanyCreateFormValidationValues;
 } & React.CSSProperties>;

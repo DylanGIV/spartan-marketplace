@@ -1,29 +1,22 @@
-import logo from './logo.svg';
 import './App.css';
 
-import { Auth } from 'aws-amplify';
-
-import { CompanyCreateForm } from './ui-components';
 import { useState } from 'react';
 import { withAuthenticator } from '@aws-amplify/ui-react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './routes/home/home.component';
+import Navigation from './routes/navigation/navigation.component';
+
+import '@aws-amplify/ui-react/styles.css';
+import Parts from './routes/parts/parts.component';
 
 function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const signUpHandler = async () => {
-    try {
-      const { user } = await Auth.signUp({ username, password });
-      console.log(user);
-    } catch (error) {
-      console.log('error signing up:', error);
-    }
-  };
-
   return (
-    <div className='App'>
-      <CompanyCreateForm />
-    </div>
+    <Routes>
+      <Route path='/' element={<Navigation />}>
+        <Route index element={<Home />} />
+        <Route path='parts' element={<Parts />} />
+      </Route>
+    </Routes>
   );
 }
 
