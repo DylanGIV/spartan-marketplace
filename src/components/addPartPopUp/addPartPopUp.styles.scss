@@ -1,0 +1,21 @@
+.add-part-pop-up-container {
+  position: absolute;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 2px solid black;
+  background-color: #eff0f0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  min-height: 500px;
+  min-width: 500px;
+  max-width: 800px;
+  .text-field-container {
+    display: flex;
+    flex-direction: column;
+    width: 80vh;
+    margin: 5px;
+  }
+}
