@@ -21,6 +21,22 @@ const Navigation = () => {
         cursor: 'pointer',
       },
     },
+    Applicants: {
+      onClick: () => {
+        navigate('/Inventory');
+      },
+      style: {
+        cursor: 'pointer',
+      },
+    },
+    Company: {
+      onClick: () => {
+        navigate('/Parts');
+      },
+      style: {
+        cursor: 'pointer',
+      },
+    },
   };
   return (
     <Fragment>

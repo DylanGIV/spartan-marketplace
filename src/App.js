@@ -8,6 +8,7 @@ import Navigation from './routes/navigation/navigation.component';
 
 import '@aws-amplify/ui-react/styles.css';
 import Parts from './routes/parts/parts.component';
+import Inventory from './routes/inventory/inventory.component';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path='/' element={<Navigation />}>
         <Route index element={<Home />} />
         <Route path='parts' element={<Parts />} />
+        <Route path='inventory' element={<Inventory />} />
       </Route>
     </Routes>
   );

@@ -22,6 +22,7 @@ type EagerItem = {
   readonly imageUrl?: string | null;
   readonly control?: string | null;
   readonly price?: number | null;
+  readonly companyID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -42,6 +43,7 @@ type LazyItem = {
   readonly imageUrl?: string | null;
   readonly control?: string | null;
   readonly price?: number | null;
+  readonly companyID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -64,10 +66,8 @@ type EagerItemMRO = {
   readonly altPartNumber?: string | null;
   readonly description?: string | null;
   readonly quantity?: number | null;
-  readonly condition?: string | null;
-  readonly imageUrl?: string | null;
-  readonly control?: string | null;
   readonly price?: number | null;
+  readonly companyID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -84,10 +84,8 @@ type LazyItemMRO = {
   readonly altPartNumber?: string | null;
   readonly description?: string | null;
   readonly quantity?: number | null;
-  readonly condition?: string | null;
-  readonly imageUrl?: string | null;
-  readonly control?: string | null;
   readonly price?: number | null;
+  readonly companyID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -107,7 +105,7 @@ type EagerUserDetails = {
   readonly BillingAddresses?: (BillingAddressUserDetails | null)[] | null;
   readonly ShippingAddresses?: (ShippingAddressUserDetails | null)[] | null;
   readonly companyID: string;
-  readonly untitledfield?: string | null;
+  readonly isCompanyOwner?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -121,7 +119,7 @@ type LazyUserDetails = {
   readonly BillingAddresses: AsyncCollection<BillingAddressUserDetails>;
   readonly ShippingAddresses: AsyncCollection<ShippingAddressUserDetails>;
   readonly companyID: string;
-  readonly untitledfield?: string | null;
+  readonly isCompanyOwner?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -189,6 +187,9 @@ type EagerCompany = {
   readonly contactEmail?: string | null;
   readonly BillingAddresses?: (BillingAddressCompany | null)[] | null;
   readonly ShippingAddresses?: (ShippingAddressCompany | null)[] | null;
+  readonly UserDetails?: (UserDetails | null)[] | null;
+  readonly Items?: (Item | null)[] | null;
+  readonly ItemMROS?: (ItemMRO | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -204,6 +205,9 @@ type LazyCompany = {
   readonly contactEmail?: string | null;
   readonly BillingAddresses: AsyncCollection<BillingAddressCompany>;
   readonly ShippingAddresses: AsyncCollection<ShippingAddressCompany>;
+  readonly UserDetails: AsyncCollection<UserDetails>;
+  readonly Items: AsyncCollection<Item>;
+  readonly ItemMROS: AsyncCollection<ItemMRO>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

@@ -10,6 +10,7 @@ type Item @model @auth(rules: [{allow: public}]) {
   imageUrl: String
   control: String
   price: Float
+  companyID: ID! @index(name: "byCompany")
 }
 
 type ItemMRO @model @auth(rules: [{allow: public}]) {
@@ -20,10 +21,8 @@ type ItemMRO @model @auth(rules: [{allow: public}]) {
   altPartNumber: String
   description: String
   quantity: Int
-  condition: String
-  imageUrl: String
-  control: String
   price: Float
+  companyID: ID! @index(name: "byCompany")
 }
 
 type UserDetails @model @auth(rules: [{allow: public}, {allow: owner}]) {
@@ -31,7 +30,7 @@ type UserDetails @model @auth(rules: [{allow: public}, {allow: owner}]) {
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "BillingAddressUserDetails")
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "ShippingAddressUserDetails")
   companyID: ID! @index(name: "byCompany")
-  untitledfield: String
+  isCompanyOwner: Boolean
 }
 
 type BillingAddress @model @auth(rules: [{allow: public}]) {
@@ -76,5 +75,8 @@ type Company @model @auth(rules: [{allow: public}]) {
   contactEmail: String
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "BillingAddressCompany")
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "ShippingAddressCompany")
+  UserDetails: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
+  Items: [Item] @hasMany(indexName: "byCompany", fields: ["id"])
+  ItemMROS: [ItemMRO] @hasMany(indexName: "byCompany", fields: ["id"])
 }
  

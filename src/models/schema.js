@@ -80,6 +80,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "companyID": {
+                    "name": "companyID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -103,6 +110,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCompany",
+                        "fields": [
+                            "companyID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -174,32 +190,18 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "condition": {
-                    "name": "condition",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "imageUrl": {
-                    "name": "imageUrl",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "control": {
-                    "name": "control",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "price": {
                     "name": "price",
                     "isArray": false,
                     "type": "Float",
                     "isRequired": false,
+                    "attributes": []
+                },
+                "companyID": {
+                    "name": "companyID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -225,6 +227,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCompany",
+                        "fields": [
+                            "companyID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -293,10 +304,10 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "untitledfield": {
-                    "name": "untitledfield",
+                "isCompanyOwner": {
+                    "name": "isCompanyOwner",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -572,6 +583,54 @@ export const schema = {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
                             "company"
+                        ]
+                    }
+                },
+                "UserDetails": {
+                    "name": "UserDetails",
+                    "isArray": true,
+                    "type": {
+                        "model": "UserDetails"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "companyID"
+                        ]
+                    }
+                },
+                "Items": {
+                    "name": "Items",
+                    "isArray": true,
+                    "type": {
+                        "model": "Item"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "companyID"
+                        ]
+                    }
+                },
+                "ItemMROS": {
+                    "name": "ItemMROS",
+                    "isArray": true,
+                    "type": {
+                        "model": "ItemMRO"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "companyID"
                         ]
                     }
                 },
@@ -1253,5 +1312,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "2cfbe201f38690dc7cff1ce4beb9a069"
+    "version": "af3635e2448142304e65e711b0c3c849"
 };

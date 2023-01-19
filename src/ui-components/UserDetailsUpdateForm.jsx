@@ -24,10 +24,8 @@ export default function UserDetailsUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    companyID: "",
     untitledfield: "",
   };
-  const [companyID, setCompanyID] = React.useState(initialValues.companyID);
   const [untitledfield, setUntitledfield] = React.useState(
     initialValues.untitledfield
   );
@@ -36,7 +34,6 @@ export default function UserDetailsUpdateForm(props) {
     const cleanValues = userDetailsRecord
       ? { ...initialValues, ...userDetailsRecord }
       : initialValues;
-    setCompanyID(cleanValues.companyID);
     setUntitledfield(cleanValues.untitledfield);
     setErrors({});
   };
@@ -52,7 +49,6 @@ export default function UserDetailsUpdateForm(props) {
   }, [idProp, userDetails]);
   React.useEffect(resetStateValues, [userDetailsRecord]);
   const validations = {
-    companyID: [{ type: "Required" }],
     untitledfield: [],
   };
   const runValidationTasks = async (
@@ -80,7 +76,6 @@ export default function UserDetailsUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          companyID,
           untitledfield,
         };
         const validationResponses = await Promise.all(
@@ -129,31 +124,6 @@ export default function UserDetailsUpdateForm(props) {
       {...rest}
     >
       <TextField
-        label="Company id"
-        isRequired={true}
-        isReadOnly={false}
-        value={companyID}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              companyID: value,
-              untitledfield,
-            };
-            const result = onChange(modelFields);
-            value = result?.companyID ?? value;
-          }
-          if (errors.companyID?.hasError) {
-            runValidationTasks("companyID", value);
-          }
-          setCompanyID(value);
-        }}
-        onBlur={() => runValidationTasks("companyID", companyID)}
-        errorMessage={errors.companyID?.errorMessage}
-        hasError={errors.companyID?.hasError}
-        {...getOverrideProps(overrides, "companyID")}
-      ></TextField>
-      <TextField
         label="Untitledfield"
         isRequired={false}
         isReadOnly={false}
@@ -162,7 +132,6 @@ export default function UserDetailsUpdateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              companyID,
               untitledfield: value,
             };
             const result = onChange(modelFields);

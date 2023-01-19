@@ -23,21 +23,17 @@ export default function UserDetailsCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    companyID: "",
     untitledfield: "",
   };
-  const [companyID, setCompanyID] = React.useState(initialValues.companyID);
   const [untitledfield, setUntitledfield] = React.useState(
     initialValues.untitledfield
   );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setCompanyID(initialValues.companyID);
     setUntitledfield(initialValues.untitledfield);
     setErrors({});
   };
   const validations = {
-    companyID: [{ type: "Required" }],
     untitledfield: [],
   };
   const runValidationTasks = async (
@@ -65,7 +61,6 @@ export default function UserDetailsCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          companyID,
           untitledfield,
         };
         const validationResponses = await Promise.all(
@@ -113,31 +108,6 @@ export default function UserDetailsCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Company id"
-        isRequired={true}
-        isReadOnly={false}
-        value={companyID}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              companyID: value,
-              untitledfield,
-            };
-            const result = onChange(modelFields);
-            value = result?.companyID ?? value;
-          }
-          if (errors.companyID?.hasError) {
-            runValidationTasks("companyID", value);
-          }
-          setCompanyID(value);
-        }}
-        onBlur={() => runValidationTasks("companyID", companyID)}
-        errorMessage={errors.companyID?.errorMessage}
-        hasError={errors.companyID?.hasError}
-        {...getOverrideProps(overrides, "companyID")}
-      ></TextField>
-      <TextField
         label="Untitledfield"
         isRequired={false}
         isReadOnly={false}
@@ -146,7 +116,6 @@ export default function UserDetailsCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              companyID,
               untitledfield: value,
             };
             const result = onChange(modelFields);

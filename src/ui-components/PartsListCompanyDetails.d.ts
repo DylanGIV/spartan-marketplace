@@ -1,0 +1,29 @@
+/***************************************************************************
+ * The contents of this file were generated with Amplify Studio.           *
+ * Please refrain from making any modifications to this file.              *
+ * Any changes to this file will be overwritten when running amplify pull. *
+ **************************************************************************/
+
+import * as React from "react";
+import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
+import { FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
+export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
+export declare type PartsListCompanyDetailsOverridesProps = {
+    PartsListCompanyDetails?: PrimitiveOverrideProps<FlexProps>;
+    "Frame 420"?: PrimitiveOverrideProps<FlexProps>;
+    "Frame 419"?: PrimitiveOverrideProps<FlexProps>;
+    image36562867?: PrimitiveOverrideProps<ImageProps>;
+    image36562868?: PrimitiveOverrideProps<ImageProps>;
+    Company?: PrimitiveOverrideProps<TextProps>;
+    Extra36562855?: PrimitiveOverrideProps<TextProps>;
+    Extra36562856?: PrimitiveOverrideProps<TextProps>;
+    "Phone:"?: PrimitiveOverrideProps<TextProps>;
+    Distance?: PrimitiveOverrideProps<TextProps>;
+    "Frame 418"?: PrimitiveOverrideProps<FlexProps>;
+    "Description:"?: PrimitiveOverrideProps<TextProps>;
+    "Fax:"?: PrimitiveOverrideProps<TextProps>;
+} & EscapeHatchProps;
+export declare type PartsListCompanyDetailsProps = React.PropsWithChildren<Partial<FlexProps> & {
+    overrides?: PartsListCompanyDetailsOverridesProps | undefined | null;
+}>;
+export default function PartsListCompanyDetails(props: PartsListCompanyDetailsProps): React.ReactElement;

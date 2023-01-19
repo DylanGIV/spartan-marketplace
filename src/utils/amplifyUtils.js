@@ -8,3 +8,5 @@ export const signOutHandler = async () => {
     console.log('error signing out:', error);
   }
 };
+
+export const AddPartToInventory = async () => {};
