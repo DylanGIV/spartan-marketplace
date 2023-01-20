@@ -1,8 +1,11 @@
 import { Button, TextField } from '@mui/material';
 import { useState } from 'react';
 import './addPartPopUp.styles.scss';
+import { AddPartToInventory } from '../../utils/amplifyUtils';
+import { DataStore } from 'aws-amplify';
+import { UserDetails } from '../../models';
 
-const AddPartPopUp = () => {
+const AddPartPopUp = (props) => {
   const [partID, setPartID] = useState('');
   const [nsn, setNsn] = useState('');
   const [partNumber, setPartNumber] = useState('');
@@ -14,7 +17,55 @@ const AddPartPopUp = () => {
   const [control, setControl] = useState('');
   const [price, setPrice] = useState(0.0);
 
-  const handlePartSubmit = async () => {};
+  const { setAddPartOpen } = props;
+
+  const handlePartSubmit = async () => {
+    const newPrice = parseFloat(price);
+    const newQuantity = parseInt(quantity);
+    if (
+      partID.length > 0 &&
+      nsn.length > 0 &&
+      partNumber.length > 0 &&
+      altPartNumber.length > 0 &&
+      description.length > 0 &&
+      newQuantity > 0 &&
+      condition.length > 0 &&
+      imageUrl.length > 0 &&
+      control.length > 0 &&
+      newPrice > 0
+    ) {
+      const userDetails = await DataStore.query(UserDetails);
+      const companyID = userDetails[0].companyID;
+
+      if (companyID) {
+        try {
+          const response = await AddPartToInventory(
+            partID,
+            nsn,
+            partNumber,
+            altPartNumber,
+            description,
+            newQuantity,
+            condition,
+            imageUrl,
+            control,
+            newPrice,
+            companyID
+          );
+          console.log(response);
+          alert('Part successfully added!');
+          setAddPartOpen(false);
+        } catch (error) {
+          console.log(error);
+          alert('There was an error submitting your part.');
+        }
+      } else {
+        alert('There was an error retrieving company from your profile.');
+      }
+    } else {
+      alert('Please fill all required fields.');
+    }
+  };
 
   return (
     <div className='add-part-pop-up-container'>
@@ -56,6 +107,7 @@ const AddPartPopUp = () => {
           <TextField
             label='Quantity'
             value={quantity}
+            type='number'
             onChange={(event) => setQuantity(event.target.value)}
             style={{ marginBottom: 10 }}
           />
@@ -80,12 +132,13 @@ const AddPartPopUp = () => {
           <TextField
             label='Price'
             value={price}
+            type='number'
             onChange={(event) => setPrice(event.target.value)}
             style={{ marginBottom: 10 }}
           />
         </div>
       </div>
-      <Button style={{ marginTop: 20 }} onClick={handlePartSubmit}>
+      <Button style={{ marginTop: 20 }} onClick={() => handlePartSubmit()}>
         Submit
       </Button>
     </div>
