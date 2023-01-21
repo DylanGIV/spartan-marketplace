@@ -29,11 +29,13 @@ export default function PartsListDetailsCollection(props) {
   }, [itemsProp, itemsDataStore]);
   return (
     <Collection
-      type="list"
+      type="grid"
       isPaginated={true}
       searchPlaceholder="Search..."
-      itemsPerPage={3}
-      direction="column"
+      itemsPerPage={5}
+      templateColumns="1fr"
+      autoFlow="row"
+      alignItems="stretch"
       justifyContent="stretch"
       items={items || []}
       {...getOverrideProps(overrides, "PartsListDetailsCollection")}

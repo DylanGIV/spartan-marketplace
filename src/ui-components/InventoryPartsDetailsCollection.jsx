@@ -33,8 +33,7 @@ export default function InventoryPartsDetailsCollection(props) {
       isSearchable="true"
       isPaginated={true}
       searchPlaceholder="Search..."
-      itemsPerPage={25}
-      templateColumns="1fr"
+      itemsPerPage={50}
       autoFlow="row"
       alignItems="stretch"
       justifyContent="stretch"
