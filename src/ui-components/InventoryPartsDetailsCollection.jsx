@@ -5,19 +5,19 @@
  **************************************************************************/
 
 /* eslint-disable */
-import * as React from 'react';
-import { Item } from '../models';
+import * as React from "react";
+import { Item } from "../models";
 import {
   getOverrideProps,
   useDataStoreBinding,
-} from '@aws-amplify/ui-react/internal';
-import InventoryPartsDetails from './InventoryPartsDetails';
-import { Collection } from '@aws-amplify/ui-react';
+} from "@aws-amplify/ui-react/internal";
+import InventoryPartsDetails from "./InventoryPartsDetails";
+import { Collection } from "@aws-amplify/ui-react";
 export default function InventoryPartsDetailsCollection(props) {
   const { items: itemsProp, overrideItems, overrides, ...rest } = props;
   const [items, setItems] = React.useState(undefined);
   const itemsDataStore = useDataStoreBinding({
-    type: 'collection',
+    type: "collection",
     model: Item,
   }).items;
   React.useEffect(() => {
@@ -29,21 +29,25 @@ export default function InventoryPartsDetailsCollection(props) {
   }, [itemsProp, itemsDataStore]);
   return (
     <Collection
-      type='list'
-      isSearchable={true}
+      type="grid"
+      isSearchable="true"
       isPaginated={true}
-      searchPlaceholder='Search...'
+      searchPlaceholder="Search..."
       itemsPerPage={25}
-      direction='column'
-      alignItems='stretch'
-      justifyContent='left'
+      templateColumns="1fr"
+      autoFlow="row"
+      alignItems="stretch"
+      justifyContent="stretch"
       items={items || []}
-      {...getOverrideProps(overrides, 'InventoryPartsDetailsCollection')}
+      {...getOverrideProps(overrides, "InventoryPartsDetailsCollection")}
       {...rest}
     >
       {(item, index) => (
         <InventoryPartsDetails
           item={item}
+          height="auto"
+          margin="0px 0 0px 0"
+          width="auto"
           key={item.id}
           {...(overrideItems && overrideItems({ item, index }))}
         ></InventoryPartsDetails>

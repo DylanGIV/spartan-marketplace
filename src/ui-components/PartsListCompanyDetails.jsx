@@ -9,7 +9,7 @@ import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Flex, Image, Text } from "@aws-amplify/ui-react";
 export default function PartsListCompanyDetails(props) {
-  const { overrides, ...rest } = props;
+  const { company, overrides, ...rest } = props;
   return (
     <Flex
       gap="0"
@@ -98,7 +98,7 @@ export default function PartsListCompanyDetails(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Company"
+            children={company?.companyName}
             {...getOverrideProps(overrides, "Company")}
           ></Text>
           <Text
@@ -119,7 +119,7 @@ export default function PartsListCompanyDetails(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Extra"
+            children={company?.contactEmail}
             {...getOverrideProps(overrides, "Extra36562855")}
           ></Text>
           <Text
@@ -132,7 +132,7 @@ export default function PartsListCompanyDetails(props) {
             display="block"
             direction="column"
             justifyContent="unset"
-            width="294px"
+            width="340px"
             height="unset"
             gap="unset"
             alignItems="unset"
@@ -161,7 +161,7 @@ export default function PartsListCompanyDetails(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Phone:"
+            children={company?.phone}
             {...getOverrideProps(overrides, "Phone:")}
           ></Text>
           <Text

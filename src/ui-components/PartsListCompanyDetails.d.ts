@@ -5,6 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
+import { Company } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
 import { FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -24,6 +25,8 @@ export declare type PartsListCompanyDetailsOverridesProps = {
     "Fax:"?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
 export declare type PartsListCompanyDetailsProps = React.PropsWithChildren<Partial<FlexProps> & {
+    company?: Company;
+} & {
     overrides?: PartsListCompanyDetailsOverridesProps | undefined | null;
 }>;
 export default function PartsListCompanyDetails(props: PartsListCompanyDetailsProps): React.ReactElement;

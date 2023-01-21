@@ -29,6 +29,33 @@ const Inventory = () => {
   //   };
   //   GetParts();
   // }, []);
+  // const [data, setData] = useState(null);
+
+  // useEffect(() => {
+  //   const queryData = async () => {
+  //     const userDetails = await DataStore.query(UserDetails);
+  //     const companyID = userDetails[0].companyID;
+
+  //     let company = null;
+  //     let parts = null;
+
+  //     try {
+  //       company = await GetCompanyByID(companyID);
+  //       parts = await GetPartsByCompany(companyID);
+  //     } catch (error) {
+  //       alert('There was an error retrieving parts list.');
+  //       console.log(error);
+  //     }
+  //     if (company && parts) {
+  //       const data = new Object({
+  //         company: company,
+  //         parts: parts,
+  //       });
+  //       setData(data);
+  //     }
+  //   };
+  //   queryData();
+  // }, []);
 
   return (
     <div>

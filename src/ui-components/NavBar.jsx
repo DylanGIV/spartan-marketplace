@@ -30,15 +30,15 @@ export default function NavBar(props) {
       justifyContent="center"
       alignItems="center"
       position="relative"
-      padding="24px 32px 24px 32px"
+      padding="24px 32px 24px 0px"
       backgroundColor="rgba(255,255,255,1)"
       {...getOverrideProps(overrides, "NavBar")}
       {...rest}
     >
       <Flex
-        gap="2px"
+        gap="18px"
         direction="row"
-        width="unset"
+        width="228px"
         height="unset"
         justifyContent="center"
         alignItems="center"
@@ -69,11 +69,11 @@ export default function NavBar(props) {
         ></Icon>
         <Text
           fontFamily="Inter"
-          fontSize="20px"
+          fontSize="32px"
           fontWeight="600"
           color="rgba(0,0,0,1)"
           textTransform="capitalize"
-          lineHeight="24.204544067382812px"
+          lineHeight="38.727272033691406px"
           textAlign="left"
           display="block"
           direction="column"
@@ -106,7 +106,7 @@ export default function NavBar(props) {
       >
         <Text
           fontFamily="Inter"
-          fontSize="16px"
+          fontSize="24px"
           fontWeight="400"
           color="rgba(0,0,0,1)"
           lineHeight="24px"
@@ -114,7 +114,7 @@ export default function NavBar(props) {
           display="block"
           direction="column"
           justifyContent="unset"
-          letterSpacing="0.01px"
+          letterSpacing="0.09px"
           width="unset"
           height="unset"
           gap="unset"
@@ -128,7 +128,7 @@ export default function NavBar(props) {
         ></Text>
         <Text
           fontFamily="Inter"
-          fontSize="16px"
+          fontSize="24px"
           fontWeight="400"
           color="rgba(0,0,0,1)"
           lineHeight="24px"
@@ -136,7 +136,7 @@ export default function NavBar(props) {
           display="block"
           direction="column"
           justifyContent="unset"
-          letterSpacing="0.01px"
+          letterSpacing="0.09px"
           width="unset"
           height="unset"
           gap="unset"
@@ -153,7 +153,7 @@ export default function NavBar(props) {
         ></Text>
         <Text
           fontFamily="Inter"
-          fontSize="16px"
+          fontSize="24px"
           fontWeight="400"
           color="rgba(0,0,0,1)"
           lineHeight="24px"
@@ -161,7 +161,7 @@ export default function NavBar(props) {
           display="block"
           direction="column"
           justifyContent="unset"
-          letterSpacing="0.01px"
+          letterSpacing="0.09px"
           width="unset"
           height="unset"
           gap="unset"
@@ -175,7 +175,7 @@ export default function NavBar(props) {
         ></Text>
         <Text
           fontFamily="Inter"
-          fontSize="16px"
+          fontSize="24px"
           fontWeight="400"
           color="rgba(0,0,0,1)"
           lineHeight="24px"
@@ -183,7 +183,7 @@ export default function NavBar(props) {
           display="block"
           direction="column"
           justifyContent="unset"
-          letterSpacing="0.01px"
+          letterSpacing="0.09px"
           width="unset"
           height="unset"
           gap="unset"

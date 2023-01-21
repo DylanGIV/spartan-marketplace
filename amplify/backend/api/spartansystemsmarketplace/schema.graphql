@@ -78,5 +78,4 @@ type Company @model @auth(rules: [{allow: public}]) {
   UserDetails: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
   Items: [Item] @hasMany(indexName: "byCompany", fields: ["id"])
   ItemMROS: [ItemMRO] @hasMany(indexName: "byCompany", fields: ["id"])
-}
- 
+} 

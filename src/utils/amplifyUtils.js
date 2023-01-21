@@ -3,13 +3,8 @@ import { Auth } from 'aws-amplify';
 import { DataStore } from 'aws-amplify';
 import { Company, Item } from '../models';
 
-export const signOutHandler = async () => {
-  try {
-    const response = await Auth.signOut();
-    console.log(response);
-  } catch (error) {
-    console.log('error signing out:', error);
-  }
+export const SignOutAuth = async () => {
+  return await Auth.signOut();
 };
 
 export const AddPartToInventory = async (
@@ -77,8 +72,16 @@ export async function batchAddPartsToInventoryILS(
 }
 
 export const GetPartsByCompany = async (companyID) => {
-  const parts = await DataStore.query(Item, (i) => i.companyID === companyID);
+  const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
   return parts;
+};
+export const GetCompanyByID = async (companyID) => {
+  const company = await DataStore.query(Company, (p) => p.p.eq(companyID));
+  return company;
+};
+export const GetAllCompanies = async () => {
+  const companies = await DataStore.query(Company);
+  return companies;
 };
 
 const sendData = async () => {
