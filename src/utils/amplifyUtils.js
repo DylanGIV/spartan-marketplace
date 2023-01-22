@@ -1,5 +1,5 @@
 import { Alert } from '@mui/material';
-import { Auth } from 'aws-amplify';
+import { Auth, Predicates } from 'aws-amplify';
 import { DataStore } from 'aws-amplify';
 import { Company, Item } from '../models';
 
@@ -104,4 +104,8 @@ const sendData = async () => {
 
 export const DeleteAllPartsByCompany = async (companyID) => {
   return await DataStore.delete(Item, (p) => p.companyID.eq(companyID));
+};
+
+export const DeleteAllParts = async () => {
+  return await DataStore.delete(Item, Predicates.ALL);
 };
