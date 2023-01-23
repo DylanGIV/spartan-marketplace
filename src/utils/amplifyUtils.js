@@ -1,7 +1,7 @@
 import { Alert } from '@mui/material';
 import { Auth, Predicates } from 'aws-amplify';
-import { DataStore } from 'aws-amplify';
 import { Company, Item } from '../models';
+import { DataStore } from '@aws-amplify/datastore';
 
 export const SignOutAuth = async () => {
   return await Auth.signOut();
@@ -73,6 +73,19 @@ export async function batchAddPartsToInventoryILS(
 
 export const GetPartsByCompany = async (companyID) => {
   const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
+  return parts;
+};
+export const GetPartsByCompanyAndSearch = async (companyID, search) => {
+  const parts = await DataStore.query(
+    Item,
+    (p) =>
+      p.companyID.eq(companyID) &&
+      (p.AltPartNumber.contains(search) ||
+        p.NSN.contains(search) ||
+        p.PartID.contains(search) ||
+        p.PartNumber.contains(search) ||
+        p.description.contains(search))
+  );
   return parts;
 };
 export const GetCompanyByID = async (companyID) => {

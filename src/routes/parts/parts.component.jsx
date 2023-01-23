@@ -7,10 +7,23 @@ import {
   PartsListDetails,
   PartsListDetailsCollection,
 } from '../../ui-components';
-import { GetAllCompanies, GetPartsByCompany } from '../../utils/amplifyUtils';
+import {
+  GetAllCompanies,
+  GetPartsByCompany,
+  GetPartsByCompanyAndSearch,
+} from '../../utils/amplifyUtils';
+import * as queries from '../../graphql/queries.ts';
+import * as mutations from '../../graphql/mutations.ts';
+import { API } from 'aws-amplify';
+
+import './parts.styles.scss';
+import { Button, TextField } from '@mui/material';
+import { SearchField } from '@aws-amplify/ui-react';
 
 const Parts = () => {
   const [data, setData] = useState([]);
+  const [partSearchTextField, setPartSearchTextField] = useState('');
+  const [partSearch, setPartSearch] = useState('');
 
   useEffect(() => {
     const queryData = async () => {
@@ -21,14 +34,19 @@ const Parts = () => {
         alert('There was an error retrieving companies list.');
         console.log(error);
       }
-
       const tempData = new Array();
-
       if (companies) {
         for (let i = 0; i < companies.length; i++) {
           let parts = null;
           try {
-            parts = await GetPartsByCompany(companies[i].id);
+            if (partSearch) {
+              parts = await GetPartsByCompanyAndSearch(
+                companies[i].id,
+                partSearch
+              );
+            } else {
+              parts = await GetPartsByCompany(companies[i].id);
+            }
           } catch (error) {
             alert('There was an error retrieving parts');
             console.log(error);
@@ -44,23 +62,47 @@ const Parts = () => {
       }
     };
     queryData();
-  }, []);
+  }, [partSearch]);
 
+  console.log(data);
   return (
     <div>
-      <h1>Parts Page</h1>
-      <PartKey />
-      {data ? (
-        data.map((d) => {
-          return (
-            <div key={d.id}>
-              <PartsListCompanyDetails company={d.company} />
-              <PartsListDetailsCollection items={d.parts} />
-            </div>
-          );
-        })
+      <div className='search-bar-container'>
+        <SearchField
+          label='Search'
+          value={partSearchTextField}
+          onChange={(event) => setPartSearchTextField(event.target.value)}
+          onSubmit={(value) => setPartSearch(value)}
+          onClear={() => setPartSearchTextField('')}
+        />
+      </div>
+      {partSearch ? (
+        <div className='parts-list-container'>
+          <PartKey />
+          {data.length ? (
+            data.map((d) => {
+              return (
+                <div key={d.id} style={{ backgroundColor: '#f6f6f6' }}>
+                  <PartsListCompanyDetails
+                    company={d.company}
+                    style={{ margin: 5 }}
+                  />
+                  <PartsListDetailsCollection
+                    key={d.parts.id}
+                    items={d.parts}
+                    style={{ marginLeft: 5 }}
+                  />
+                </div>
+              );
+            })
+          ) : (
+            <h2>No parts</h2>
+          )}
+        </div>
       ) : (
-        <h1>No parts</h1>
+        <div>
+          <h1>Make a search</h1>
+        </div>
       )}
     </div>
   );

@@ -1466,6 +1466,41 @@ export const getCompany = /* GraphQL */ `
     }
   }
 `;
+export const listCompaniesAndItems = /* GraphQL */ `
+  query MyQuery {
+    listCompanies {
+      items {
+        Items {
+          items {
+            AltPartNumber
+            NSN
+            PartID
+            PartNumber
+            _deleted
+            _lastChangedAt
+            _version
+            companyID
+            condition
+            control
+            description
+            id
+            imageUrl
+            price
+            quantity
+            createdAt
+            updatedAt
+          }
+        }
+        companyName
+        createdAt
+        contactEmail
+        id
+        phone
+      }
+    }
+  }
+`;
+
 export const listCompanies = /* GraphQL */ `
   query ListCompanies(
     $filter: ModelCompanyFilterInput
