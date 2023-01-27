@@ -6,10 +6,7 @@
 
 /* eslint-disable */
 import * as React from "react";
-import {
-  getOverrideProps,
-  useNavigateAction,
-} from "@aws-amplify/ui-react/internal";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Flex,
   Icon,
@@ -20,7 +17,6 @@ import {
 } from "@aws-amplify/ui-react";
 export default function NavBar(props) {
   const { overrides, ...rest } = props;
-  const jobsOnClick = useNavigateAction({ type: "url", url: "" });
   return (
     <Flex
       gap="20px"
@@ -86,7 +82,7 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Spartan"
+          children="Logo"
           {...getOverrideProps(overrides, "Logo29767075")}
         ></Text>
       </Flex>
@@ -123,7 +119,7 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Home"
+          children="Dashboard"
           {...getOverrideProps(overrides, "Dashboard")}
         ></Text>
         <Text
@@ -145,10 +141,7 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Parts"
-          onClick={() => {
-            jobsOnClick();
-          }}
+          children="Jobs"
           {...getOverrideProps(overrides, "Jobs")}
         ></Text>
         <Text
@@ -170,7 +163,7 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="MRO"
+          children="Applicants"
           {...getOverrideProps(overrides, "Applicants")}
         ></Text>
         <Text
@@ -192,7 +185,7 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Support"
+          children="Company"
           {...getOverrideProps(overrides, "Company")}
         ></Text>
       </Flex>

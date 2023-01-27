@@ -44,7 +44,7 @@ export default function InventoryPartsDetails(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children={item?.PartNumber}
+        children={item?.partNumber}
         {...getOverrideProps(overrides, "Part No")}
       ></Text>
       <Text
@@ -65,7 +65,7 @@ export default function InventoryPartsDetails(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children={item?.AltPartNumber}
+        children={item?.altPartNumber}
         {...getOverrideProps(overrides, "Alt Part No")}
       ></Text>
       <Text
@@ -86,7 +86,7 @@ export default function InventoryPartsDetails(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children={item?.NSN}
+        children={item?.nsn}
         {...getOverrideProps(overrides, "NSN")}
       ></Text>
       <Text

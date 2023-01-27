@@ -1,11 +1,12 @@
 import { Button, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import './addPartPopUp.styles.scss';
 import { AddPartToInventory } from '../../utils/amplifyUtils';
-import { DataStore } from 'aws-amplify';
 import { UserDetails } from '../../models';
+import { DataStore } from 'aws-amplify';
+import { InventoryContext } from '../../context/inventory.context';
 
-const AddPartPopUp = (props) => {
+const AddPartPopUp = () => {
   const [partID, setPartID] = useState('');
   const [nsn, setNsn] = useState('');
   const [partNumber, setPartNumber] = useState('');
@@ -17,7 +18,7 @@ const AddPartPopUp = (props) => {
   const [control, setControl] = useState('');
   const [price, setPrice] = useState(0.0);
 
-  const { setAddPartOpen } = props;
+  const { setIsAddPartOpen } = useContext(InventoryContext);
 
   const handlePartSubmit = async () => {
     const newPrice = parseFloat(price);
@@ -54,7 +55,7 @@ const AddPartPopUp = (props) => {
           );
           console.log(response);
           alert('Part successfully added!');
-          setAddPartOpen(false);
+          setIsAddPartOpen(false);
         } catch (error) {
           console.log(error);
           alert('There was an error submitting your part.');

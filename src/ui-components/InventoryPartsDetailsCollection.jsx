@@ -30,10 +30,11 @@ export default function InventoryPartsDetailsCollection(props) {
   return (
     <Collection
       type="grid"
-      isSearchable="true"
+      isSearchable={true}
       isPaginated={true}
       searchPlaceholder="Search..."
       itemsPerPage={50}
+      templateColumns="1fr"
       autoFlow="row"
       alignItems="stretch"
       justifyContent="stretch"
@@ -45,8 +46,8 @@ export default function InventoryPartsDetailsCollection(props) {
         <InventoryPartsDetails
           item={item}
           height="auto"
-          margin="0px 0 0px 0"
           width="auto"
+          margin="0 0 1px 0"
           key={item.id}
           {...(overrideItems && overrideItems({ item, index }))}
         ></InventoryPartsDetails>

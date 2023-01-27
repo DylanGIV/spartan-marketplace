@@ -1,14 +1,15 @@
 import { ScrollView } from '@aws-amplify/ui-react';
 import { Button } from '@mui/material';
 import { DataStore } from 'aws-amplify';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { InventoryContext } from '../../context/inventory.context';
 import { UserDetails } from '../../models';
-import { batchAddPartsToInventoryILS } from '../../utils/amplifyUtils';
+import { BatchAddPartsToInventoryILS } from '../../utils/amplifyUtils';
 import './importDataPopUp.styles.scss';
 
-const ImportDataPopUp = (props) => {
+const ImportDataPopUp = () => {
   const [data, setData] = useState([]);
-  const { setImportDataOpen } = props;
+  const { setIsImportPartOpen } = useContext(InventoryContext);
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -42,7 +43,7 @@ const ImportDataPopUp = (props) => {
     const userDetails = await DataStore.query(UserDetails);
     const companyID = userDetails[0].companyID;
 
-    await batchAddPartsToInventoryILS(data, companyID, setImportDataOpen);
+    await BatchAddPartsToInventoryILS(data, companyID);
   };
 
   return (

@@ -17,11 +17,15 @@ export declare type CompanyUpdateFormInputValues = {
     companyName?: string;
     phone?: string;
     contactEmail?: string;
+    profilePictureUrl?: string;
+    fax?: string;
 };
 export declare type CompanyUpdateFormValidationValues = {
     companyName?: ValidationFunction<string>;
     phone?: ValidationFunction<string>;
     contactEmail?: ValidationFunction<string>;
+    profilePictureUrl?: ValidationFunction<string>;
+    fax?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CompanyUpdateFormOverridesProps = {
@@ -29,6 +33,8 @@ export declare type CompanyUpdateFormOverridesProps = {
     companyName?: PrimitiveOverrideProps<TextFieldProps>;
     phone?: PrimitiveOverrideProps<TextFieldProps>;
     contactEmail?: PrimitiveOverrideProps<TextFieldProps>;
+    profilePictureUrl?: PrimitiveOverrideProps<TextFieldProps>;
+    fax?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CompanyUpdateFormProps = React.PropsWithChildren<{
     overrides?: CompanyUpdateFormOverridesProps | undefined | null;

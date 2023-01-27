@@ -6,94 +6,112 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@a
 
 
 
-type EagerItem = {
+type EagerRFQ = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Item, 'id'>;
+    identifier: ManagedIdentifier<RFQ, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly PartID?: string | null;
-  readonly NSN?: string | null;
-  readonly PartNumber?: string | null;
-  readonly AltPartNumber?: string | null;
-  readonly description?: string | null;
-  readonly quantity?: number | null;
-  readonly condition?: string | null;
-  readonly imageUrl?: string | null;
-  readonly control?: string | null;
-  readonly price?: number | null;
-  readonly companyID: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-type LazyItem = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Item, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly PartID?: string | null;
-  readonly NSN?: string | null;
-  readonly PartNumber?: string | null;
-  readonly AltPartNumber?: string | null;
-  readonly description?: string | null;
-  readonly quantity?: number | null;
-  readonly condition?: string | null;
-  readonly imageUrl?: string | null;
-  readonly control?: string | null;
-  readonly price?: number | null;
-  readonly companyID: string;
-  readonly createdAt?: string | null;
-  readonly updatedAt?: string | null;
-}
-
-export declare type Item = LazyLoading extends LazyLoadingDisabled ? EagerItem : LazyItem
-
-export declare const Item: (new (init: ModelInit<Item>) => Item) & {
-  copyOf(source: Item, mutator: (draft: MutableModel<Item>) => MutableModel<Item> | void): Item;
-}
-
-type EagerItemMRO = {
-  readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ItemMRO, 'id'>;
-    readOnlyFields: 'createdAt' | 'updatedAt';
-  };
-  readonly id: string;
-  readonly partID?: string | null;
+  readonly quotationNumber?: string | null;
+  readonly dateSent?: string | null;
+  readonly custRefNum?: string | null;
+  readonly companyName?: string | null;
+  readonly contact?: string | null;
+  readonly phone?: string | null;
+  readonly email?: string | null;
+  readonly shippingTerms?: string | null;
+  readonly shippingMethod?: string | null;
+  readonly leadTime?: number | null;
+  readonly paymentTerms?: string | null;
+  readonly dueDate?: string | null;
+  readonly quantityRequested?: number | null;
+  readonly quantityQuoted?: number | null;
   readonly nsn?: string | null;
   readonly partNumber?: string | null;
   readonly altPartNumber?: string | null;
+  readonly condition?: string | null;
+  readonly uom?: string | null;
   readonly description?: string | null;
-  readonly quantity?: number | null;
   readonly price?: number | null;
-  readonly companyID: string;
+  readonly discount?: number | null;
+  readonly attr1?: string | null;
+  readonly attr2?: string | null;
+  readonly attr3?: string | null;
+  readonly lineTotal?: number | null;
+  readonly subtotal?: number | null;
+  readonly salesTax?: number | null;
+  readonly total?: number | null;
+  readonly internalComments?: string | null;
+  readonly emailComments?: string | null;
+  readonly attr4?: string | null;
+  readonly attr5?: string | null;
+  readonly attr6?: string | null;
+  readonly imageUrls?: (string | null)[] | null;
+  readonly addressLine1?: string | null;
+  readonly addressLine2?: string | null;
+  readonly city?: string | null;
+  readonly state?: string | null;
+  readonly zip?: string | null;
+  readonly country?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-type LazyItemMRO = {
+type LazyRFQ = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ItemMRO, 'id'>;
+    identifier: ManagedIdentifier<RFQ, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly partID?: string | null;
+  readonly quotationNumber?: string | null;
+  readonly dateSent?: string | null;
+  readonly custRefNum?: string | null;
+  readonly companyName?: string | null;
+  readonly contact?: string | null;
+  readonly phone?: string | null;
+  readonly email?: string | null;
+  readonly shippingTerms?: string | null;
+  readonly shippingMethod?: string | null;
+  readonly leadTime?: number | null;
+  readonly paymentTerms?: string | null;
+  readonly dueDate?: string | null;
+  readonly quantityRequested?: number | null;
+  readonly quantityQuoted?: number | null;
   readonly nsn?: string | null;
   readonly partNumber?: string | null;
   readonly altPartNumber?: string | null;
+  readonly condition?: string | null;
+  readonly uom?: string | null;
   readonly description?: string | null;
-  readonly quantity?: number | null;
   readonly price?: number | null;
-  readonly companyID: string;
+  readonly discount?: number | null;
+  readonly attr1?: string | null;
+  readonly attr2?: string | null;
+  readonly attr3?: string | null;
+  readonly lineTotal?: number | null;
+  readonly subtotal?: number | null;
+  readonly salesTax?: number | null;
+  readonly total?: number | null;
+  readonly internalComments?: string | null;
+  readonly emailComments?: string | null;
+  readonly attr4?: string | null;
+  readonly attr5?: string | null;
+  readonly attr6?: string | null;
+  readonly imageUrls?: (string | null)[] | null;
+  readonly addressLine1?: string | null;
+  readonly addressLine2?: string | null;
+  readonly city?: string | null;
+  readonly state?: string | null;
+  readonly zip?: string | null;
+  readonly country?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
-export declare type ItemMRO = LazyLoading extends LazyLoadingDisabled ? EagerItemMRO : LazyItemMRO
+export declare type RFQ = LazyLoading extends LazyLoadingDisabled ? EagerRFQ : LazyRFQ
 
-export declare const ItemMRO: (new (init: ModelInit<ItemMRO>) => ItemMRO) & {
-  copyOf(source: ItemMRO, mutator: (draft: MutableModel<ItemMRO>) => MutableModel<ItemMRO> | void): ItemMRO;
+export declare const RFQ: (new (init: ModelInit<RFQ>) => RFQ) & {
+  copyOf(source: RFQ, mutator: (draft: MutableModel<RFQ>) => MutableModel<RFQ> | void): RFQ;
 }
 
 type EagerUserDetails = {
@@ -102,10 +120,9 @@ type EagerUserDetails = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly BillingAddresses?: (BillingAddressUserDetails | null)[] | null;
-  readonly ShippingAddresses?: (ShippingAddressUserDetails | null)[] | null;
   readonly companyID: string;
-  readonly isCompanyOwner?: boolean | null;
+  readonly BillingAddresses?: (UserDetailsBillingAddress | null)[] | null;
+  readonly ShippingAddresses?: (UserDetailsShippingAddress | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -116,10 +133,9 @@ type LazyUserDetails = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly BillingAddresses: AsyncCollection<BillingAddressUserDetails>;
-  readonly ShippingAddresses: AsyncCollection<ShippingAddressUserDetails>;
   readonly companyID: string;
-  readonly isCompanyOwner?: boolean | null;
+  readonly BillingAddresses: AsyncCollection<UserDetailsBillingAddress>;
+  readonly ShippingAddresses: AsyncCollection<UserDetailsShippingAddress>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -143,9 +159,9 @@ type EagerBillingAddress = {
   readonly city?: string | null;
   readonly region?: string | null;
   readonly postalCode?: string | null;
+  readonly CompanyBillingAddresses?: (CompanyBillingAddress | null)[] | null;
   readonly countryID: string;
-  readonly companies?: (BillingAddressCompany | null)[] | null;
-  readonly users?: (BillingAddressUserDetails | null)[] | null;
+  readonly UserBillingAddresses?: (UserDetailsBillingAddress | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -163,9 +179,9 @@ type LazyBillingAddress = {
   readonly city?: string | null;
   readonly region?: string | null;
   readonly postalCode?: string | null;
+  readonly CompanyBillingAddresses: AsyncCollection<CompanyBillingAddress>;
   readonly countryID: string;
-  readonly companies: AsyncCollection<BillingAddressCompany>;
-  readonly users: AsyncCollection<BillingAddressUserDetails>;
+  readonly UserBillingAddresses: AsyncCollection<UserDetailsBillingAddress>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -185,11 +201,13 @@ type EagerCompany = {
   readonly companyName?: string | null;
   readonly phone?: string | null;
   readonly contactEmail?: string | null;
-  readonly BillingAddresses?: (BillingAddressCompany | null)[] | null;
-  readonly ShippingAddresses?: (ShippingAddressCompany | null)[] | null;
-  readonly UserDetails?: (UserDetails | null)[] | null;
   readonly Items?: (Item | null)[] | null;
   readonly ItemMROS?: (ItemMRO | null)[] | null;
+  readonly BillingAddresses?: (CompanyBillingAddress | null)[] | null;
+  readonly CompanyMembers?: (UserDetails | null)[] | null;
+  readonly ShippingAddresses?: (CompanyShippingAddress | null)[] | null;
+  readonly profilePictureUrl?: string | null;
+  readonly fax?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -203,11 +221,13 @@ type LazyCompany = {
   readonly companyName?: string | null;
   readonly phone?: string | null;
   readonly contactEmail?: string | null;
-  readonly BillingAddresses: AsyncCollection<BillingAddressCompany>;
-  readonly ShippingAddresses: AsyncCollection<ShippingAddressCompany>;
-  readonly UserDetails: AsyncCollection<UserDetails>;
   readonly Items: AsyncCollection<Item>;
   readonly ItemMROS: AsyncCollection<ItemMRO>;
+  readonly BillingAddresses: AsyncCollection<CompanyBillingAddress>;
+  readonly CompanyMembers: AsyncCollection<UserDetails>;
+  readonly ShippingAddresses: AsyncCollection<CompanyShippingAddress>;
+  readonly profilePictureUrl?: string | null;
+  readonly fax?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -216,6 +236,96 @@ export declare type Company = LazyLoading extends LazyLoadingDisabled ? EagerCom
 
 export declare const Company: (new (init: ModelInit<Company>) => Company) & {
   copyOf(source: Company, mutator: (draft: MutableModel<Company>) => MutableModel<Company> | void): Company;
+}
+
+type EagerItem = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Item, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly nsn?: string | null;
+  readonly partNumber?: string | null;
+  readonly altPartNumber?: string | null;
+  readonly description?: string | null;
+  readonly quantity?: number | null;
+  readonly condition?: string | null;
+  readonly control?: string | null;
+  readonly price?: number | null;
+  readonly companyID: string;
+  readonly imageUrls?: (string | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyItem = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Item, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly nsn?: string | null;
+  readonly partNumber?: string | null;
+  readonly altPartNumber?: string | null;
+  readonly description?: string | null;
+  readonly quantity?: number | null;
+  readonly condition?: string | null;
+  readonly control?: string | null;
+  readonly price?: number | null;
+  readonly companyID: string;
+  readonly imageUrls?: (string | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Item = LazyLoading extends LazyLoadingDisabled ? EagerItem : LazyItem
+
+export declare const Item: (new (init: ModelInit<Item>) => Item) & {
+  copyOf(source: Item, mutator: (draft: MutableModel<Item>) => MutableModel<Item> | void): Item;
+}
+
+type EagerItemMRO = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<ItemMRO, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly nsn?: string | null;
+  readonly partNumber?: string | null;
+  readonly altPartNumber?: string | null;
+  readonly description?: string | null;
+  readonly quantity?: number | null;
+  readonly price?: number | null;
+  readonly certification?: string | null;
+  readonly companyID: string;
+  readonly imageUrls?: (string | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyItemMRO = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<ItemMRO, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly nsn?: string | null;
+  readonly partNumber?: string | null;
+  readonly altPartNumber?: string | null;
+  readonly description?: string | null;
+  readonly quantity?: number | null;
+  readonly price?: number | null;
+  readonly certification?: string | null;
+  readonly companyID: string;
+  readonly imageUrls?: (string | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type ItemMRO = LazyLoading extends LazyLoadingDisabled ? EagerItemMRO : LazyItemMRO
+
+export declare const ItemMRO: (new (init: ModelInit<ItemMRO>) => ItemMRO) & {
+  copyOf(source: ItemMRO, mutator: (draft: MutableModel<ItemMRO>) => MutableModel<ItemMRO> | void): ItemMRO;
 }
 
 type EagerShippingAddress = {
@@ -229,11 +339,11 @@ type EagerShippingAddress = {
   readonly addressLine1?: string | null;
   readonly addressLine2?: string | null;
   readonly city?: string | null;
-  readonly region?: string | null;
+  readonly regi?: string | null;
   readonly postalCode?: string | null;
   readonly countryID: string;
-  readonly companies?: (ShippingAddressCompany | null)[] | null;
-  readonly users?: (ShippingAddressUserDetails | null)[] | null;
+  readonly UserShippingAddresses?: (UserDetailsShippingAddress | null)[] | null;
+  readonly CompanyShippingAddresses?: (CompanyShippingAddress | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -249,11 +359,11 @@ type LazyShippingAddress = {
   readonly addressLine1?: string | null;
   readonly addressLine2?: string | null;
   readonly city?: string | null;
-  readonly region?: string | null;
+  readonly regi?: string | null;
   readonly postalCode?: string | null;
   readonly countryID: string;
-  readonly companies: AsyncCollection<ShippingAddressCompany>;
-  readonly users: AsyncCollection<ShippingAddressUserDetails>;
+  readonly UserShippingAddresses: AsyncCollection<UserDetailsShippingAddress>;
+  readonly CompanyShippingAddresses: AsyncCollection<CompanyShippingAddress>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -271,8 +381,8 @@ type EagerCountry = {
   };
   readonly id: string;
   readonly countryName?: string | null;
-  readonly ShippingAddresses?: (ShippingAddress | null)[] | null;
   readonly BillingAddresses?: (BillingAddress | null)[] | null;
+  readonly ShippingAddresses?: (ShippingAddress | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -284,8 +394,8 @@ type LazyCountry = {
   };
   readonly id: string;
   readonly countryName?: string | null;
-  readonly ShippingAddresses: AsyncCollection<ShippingAddress>;
   readonly BillingAddresses: AsyncCollection<BillingAddress>;
+  readonly ShippingAddresses: AsyncCollection<ShippingAddress>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -296,9 +406,9 @@ export declare const Country: (new (init: ModelInit<Country>) => Country) & {
   copyOf(source: Country, mutator: (draft: MutableModel<Country>) => MutableModel<Country> | void): Country;
 }
 
-type EagerBillingAddressUserDetails = {
+type EagerUserDetailsBillingAddress = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<BillingAddressUserDetails, 'id'>;
+    identifier: ManagedIdentifier<UserDetailsBillingAddress, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -310,9 +420,9 @@ type EagerBillingAddressUserDetails = {
   readonly updatedAt?: string | null;
 }
 
-type LazyBillingAddressUserDetails = {
+type LazyUserDetailsBillingAddress = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<BillingAddressUserDetails, 'id'>;
+    identifier: ManagedIdentifier<UserDetailsBillingAddress, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -324,15 +434,15 @@ type LazyBillingAddressUserDetails = {
   readonly updatedAt?: string | null;
 }
 
-export declare type BillingAddressUserDetails = LazyLoading extends LazyLoadingDisabled ? EagerBillingAddressUserDetails : LazyBillingAddressUserDetails
+export declare type UserDetailsBillingAddress = LazyLoading extends LazyLoadingDisabled ? EagerUserDetailsBillingAddress : LazyUserDetailsBillingAddress
 
-export declare const BillingAddressUserDetails: (new (init: ModelInit<BillingAddressUserDetails>) => BillingAddressUserDetails) & {
-  copyOf(source: BillingAddressUserDetails, mutator: (draft: MutableModel<BillingAddressUserDetails>) => MutableModel<BillingAddressUserDetails> | void): BillingAddressUserDetails;
+export declare const UserDetailsBillingAddress: (new (init: ModelInit<UserDetailsBillingAddress>) => UserDetailsBillingAddress) & {
+  copyOf(source: UserDetailsBillingAddress, mutator: (draft: MutableModel<UserDetailsBillingAddress>) => MutableModel<UserDetailsBillingAddress> | void): UserDetailsBillingAddress;
 }
 
-type EagerShippingAddressUserDetails = {
+type EagerUserDetailsShippingAddress = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ShippingAddressUserDetails, 'id'>;
+    identifier: ManagedIdentifier<UserDetailsShippingAddress, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -344,9 +454,9 @@ type EagerShippingAddressUserDetails = {
   readonly updatedAt?: string | null;
 }
 
-type LazyShippingAddressUserDetails = {
+type LazyUserDetailsShippingAddress = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ShippingAddressUserDetails, 'id'>;
+    identifier: ManagedIdentifier<UserDetailsShippingAddress, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -358,15 +468,15 @@ type LazyShippingAddressUserDetails = {
   readonly updatedAt?: string | null;
 }
 
-export declare type ShippingAddressUserDetails = LazyLoading extends LazyLoadingDisabled ? EagerShippingAddressUserDetails : LazyShippingAddressUserDetails
+export declare type UserDetailsShippingAddress = LazyLoading extends LazyLoadingDisabled ? EagerUserDetailsShippingAddress : LazyUserDetailsShippingAddress
 
-export declare const ShippingAddressUserDetails: (new (init: ModelInit<ShippingAddressUserDetails>) => ShippingAddressUserDetails) & {
-  copyOf(source: ShippingAddressUserDetails, mutator: (draft: MutableModel<ShippingAddressUserDetails>) => MutableModel<ShippingAddressUserDetails> | void): ShippingAddressUserDetails;
+export declare const UserDetailsShippingAddress: (new (init: ModelInit<UserDetailsShippingAddress>) => UserDetailsShippingAddress) & {
+  copyOf(source: UserDetailsShippingAddress, mutator: (draft: MutableModel<UserDetailsShippingAddress>) => MutableModel<UserDetailsShippingAddress> | void): UserDetailsShippingAddress;
 }
 
-type EagerBillingAddressCompany = {
+type EagerCompanyBillingAddress = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<BillingAddressCompany, 'id'>;
+    identifier: ManagedIdentifier<CompanyBillingAddress, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -378,9 +488,9 @@ type EagerBillingAddressCompany = {
   readonly updatedAt?: string | null;
 }
 
-type LazyBillingAddressCompany = {
+type LazyCompanyBillingAddress = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<BillingAddressCompany, 'id'>;
+    identifier: ManagedIdentifier<CompanyBillingAddress, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -392,15 +502,15 @@ type LazyBillingAddressCompany = {
   readonly updatedAt?: string | null;
 }
 
-export declare type BillingAddressCompany = LazyLoading extends LazyLoadingDisabled ? EagerBillingAddressCompany : LazyBillingAddressCompany
+export declare type CompanyBillingAddress = LazyLoading extends LazyLoadingDisabled ? EagerCompanyBillingAddress : LazyCompanyBillingAddress
 
-export declare const BillingAddressCompany: (new (init: ModelInit<BillingAddressCompany>) => BillingAddressCompany) & {
-  copyOf(source: BillingAddressCompany, mutator: (draft: MutableModel<BillingAddressCompany>) => MutableModel<BillingAddressCompany> | void): BillingAddressCompany;
+export declare const CompanyBillingAddress: (new (init: ModelInit<CompanyBillingAddress>) => CompanyBillingAddress) & {
+  copyOf(source: CompanyBillingAddress, mutator: (draft: MutableModel<CompanyBillingAddress>) => MutableModel<CompanyBillingAddress> | void): CompanyBillingAddress;
 }
 
-type EagerShippingAddressCompany = {
+type EagerCompanyShippingAddress = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ShippingAddressCompany, 'id'>;
+    identifier: ManagedIdentifier<CompanyShippingAddress, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -412,9 +522,9 @@ type EagerShippingAddressCompany = {
   readonly updatedAt?: string | null;
 }
 
-type LazyShippingAddressCompany = {
+type LazyCompanyShippingAddress = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<ShippingAddressCompany, 'id'>;
+    identifier: ManagedIdentifier<CompanyShippingAddress, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -426,8 +536,8 @@ type LazyShippingAddressCompany = {
   readonly updatedAt?: string | null;
 }
 
-export declare type ShippingAddressCompany = LazyLoading extends LazyLoadingDisabled ? EagerShippingAddressCompany : LazyShippingAddressCompany
+export declare type CompanyShippingAddress = LazyLoading extends LazyLoadingDisabled ? EagerCompanyShippingAddress : LazyCompanyShippingAddress
 
-export declare const ShippingAddressCompany: (new (init: ModelInit<ShippingAddressCompany>) => ShippingAddressCompany) & {
-  copyOf(source: ShippingAddressCompany, mutator: (draft: MutableModel<ShippingAddressCompany>) => MutableModel<ShippingAddressCompany> | void): ShippingAddressCompany;
+export declare const CompanyShippingAddress: (new (init: ModelInit<CompanyShippingAddress>) => CompanyShippingAddress) & {
+  copyOf(source: CompanyShippingAddress, mutator: (draft: MutableModel<CompanyShippingAddress>) => MutableModel<CompanyShippingAddress> | void): CompanyShippingAddress;
 }

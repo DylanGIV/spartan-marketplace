@@ -6,10 +6,14 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import {
+  getOverrideProps,
+  useNavigateAction,
+} from "@aws-amplify/ui-react/internal";
 import { Flex, Image, Text } from "@aws-amplify/ui-react";
 export default function PartsListCompanyDetails(props) {
   const { company, overrides, ...rest } = props;
+  const companyOnClick = useNavigateAction({ type: "url", url: "" });
   return (
     <Flex
       gap="0"
@@ -21,7 +25,6 @@ export default function PartsListCompanyDetails(props) {
       overflow="hidden"
       position="relative"
       padding="0px 0px 0px 0px"
-      backgroundColor="rgba(239,240,240,1)"
       {...getOverrideProps(overrides, "PartsListCompanyDetails")}
       {...rest}
     >
@@ -78,6 +81,7 @@ export default function PartsListCompanyDetails(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             objectFit="cover"
+            src={company?.profilePictureUrl}
             {...getOverrideProps(overrides, "image36562868")}
           ></Image>
           <Text
@@ -99,6 +103,9 @@ export default function PartsListCompanyDetails(props) {
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
             children={company?.companyName}
+            onClick={() => {
+              companyOnClick();
+            }}
             {...getOverrideProps(overrides, "Company")}
           ></Text>
           <Text
@@ -119,7 +126,7 @@ export default function PartsListCompanyDetails(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children={company?.contactEmail}
+            children="Extra"
             {...getOverrideProps(overrides, "Extra36562855")}
           ></Text>
           <Text
@@ -238,7 +245,7 @@ export default function PartsListCompanyDetails(props) {
             position="relative"
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
-            children="Fax:"
+            children={company?.fax}
             {...getOverrideProps(overrides, "Fax:")}
           ></Text>
         </Flex>

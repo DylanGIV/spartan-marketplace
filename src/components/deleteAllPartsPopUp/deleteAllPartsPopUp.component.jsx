@@ -1,18 +1,19 @@
 import { Button, TextField } from '@mui/material';
 import { DataStore } from 'aws-amplify';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useState } from 'react';
+import { InventoryContext } from '../../context/inventory.context';
 import { UserDetails } from '../../models';
 import { DeleteAllPartsByCompany } from '../../utils/amplifyUtils';
 import './deleteAllPartsPopUp.styles.scss';
 
 const DELETE_MATCH_WORD = 'delete';
 
-const DeleteAllPartsPopUp = (props) => {
+const DeleteAllPartsPopUp = () => {
   const [buttonInactive, setButtonInactive] = useState(true);
   const [deleteText, setDeleteText] = useState('');
 
-  const { setDeleteDataOpen } = props;
+  const { setIsDeleteAllPartOpen } = useContext(InventoryContext);
 
   useEffect(() => {
     if (deleteText.toLocaleLowerCase() === DELETE_MATCH_WORD)
@@ -33,7 +34,7 @@ const DeleteAllPartsPopUp = (props) => {
         const response = await DeleteAllPartsByCompany(companyID);
         console.log(response);
         alert('Successfully deleted all items');
-        setDeleteDataOpen(false);
+        setIsDeleteAllPartOpen(false);
       } catch (error) {
         console.log(error);
         alert('There was an error trying to delete all items.');

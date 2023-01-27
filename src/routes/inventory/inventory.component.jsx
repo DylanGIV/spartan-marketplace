@@ -1,9 +1,10 @@
 import { Alert } from '@aws-amplify/ui-react';
 import { Box, Modal } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AddPartPopUp from '../../components/addPartPopUp/addPartPopUp.component';
 import DeleteAllPartsPopUp from '../../components/deleteAllPartsPopUp/deleteAllPartsPopUp.component';
 import ImportDataPopUp from '../../components/importDataPopUp/importDataPopUp.component';
+import { InventoryContext } from '../../context/inventory.context';
 import {
   InventoryKey,
   InventoryPartsDetailsCollection,
@@ -11,12 +12,18 @@ import {
 import { GetPartsByCompany } from '../../utils/amplifyUtils';
 
 const Inventory = () => {
-  const [addPartOpen, setAddPartOpen] = useState(false);
-  const [importDataOpen, setImportDataOpen] = useState(false);
-  const [deleteDataOpen, setDeleteDataOpen] = useState(false);
   const [parts, setParts] = useState([]);
 
-  const AddPartHandler = async () => {};
+  const {
+    isAddPartOpen,
+    isDeleteAllPartOpen,
+    isImportPartOpen,
+    setIsAddPartOpen,
+    setIsDeleteAllPartOpen,
+    setIsImportPartOpen,
+  } = useContext(InventoryContext);
+
+  // const AddPartHandler = async () => {};
 
   // useEffect(() => {
   //   const GetParts = async () => {
@@ -70,16 +77,16 @@ const Inventory = () => {
         >
           <div style={{ display: 'flex' }}>
             <div style={{ paddingBottom: 10, marginRight: 10 }}>
-              <button onClick={() => setAddPartOpen(true)}>ADD PART</button>
+              <button onClick={() => setIsAddPartOpen(true)}>ADD PART</button>
             </div>
             <div style={{ paddingBottom: 10 }}>
-              <button onClick={() => setImportDataOpen(true)}>
+              <button onClick={() => setIsImportPartOpen(true)}>
                 IMPORT DATA
               </button>
             </div>
           </div>
           <div style={{}}>
-            <button onClick={() => setDeleteDataOpen(true)}>
+            <button onClick={() => setIsDeleteAllPartOpen(true)}>
               DELETE ALL DATA
             </button>
           </div>
@@ -91,14 +98,17 @@ const Inventory = () => {
         <InventoryPartsDetailsCollection />
       </div>
 
-      <Modal open={addPartOpen} onClose={() => setAddPartOpen(false)}>
-        <AddPartPopUp setAddPartOpen={setAddPartOpen} />
+      <Modal open={isAddPartOpen} onClose={() => setIsAddPartOpen(false)}>
+        <AddPartPopUp />
       </Modal>
-      <Modal open={importDataOpen} onClose={() => setImportDataOpen(false)}>
-        <ImportDataPopUp setImportDataOpen={setImportDataOpen} />
+      <Modal open={isImportPartOpen} onClose={() => setIsImportPartOpen(false)}>
+        <ImportDataPopUp />
       </Modal>
-      <Modal open={deleteDataOpen} onClose={() => setDeleteDataOpen(false)}>
-        <DeleteAllPartsPopUp setDeleteDataOpen={setDeleteDataOpen} />
+      <Modal
+        open={isDeleteAllPartOpen}
+        onClose={() => setIsDeleteAllPartOpen(false)}
+      >
+        <DeleteAllPartsPopUp />
       </Modal>
     </div>
   );

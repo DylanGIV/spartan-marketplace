@@ -16,11 +16,15 @@ export declare type CompanyCreateFormInputValues = {
     companyName?: string;
     phone?: string;
     contactEmail?: string;
+    profilePictureUrl?: string;
+    fax?: string;
 };
 export declare type CompanyCreateFormValidationValues = {
     companyName?: ValidationFunction<string>;
     phone?: ValidationFunction<string>;
     contactEmail?: ValidationFunction<string>;
+    profilePictureUrl?: ValidationFunction<string>;
+    fax?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CompanyCreateFormOverridesProps = {
@@ -28,6 +32,8 @@ export declare type CompanyCreateFormOverridesProps = {
     companyName?: PrimitiveOverrideProps<TextFieldProps>;
     phone?: PrimitiveOverrideProps<TextFieldProps>;
     contactEmail?: PrimitiveOverrideProps<TextFieldProps>;
+    profilePictureUrl?: PrimitiveOverrideProps<TextFieldProps>;
+    fax?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CompanyCreateFormProps = React.PropsWithChildren<{
     overrides?: CompanyCreateFormOverridesProps | undefined | null;
@@ -36,7 +42,6 @@ export declare type CompanyCreateFormProps = React.PropsWithChildren<{
     onSubmit?: (fields: CompanyCreateFormInputValues) => CompanyCreateFormInputValues;
     onSuccess?: (fields: CompanyCreateFormInputValues) => void;
     onError?: (fields: CompanyCreateFormInputValues, errorMessage: string) => void;
-    onCancel?: () => void;
     onChange?: (fields: CompanyCreateFormInputValues) => CompanyCreateFormInputValues;
     onValidate?: CompanyCreateFormValidationValues;
 } & React.CSSProperties>;

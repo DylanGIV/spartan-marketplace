@@ -1,36 +1,74 @@
-type Item @model @auth(rules: [{allow: public}]) {
+type RFQ @model @auth(rules: [{allow: public}]) {
   id: ID!
-  PartID: String
-  NSN: String
-  PartNumber: String
-  AltPartNumber: String
-  description: String
-  quantity: Int
-  condition: String
-  imageUrl: String
-  control: String
-  price: Float
-  companyID: ID! @index(name: "byCompany")
-}
-
-type ItemMRO @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  partID: String
+  quotationNumber: String
+  dateSent: AWSDateTime
+  custRefNum: String
+  companyName: String
+  contact: String
+  phone: AWSPhone
+  email: AWSEmail
+  shippingTerms: String
+  shippingMethod: String
+  leadTime: Int
+  paymentTerms: String
+  dueDate: AWSDateTime
+  quantityRequested: Int
+  quantityQuoted: Int
   nsn: String
   partNumber: String
   altPartNumber: String
+  condition: String
+  uom: String
   description: String
-  quantity: Int
   price: Float
-  companyID: ID! @index(name: "byCompany")
+  discount: Float
+  attr1: String
+  attr2: String
+  attr3: String
+  lineTotal: Float
+  subtotal: Float
+  salesTax: Float
+  total: Float
+  internalComments: String
+  emailComments: String
+  attr4: String
+  attr5: String
+  attr6: String
+  imageUrls: [String]
+  addressLine1: String
+  addressLine2: String
+  city: String
+  state: String
+  zip: String
+  country: String
 }
 
-type UserDetails @model @auth(rules: [{allow: public}, {allow: owner}]) {
+type UserDetails @model @auth(rules: [{allow: public}]) {
   id: ID!
-  BillingAddresses: [BillingAddress] @manyToMany(relationName: "BillingAddressUserDetails")
-  ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "ShippingAddressUserDetails")
   companyID: ID! @index(name: "byCompany")
-  isCompanyOwner: Boolean
+  BillingAddresses: [BillingAddress] @manyToMany(relationName: "UserDetailsBillingAddress")
+  ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "UserDetailsShippingAddress")
+}
+
+type Country @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  countryName: String
+  BillingAddresses: [BillingAddress] @hasMany(indexName: "byCountry", fields: ["id"])
+  ShippingAddresses: [ShippingAddress] @hasMany(indexName: "byCountry", fields: ["id"])
+}
+
+type ShippingAddress @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  unitNumber: String
+  streetNumber: String
+  addressLine1: String
+  addressLine2: String
+  city: String
+  regi: String
+  postalCode: String
+  countryID: ID! @index(name: "byCountry")
+  UserShippingAddresses: [UserDetails] @manyToMany(relationName: "UserDetailsShippingAddress")
+  CompanyShippingAddresses: [Company] @manyToMany(relationName: "CompanyShippingAddress")
 }
 
 type BillingAddress @model @auth(rules: [{allow: public}]) {
@@ -42,40 +80,48 @@ type BillingAddress @model @auth(rules: [{allow: public}]) {
   city: String
   region: String
   postalCode: String
+  CompanyBillingAddresses: [Company] @manyToMany(relationName: "CompanyBillingAddress")
   countryID: ID! @index(name: "byCountry")
-  companies: [Company] @manyToMany(relationName: "BillingAddressCompany")
-  users: [UserDetails] @manyToMany(relationName: "BillingAddressUserDetails")
-}
-
-type ShippingAddress @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  unitNumber: String
-  streetNumber: String
-  addressLine1: String
-  addressLine2: String
-  city: String
-  region: String
-  postalCode: String
-  countryID: ID! @index(name: "byCountry")
-  companies: [Company] @manyToMany(relationName: "ShippingAddressCompany")
-  users: [UserDetails] @manyToMany(relationName: "ShippingAddressUserDetails")
-}
-
-type Country @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  countryName: String
-  ShippingAddresses: [ShippingAddress] @hasMany(indexName: "byCountry", fields: ["id"])
-  BillingAddresses: [BillingAddress] @hasMany(indexName: "byCountry", fields: ["id"])
+  UserBillingAddresses: [UserDetails] @manyToMany(relationName: "UserDetailsBillingAddress")
 }
 
 type Company @model @auth(rules: [{allow: public}]) {
   id: ID!
   companyName: String
   phone: AWSPhone
-  contactEmail: String
-  BillingAddresses: [BillingAddress] @manyToMany(relationName: "BillingAddressCompany")
-  ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "ShippingAddressCompany")
-  UserDetails: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
+  contactEmail: AWSEmail
   Items: [Item] @hasMany(indexName: "byCompany", fields: ["id"])
   ItemMROS: [ItemMRO] @hasMany(indexName: "byCompany", fields: ["id"])
-} 
+  BillingAddresses: [BillingAddress] @manyToMany(relationName: "CompanyBillingAddress")
+  CompanyMembers: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
+  ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "CompanyShippingAddress")
+  profilePictureUrl: String
+  fax: String
+}
+
+type ItemMRO @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nsn: String
+  partNumber: String
+  altPartNumber: String
+  description: String
+  quantity: Int
+  price: Float
+  certification: String
+  companyID: ID! @index(name: "byCompany")
+  imageUrls: [String]
+}
+
+type Item @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nsn: String
+  partNumber: String
+  altPartNumber: String
+  description: String
+  quantity: Int
+  condition: String
+  control: String
+  price: Float
+  companyID: ID! @index(name: "byCompany")
+  imageUrls: [String]
+}

@@ -1,4 +1,3 @@
-import { DataStore } from '@aws-amplify/datastore';
 import { Fragment, useEffect, useState } from 'react';
 import { Item, UserDetails } from '../../models';
 import {

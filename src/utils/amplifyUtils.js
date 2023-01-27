@@ -1,14 +1,15 @@
 import { Alert } from '@mui/material';
 import { Auth, Predicates } from 'aws-amplify';
 import { Company, Item } from '../models';
-import { DataStore } from '@aws-amplify/datastore';
+import { DataStore } from 'aws-amplify';
+import { useContext } from 'react';
+import { InventoryContext } from '../context/inventory.context';
 
 export const SignOutAuth = async () => {
   return await Auth.signOut();
 };
 
 export const AddPartToInventory = async (
-  partID,
   nsn,
   partNumber,
   altPartNumber,
@@ -22,10 +23,9 @@ export const AddPartToInventory = async (
 ) => {
   return await DataStore.save(
     new Item({
-      PartID: partID,
-      NSN: nsn,
-      PartNumber: partNumber,
-      AltPartNumber: altPartNumber,
+      nsn: nsn,
+      partNumber: partNumber,
+      altPartNumber: altPartNumber,
       description: description,
       quantity: quantity,
       condition: condition,
@@ -37,20 +37,16 @@ export const AddPartToInventory = async (
   );
 };
 
-export async function batchAddPartsToInventoryILS(
-  items,
-  companyID,
-  setImportDataOpen
-) {
+export const BatchAddPartsToInventoryILS = async (items, companyID) => {
+  const { setIsImportPartOpen } = useContext(InventoryContext);
   const promises = items.map((item) => {
     const newPrice = parseFloat(item.PRICE);
     const newQuantity = parseInt(item.QUANTITY);
     return DataStore.save(
       new Item({
-        // PartID: partID,
-        // NSN: nsn,
-        PartNumber: item.PARTNUMBER,
-        AltPartNumber: item.ALTERNATEPARTNUMBER,
+        // nsn: nsn,
+        partNumber: item.PARTNUMBER,
+        altPartNumber: item.ALTERNATEPARTNUMBER,
         description: item.DESCRIPTION,
         quantity: newQuantity,
         condition: item.CONDITIONCD,
@@ -64,12 +60,12 @@ export async function batchAddPartsToInventoryILS(
   await Promise.all(promises)
     .then(() => {
       alert('Successfully saved all items to database.');
-      setImportDataOpen(false);
+      setIsImportPartOpen(false);
     })
     .catch((err) => {
       console.log('Error while batch saving:', err);
     });
-}
+};
 
 export const GetPartsByCompany = async (companyID) => {
   const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
@@ -80,10 +76,9 @@ export const GetPartsByCompanyAndSearch = async (companyID, search) => {
     Item,
     (p) =>
       p.companyID.eq(companyID) &&
-      (p.AltPartNumber.contains(search) ||
-        p.NSN.contains(search) ||
-        p.PartID.contains(search) ||
-        p.PartNumber.contains(search) ||
+      (p.altPartNumber.contains(search) ||
+        p.nsn.contains(search) ||
+        p.partNumber.contains(search) ||
         p.description.contains(search))
   );
   return parts;

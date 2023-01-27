@@ -44,6 +44,9 @@ export default function PartsListDetailsCollection(props) {
       {(item, index) => (
         <PartsListDetails
           item={item}
+          height="auto"
+          width="auto"
+          margin="0 0 1px 0"
           key={item.id}
           {...(overrideItems && overrideItems({ item, index }))}
         ></PartsListDetails>

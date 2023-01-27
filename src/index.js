@@ -5,12 +5,17 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Amplify, Auth } from 'aws-amplify';
-import { ThemeProvider } from '@aws-amplify/ui-react';
+import {
+  AmplifyProvider,
+  Authenticator,
+  ThemeProvider,
+} from '@aws-amplify/ui-react';
 import { studioTheme } from './ui-components';
 import awsconfig from './aws-exports';
 
 import '@aws-amplify/ui-react/styles.css';
 import './index.css';
+import { InventoryProvider } from './context/inventory.context';
 
 Amplify.configure(awsconfig);
 
@@ -18,9 +23,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ThemeProvider theme={studioTheme}>
-        <App />
-      </ThemeProvider>
+      <AmplifyProvider>
+        <Authenticator.Provider>
+          <InventoryProvider>
+            <ThemeProvider theme={studioTheme}>
+              <App />
+            </ThemeProvider>
+          </InventoryProvider>
+        </Authenticator.Provider>
+      </AmplifyProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
