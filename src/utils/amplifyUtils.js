@@ -38,8 +38,12 @@ export const AddPartToInventory = async (
   );
 };
 
-export const BatchAddPartsToInventoryILS = async (items, companyID) => {
-  const { setIsImportPartOpen } = useContext(InventoryContext);
+export const BatchAddPartsToInventoryILS = async (
+  items,
+  companyID,
+  setIsImportPartOpen
+) => {
+  // const { setIsImportPartOpen } = useContext(InventoryContext);
   const promises = items.map((item) => {
     const newPrice = parseFloat(item.PRICE);
     const newQuantity = parseInt(item.QUANTITY);
@@ -72,7 +76,12 @@ export const GetPartsByCompany = async (companyID) => {
   const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
   return parts;
 };
-export const GetPartsByCompanyAndSearch = async (companyID, search) => {
+export const GetPartsByCompanyAndSearch = async (
+  companyID,
+  search,
+  searchUpper,
+  searchLower
+) => {
   const parts = await DataStore.query(
     Item,
     (p) =>
@@ -80,7 +89,15 @@ export const GetPartsByCompanyAndSearch = async (companyID, search) => {
       (p.altPartNumber.contains(search) ||
         p.nsn.contains(search) ||
         p.partNumber.contains(search) ||
-        p.description.contains(search))
+        p.description.contains(search) ||
+        p.altPartNumber.contains(searchLower) ||
+        p.nsn.contains(searchLower) ||
+        p.partNumber.contains(searchLower) ||
+        p.description.contains(searchLower) ||
+        p.altPartNumber.contains(searchUpper) ||
+        p.nsn.contains(searchUpper) ||
+        p.partNumber.contains(searchUpper) ||
+        p.description.contains(searchUpper))
   );
   return parts;
 };

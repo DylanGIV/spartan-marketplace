@@ -34,7 +34,7 @@ const Navigation = () => {
     },
     Company: {
       onClick: () => {
-        navigate('/Parts');
+        navigate('/rfq');
       },
       style: {
         cursor: 'pointer',

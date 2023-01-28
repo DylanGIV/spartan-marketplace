@@ -164,8 +164,9 @@ export const onDeleteRFQ = /* GraphQL */ `
 export const onCreateUserDetails = /* GraphQL */ `
   subscription OnCreateUserDetails(
     $filter: ModelSubscriptionUserDetailsFilterInput
+    $owner: String
   ) {
-    onCreateUserDetails(filter: $filter) {
+    onCreateUserDetails(filter: $filter, owner: $owner) {
       id
       companyID
       BillingAddresses {
@@ -176,11 +177,13 @@ export const onCreateUserDetails = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           billingAddress {
             id
@@ -203,6 +206,7 @@ export const onCreateUserDetails = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -215,11 +219,13 @@ export const onCreateUserDetails = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           shippingAddress {
             id
@@ -242,23 +248,27 @@ export const onCreateUserDetails = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
+      isCompanyOwner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateUserDetails = /* GraphQL */ `
   subscription OnUpdateUserDetails(
     $filter: ModelSubscriptionUserDetailsFilterInput
+    $owner: String
   ) {
-    onUpdateUserDetails(filter: $filter) {
+    onUpdateUserDetails(filter: $filter, owner: $owner) {
       id
       companyID
       BillingAddresses {
@@ -269,11 +279,13 @@ export const onUpdateUserDetails = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           billingAddress {
             id
@@ -296,6 +308,7 @@ export const onUpdateUserDetails = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -308,11 +321,13 @@ export const onUpdateUserDetails = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           shippingAddress {
             id
@@ -335,23 +350,27 @@ export const onUpdateUserDetails = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
+      isCompanyOwner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteUserDetails = /* GraphQL */ `
   subscription OnDeleteUserDetails(
     $filter: ModelSubscriptionUserDetailsFilterInput
+    $owner: String
   ) {
-    onDeleteUserDetails(filter: $filter) {
+    onDeleteUserDetails(filter: $filter, owner: $owner) {
       id
       companyID
       BillingAddresses {
@@ -362,11 +381,13 @@ export const onDeleteUserDetails = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           billingAddress {
             id
@@ -389,6 +410,7 @@ export const onDeleteUserDetails = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -401,11 +423,13 @@ export const onDeleteUserDetails = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           shippingAddress {
             id
@@ -428,15 +452,18 @@ export const onDeleteUserDetails = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
       }
+      isCompanyOwner
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -669,11 +696,13 @@ export const onCreateShippingAddress = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           shippingAddress {
             id
@@ -696,6 +725,7 @@ export const onCreateShippingAddress = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -728,6 +758,7 @@ export const onCreateShippingAddress = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -773,11 +804,13 @@ export const onUpdateShippingAddress = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           shippingAddress {
             id
@@ -800,6 +833,7 @@ export const onUpdateShippingAddress = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -832,6 +866,7 @@ export const onUpdateShippingAddress = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -877,11 +912,13 @@ export const onDeleteShippingAddress = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           shippingAddress {
             id
@@ -904,6 +941,7 @@ export const onDeleteShippingAddress = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -936,6 +974,7 @@ export const onDeleteShippingAddress = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1000,6 +1039,7 @@ export const onCreateBillingAddress = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1024,11 +1064,13 @@ export const onCreateBillingAddress = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           billingAddress {
             id
@@ -1051,6 +1093,7 @@ export const onCreateBillingAddress = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1104,6 +1147,7 @@ export const onUpdateBillingAddress = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1128,11 +1172,13 @@ export const onUpdateBillingAddress = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           billingAddress {
             id
@@ -1155,6 +1201,7 @@ export const onUpdateBillingAddress = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1208,6 +1255,7 @@ export const onDeleteBillingAddress = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1232,11 +1280,13 @@ export const onDeleteBillingAddress = /* GraphQL */ `
           userDetails {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           billingAddress {
             id
@@ -1259,6 +1309,7 @@ export const onDeleteBillingAddress = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1281,21 +1332,22 @@ export const onCreateCompany = /* GraphQL */ `
       Items {
         items {
           id
-          nsn
-          partNumber
-          altPartNumber
-          description
-          quantity
-          condition
-          control
-          price
           companyID
-          imageUrls
+          BillingAddresses {
+            nextToken
+            startedAt
+          }
+          ShippingAddresses {
+            nextToken
+            startedAt
+          }
+          isCompanyOwner
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1303,20 +1355,22 @@ export const onCreateCompany = /* GraphQL */ `
       ItemMROS {
         items {
           id
-          nsn
-          partNumber
-          altPartNumber
-          description
-          quantity
-          price
-          certification
           companyID
-          imageUrls
+          BillingAddresses {
+            nextToken
+            startedAt
+          }
+          ShippingAddresses {
+            nextToken
+            startedAt
+          }
+          isCompanyOwner
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1349,6 +1403,7 @@ export const onCreateCompany = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1376,11 +1431,13 @@ export const onCreateCompany = /* GraphQL */ `
             nextToken
             startedAt
           }
+          isCompanyOwner
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1413,6 +1470,7 @@ export const onCreateCompany = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1430,6 +1488,7 @@ export const onCreateCompany = /* GraphQL */ `
       }
       profilePictureUrl
       fax
+      companyDescription
       createdAt
       updatedAt
       _version
@@ -1448,21 +1507,22 @@ export const onUpdateCompany = /* GraphQL */ `
       Items {
         items {
           id
-          nsn
-          partNumber
-          altPartNumber
-          description
-          quantity
-          condition
-          control
-          price
           companyID
-          imageUrls
+          BillingAddresses {
+            nextToken
+            startedAt
+          }
+          ShippingAddresses {
+            nextToken
+            startedAt
+          }
+          isCompanyOwner
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1470,20 +1530,22 @@ export const onUpdateCompany = /* GraphQL */ `
       ItemMROS {
         items {
           id
-          nsn
-          partNumber
-          altPartNumber
-          description
-          quantity
-          price
-          certification
           companyID
-          imageUrls
+          BillingAddresses {
+            nextToken
+            startedAt
+          }
+          ShippingAddresses {
+            nextToken
+            startedAt
+          }
+          isCompanyOwner
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1516,6 +1578,7 @@ export const onUpdateCompany = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1543,11 +1606,13 @@ export const onUpdateCompany = /* GraphQL */ `
             nextToken
             startedAt
           }
+          isCompanyOwner
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1580,6 +1645,7 @@ export const onUpdateCompany = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1597,6 +1663,7 @@ export const onUpdateCompany = /* GraphQL */ `
       }
       profilePictureUrl
       fax
+      companyDescription
       createdAt
       updatedAt
       _version
@@ -1615,21 +1682,22 @@ export const onDeleteCompany = /* GraphQL */ `
       Items {
         items {
           id
-          nsn
-          partNumber
-          altPartNumber
-          description
-          quantity
-          condition
-          control
-          price
           companyID
-          imageUrls
+          BillingAddresses {
+            nextToken
+            startedAt
+          }
+          ShippingAddresses {
+            nextToken
+            startedAt
+          }
+          isCompanyOwner
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1637,20 +1705,22 @@ export const onDeleteCompany = /* GraphQL */ `
       ItemMROS {
         items {
           id
-          nsn
-          partNumber
-          altPartNumber
-          description
-          quantity
-          price
-          certification
           companyID
-          imageUrls
+          BillingAddresses {
+            nextToken
+            startedAt
+          }
+          ShippingAddresses {
+            nextToken
+            startedAt
+          }
+          isCompanyOwner
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1683,6 +1753,7 @@ export const onDeleteCompany = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1710,11 +1781,13 @@ export const onDeleteCompany = /* GraphQL */ `
             nextToken
             startedAt
           }
+          isCompanyOwner
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          owner
         }
         nextToken
         startedAt
@@ -1747,6 +1820,7 @@ export const onDeleteCompany = /* GraphQL */ `
             contactEmail
             profilePictureUrl
             fax
+            companyDescription
             createdAt
             updatedAt
             _version
@@ -1764,6 +1838,7 @@ export const onDeleteCompany = /* GraphQL */ `
       }
       profilePictureUrl
       fax
+      companyDescription
       createdAt
       updatedAt
       _version
@@ -1904,8 +1979,9 @@ export const onDeleteItem = /* GraphQL */ `
 export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
   subscription OnCreateUserDetailsBillingAddress(
     $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
+    $owner: String
   ) {
-    onCreateUserDetailsBillingAddress(filter: $filter) {
+    onCreateUserDetailsBillingAddress(filter: $filter, owner: $owner) {
       id
       userDetailsId
       billingAddressId
@@ -1922,6 +1998,7 @@ export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -1936,15 +2013,18 @@ export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
         }
+        isCompanyOwner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       billingAddress {
         id
@@ -1980,6 +2060,7 @@ export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -1995,14 +2076,16 @@ export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
   subscription OnUpdateUserDetailsBillingAddress(
     $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
+    $owner: String
   ) {
-    onUpdateUserDetailsBillingAddress(filter: $filter) {
+    onUpdateUserDetailsBillingAddress(filter: $filter, owner: $owner) {
       id
       userDetailsId
       billingAddressId
@@ -2019,6 +2102,7 @@ export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2033,15 +2117,18 @@ export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
         }
+        isCompanyOwner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       billingAddress {
         id
@@ -2077,6 +2164,7 @@ export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2092,14 +2180,16 @@ export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
   subscription OnDeleteUserDetailsBillingAddress(
     $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
+    $owner: String
   ) {
-    onDeleteUserDetailsBillingAddress(filter: $filter) {
+    onDeleteUserDetailsBillingAddress(filter: $filter, owner: $owner) {
       id
       userDetailsId
       billingAddressId
@@ -2116,6 +2206,7 @@ export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2130,15 +2221,18 @@ export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
         }
+        isCompanyOwner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       billingAddress {
         id
@@ -2174,6 +2268,7 @@ export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2189,14 +2284,16 @@ export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
   subscription OnCreateUserDetailsShippingAddress(
     $filter: ModelSubscriptionUserDetailsShippingAddressFilterInput
+    $owner: String
   ) {
-    onCreateUserDetailsShippingAddress(filter: $filter) {
+    onCreateUserDetailsShippingAddress(filter: $filter, owner: $owner) {
       id
       userDetailsId
       shippingAddressId
@@ -2213,6 +2310,7 @@ export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2227,15 +2325,18 @@ export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
         }
+        isCompanyOwner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       shippingAddress {
         id
@@ -2257,6 +2358,7 @@ export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2286,14 +2388,16 @@ export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
   subscription OnUpdateUserDetailsShippingAddress(
     $filter: ModelSubscriptionUserDetailsShippingAddressFilterInput
+    $owner: String
   ) {
-    onUpdateUserDetailsShippingAddress(filter: $filter) {
+    onUpdateUserDetailsShippingAddress(filter: $filter, owner: $owner) {
       id
       userDetailsId
       shippingAddressId
@@ -2310,6 +2414,7 @@ export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2324,15 +2429,18 @@ export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
         }
+        isCompanyOwner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       shippingAddress {
         id
@@ -2354,6 +2462,7 @@ export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2383,14 +2492,16 @@ export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
   subscription OnDeleteUserDetailsShippingAddress(
     $filter: ModelSubscriptionUserDetailsShippingAddressFilterInput
+    $owner: String
   ) {
-    onDeleteUserDetailsShippingAddress(filter: $filter) {
+    onDeleteUserDetailsShippingAddress(filter: $filter, owner: $owner) {
       id
       userDetailsId
       shippingAddressId
@@ -2407,6 +2518,7 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2421,15 +2533,18 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
         }
+        isCompanyOwner
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       shippingAddress {
         id
@@ -2451,6 +2566,7 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2480,6 +2596,7 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -2511,6 +2628,7 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2543,21 +2661,14 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
         Items {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            condition
-            control
-            price
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2565,20 +2676,14 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
         ItemMROS {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            price
-            certification
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2601,11 +2706,13 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
           items {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2626,6 +2733,7 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
         }
         profilePictureUrl
         fax
+        companyDescription
         createdAt
         updatedAt
         _version
@@ -2668,6 +2776,7 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2700,21 +2809,14 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
         Items {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            condition
-            control
-            price
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2722,20 +2824,14 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
         ItemMROS {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            price
-            certification
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2758,11 +2854,13 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
           items {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2783,6 +2881,7 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
         }
         profilePictureUrl
         fax
+        companyDescription
         createdAt
         updatedAt
         _version
@@ -2825,6 +2924,7 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2857,21 +2957,14 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
         Items {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            condition
-            control
-            price
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2879,20 +2972,14 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
         ItemMROS {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            price
-            certification
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2915,11 +3002,13 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
           items {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -2940,6 +3029,7 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
         }
         profilePictureUrl
         fax
+        companyDescription
         createdAt
         updatedAt
         _version
@@ -2996,6 +3086,7 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3014,21 +3105,14 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
         Items {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            condition
-            control
-            price
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3036,20 +3120,14 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
         ItemMROS {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            price
-            certification
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3072,11 +3150,13 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
           items {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3097,6 +3177,7 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
         }
         profilePictureUrl
         fax
+        companyDescription
         createdAt
         updatedAt
         _version
@@ -3153,6 +3234,7 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3171,21 +3253,14 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
         Items {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            condition
-            control
-            price
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3193,20 +3268,14 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
         ItemMROS {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            price
-            certification
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3229,11 +3298,13 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
           items {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3254,6 +3325,7 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
         }
         profilePictureUrl
         fax
+        companyDescription
         createdAt
         updatedAt
         _version
@@ -3310,6 +3382,7 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3328,21 +3401,14 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
         Items {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            condition
-            control
-            price
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3350,20 +3416,14 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
         ItemMROS {
           items {
             id
-            nsn
-            partNumber
-            altPartNumber
-            description
-            quantity
-            price
-            certification
             companyID
-            imageUrls
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3386,11 +3446,13 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
           items {
             id
             companyID
+            isCompanyOwner
             createdAt
             updatedAt
             _version
             _deleted
             _lastChangedAt
+            owner
           }
           nextToken
           startedAt
@@ -3411,6 +3473,7 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
         }
         profilePictureUrl
         fax
+        companyDescription
         createdAt
         updatedAt
         _version

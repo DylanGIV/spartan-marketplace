@@ -37,6 +37,7 @@ export { default as HeroLayout2 } from "./HeroLayout2";
 export { default as InventoryKey } from "./InventoryKey";
 export { default as FeaturesText2x2 } from "./FeaturesText2x2";
 export { default as PartsListDetails } from "./PartsListDetails";
+export { default as CustomerRFQForm } from "./CustomerRFQForm";
 export { default as ProfileCard } from "./ProfileCard";
 export { default as StandardCard } from "./StandardCard";
 export { default as studioTheme } from "./studioTheme";

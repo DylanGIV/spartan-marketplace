@@ -40,11 +40,18 @@ const ImportDataPopUp = () => {
   };
 
   const batchAddHandler = async () => {
-    const userDetails = await DataStore.query(Company);
+    const userDetails = await DataStore.query(UserDetails);
     const companyID = userDetails[0].companyID;
-    console.log(userDetails);
-
-    // await BatchAddPartsToInventoryILS(data, companyID);
+    try {
+      const response = await BatchAddPartsToInventoryILS(
+        data,
+        companyID,
+        setIsImportPartOpen
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -53,7 +60,7 @@ const ImportDataPopUp = () => {
       <ScrollView className='import-data-scroll-container'>
         <pre>{JSON.stringify(data, null, 2)}</pre>
       </ScrollView>
-      <Button onClick={() => batchAddHandler()}>Submit</Button>
+      <Button onClick={batchAddHandler}>Submit</Button>
     </div>
   );
 };

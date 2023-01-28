@@ -8,9 +8,11 @@ import Parts from './routes/parts/parts.component';
 import Inventory from './routes/inventory/inventory.component';
 import { useEffect, useState } from 'react';
 import { UserDetails } from './models';
-import { DataStore, Hub } from 'aws-amplify';
+import { Hub } from 'aws-amplify';
+import { DataStore } from '@aws-amplify/datastore';
 import CompanySelect from './routes/companySelect/companySelect.component';
 import UserAuth from './routes/auth/userAuth.component';
+import RFQ from './routes/rfq/rfq.component';
 
 function App() {
   Hub.listen('auth', async (data) => {
@@ -42,6 +44,7 @@ function App() {
           <Route index element={<Home />} />
           <Route path='parts' element={<Parts />} />
           <Route path='inventory' element={<Inventory />} />
+          <Route path='rfq' element={<RFQ />} />
         </Route>
       </Routes>
     );

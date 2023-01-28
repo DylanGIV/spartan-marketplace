@@ -39,9 +39,14 @@ const Parts = () => {
           let parts = null;
           try {
             if (partSearch) {
+              const searchUpper = partSearch.toUpperCase();
+              const searchLower = partSearch.toLowerCase();
+              console.log(searchUpper);
               parts = await GetPartsByCompanyAndSearch(
                 companies[i].id,
-                partSearch
+                partSearch,
+                searchUpper,
+                searchLower
               );
             } else {
               parts = await GetPartsByCompany(companies[i].id);
