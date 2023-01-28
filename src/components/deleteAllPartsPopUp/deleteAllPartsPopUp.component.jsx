@@ -20,7 +20,7 @@ const DeleteAllPartsPopUp = () => {
       setButtonInactive(false);
 
     if (
-      deleteText.toLocaleLowerCase() != DELETE_MATCH_WORD &&
+      deleteText.toLocaleLowerCase() !== DELETE_MATCH_WORD &&
       buttonInactive === false
     )
       setButtonInactive(true);

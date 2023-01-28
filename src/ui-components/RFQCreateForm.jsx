@@ -5,7 +5,7 @@
  **************************************************************************/
 
 /* eslint-disable */
-import * as React from 'react';
+import * as React from "react";
 import {
   Badge,
   Button,
@@ -17,11 +17,11 @@ import {
   Text,
   TextField,
   useTheme,
-} from '@aws-amplify/ui-react';
-import { getOverrideProps } from '@aws-amplify/ui-react/internal';
-import { RFQ } from '../models';
-import { fetchByPath, validateField } from './utils';
-import { DataStore } from 'aws-amplify';
+} from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { RFQ } from "../models";
+import { fetchByPath, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
 function ArrayField({
   items = [],
   onChange,
@@ -53,7 +53,7 @@ function ArrayField({
     if (
       currentFieldValue !== undefined &&
       currentFieldValue !== null &&
-      currentFieldValue !== '' &&
+      currentFieldValue !== "" &&
       !hasError
     ) {
       const newItems = [...items];
@@ -70,18 +70,18 @@ function ArrayField({
   const arraySection = (
     <React.Fragment>
       {!!items?.length && (
-        <ScrollView height='inherit' width='inherit' maxHeight={'7rem'}>
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
           {items.map((value, index) => {
             return (
               <Badge
                 key={index}
                 style={{
-                  cursor: 'pointer',
-                  alignItems: 'center',
+                  cursor: "pointer",
+                  alignItems: "center",
                   marginRight: 3,
                   marginTop: 3,
                   backgroundColor:
-                    index === selectedBadgeIndex ? '#B8CEF9' : '',
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
                 }}
                 onClick={() => {
                   setSelectedBadgeIndex(index);
@@ -92,7 +92,7 @@ function ArrayField({
                 {getBadgeText ? getBadgeText(value) : value.toString()}
                 <Icon
                   style={{
-                    cursor: 'pointer',
+                    cursor: "pointer",
                     paddingLeft: 3,
                     width: 20,
                     height: 20,
@@ -100,11 +100,11 @@ function ArrayField({
                   viewBox={{ width: 20, height: 20 }}
                   paths={[
                     {
-                      d: 'M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z',
-                      stroke: 'black',
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
                     },
                   ]}
-                  ariaLabel='button'
+                  ariaLabel="button"
                   onClick={(event) => {
                     event.stopPropagation();
                     removeItem(index);
@@ -115,7 +115,7 @@ function ArrayField({
           })}
         </ScrollView>
       )}
-      <Divider orientation='horizontal' marginTop={5} />
+      <Divider orientation="horizontal" marginTop={5} />
     </React.Fragment>
   );
   if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
@@ -141,12 +141,12 @@ function ArrayField({
           </Button>
         </>
       ) : (
-        <Flex justifyContent='flex-end'>
+        <Flex justifyContent="flex-end">
           {(currentFieldValue || isEditing) && (
             <Button
-              children='Cancel'
-              type='button'
-              size='small'
+              children="Cancel"
+              type="button"
+              size="small"
               onClick={() => {
                 setFieldValue(defaultFieldValue);
                 setIsEditing(false);
@@ -155,13 +155,13 @@ function ArrayField({
             ></Button>
           )}
           <Button
-            size='small'
-            variation='link'
+            size="small"
+            variation="link"
             color={tokens.colors.brand.primary[80]}
             isDisabled={hasError}
             onClick={addItem}
           >
-            {selectedBadgeIndex !== undefined ? 'Save' : 'Add'}
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
           </Button>
         </Flex>
       )}
@@ -181,47 +181,47 @@ export default function RFQCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    quotationNumber: '',
-    dateSent: '',
-    custRefNum: '',
-    companyName: '',
-    contact: '',
-    phone: '',
-    email: '',
-    shippingTerms: '',
-    shippingMethod: '',
-    leadTime: '',
-    paymentTerms: '',
-    dueDate: '',
-    quantityRequested: '',
-    quantityQuoted: '',
-    nsn: '',
-    partNumber: '',
-    altPartNumber: '',
-    condition: '',
-    uom: '',
-    description: '',
-    price: '',
-    discount: '',
-    attr1: '',
-    attr2: '',
-    attr3: '',
-    lineTotal: '',
-    subtotal: '',
-    salesTax: '',
-    total: '',
-    internalComments: '',
-    emailComments: '',
-    attr4: '',
-    attr5: '',
-    attr6: '',
+    quotationNumber: "",
+    dateSent: "",
+    custRefNum: "",
+    companyName: "",
+    contact: "",
+    phone: "",
+    email: "",
+    shippingTerms: "",
+    shippingMethod: "",
+    leadTime: "",
+    paymentTerms: "",
+    dueDate: "",
+    quantityRequested: "",
+    quantityQuoted: "",
+    nsn: "",
+    partNumber: "",
+    altPartNumber: "",
+    condition: "",
+    uom: "",
+    description: "",
+    price: "",
+    discount: "",
+    attr1: "",
+    attr2: "",
+    attr3: "",
+    lineTotal: "",
+    subtotal: "",
+    salesTax: "",
+    total: "",
+    internalComments: "",
+    emailComments: "",
+    attr4: "",
+    attr5: "",
+    attr6: "",
     imageUrls: [],
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    zip: '',
-    country: '',
+    addressLine1: "",
+    addressLine2: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
   };
   const [quotationNumber, setQuotationNumber] = React.useState(
     initialValues.quotationNumber
@@ -327,7 +327,7 @@ export default function RFQCreateForm(props) {
     setAttr5(initialValues.attr5);
     setAttr6(initialValues.attr6);
     setImageUrls(initialValues.imageUrls);
-    setCurrentImageUrlsValue('');
+    setCurrentImageUrlsValue("");
     setAddressLine1(initialValues.addressLine1);
     setAddressLine2(initialValues.addressLine2);
     setCity(initialValues.city);
@@ -336,7 +336,7 @@ export default function RFQCreateForm(props) {
     setCountry(initialValues.country);
     setErrors({});
   };
-  const [currentImageUrlsValue, setCurrentImageUrlsValue] = React.useState('');
+  const [currentImageUrlsValue, setCurrentImageUrlsValue] = React.useState("");
   const imageUrlsRef = React.createRef();
   const validations = {
     quotationNumber: [],
@@ -344,8 +344,8 @@ export default function RFQCreateForm(props) {
     custRefNum: [],
     companyName: [],
     contact: [],
-    phone: [{ type: 'Phone' }],
-    email: [{ type: 'Email' }],
+    phone: [{ type: "Phone" }],
+    email: [{ type: "Email" }],
     shippingTerms: [],
     shippingMethod: [],
     leadTime: [],
@@ -398,14 +398,14 @@ export default function RFQCreateForm(props) {
     return validationResponse;
   };
   const convertToLocal = (date) => {
-    const df = new Intl.DateTimeFormat('default', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      calendar: 'iso8601',
-      numberingSystem: 'latn',
+    const df = new Intl.DateTimeFormat("default", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      calendar: "iso8601",
+      numberingSystem: "latn",
       hour12: false,
     });
     const parts = df.formatToParts(date).reduce((acc, part) => {
@@ -416,10 +416,10 @@ export default function RFQCreateForm(props) {
   };
   return (
     <Grid
-      as='form'
-      rowGap='15px'
-      columnGap='15px'
-      padding='20px'
+      as="form"
+      rowGap="15px"
+      columnGap="15px"
+      padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
@@ -489,7 +489,7 @@ export default function RFQCreateForm(props) {
         }
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === 'string' && value.trim() === '') {
+            if (typeof value === "string" && value.trim() === "") {
               modelFields[key] = undefined;
             }
           });
@@ -506,11 +506,11 @@ export default function RFQCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, 'RFQCreateForm')}
+      {...getOverrideProps(overrides, "RFQCreateForm")}
       {...rest}
     >
       <TextField
-        label='Quotation number'
+        label="Quotation number"
         isRequired={false}
         isReadOnly={false}
         value={quotationNumber}
@@ -564,24 +564,24 @@ export default function RFQCreateForm(props) {
             value = result?.quotationNumber ?? value;
           }
           if (errors.quotationNumber?.hasError) {
-            runValidationTasks('quotationNumber', value);
+            runValidationTasks("quotationNumber", value);
           }
           setQuotationNumber(value);
         }}
-        onBlur={() => runValidationTasks('quotationNumber', quotationNumber)}
+        onBlur={() => runValidationTasks("quotationNumber", quotationNumber)}
         errorMessage={errors.quotationNumber?.errorMessage}
         hasError={errors.quotationNumber?.hasError}
-        {...getOverrideProps(overrides, 'quotationNumber')}
+        {...getOverrideProps(overrides, "quotationNumber")}
       ></TextField>
       <TextField
-        label='Date sent'
+        label="Date sent"
         isRequired={false}
         isReadOnly={false}
-        type='datetime-local'
+        type="datetime-local"
         value={dateSent && convertToLocal(new Date(dateSent))}
         onChange={(e) => {
           let value =
-            e.target.value === '' ? '' : new Date(e.target.value).toISOString();
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
               quotationNumber,
@@ -630,17 +630,17 @@ export default function RFQCreateForm(props) {
             value = result?.dateSent ?? value;
           }
           if (errors.dateSent?.hasError) {
-            runValidationTasks('dateSent', value);
+            runValidationTasks("dateSent", value);
           }
           setDateSent(value);
         }}
-        onBlur={() => runValidationTasks('dateSent', dateSent)}
+        onBlur={() => runValidationTasks("dateSent", dateSent)}
         errorMessage={errors.dateSent?.errorMessage}
         hasError={errors.dateSent?.hasError}
-        {...getOverrideProps(overrides, 'dateSent')}
+        {...getOverrideProps(overrides, "dateSent")}
       ></TextField>
       <TextField
-        label='Cust ref num'
+        label="Cust ref num"
         isRequired={false}
         isReadOnly={false}
         value={custRefNum}
@@ -694,17 +694,17 @@ export default function RFQCreateForm(props) {
             value = result?.custRefNum ?? value;
           }
           if (errors.custRefNum?.hasError) {
-            runValidationTasks('custRefNum', value);
+            runValidationTasks("custRefNum", value);
           }
           setCustRefNum(value);
         }}
-        onBlur={() => runValidationTasks('custRefNum', custRefNum)}
+        onBlur={() => runValidationTasks("custRefNum", custRefNum)}
         errorMessage={errors.custRefNum?.errorMessage}
         hasError={errors.custRefNum?.hasError}
-        {...getOverrideProps(overrides, 'custRefNum')}
+        {...getOverrideProps(overrides, "custRefNum")}
       ></TextField>
       <TextField
-        label='Company name'
+        label="Company name"
         isRequired={false}
         isReadOnly={false}
         value={companyName}
@@ -758,17 +758,17 @@ export default function RFQCreateForm(props) {
             value = result?.companyName ?? value;
           }
           if (errors.companyName?.hasError) {
-            runValidationTasks('companyName', value);
+            runValidationTasks("companyName", value);
           }
           setCompanyName(value);
         }}
-        onBlur={() => runValidationTasks('companyName', companyName)}
+        onBlur={() => runValidationTasks("companyName", companyName)}
         errorMessage={errors.companyName?.errorMessage}
         hasError={errors.companyName?.hasError}
-        {...getOverrideProps(overrides, 'companyName')}
+        {...getOverrideProps(overrides, "companyName")}
       ></TextField>
       <TextField
-        label='Contact'
+        label="Contact"
         isRequired={false}
         isReadOnly={false}
         value={contact}
@@ -822,20 +822,20 @@ export default function RFQCreateForm(props) {
             value = result?.contact ?? value;
           }
           if (errors.contact?.hasError) {
-            runValidationTasks('contact', value);
+            runValidationTasks("contact", value);
           }
           setContact(value);
         }}
-        onBlur={() => runValidationTasks('contact', contact)}
+        onBlur={() => runValidationTasks("contact", contact)}
         errorMessage={errors.contact?.errorMessage}
         hasError={errors.contact?.hasError}
-        {...getOverrideProps(overrides, 'contact')}
+        {...getOverrideProps(overrides, "contact")}
       ></TextField>
       <TextField
-        label='Phone'
+        label="Phone"
         isRequired={false}
         isReadOnly={false}
-        type='tel'
+        type="tel"
         value={phone}
         onChange={(e) => {
           let { value } = e.target;
@@ -887,17 +887,17 @@ export default function RFQCreateForm(props) {
             value = result?.phone ?? value;
           }
           if (errors.phone?.hasError) {
-            runValidationTasks('phone', value);
+            runValidationTasks("phone", value);
           }
           setPhone(value);
         }}
-        onBlur={() => runValidationTasks('phone', phone)}
+        onBlur={() => runValidationTasks("phone", phone)}
         errorMessage={errors.phone?.errorMessage}
         hasError={errors.phone?.hasError}
-        {...getOverrideProps(overrides, 'phone')}
+        {...getOverrideProps(overrides, "phone")}
       ></TextField>
       <TextField
-        label='Email'
+        label="Email"
         isRequired={false}
         isReadOnly={false}
         value={email}
@@ -951,17 +951,17 @@ export default function RFQCreateForm(props) {
             value = result?.email ?? value;
           }
           if (errors.email?.hasError) {
-            runValidationTasks('email', value);
+            runValidationTasks("email", value);
           }
           setEmail(value);
         }}
-        onBlur={() => runValidationTasks('email', email)}
+        onBlur={() => runValidationTasks("email", email)}
         errorMessage={errors.email?.errorMessage}
         hasError={errors.email?.hasError}
-        {...getOverrideProps(overrides, 'email')}
+        {...getOverrideProps(overrides, "email")}
       ></TextField>
       <TextField
-        label='Shipping terms'
+        label="Shipping terms"
         isRequired={false}
         isReadOnly={false}
         value={shippingTerms}
@@ -1015,17 +1015,17 @@ export default function RFQCreateForm(props) {
             value = result?.shippingTerms ?? value;
           }
           if (errors.shippingTerms?.hasError) {
-            runValidationTasks('shippingTerms', value);
+            runValidationTasks("shippingTerms", value);
           }
           setShippingTerms(value);
         }}
-        onBlur={() => runValidationTasks('shippingTerms', shippingTerms)}
+        onBlur={() => runValidationTasks("shippingTerms", shippingTerms)}
         errorMessage={errors.shippingTerms?.errorMessage}
         hasError={errors.shippingTerms?.hasError}
-        {...getOverrideProps(overrides, 'shippingTerms')}
+        {...getOverrideProps(overrides, "shippingTerms")}
       ></TextField>
       <TextField
-        label='Shipping method'
+        label="Shipping method"
         isRequired={false}
         isReadOnly={false}
         value={shippingMethod}
@@ -1079,21 +1079,21 @@ export default function RFQCreateForm(props) {
             value = result?.shippingMethod ?? value;
           }
           if (errors.shippingMethod?.hasError) {
-            runValidationTasks('shippingMethod', value);
+            runValidationTasks("shippingMethod", value);
           }
           setShippingMethod(value);
         }}
-        onBlur={() => runValidationTasks('shippingMethod', shippingMethod)}
+        onBlur={() => runValidationTasks("shippingMethod", shippingMethod)}
         errorMessage={errors.shippingMethod?.errorMessage}
         hasError={errors.shippingMethod?.hasError}
-        {...getOverrideProps(overrides, 'shippingMethod')}
+        {...getOverrideProps(overrides, "shippingMethod")}
       ></TextField>
       <TextField
-        label='Lead time'
+        label="Lead time"
         isRequired={false}
         isReadOnly={false}
-        type='number'
-        step='any'
+        type="number"
+        step="any"
         value={leadTime}
         onChange={(e) => {
           let value = isNaN(parseInt(e.target.value))
@@ -1147,17 +1147,17 @@ export default function RFQCreateForm(props) {
             value = result?.leadTime ?? value;
           }
           if (errors.leadTime?.hasError) {
-            runValidationTasks('leadTime', value);
+            runValidationTasks("leadTime", value);
           }
           setLeadTime(value);
         }}
-        onBlur={() => runValidationTasks('leadTime', leadTime)}
+        onBlur={() => runValidationTasks("leadTime", leadTime)}
         errorMessage={errors.leadTime?.errorMessage}
         hasError={errors.leadTime?.hasError}
-        {...getOverrideProps(overrides, 'leadTime')}
+        {...getOverrideProps(overrides, "leadTime")}
       ></TextField>
       <TextField
-        label='Payment terms'
+        label="Payment terms"
         isRequired={false}
         isReadOnly={false}
         value={paymentTerms}
@@ -1211,24 +1211,24 @@ export default function RFQCreateForm(props) {
             value = result?.paymentTerms ?? value;
           }
           if (errors.paymentTerms?.hasError) {
-            runValidationTasks('paymentTerms', value);
+            runValidationTasks("paymentTerms", value);
           }
           setPaymentTerms(value);
         }}
-        onBlur={() => runValidationTasks('paymentTerms', paymentTerms)}
+        onBlur={() => runValidationTasks("paymentTerms", paymentTerms)}
         errorMessage={errors.paymentTerms?.errorMessage}
         hasError={errors.paymentTerms?.hasError}
-        {...getOverrideProps(overrides, 'paymentTerms')}
+        {...getOverrideProps(overrides, "paymentTerms")}
       ></TextField>
       <TextField
-        label='Due date'
+        label="Due date"
         isRequired={false}
         isReadOnly={false}
-        type='datetime-local'
+        type="datetime-local"
         value={dueDate && convertToLocal(new Date(dueDate))}
         onChange={(e) => {
           let value =
-            e.target.value === '' ? '' : new Date(e.target.value).toISOString();
+            e.target.value === "" ? "" : new Date(e.target.value).toISOString();
           if (onChange) {
             const modelFields = {
               quotationNumber,
@@ -1277,21 +1277,21 @@ export default function RFQCreateForm(props) {
             value = result?.dueDate ?? value;
           }
           if (errors.dueDate?.hasError) {
-            runValidationTasks('dueDate', value);
+            runValidationTasks("dueDate", value);
           }
           setDueDate(value);
         }}
-        onBlur={() => runValidationTasks('dueDate', dueDate)}
+        onBlur={() => runValidationTasks("dueDate", dueDate)}
         errorMessage={errors.dueDate?.errorMessage}
         hasError={errors.dueDate?.hasError}
-        {...getOverrideProps(overrides, 'dueDate')}
+        {...getOverrideProps(overrides, "dueDate")}
       ></TextField>
       <TextField
-        label='Quantity requested'
+        label="Quantity requested"
         isRequired={false}
         isReadOnly={false}
-        type='number'
-        step='any'
+        type="number"
+        step="any"
         value={quantityRequested}
         onChange={(e) => {
           let value = isNaN(parseInt(e.target.value))
@@ -1345,23 +1345,23 @@ export default function RFQCreateForm(props) {
             value = result?.quantityRequested ?? value;
           }
           if (errors.quantityRequested?.hasError) {
-            runValidationTasks('quantityRequested', value);
+            runValidationTasks("quantityRequested", value);
           }
           setQuantityRequested(value);
         }}
         onBlur={() =>
-          runValidationTasks('quantityRequested', quantityRequested)
+          runValidationTasks("quantityRequested", quantityRequested)
         }
         errorMessage={errors.quantityRequested?.errorMessage}
         hasError={errors.quantityRequested?.hasError}
-        {...getOverrideProps(overrides, 'quantityRequested')}
+        {...getOverrideProps(overrides, "quantityRequested")}
       ></TextField>
       <TextField
-        label='Quantity quoted'
+        label="Quantity quoted"
         isRequired={false}
         isReadOnly={false}
-        type='number'
-        step='any'
+        type="number"
+        step="any"
         value={quantityQuoted}
         onChange={(e) => {
           let value = isNaN(parseInt(e.target.value))
@@ -1415,17 +1415,17 @@ export default function RFQCreateForm(props) {
             value = result?.quantityQuoted ?? value;
           }
           if (errors.quantityQuoted?.hasError) {
-            runValidationTasks('quantityQuoted', value);
+            runValidationTasks("quantityQuoted", value);
           }
           setQuantityQuoted(value);
         }}
-        onBlur={() => runValidationTasks('quantityQuoted', quantityQuoted)}
+        onBlur={() => runValidationTasks("quantityQuoted", quantityQuoted)}
         errorMessage={errors.quantityQuoted?.errorMessage}
         hasError={errors.quantityQuoted?.hasError}
-        {...getOverrideProps(overrides, 'quantityQuoted')}
+        {...getOverrideProps(overrides, "quantityQuoted")}
       ></TextField>
       <TextField
-        label='Nsn'
+        label="Nsn"
         isRequired={false}
         isReadOnly={false}
         value={nsn}
@@ -1479,17 +1479,17 @@ export default function RFQCreateForm(props) {
             value = result?.nsn ?? value;
           }
           if (errors.nsn?.hasError) {
-            runValidationTasks('nsn', value);
+            runValidationTasks("nsn", value);
           }
           setNsn(value);
         }}
-        onBlur={() => runValidationTasks('nsn', nsn)}
+        onBlur={() => runValidationTasks("nsn", nsn)}
         errorMessage={errors.nsn?.errorMessage}
         hasError={errors.nsn?.hasError}
-        {...getOverrideProps(overrides, 'nsn')}
+        {...getOverrideProps(overrides, "nsn")}
       ></TextField>
       <TextField
-        label='Part number'
+        label="Part number"
         isRequired={false}
         isReadOnly={false}
         value={partNumber}
@@ -1543,17 +1543,17 @@ export default function RFQCreateForm(props) {
             value = result?.partNumber ?? value;
           }
           if (errors.partNumber?.hasError) {
-            runValidationTasks('partNumber', value);
+            runValidationTasks("partNumber", value);
           }
           setPartNumber(value);
         }}
-        onBlur={() => runValidationTasks('partNumber', partNumber)}
+        onBlur={() => runValidationTasks("partNumber", partNumber)}
         errorMessage={errors.partNumber?.errorMessage}
         hasError={errors.partNumber?.hasError}
-        {...getOverrideProps(overrides, 'partNumber')}
+        {...getOverrideProps(overrides, "partNumber")}
       ></TextField>
       <TextField
-        label='Alt part number'
+        label="Alt part number"
         isRequired={false}
         isReadOnly={false}
         value={altPartNumber}
@@ -1607,17 +1607,17 @@ export default function RFQCreateForm(props) {
             value = result?.altPartNumber ?? value;
           }
           if (errors.altPartNumber?.hasError) {
-            runValidationTasks('altPartNumber', value);
+            runValidationTasks("altPartNumber", value);
           }
           setAltPartNumber(value);
         }}
-        onBlur={() => runValidationTasks('altPartNumber', altPartNumber)}
+        onBlur={() => runValidationTasks("altPartNumber", altPartNumber)}
         errorMessage={errors.altPartNumber?.errorMessage}
         hasError={errors.altPartNumber?.hasError}
-        {...getOverrideProps(overrides, 'altPartNumber')}
+        {...getOverrideProps(overrides, "altPartNumber")}
       ></TextField>
       <TextField
-        label='Condition'
+        label="Condition"
         isRequired={false}
         isReadOnly={false}
         value={condition}
@@ -1671,17 +1671,17 @@ export default function RFQCreateForm(props) {
             value = result?.condition ?? value;
           }
           if (errors.condition?.hasError) {
-            runValidationTasks('condition', value);
+            runValidationTasks("condition", value);
           }
           setCondition(value);
         }}
-        onBlur={() => runValidationTasks('condition', condition)}
+        onBlur={() => runValidationTasks("condition", condition)}
         errorMessage={errors.condition?.errorMessage}
         hasError={errors.condition?.hasError}
-        {...getOverrideProps(overrides, 'condition')}
+        {...getOverrideProps(overrides, "condition")}
       ></TextField>
       <TextField
-        label='Uom'
+        label="Uom"
         isRequired={false}
         isReadOnly={false}
         value={uom}
@@ -1735,17 +1735,17 @@ export default function RFQCreateForm(props) {
             value = result?.uom ?? value;
           }
           if (errors.uom?.hasError) {
-            runValidationTasks('uom', value);
+            runValidationTasks("uom", value);
           }
           setUom(value);
         }}
-        onBlur={() => runValidationTasks('uom', uom)}
+        onBlur={() => runValidationTasks("uom", uom)}
         errorMessage={errors.uom?.errorMessage}
         hasError={errors.uom?.hasError}
-        {...getOverrideProps(overrides, 'uom')}
+        {...getOverrideProps(overrides, "uom")}
       ></TextField>
       <TextField
-        label='Description'
+        label="Description"
         isRequired={false}
         isReadOnly={false}
         value={description}
@@ -1799,21 +1799,21 @@ export default function RFQCreateForm(props) {
             value = result?.description ?? value;
           }
           if (errors.description?.hasError) {
-            runValidationTasks('description', value);
+            runValidationTasks("description", value);
           }
           setDescription(value);
         }}
-        onBlur={() => runValidationTasks('description', description)}
+        onBlur={() => runValidationTasks("description", description)}
         errorMessage={errors.description?.errorMessage}
         hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, 'description')}
+        {...getOverrideProps(overrides, "description")}
       ></TextField>
       <TextField
-        label='Price'
+        label="Price"
         isRequired={false}
         isReadOnly={false}
-        type='number'
-        step='any'
+        type="number"
+        step="any"
         value={price}
         onChange={(e) => {
           let value = isNaN(parseFloat(e.target.value))
@@ -1867,21 +1867,21 @@ export default function RFQCreateForm(props) {
             value = result?.price ?? value;
           }
           if (errors.price?.hasError) {
-            runValidationTasks('price', value);
+            runValidationTasks("price", value);
           }
           setPrice(value);
         }}
-        onBlur={() => runValidationTasks('price', price)}
+        onBlur={() => runValidationTasks("price", price)}
         errorMessage={errors.price?.errorMessage}
         hasError={errors.price?.hasError}
-        {...getOverrideProps(overrides, 'price')}
+        {...getOverrideProps(overrides, "price")}
       ></TextField>
       <TextField
-        label='Discount'
+        label="Discount"
         isRequired={false}
         isReadOnly={false}
-        type='number'
-        step='any'
+        type="number"
+        step="any"
         value={discount}
         onChange={(e) => {
           let value = isNaN(parseFloat(e.target.value))
@@ -1935,17 +1935,17 @@ export default function RFQCreateForm(props) {
             value = result?.discount ?? value;
           }
           if (errors.discount?.hasError) {
-            runValidationTasks('discount', value);
+            runValidationTasks("discount", value);
           }
           setDiscount(value);
         }}
-        onBlur={() => runValidationTasks('discount', discount)}
+        onBlur={() => runValidationTasks("discount", discount)}
         errorMessage={errors.discount?.errorMessage}
         hasError={errors.discount?.hasError}
-        {...getOverrideProps(overrides, 'discount')}
+        {...getOverrideProps(overrides, "discount")}
       ></TextField>
       <TextField
-        label='Attr1'
+        label="Attr1"
         isRequired={false}
         isReadOnly={false}
         value={attr1}
@@ -1999,17 +1999,17 @@ export default function RFQCreateForm(props) {
             value = result?.attr1 ?? value;
           }
           if (errors.attr1?.hasError) {
-            runValidationTasks('attr1', value);
+            runValidationTasks("attr1", value);
           }
           setAttr1(value);
         }}
-        onBlur={() => runValidationTasks('attr1', attr1)}
+        onBlur={() => runValidationTasks("attr1", attr1)}
         errorMessage={errors.attr1?.errorMessage}
         hasError={errors.attr1?.hasError}
-        {...getOverrideProps(overrides, 'attr1')}
+        {...getOverrideProps(overrides, "attr1")}
       ></TextField>
       <TextField
-        label='Attr2'
+        label="Attr2"
         isRequired={false}
         isReadOnly={false}
         value={attr2}
@@ -2063,17 +2063,17 @@ export default function RFQCreateForm(props) {
             value = result?.attr2 ?? value;
           }
           if (errors.attr2?.hasError) {
-            runValidationTasks('attr2', value);
+            runValidationTasks("attr2", value);
           }
           setAttr2(value);
         }}
-        onBlur={() => runValidationTasks('attr2', attr2)}
+        onBlur={() => runValidationTasks("attr2", attr2)}
         errorMessage={errors.attr2?.errorMessage}
         hasError={errors.attr2?.hasError}
-        {...getOverrideProps(overrides, 'attr2')}
+        {...getOverrideProps(overrides, "attr2")}
       ></TextField>
       <TextField
-        label='Attr3'
+        label="Attr3"
         isRequired={false}
         isReadOnly={false}
         value={attr3}
@@ -2127,21 +2127,21 @@ export default function RFQCreateForm(props) {
             value = result?.attr3 ?? value;
           }
           if (errors.attr3?.hasError) {
-            runValidationTasks('attr3', value);
+            runValidationTasks("attr3", value);
           }
           setAttr3(value);
         }}
-        onBlur={() => runValidationTasks('attr3', attr3)}
+        onBlur={() => runValidationTasks("attr3", attr3)}
         errorMessage={errors.attr3?.errorMessage}
         hasError={errors.attr3?.hasError}
-        {...getOverrideProps(overrides, 'attr3')}
+        {...getOverrideProps(overrides, "attr3")}
       ></TextField>
       <TextField
-        label='Line total'
+        label="Line total"
         isRequired={false}
         isReadOnly={false}
-        type='number'
-        step='any'
+        type="number"
+        step="any"
         value={lineTotal}
         onChange={(e) => {
           let value = isNaN(parseFloat(e.target.value))
@@ -2195,21 +2195,21 @@ export default function RFQCreateForm(props) {
             value = result?.lineTotal ?? value;
           }
           if (errors.lineTotal?.hasError) {
-            runValidationTasks('lineTotal', value);
+            runValidationTasks("lineTotal", value);
           }
           setLineTotal(value);
         }}
-        onBlur={() => runValidationTasks('lineTotal', lineTotal)}
+        onBlur={() => runValidationTasks("lineTotal", lineTotal)}
         errorMessage={errors.lineTotal?.errorMessage}
         hasError={errors.lineTotal?.hasError}
-        {...getOverrideProps(overrides, 'lineTotal')}
+        {...getOverrideProps(overrides, "lineTotal")}
       ></TextField>
       <TextField
-        label='Subtotal'
+        label="Subtotal"
         isRequired={false}
         isReadOnly={false}
-        type='number'
-        step='any'
+        type="number"
+        step="any"
         value={subtotal}
         onChange={(e) => {
           let value = isNaN(parseFloat(e.target.value))
@@ -2263,21 +2263,21 @@ export default function RFQCreateForm(props) {
             value = result?.subtotal ?? value;
           }
           if (errors.subtotal?.hasError) {
-            runValidationTasks('subtotal', value);
+            runValidationTasks("subtotal", value);
           }
           setSubtotal(value);
         }}
-        onBlur={() => runValidationTasks('subtotal', subtotal)}
+        onBlur={() => runValidationTasks("subtotal", subtotal)}
         errorMessage={errors.subtotal?.errorMessage}
         hasError={errors.subtotal?.hasError}
-        {...getOverrideProps(overrides, 'subtotal')}
+        {...getOverrideProps(overrides, "subtotal")}
       ></TextField>
       <TextField
-        label='Sales tax'
+        label="Sales tax"
         isRequired={false}
         isReadOnly={false}
-        type='number'
-        step='any'
+        type="number"
+        step="any"
         value={salesTax}
         onChange={(e) => {
           let value = isNaN(parseFloat(e.target.value))
@@ -2331,21 +2331,21 @@ export default function RFQCreateForm(props) {
             value = result?.salesTax ?? value;
           }
           if (errors.salesTax?.hasError) {
-            runValidationTasks('salesTax', value);
+            runValidationTasks("salesTax", value);
           }
           setSalesTax(value);
         }}
-        onBlur={() => runValidationTasks('salesTax', salesTax)}
+        onBlur={() => runValidationTasks("salesTax", salesTax)}
         errorMessage={errors.salesTax?.errorMessage}
         hasError={errors.salesTax?.hasError}
-        {...getOverrideProps(overrides, 'salesTax')}
+        {...getOverrideProps(overrides, "salesTax")}
       ></TextField>
       <TextField
-        label='Total'
+        label="Total"
         isRequired={false}
         isReadOnly={false}
-        type='number'
-        step='any'
+        type="number"
+        step="any"
         value={total}
         onChange={(e) => {
           let value = isNaN(parseFloat(e.target.value))
@@ -2399,17 +2399,17 @@ export default function RFQCreateForm(props) {
             value = result?.total ?? value;
           }
           if (errors.total?.hasError) {
-            runValidationTasks('total', value);
+            runValidationTasks("total", value);
           }
           setTotal(value);
         }}
-        onBlur={() => runValidationTasks('total', total)}
+        onBlur={() => runValidationTasks("total", total)}
         errorMessage={errors.total?.errorMessage}
         hasError={errors.total?.hasError}
-        {...getOverrideProps(overrides, 'total')}
+        {...getOverrideProps(overrides, "total")}
       ></TextField>
       <TextField
-        label='Internal comments'
+        label="Internal comments"
         isRequired={false}
         isReadOnly={false}
         value={internalComments}
@@ -2463,17 +2463,17 @@ export default function RFQCreateForm(props) {
             value = result?.internalComments ?? value;
           }
           if (errors.internalComments?.hasError) {
-            runValidationTasks('internalComments', value);
+            runValidationTasks("internalComments", value);
           }
           setInternalComments(value);
         }}
-        onBlur={() => runValidationTasks('internalComments', internalComments)}
+        onBlur={() => runValidationTasks("internalComments", internalComments)}
         errorMessage={errors.internalComments?.errorMessage}
         hasError={errors.internalComments?.hasError}
-        {...getOverrideProps(overrides, 'internalComments')}
+        {...getOverrideProps(overrides, "internalComments")}
       ></TextField>
       <TextField
-        label='Email comments'
+        label="Email comments"
         isRequired={false}
         isReadOnly={false}
         value={emailComments}
@@ -2527,17 +2527,17 @@ export default function RFQCreateForm(props) {
             value = result?.emailComments ?? value;
           }
           if (errors.emailComments?.hasError) {
-            runValidationTasks('emailComments', value);
+            runValidationTasks("emailComments", value);
           }
           setEmailComments(value);
         }}
-        onBlur={() => runValidationTasks('emailComments', emailComments)}
+        onBlur={() => runValidationTasks("emailComments", emailComments)}
         errorMessage={errors.emailComments?.errorMessage}
         hasError={errors.emailComments?.hasError}
-        {...getOverrideProps(overrides, 'emailComments')}
+        {...getOverrideProps(overrides, "emailComments")}
       ></TextField>
       <TextField
-        label='Attr4'
+        label="Attr4"
         isRequired={false}
         isReadOnly={false}
         value={attr4}
@@ -2591,17 +2591,17 @@ export default function RFQCreateForm(props) {
             value = result?.attr4 ?? value;
           }
           if (errors.attr4?.hasError) {
-            runValidationTasks('attr4', value);
+            runValidationTasks("attr4", value);
           }
           setAttr4(value);
         }}
-        onBlur={() => runValidationTasks('attr4', attr4)}
+        onBlur={() => runValidationTasks("attr4", attr4)}
         errorMessage={errors.attr4?.errorMessage}
         hasError={errors.attr4?.hasError}
-        {...getOverrideProps(overrides, 'attr4')}
+        {...getOverrideProps(overrides, "attr4")}
       ></TextField>
       <TextField
-        label='Attr5'
+        label="Attr5"
         isRequired={false}
         isReadOnly={false}
         value={attr5}
@@ -2655,17 +2655,17 @@ export default function RFQCreateForm(props) {
             value = result?.attr5 ?? value;
           }
           if (errors.attr5?.hasError) {
-            runValidationTasks('attr5', value);
+            runValidationTasks("attr5", value);
           }
           setAttr5(value);
         }}
-        onBlur={() => runValidationTasks('attr5', attr5)}
+        onBlur={() => runValidationTasks("attr5", attr5)}
         errorMessage={errors.attr5?.errorMessage}
         hasError={errors.attr5?.hasError}
-        {...getOverrideProps(overrides, 'attr5')}
+        {...getOverrideProps(overrides, "attr5")}
       ></TextField>
       <TextField
-        label='Attr6'
+        label="Attr6"
         isRequired={false}
         isReadOnly={false}
         value={attr6}
@@ -2719,14 +2719,14 @@ export default function RFQCreateForm(props) {
             value = result?.attr6 ?? value;
           }
           if (errors.attr6?.hasError) {
-            runValidationTasks('attr6', value);
+            runValidationTasks("attr6", value);
           }
           setAttr6(value);
         }}
-        onBlur={() => runValidationTasks('attr6', attr6)}
+        onBlur={() => runValidationTasks("attr6", attr6)}
         errorMessage={errors.attr6?.errorMessage}
         hasError={errors.attr6?.hasError}
-        {...getOverrideProps(overrides, 'attr6')}
+        {...getOverrideProps(overrides, "attr6")}
       ></TextField>
       <ArrayField
         onChange={async (items) => {
@@ -2779,38 +2779,38 @@ export default function RFQCreateForm(props) {
             values = result?.imageUrls ?? values;
           }
           setImageUrls(values);
-          setCurrentImageUrlsValue('');
+          setCurrentImageUrlsValue("");
         }}
         currentFieldValue={currentImageUrlsValue}
-        label={'Image urls'}
+        label={"Image urls"}
         items={imageUrls}
         hasError={errors.imageUrls?.hasError}
         setFieldValue={setCurrentImageUrlsValue}
         inputFieldRef={imageUrlsRef}
-        defaultFieldValue={''}
+        defaultFieldValue={""}
       >
         <TextField
-          label='Image urls'
+          label="Image urls"
           isRequired={false}
           isReadOnly={false}
           value={currentImageUrlsValue}
           onChange={(e) => {
             let { value } = e.target;
             if (errors.imageUrls?.hasError) {
-              runValidationTasks('imageUrls', value);
+              runValidationTasks("imageUrls", value);
             }
             setCurrentImageUrlsValue(value);
           }}
-          onBlur={() => runValidationTasks('imageUrls', currentImageUrlsValue)}
+          onBlur={() => runValidationTasks("imageUrls", currentImageUrlsValue)}
           errorMessage={errors.imageUrls?.errorMessage}
           hasError={errors.imageUrls?.hasError}
           ref={imageUrlsRef}
           labelHidden={true}
-          {...getOverrideProps(overrides, 'imageUrls')}
+          {...getOverrideProps(overrides, "imageUrls")}
         ></TextField>
       </ArrayField>
       <TextField
-        label='Address line1'
+        label="Address line1"
         isRequired={false}
         isReadOnly={false}
         value={addressLine1}
@@ -2864,17 +2864,17 @@ export default function RFQCreateForm(props) {
             value = result?.addressLine1 ?? value;
           }
           if (errors.addressLine1?.hasError) {
-            runValidationTasks('addressLine1', value);
+            runValidationTasks("addressLine1", value);
           }
           setAddressLine1(value);
         }}
-        onBlur={() => runValidationTasks('addressLine1', addressLine1)}
+        onBlur={() => runValidationTasks("addressLine1", addressLine1)}
         errorMessage={errors.addressLine1?.errorMessage}
         hasError={errors.addressLine1?.hasError}
-        {...getOverrideProps(overrides, 'addressLine1')}
+        {...getOverrideProps(overrides, "addressLine1")}
       ></TextField>
       <TextField
-        label='Address line2'
+        label="Address line2"
         isRequired={false}
         isReadOnly={false}
         value={addressLine2}
@@ -2928,17 +2928,17 @@ export default function RFQCreateForm(props) {
             value = result?.addressLine2 ?? value;
           }
           if (errors.addressLine2?.hasError) {
-            runValidationTasks('addressLine2', value);
+            runValidationTasks("addressLine2", value);
           }
           setAddressLine2(value);
         }}
-        onBlur={() => runValidationTasks('addressLine2', addressLine2)}
+        onBlur={() => runValidationTasks("addressLine2", addressLine2)}
         errorMessage={errors.addressLine2?.errorMessage}
         hasError={errors.addressLine2?.hasError}
-        {...getOverrideProps(overrides, 'addressLine2')}
+        {...getOverrideProps(overrides, "addressLine2")}
       ></TextField>
       <TextField
-        label='City'
+        label="City"
         isRequired={false}
         isReadOnly={false}
         value={city}
@@ -2992,17 +2992,17 @@ export default function RFQCreateForm(props) {
             value = result?.city ?? value;
           }
           if (errors.city?.hasError) {
-            runValidationTasks('city', value);
+            runValidationTasks("city", value);
           }
           setCity(value);
         }}
-        onBlur={() => runValidationTasks('city', city)}
+        onBlur={() => runValidationTasks("city", city)}
         errorMessage={errors.city?.errorMessage}
         hasError={errors.city?.hasError}
-        {...getOverrideProps(overrides, 'city')}
+        {...getOverrideProps(overrides, "city")}
       ></TextField>
       <TextField
-        label='State'
+        label="State"
         isRequired={false}
         isReadOnly={false}
         value={state}
@@ -3056,17 +3056,17 @@ export default function RFQCreateForm(props) {
             value = result?.state ?? value;
           }
           if (errors.state?.hasError) {
-            runValidationTasks('state', value);
+            runValidationTasks("state", value);
           }
           setState(value);
         }}
-        onBlur={() => runValidationTasks('state', state)}
+        onBlur={() => runValidationTasks("state", state)}
         errorMessage={errors.state?.errorMessage}
         hasError={errors.state?.hasError}
-        {...getOverrideProps(overrides, 'state')}
+        {...getOverrideProps(overrides, "state")}
       ></TextField>
       <TextField
-        label='Zip'
+        label="Zip"
         isRequired={false}
         isReadOnly={false}
         value={zip}
@@ -3120,17 +3120,17 @@ export default function RFQCreateForm(props) {
             value = result?.zip ?? value;
           }
           if (errors.zip?.hasError) {
-            runValidationTasks('zip', value);
+            runValidationTasks("zip", value);
           }
           setZip(value);
         }}
-        onBlur={() => runValidationTasks('zip', zip)}
+        onBlur={() => runValidationTasks("zip", zip)}
         errorMessage={errors.zip?.errorMessage}
         hasError={errors.zip?.hasError}
-        {...getOverrideProps(overrides, 'zip')}
+        {...getOverrideProps(overrides, "zip")}
       ></TextField>
       <TextField
-        label='Country'
+        label="Country"
         isRequired={false}
         isReadOnly={false}
         value={country}
@@ -3184,38 +3184,38 @@ export default function RFQCreateForm(props) {
             value = result?.country ?? value;
           }
           if (errors.country?.hasError) {
-            runValidationTasks('country', value);
+            runValidationTasks("country", value);
           }
           setCountry(value);
         }}
-        onBlur={() => runValidationTasks('country', country)}
+        onBlur={() => runValidationTasks("country", country)}
         errorMessage={errors.country?.errorMessage}
         hasError={errors.country?.hasError}
-        {...getOverrideProps(overrides, 'country')}
+        {...getOverrideProps(overrides, "country")}
       ></TextField>
       <Flex
-        justifyContent='space-between'
-        {...getOverrideProps(overrides, 'CTAFlex')}
+        justifyContent="space-between"
+        {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children='Clear'
-          type='reset'
+          children="Clear"
+          type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          {...getOverrideProps(overrides, 'ClearButton')}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
-          gap='15px'
-          {...getOverrideProps(overrides, 'RightAlignCTASubFlex')}
+          gap="15px"
+          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
-            children='Submit'
-            type='submit'
-            variation='primary'
+            children="Submit"
+            type="submit"
+            variation="primary"
             isDisabled={Object.values(errors).some((e) => e?.hasError)}
-            {...getOverrideProps(overrides, 'SubmitButton')}
+            {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
       </Flex>

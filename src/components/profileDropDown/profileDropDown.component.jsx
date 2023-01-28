@@ -1,11 +1,15 @@
 import './profileDropDown.styles.scss';
 import { Button } from '@mui/material';
 import { SignOutAuth } from '../../utils/amplifyUtils';
+import { useNavigate } from 'react-router';
 
 const ProfileDropDown = () => {
+  const navigate = useNavigate();
   const signOutHandler = async () => {
     try {
       await SignOutAuth();
+
+      navigate('/');
     } catch (error) {
       alert('There was an error trying to sign out.');
     }

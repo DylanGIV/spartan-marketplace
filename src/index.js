@@ -4,7 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
-import { Amplify, Auth } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
 import {
   AmplifyProvider,
   Authenticator,
@@ -27,7 +27,9 @@ root.render(
         <Authenticator.Provider>
           <InventoryProvider>
             <ThemeProvider theme={studioTheme}>
-              <App />
+              <Authenticator>
+                <App />
+              </Authenticator>
             </ThemeProvider>
           </InventoryProvider>
         </Authenticator.Provider>

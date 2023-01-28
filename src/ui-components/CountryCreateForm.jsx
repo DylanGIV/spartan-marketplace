@@ -5,12 +5,12 @@
  **************************************************************************/
 
 /* eslint-disable */
-import * as React from 'react';
-import { Button, Flex, Grid, TextField } from '@aws-amplify/ui-react';
-import { getOverrideProps } from '@aws-amplify/ui-react/internal';
-import { Country } from '../models';
-import { fetchByPath, validateField } from './utils';
-import { DataStore } from 'aws-amplify';
+import * as React from "react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Country } from "../models";
+import { fetchByPath, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
 export default function CountryCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -23,7 +23,7 @@ export default function CountryCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    countryName: '',
+    countryName: "",
   };
   const [countryName, setCountryName] = React.useState(
     initialValues.countryName
@@ -54,10 +54,10 @@ export default function CountryCreateForm(props) {
   };
   return (
     <Grid
-      as='form'
-      rowGap='15px'
-      columnGap='15px'
-      padding='20px'
+      as="form"
+      rowGap="15px"
+      columnGap="15px"
+      padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
@@ -87,7 +87,7 @@ export default function CountryCreateForm(props) {
         }
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === 'string' && value.trim() === '') {
+            if (typeof value === "string" && value.trim() === "") {
               modelFields[key] = undefined;
             }
           });
@@ -104,11 +104,11 @@ export default function CountryCreateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, 'CountryCreateForm')}
+      {...getOverrideProps(overrides, "CountryCreateForm")}
       {...rest}
     >
       <TextField
-        label='Country name'
+        label="Country name"
         isRequired={false}
         isReadOnly={false}
         value={countryName}
@@ -122,38 +122,38 @@ export default function CountryCreateForm(props) {
             value = result?.countryName ?? value;
           }
           if (errors.countryName?.hasError) {
-            runValidationTasks('countryName', value);
+            runValidationTasks("countryName", value);
           }
           setCountryName(value);
         }}
-        onBlur={() => runValidationTasks('countryName', countryName)}
+        onBlur={() => runValidationTasks("countryName", countryName)}
         errorMessage={errors.countryName?.errorMessage}
         hasError={errors.countryName?.hasError}
-        {...getOverrideProps(overrides, 'countryName')}
+        {...getOverrideProps(overrides, "countryName")}
       ></TextField>
       <Flex
-        justifyContent='space-between'
-        {...getOverrideProps(overrides, 'CTAFlex')}
+        justifyContent="space-between"
+        {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children='Clear'
-          type='reset'
+          children="Clear"
+          type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          {...getOverrideProps(overrides, 'ClearButton')}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
-          gap='15px'
-          {...getOverrideProps(overrides, 'RightAlignCTASubFlex')}
+          gap="15px"
+          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
-            children='Submit'
-            type='submit'
-            variation='primary'
+            children="Submit"
+            type="submit"
+            variation="primary"
             isDisabled={Object.values(errors).some((e) => e?.hasError)}
-            {...getOverrideProps(overrides, 'SubmitButton')}
+            {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
       </Flex>

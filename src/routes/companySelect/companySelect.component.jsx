@@ -10,11 +10,17 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Icon,
+  Box,
 } from '@mui/material';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
+import { DataStore } from 'aws-amplify';
+import { Company } from '../../models';
+import { AddCompany, CreateUserDetails } from '../../utils/amplifyUtils';
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
+import { useNavigate } from 'react-router';
 
 export default function CompanySelector() {
   const [open, setOpen] = useState(false);
@@ -23,6 +29,8 @@ export default function CompanySelector() {
   const [company, setCompany] = useState('');
   const [companySubmitButtonDisabled, setCompanySubmitButtonDisabled] =
     useState(true);
+
+  const navigate = useNavigate();
 
   const [newCompany, setNewCompany] = useState({
     name: '',
@@ -33,6 +41,8 @@ export default function CompanySelector() {
     logo: null,
   });
 
+  const [existingCompanies, setExistingCompanies] = useState([]);
+
   useEffect(() => {
     if (company) {
       setCompanySubmitButtonDisabled(false);
@@ -40,6 +50,18 @@ export default function CompanySelector() {
       setCompanySubmitButtonDisabled(true);
     }
   }, [company]);
+
+  useEffect(() => {
+    const getExistingCompanies = async () => {
+      try {
+        const companies = await DataStore.query(Company);
+        setExistingCompanies(companies);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getExistingCompanies();
+  }, []);
 
   const handleChange = (event) => {
     setCompany(event.target.value);
@@ -58,14 +80,50 @@ export default function CompanySelector() {
     setNewCompany({ ...newCompany, [name]: value });
   };
 
+  const handlePhoneChange = (value) => {
+    setNewCompany({ ...newCompany, phone: value });
+  };
+
   const handleLogoChange = (event) => {
     setNewCompany({ ...newCompany, logo: event.target.files[0] });
     if (event.target.files[0]) setIsLogoSubmitted(true);
   };
 
-  const handleSubmit = (event) => {
+  const handleJoinCompany = async (event) => {
+    event.preventDefault();
+    try {
+      const userResponse = await CreateUserDetails(company, false);
+      console.log(userResponse);
+      navigate('/');
+    } catch (error) {
+      alert('Could not join company.');
+    }
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Code to handle the submission of the new company form
+    try {
+      const response = await AddCompany(
+        newCompany.name,
+        newCompany.description,
+        newCompany.email,
+        newCompany.phone,
+        newCompany.fax,
+        newCompany.logo
+      );
+      console.log(response);
+      try {
+        const userResponse = await CreateUserDetails(response.id, true);
+        console.log(userResponse);
+        navigate('/');
+      } catch (error) {
+        alert('Failed to Add user to company', error);
+      }
+    } catch (error) {
+      console.log(error);
+      alert('Failed to create company', error);
+    }
   };
   const handleLogoClear = (event) => {
     event.preventDefault();
@@ -75,25 +133,8 @@ export default function CompanySelector() {
     }
   };
 
-  const existingCompany = [
-    {
-      id: 4,
-      name: 'abcefd',
-    },
-    {
-      id: 1,
-      name: 'fdsafwe',
-    },
-    {
-      id: 2,
-      name: 'vcxzva',
-    },
-    {
-      id: 3,
-      name: 'fgweagas',
-    },
-  ];
-
+  // DataStore.delete(Company)
+  console.log(company);
   return (
     <div style={{ height: '800px' }}>
       <div style={styles.container}>
@@ -122,13 +163,21 @@ export default function CompanySelector() {
                 value={company}
                 onChange={handleChange}
               >
-                {/* Code to fetch and map the existing companies here */}
-                {existingCompany.map((c) => {
-                  return <MenuItem value={c.id}>{c.name}</MenuItem>;
+                {existingCompanies.map((c) => {
+                  return (
+                    <MenuItem key={c.id} value={c.id}>
+                      {c.companyName}
+                    </MenuItem>
+                  );
                 })}
               </Select>
             </FormControl>
-            <Button disabled={companySubmitButtonDisabled}>Join Company</Button>
+            <Button
+              disabled={companySubmitButtonDisabled}
+              onClick={handleJoinCompany}
+            >
+              Join Company
+            </Button>
           </div>
         </div>
         <div>
@@ -165,16 +214,32 @@ export default function CompanySelector() {
                 onChange={handleNewCompanyChange}
                 required
               />
-              <TextField
-                margin='dense'
-                id='phone'
-                label='Phone'
-                type='tel'
-                fullWidth
-                name='phone'
+
+              <PhoneInput
+                inputProps={{
+                  name: 'phone',
+                  required: true,
+                  autoFocus: true,
+                }}
+                country={'us'}
                 value={newCompany.phone}
-                onChange={handleNewCompanyChange}
-                required
+                onChange={handlePhoneChange}
+                countryCodeEditable={false}
+                containerStyle={{
+                  width: '100%',
+                  marginTop: '6px',
+                  marginBottom: '4px',
+                }}
+                inputStyle={{
+                  paddingLeft: 60,
+                  width: '100%',
+                  height: '55px',
+                }}
+                buttonStyle={{
+                  backgroundColor: '#fff',
+                  paddingRight: 8,
+                  paddingLeft: 8,
+                }}
               />
               <TextField
                 margin='dense'

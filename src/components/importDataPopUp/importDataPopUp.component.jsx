@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { DataStore } from 'aws-amplify';
 import React, { useContext, useState } from 'react';
 import { InventoryContext } from '../../context/inventory.context';
-import { UserDetails } from '../../models';
+import { Company, UserDetails } from '../../models';
 import { BatchAddPartsToInventoryILS } from '../../utils/amplifyUtils';
 import './importDataPopUp.styles.scss';
 
@@ -40,10 +40,11 @@ const ImportDataPopUp = () => {
   };
 
   const batchAddHandler = async () => {
-    const userDetails = await DataStore.query(UserDetails);
+    const userDetails = await DataStore.query(Company);
     const companyID = userDetails[0].companyID;
+    console.log(userDetails);
 
-    await BatchAddPartsToInventoryILS(data, companyID);
+    // await BatchAddPartsToInventoryILS(data, companyID);
   };
 
   return (

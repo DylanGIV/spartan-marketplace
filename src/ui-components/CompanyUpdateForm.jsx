@@ -5,12 +5,12 @@
  **************************************************************************/
 
 /* eslint-disable */
-import * as React from 'react';
-import { Button, Flex, Grid, TextField } from '@aws-amplify/ui-react';
-import { getOverrideProps } from '@aws-amplify/ui-react/internal';
-import { Company } from '../models';
-import { fetchByPath, validateField } from './utils';
-import { DataStore } from 'aws-amplify';
+import * as React from "react";
+import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { Company } from "../models";
+import { fetchByPath, validateField } from "./utils";
+import { DataStore } from "aws-amplify";
 export default function CompanyUpdateForm(props) {
   const {
     id: idProp,
@@ -24,11 +24,12 @@ export default function CompanyUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    companyName: '',
-    phone: '',
-    contactEmail: '',
-    profilePictureUrl: '',
-    fax: '',
+    companyName: "",
+    phone: "",
+    contactEmail: "",
+    profilePictureUrl: "",
+    fax: "",
+    companyDescription: "",
   };
   const [companyName, setCompanyName] = React.useState(
     initialValues.companyName
@@ -41,6 +42,9 @@ export default function CompanyUpdateForm(props) {
     initialValues.profilePictureUrl
   );
   const [fax, setFax] = React.useState(initialValues.fax);
+  const [companyDescription, setCompanyDescription] = React.useState(
+    initialValues.companyDescription
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = companyRecord
@@ -51,6 +55,7 @@ export default function CompanyUpdateForm(props) {
     setContactEmail(cleanValues.contactEmail);
     setProfilePictureUrl(cleanValues.profilePictureUrl);
     setFax(cleanValues.fax);
+    setCompanyDescription(cleanValues.companyDescription);
     setErrors({});
   };
   const [companyRecord, setCompanyRecord] = React.useState(company);
@@ -64,10 +69,11 @@ export default function CompanyUpdateForm(props) {
   React.useEffect(resetStateValues, [companyRecord]);
   const validations = {
     companyName: [],
-    phone: [{ type: 'Phone' }],
-    contactEmail: [{ type: 'Email' }],
+    phone: [{ type: "Phone" }],
+    contactEmail: [{ type: "Email" }],
     profilePictureUrl: [],
     fax: [],
+    companyDescription: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -87,10 +93,10 @@ export default function CompanyUpdateForm(props) {
   };
   return (
     <Grid
-      as='form'
-      rowGap='15px'
-      columnGap='15px'
-      padding='20px'
+      as="form"
+      rowGap="15px"
+      columnGap="15px"
+      padding="20px"
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
@@ -99,6 +105,7 @@ export default function CompanyUpdateForm(props) {
           contactEmail,
           profilePictureUrl,
           fax,
+          companyDescription,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -124,7 +131,7 @@ export default function CompanyUpdateForm(props) {
         }
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === 'string' && value.trim() === '') {
+            if (typeof value === "string" && value.trim() === "") {
               modelFields[key] = undefined;
             }
           });
@@ -142,11 +149,11 @@ export default function CompanyUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, 'CompanyUpdateForm')}
+      {...getOverrideProps(overrides, "CompanyUpdateForm")}
       {...rest}
     >
       <TextField
-        label='Company name'
+        label="Company name"
         isRequired={false}
         isReadOnly={false}
         value={companyName}
@@ -159,25 +166,26 @@ export default function CompanyUpdateForm(props) {
               contactEmail,
               profilePictureUrl,
               fax,
+              companyDescription,
             };
             const result = onChange(modelFields);
             value = result?.companyName ?? value;
           }
           if (errors.companyName?.hasError) {
-            runValidationTasks('companyName', value);
+            runValidationTasks("companyName", value);
           }
           setCompanyName(value);
         }}
-        onBlur={() => runValidationTasks('companyName', companyName)}
+        onBlur={() => runValidationTasks("companyName", companyName)}
         errorMessage={errors.companyName?.errorMessage}
         hasError={errors.companyName?.hasError}
-        {...getOverrideProps(overrides, 'companyName')}
+        {...getOverrideProps(overrides, "companyName")}
       ></TextField>
       <TextField
-        label='Phone'
+        label="Phone"
         isRequired={false}
         isReadOnly={false}
-        type='tel'
+        type="tel"
         value={phone}
         onChange={(e) => {
           let { value } = e.target;
@@ -188,22 +196,23 @@ export default function CompanyUpdateForm(props) {
               contactEmail,
               profilePictureUrl,
               fax,
+              companyDescription,
             };
             const result = onChange(modelFields);
             value = result?.phone ?? value;
           }
           if (errors.phone?.hasError) {
-            runValidationTasks('phone', value);
+            runValidationTasks("phone", value);
           }
           setPhone(value);
         }}
-        onBlur={() => runValidationTasks('phone', phone)}
+        onBlur={() => runValidationTasks("phone", phone)}
         errorMessage={errors.phone?.errorMessage}
         hasError={errors.phone?.hasError}
-        {...getOverrideProps(overrides, 'phone')}
+        {...getOverrideProps(overrides, "phone")}
       ></TextField>
       <TextField
-        label='Contact email'
+        label="Contact email"
         isRequired={false}
         isReadOnly={false}
         value={contactEmail}
@@ -216,22 +225,23 @@ export default function CompanyUpdateForm(props) {
               contactEmail: value,
               profilePictureUrl,
               fax,
+              companyDescription,
             };
             const result = onChange(modelFields);
             value = result?.contactEmail ?? value;
           }
           if (errors.contactEmail?.hasError) {
-            runValidationTasks('contactEmail', value);
+            runValidationTasks("contactEmail", value);
           }
           setContactEmail(value);
         }}
-        onBlur={() => runValidationTasks('contactEmail', contactEmail)}
+        onBlur={() => runValidationTasks("contactEmail", contactEmail)}
         errorMessage={errors.contactEmail?.errorMessage}
         hasError={errors.contactEmail?.hasError}
-        {...getOverrideProps(overrides, 'contactEmail')}
+        {...getOverrideProps(overrides, "contactEmail")}
       ></TextField>
       <TextField
-        label='Profile picture url'
+        label="Profile picture url"
         isRequired={false}
         isReadOnly={false}
         value={profilePictureUrl}
@@ -244,24 +254,25 @@ export default function CompanyUpdateForm(props) {
               contactEmail,
               profilePictureUrl: value,
               fax,
+              companyDescription,
             };
             const result = onChange(modelFields);
             value = result?.profilePictureUrl ?? value;
           }
           if (errors.profilePictureUrl?.hasError) {
-            runValidationTasks('profilePictureUrl', value);
+            runValidationTasks("profilePictureUrl", value);
           }
           setProfilePictureUrl(value);
         }}
         onBlur={() =>
-          runValidationTasks('profilePictureUrl', profilePictureUrl)
+          runValidationTasks("profilePictureUrl", profilePictureUrl)
         }
         errorMessage={errors.profilePictureUrl?.errorMessage}
         hasError={errors.profilePictureUrl?.hasError}
-        {...getOverrideProps(overrides, 'profilePictureUrl')}
+        {...getOverrideProps(overrides, "profilePictureUrl")}
       ></TextField>
       <TextField
-        label='Fax'
+        label="Fax"
         isRequired={false}
         isReadOnly={false}
         value={fax}
@@ -274,47 +285,79 @@ export default function CompanyUpdateForm(props) {
               contactEmail,
               profilePictureUrl,
               fax: value,
+              companyDescription,
             };
             const result = onChange(modelFields);
             value = result?.fax ?? value;
           }
           if (errors.fax?.hasError) {
-            runValidationTasks('fax', value);
+            runValidationTasks("fax", value);
           }
           setFax(value);
         }}
-        onBlur={() => runValidationTasks('fax', fax)}
+        onBlur={() => runValidationTasks("fax", fax)}
         errorMessage={errors.fax?.errorMessage}
         hasError={errors.fax?.hasError}
-        {...getOverrideProps(overrides, 'fax')}
+        {...getOverrideProps(overrides, "fax")}
+      ></TextField>
+      <TextField
+        label="Company description"
+        isRequired={false}
+        isReadOnly={false}
+        value={companyDescription}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              companyName,
+              phone,
+              contactEmail,
+              profilePictureUrl,
+              fax,
+              companyDescription: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.companyDescription ?? value;
+          }
+          if (errors.companyDescription?.hasError) {
+            runValidationTasks("companyDescription", value);
+          }
+          setCompanyDescription(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("companyDescription", companyDescription)
+        }
+        errorMessage={errors.companyDescription?.errorMessage}
+        hasError={errors.companyDescription?.hasError}
+        {...getOverrideProps(overrides, "companyDescription")}
       ></TextField>
       <Flex
-        justifyContent='space-between'
-        {...getOverrideProps(overrides, 'CTAFlex')}
+        justifyContent="space-between"
+        {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children='Reset'
-          type='reset'
+          children="Reset"
+          type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
           isDisabled={!(idProp || company)}
-          {...getOverrideProps(overrides, 'ResetButton')}
+          {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
-          gap='15px'
-          {...getOverrideProps(overrides, 'RightAlignCTASubFlex')}
+          gap="15px"
+          {...getOverrideProps(overrides, "RightAlignCTASubFlex")}
         >
           <Button
-            children='Submit'
-            type='submit'
-            variation='primary'
+            children="Submit"
+            type="submit"
+            variation="primary"
             isDisabled={
               !(idProp || company) ||
               Object.values(errors).some((e) => e?.hasError)
             }
-            {...getOverrideProps(overrides, 'SubmitButton')}
+            {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>
       </Flex>

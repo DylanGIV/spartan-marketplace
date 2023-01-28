@@ -1,9 +1,5 @@
-import {
-  Authenticator,
-  useAuthenticator,
-  withAuthenticator,
-} from '@aws-amplify/ui-react';
-import { Routes, Route } from 'react-router-dom';
+import { useAuthenticator, withAuthenticator } from '@aws-amplify/ui-react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import Home from './routes/home/home.component';
 import Navigation from './routes/navigation/navigation.component';
 
@@ -12,12 +8,20 @@ import Parts from './routes/parts/parts.component';
 import Inventory from './routes/inventory/inventory.component';
 import { useEffect, useState } from 'react';
 import { UserDetails } from './models';
-import { DataStore } from 'aws-amplify';
+import { DataStore, Hub } from 'aws-amplify';
 import CompanySelect from './routes/companySelect/companySelect.component';
+import UserAuth from './routes/auth/userAuth.component';
 
-export default function App() {
+function App() {
+  Hub.listen('auth', async (data) => {
+    if (data.payload.event === 'signOut') {
+      await DataStore.clear();
+    }
+  });
+
   const [userDetailsExists, setUserDetailsExists] = useState(false);
   const { user } = useAuthenticator();
+  const navigate = useNavigate();
   useEffect(() => {
     const getUser = async () => {
       const userDetails = await DataStore.query(UserDetails);
@@ -44,6 +48,13 @@ export default function App() {
   } else if (user) {
     return <CompanySelect />;
   } else {
-    return <Authenticator />;
+    // return (
+    //   // <Routes>
+    //   //   <Route path='/auth' element={<UserAuth />} />;
+    //   // </Routes>
+    //   // <UserAuth />
+    // );
   }
 }
+
+export default App;

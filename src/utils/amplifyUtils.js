@@ -1,11 +1,12 @@
 import { Alert } from '@mui/material';
 import { Auth, Predicates } from 'aws-amplify';
-import { Company, Item } from '../models';
+import { Company, Item, UserDetails } from '../models';
 import { DataStore } from 'aws-amplify';
 import { useContext } from 'react';
 import { InventoryContext } from '../context/inventory.context';
 
 export const SignOutAuth = async () => {
+  await DataStore.clear();
   return await Auth.signOut();
 };
 
@@ -103,12 +104,36 @@ const sendData = async () => {
   console.log(response);
 };
 
-// const response = await DataStore.save(
-//   new UserDetails({
-//     companyID: companyID,
-//     isCompanyOwner: true,
-//   })
-// );
+export const CreateUserDetails = async (companyID, isOwner) => {
+  const response = await DataStore.save(
+    new UserDetails({
+      companyID: companyID,
+      isCompanyOwner: isOwner,
+    })
+  );
+  return response;
+};
+
+export const AddCompany = async (
+  companyName,
+  companyDescription,
+  email,
+  phone,
+  fax,
+  profilePictureUrl
+) => {
+  const response = await DataStore.save(
+    new Company({
+      companyName: companyName,
+      companyDescription: companyDescription,
+      contactEmail: email,
+      phone: phone,
+      fax: fax,
+      profilePictureUrl: profilePictureUrl,
+    })
+  );
+  return response;
+};
 
 export const DeleteAllPartsByCompany = async (companyID) => {
   return await DataStore.delete(Item, (p) => p.companyID.eq(companyID));

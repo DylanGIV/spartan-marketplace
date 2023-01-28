@@ -43,11 +43,12 @@ type RFQ @model @auth(rules: [{allow: public}]) {
   country: String
 }
 
-type UserDetails @model @auth(rules: [{allow: public}]) {
+type UserDetails @model @auth(rules: [{allow: public}, {allow: owner}]) {
   id: ID!
   companyID: ID! @index(name: "byCompany")
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "UserDetailsBillingAddress")
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "UserDetailsShippingAddress")
+  isCompanyOwner: Boolean
 }
 
 type Country @model @auth(rules: [{allow: public}]) {
@@ -90,13 +91,14 @@ type Company @model @auth(rules: [{allow: public}]) {
   companyName: String
   phone: AWSPhone
   contactEmail: AWSEmail
-  Items: [Item] @hasMany(indexName: "byCompany", fields: ["id"])
-  ItemMROS: [ItemMRO] @hasMany(indexName: "byCompany", fields: ["id"])
+  Items: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
+  ItemMROS: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "CompanyBillingAddress")
   CompanyMembers: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "CompanyShippingAddress")
   profilePictureUrl: String
   fax: String
+  companyDescription: String
 }
 
 type ItemMRO @model @auth(rules: [{allow: public}]) {
@@ -125,3 +127,4 @@ type Item @model @auth(rules: [{allow: public}]) {
   companyID: ID! @index(name: "byCompany")
   imageUrls: [String]
 }
+ 
