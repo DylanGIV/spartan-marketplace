@@ -8,20 +8,24 @@
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
+  Button,
+  CheckboxField,
   Divider,
   Flex,
+  SelectField,
   StepperField,
   Text,
   TextField,
+  View,
 } from "@aws-amplify/ui-react";
 export default function CustomerRFQForm(props) {
-  const { overrides, ...rest } = props;
+  const { contactPhone, overrides, ...rest } = props;
   return (
     <Flex
-      gap="0"
-      direction="row"
+      gap="14px"
+      direction="column"
       width="1200px"
-      height="unset"
+      height="1222px"
       justifyContent="flex-start"
       alignItems="flex-start"
       position="relative"
@@ -38,9 +42,8 @@ export default function CustomerRFQForm(props) {
         height="unset"
         justifyContent="center"
         alignItems="center"
-        grow="1"
-        shrink="1"
-        basis="0"
+        shrink="0"
+        alignSelf="stretch"
         position="relative"
         padding="0px 0px 0px 0px"
         {...getOverrideProps(overrides, "Frame 313")}
@@ -55,9 +58,10 @@ export default function CustomerRFQForm(props) {
           grow="1"
           shrink="1"
           basis="0"
+          alignSelf="stretch"
           position="relative"
           padding="0px 32px 0px 32px"
-          {...getOverrideProps(overrides, "Frame 406")}
+          {...getOverrideProps(overrides, "CreateQuotation")}
         >
           <Text
             fontFamily="Inter"
@@ -81,6 +85,30 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "Create Quotation")}
           ></Text>
           <TextField
+            label="Company Name"
+            width="unset"
+            shrink="0"
+            alignSelf="stretch"
+            placeholder="Placeholder"
+            size="large"
+            isDisabled={false}
+            labelHidden={false}
+            variation="default"
+            {...getOverrideProps(overrides, "CompanyName")}
+          ></TextField>
+          <TextField
+            label="Company Contact Email"
+            width="unset"
+            shrink="0"
+            alignSelf="stretch"
+            placeholder="Placeholder"
+            size="large"
+            isDisabled={false}
+            labelHidden={false}
+            variation="default"
+            {...getOverrideProps(overrides, "CompanyContactEmail")}
+          ></TextField>
+          <TextField
             label="Quotation Number"
             width="unset"
             shrink="0"
@@ -90,7 +118,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912693")}
+            {...getOverrideProps(overrides, "QuotationNumber")}
           ></TextField>
           <TextField
             label="Quotation Date"
@@ -102,7 +130,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912694")}
+            {...getOverrideProps(overrides, "QuotationDate")}
           ></TextField>
           <TextField
             label="Part Number"
@@ -114,7 +142,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912732")}
+            {...getOverrideProps(overrides, "PartNumber")}
           ></TextField>
           <TextField
             label="Alternate Part Number"
@@ -126,7 +154,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912739")}
+            {...getOverrideProps(overrides, "AlternatePartNumber")}
           ></TextField>
           <TextField
             label="Condition"
@@ -138,7 +166,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912746")}
+            {...getOverrideProps(overrides, "Condition")}
           ></TextField>
           <TextField
             label="Description"
@@ -150,7 +178,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912852")}
+            {...getOverrideProps(overrides, "Description")}
           ></TextField>
           <StepperField
             label="Quantity Requested"
@@ -161,11 +189,11 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "StepperField")}
+            {...getOverrideProps(overrides, "QuantityRequested")}
           ></StepperField>
         </Flex>
         <Divider
-          height="784px"
+          height="1000px"
           shrink="0"
           size="small"
           orientation="vertical"
@@ -183,7 +211,7 @@ export default function CustomerRFQForm(props) {
           basis="0"
           position="relative"
           padding="0px 32px 0px 32px"
-          {...getOverrideProps(overrides, "Frame 409")}
+          {...getOverrideProps(overrides, "CustomerDetails")}
         >
           <Text
             fontFamily="Inter"
@@ -216,10 +244,26 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912698")}
+            {...getOverrideProps(overrides, "ContactEmail")}
           ></TextField>
-          <TextField
-            label="Contact Phone"
+          <View
+            width="unset"
+            height="88px"
+            display="block"
+            gap="unset"
+            alignItems="unset"
+            justifyContent="unset"
+            overflow="hidden"
+            shrink="0"
+            alignSelf="stretch"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            backgroundColor="rgba(255,255,255,1)"
+            children={contactPhone}
+            {...getOverrideProps(overrides, "ContactPhone")}
+          ></View>
+          <SelectField
+            label="Saved Addresses"
             width="unset"
             shrink="0"
             alignSelf="stretch"
@@ -228,8 +272,8 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912829")}
-          ></TextField>
+            {...getOverrideProps(overrides, "SavedAddresses")}
+          ></SelectField>
           <TextField
             label="Country"
             width="unset"
@@ -240,7 +284,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912822")}
+            {...getOverrideProps(overrides, "Country")}
           ></TextField>
           <TextField
             label="State"
@@ -252,7 +296,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912767")}
+            {...getOverrideProps(overrides, "State")}
           ></TextField>
           <TextField
             label="City"
@@ -264,7 +308,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912774")}
+            {...getOverrideProps(overrides, "City")}
           ></TextField>
           <TextField
             label="Street address"
@@ -276,7 +320,7 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912760")}
+            {...getOverrideProps(overrides, "StreetAddress")}
           ></TextField>
           <TextField
             label="Zip code"
@@ -288,8 +332,17 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912699")}
+            {...getOverrideProps(overrides, "Zipcode")}
           ></TextField>
+          <CheckboxField
+            label="Save Address?"
+            shrink="0"
+            size="large"
+            defaultChecked={true}
+            isDisabled={false}
+            labelPosition="start"
+            {...getOverrideProps(overrides, "SaveAddressCheckbox")}
+          ></CheckboxField>
           <TextField
             label="Additional Comments"
             width="unset"
@@ -300,9 +353,35 @@ export default function CustomerRFQForm(props) {
             isDisabled={false}
             labelHidden={false}
             variation="default"
-            {...getOverrideProps(overrides, "TextField36912700")}
+            {...getOverrideProps(overrides, "AdditionalComments")}
           ></TextField>
         </Flex>
+      </Flex>
+      <Flex
+        gap="10px"
+        direction="column"
+        width="unset"
+        height="unset"
+        justifyContent="flex-start"
+        alignItems="center"
+        shrink="0"
+        alignSelf="stretch"
+        position="relative"
+        padding="24px 493px 24px 493px"
+        backgroundColor="rgba(255,255,255,1)"
+        {...getOverrideProps(overrides, "Frame 421")}
+      >
+        <Button
+          width="227px"
+          height="57px"
+          borderRadius="10px"
+          shrink="0"
+          size="large"
+          isDisabled={false}
+          variation="primary"
+          children="Primary Button"
+          {...getOverrideProps(overrides, "SubmitButton")}
+        ></Button>
       </Flex>
     </Flex>
   );

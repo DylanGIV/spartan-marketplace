@@ -119,8 +119,8 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Dashboard"
-          {...getOverrideProps(overrides, "Dashboard")}
+          children="Home"
+          {...getOverrideProps(overrides, "Home")}
         ></Text>
         <Text
           fontFamily="Inter"
@@ -141,8 +141,8 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Jobs"
-          {...getOverrideProps(overrides, "Jobs")}
+          children="Parts"
+          {...getOverrideProps(overrides, "Parts")}
         ></Text>
         <Text
           fontFamily="Inter"
@@ -163,8 +163,8 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Applicants"
-          {...getOverrideProps(overrides, "Applicants")}
+          children="Inventory"
+          {...getOverrideProps(overrides, "Inventory")}
         ></Text>
         <Text
           fontFamily="Inter"
@@ -185,8 +185,8 @@ export default function NavBar(props) {
           position="relative"
           padding="0px 0px 0px 0px"
           whiteSpace="pre-wrap"
-          children="Company"
-          {...getOverrideProps(overrides, "Company")}
+          children="RFQs"
+          {...getOverrideProps(overrides, "RFQs")}
         ></Text>
       </Flex>
       <Flex

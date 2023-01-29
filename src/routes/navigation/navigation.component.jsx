@@ -8,7 +8,7 @@ const Navigation = () => {
 
   const navigate = useNavigate();
   const navOverrides = {
-    Dashboard: {
+    Home: {
       onClick: () => {
         navigate('/');
       },
@@ -16,7 +16,7 @@ const Navigation = () => {
         cursor: 'pointer',
       },
     },
-    Jobs: {
+    Parts: {
       onClick: () => {
         navigate('/Parts');
       },
@@ -24,7 +24,7 @@ const Navigation = () => {
         cursor: 'pointer',
       },
     },
-    Applicants: {
+    Inventory: {
       onClick: () => {
         navigate('/Inventory');
       },
@@ -32,7 +32,7 @@ const Navigation = () => {
         cursor: 'pointer',
       },
     },
-    Company: {
+    RFQs: {
       onClick: () => {
         navigate('/rfq');
       },

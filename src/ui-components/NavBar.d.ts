@@ -14,10 +14,10 @@ export declare type NavBarOverridesProps = {
     "Star 1"?: PrimitiveOverrideProps<IconProps>;
     Logo29767075?: PrimitiveOverrideProps<TextProps>;
     "Frame 32129767076"?: PrimitiveOverrideProps<FlexProps>;
-    Dashboard?: PrimitiveOverrideProps<TextProps>;
-    Jobs?: PrimitiveOverrideProps<TextProps>;
-    Applicants?: PrimitiveOverrideProps<TextProps>;
-    Company?: PrimitiveOverrideProps<TextProps>;
+    Home?: PrimitiveOverrideProps<TextProps>;
+    Parts?: PrimitiveOverrideProps<TextProps>;
+    Inventory?: PrimitiveOverrideProps<TextProps>;
+    RFQs?: PrimitiveOverrideProps<TextProps>;
     "Frame 32129767081"?: PrimitiveOverrideProps<FlexProps>;
     SearchField?: PrimitiveOverrideProps<SearchFieldProps>;
     Icon?: PrimitiveOverrideProps<ViewProps>;

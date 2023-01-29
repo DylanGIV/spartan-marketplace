@@ -4,6 +4,7 @@ import { Company, Item, UserDetails } from '../models';
 import { DataStore } from 'aws-amplify';
 import { useContext } from 'react';
 import { InventoryContext } from '../context/inventory.context';
+import React from 'react';
 
 export const SignOutAuth = async () => {
   await DataStore.clear();
@@ -102,7 +103,7 @@ export const GetPartsByCompanyAndSearch = async (
   return parts;
 };
 export const GetCompanyByID = async (companyID) => {
-  const company = await DataStore.query(Company, (p) => p.p.eq(companyID));
+  const company = await DataStore.query(Company, (p) => p.id.eq(companyID));
   return company;
 };
 export const GetAllCompanies = async () => {

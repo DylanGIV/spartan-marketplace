@@ -1,17 +1,20 @@
 import { Alert } from '@aws-amplify/ui-react';
 import { Box, Modal } from '@mui/material';
+import { DataStore } from 'aws-amplify';
 import { useContext, useEffect, useState } from 'react';
 import AddPartPopUp from '../../components/addPartPopUp/addPartPopUp.component';
 import DeleteAllPartsPopUp from '../../components/deleteAllPartsPopUp/deleteAllPartsPopUp.component';
 import ImportDataPopUp from '../../components/importDataPopUp/importDataPopUp.component';
 import { InventoryContext } from '../../context/inventory.context';
+import { Item, UserDetails } from '../../models';
 import {
   InventoryKey,
   InventoryPartsDetailsCollection,
 } from '../../ui-components';
-import { GetPartsByCompany } from '../../utils/amplifyUtils';
+import { GetCompanyByID, GetPartsByCompany } from '../../utils/amplifyUtils';
 
 const Inventory = () => {
+  const [data, setData] = useState([]);
   const [parts, setParts] = useState([]);
 
   const {
@@ -22,8 +25,6 @@ const Inventory = () => {
     setIsDeleteAllPartOpen,
     setIsImportPartOpen,
   } = useContext(InventoryContext);
-
-  // const AddPartHandler = async () => {};
 
   // useEffect(() => {
   //   const GetParts = async () => {
@@ -36,33 +37,33 @@ const Inventory = () => {
   //   };
   //   GetParts();
   // }, []);
-  // const [data, setData] = useState(null);
 
-  // useEffect(() => {
-  //   const queryData = async () => {
-  //     const userDetails = await DataStore.query(UserDetails);
-  //     const companyID = userDetails[0].companyID;
+  useEffect(() => {
+    const queryData = async () => {
+      const userDetails = await DataStore.query(UserDetails);
+      const companyID = userDetails[0].companyID;
 
-  //     let company = null;
-  //     let parts = null;
+      let company = null;
+      let parts = null;
 
-  //     try {
-  //       company = await GetCompanyByID(companyID);
-  //       parts = await GetPartsByCompany(companyID);
-  //     } catch (error) {
-  //       alert('There was an error retrieving parts list.');
-  //       console.log(error);
-  //     }
-  //     if (company && parts) {
-  //       const data = new Object({
-  //         company: company,
-  //         parts: parts,
-  //       });
-  //       setData(data);
-  //     }
-  //   };
-  //   queryData();
-  // }, []);
+      try {
+        company = await GetCompanyByID(companyID);
+        parts = await GetPartsByCompany(companyID);
+      } catch (error) {
+        alert('There was an error retrieving parts list.');
+        console.log(error);
+      }
+      if (company && parts) {
+        const data = new Object({
+          company: company,
+          parts: parts,
+        });
+        setData(data);
+      }
+    };
+    queryData();
+  }, []);
+  console.log(data.parts);
 
   return (
     <div>
@@ -95,7 +96,7 @@ const Inventory = () => {
           <InventoryKey />
         </div>
 
-        <InventoryPartsDetailsCollection />
+        <InventoryPartsDetailsCollection items={data.parts} />
       </div>
 
       <Modal open={isAddPartOpen} onClose={() => setIsAddPartOpen(false)}>

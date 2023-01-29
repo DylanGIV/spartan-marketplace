@@ -37,6 +37,12 @@ function App() {
     };
     getUser();
   }, [user]);
+  useEffect(() => {
+    const startDataStore = async () => {
+      await DataStore.start();
+    };
+    startDataStore();
+  }, []);
   if (user && userDetailsExists) {
     return (
       <Routes>

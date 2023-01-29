@@ -29,7 +29,7 @@ const AddPartPopUp = () => {
       partNumber.length > 0 &&
       altPartNumber.length > 0 &&
       description.length > 0 &&
-      newQuantity > 0 &&
+      newQuantity > -1 &&
       condition.length > 0 &&
       imageUrl.length > 0 &&
       control.length > 0 &&
@@ -41,7 +41,6 @@ const AddPartPopUp = () => {
       if (companyID) {
         try {
           const response = await AddPartToInventory(
-            partID,
             nsn,
             partNumber,
             altPartNumber,
