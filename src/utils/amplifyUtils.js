@@ -7,7 +7,6 @@ import { InventoryContext } from '../context/inventory.context';
 import React from 'react';
 
 export const SignOutAuth = async () => {
-  await DataStore.clear();
   return await Auth.signOut();
 };
 
@@ -45,23 +44,34 @@ export const BatchAddPartsToInventoryILS = async (
   setIsImportPartOpen
 ) => {
   // const { setIsImportPartOpen } = useContext(InventoryContext);
-  const promises = items.map((item) => {
-    const newPrice = parseFloat(item.PRICE);
+  const promises = items.map(async (item) => {
+    let newPrice = null;
+    console.log(item.PRICE);
+
+    if (item.PRICE !== '') {
+      newPrice = parseFloat(item.PRICE);
+      console.log(newPrice);
+    }
     const newQuantity = parseInt(item.QUANTITY);
-    return DataStore.save(
-      new Item({
-        // nsn: nsn,
-        partNumber: item.PARTNUMBER,
-        altPartNumber: item.ALTERNATEPARTNUMBER,
-        description: item.DESCRIPTION,
-        quantity: newQuantity,
-        condition: item.CONDITIONCD,
-        // imageUrl: imageUrl,
-        control: item.CONTROL,
-        price: newPrice,
-        companyID: companyID,
-      })
-    );
+    try {
+      const response = await DataStore.save(
+        new Item({
+          nsn: '',
+          partNumber: item.PARTNUMBER,
+          altPartNumber: item.ALTERNATEPARTNUMBER,
+          description: item.DESCRIPTION,
+          quantity: newQuantity,
+          condition: item.CONDITIONCD,
+          imageUrls: [''],
+          control: item.CONTROL,
+          price: newPrice,
+          companyID: companyID,
+        })
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   });
   await Promise.all(promises)
     .then(() => {
@@ -76,6 +86,20 @@ export const BatchAddPartsToInventoryILS = async (
 export const GetPartsByCompany = async (companyID) => {
   const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
   return parts;
+};
+export const GetPartsByCompanySubscribe = (company, setData) => {
+  const subscription = DataStore.observeQuery(
+    Item,
+    (p) => p.companyID.eq(company.id),
+    { pollInterval: 2000 }
+  ).subscribe((snapshot) => {
+    const { items, isSynced } = snapshot;
+    setData({
+      company: company,
+      parts: items,
+    });
+  });
+  return subscription;
 };
 export const GetPartsByCompanyAndSearch = async (
   companyID,

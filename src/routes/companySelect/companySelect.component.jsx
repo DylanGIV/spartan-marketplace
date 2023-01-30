@@ -134,8 +134,6 @@ export default function CompanySelector() {
     }
   };
 
-  // DataStore.delete(Company)
-  console.log(company);
   return (
     <div style={{ height: '800px' }}>
       <div style={styles.container}>

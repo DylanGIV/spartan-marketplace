@@ -1,13 +1,13 @@
 import { ScrollView } from '@aws-amplify/ui-react';
 import { Button } from '@mui/material';
 import { DataStore } from 'aws-amplify';
-import React, { useContext, useState } from 'react';
+import React, { forwardRef, useContext, useState } from 'react';
 import { InventoryContext } from '../../context/inventory.context';
-import { Company, UserDetails } from '../../models';
+import { Company, Item, UserDetails } from '../../models';
 import { BatchAddPartsToInventoryILS } from '../../utils/amplifyUtils';
 import './importDataPopUp.styles.scss';
 
-const ImportDataPopUp = () => {
+const ImportDataPopUp = forwardRef((props, ref) => {
   const [data, setData] = useState([]);
   const { setIsImportPartOpen } = useContext(InventoryContext);
 
@@ -43,12 +43,7 @@ const ImportDataPopUp = () => {
     const userDetails = await DataStore.query(UserDetails);
     const companyID = userDetails[0].companyID;
     try {
-      const response = await BatchAddPartsToInventoryILS(
-        data,
-        companyID,
-        setIsImportPartOpen
-      );
-      console.log(response);
+      await TestFunctionBatch(data, companyID, setIsImportPartOpen);
     } catch (error) {
       console.log(error);
     }
@@ -63,6 +58,46 @@ const ImportDataPopUp = () => {
       <Button onClick={batchAddHandler}>Submit</Button>
     </div>
   );
-};
+});
+const TestFunctionBatch = async (items, companyID, setIsImportPartOpen) => {
+  // const { setIsImportPartOpen } = useContext(InventoryContext);
+  const promises = items.map(async (item) => {
+    let newPrice = parseFloat(item.PRICE);
+    let newQuantity = parseInt(item.QUANTITY);
 
+    if (isNaN(newPrice)) {
+      newPrice = null;
+    }
+    if (isNaN(newQuantity)) {
+      newQuantity = null;
+    }
+    try {
+      const response = await DataStore.save(
+        new Item({
+          nsn: '',
+          partNumber: item.PARTNUMBER,
+          altPartNumber: item.ALTERNATEPARTNUMBER,
+          description: item.DESCRIPTION,
+          quantity: newQuantity,
+          condition: item.CONDITIONCD,
+          imageUrls: [''],
+          control: item.CONTROL,
+          price: newPrice,
+          companyID: companyID,
+        })
+      );
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  await Promise.all(promises)
+    .then(() => {
+      alert('Successfully saved all items to database.');
+      setIsImportPartOpen(false);
+    })
+    .catch((err) => {
+      console.log('Error while batch saving:', err);
+    });
+};
 export default ImportDataPopUp;

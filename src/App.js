@@ -18,6 +18,7 @@ function App() {
   Hub.listen('auth', async (data) => {
     if (data.payload.event === 'signOut') {
       await DataStore.clear();
+      // await DataStore.start();
     }
   });
 
@@ -38,10 +39,10 @@ function App() {
     getUser();
   }, [user]);
   useEffect(() => {
-    const startDataStore = async () => {
-      await DataStore.start();
-    };
-    startDataStore();
+    // const startDataStore = async () => {
+    //   await DataStore.start();
+    // };
+    // startDataStore();
   }, []);
   if (user && userDetailsExists) {
     return (

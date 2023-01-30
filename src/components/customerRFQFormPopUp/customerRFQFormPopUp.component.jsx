@@ -1,9 +1,9 @@
 import { Text } from '@aws-amplify/ui-react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import { CustomerRFQForm } from '../../ui-components';
 
-const CustomerRFQFormPopUp = (props) => {
+const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const { userDetails, dataRFQ } = props;
   const date = new Date();
   const [quotationNumber, setQuotationNumber] = useState('');
@@ -201,6 +201,6 @@ const CustomerRFQFormPopUp = (props) => {
       }
     />
   );
-};
+});
 
 export default CustomerRFQFormPopUp;

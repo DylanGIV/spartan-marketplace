@@ -11,11 +11,15 @@ import {
   InventoryKey,
   InventoryPartsDetailsCollection,
 } from '../../ui-components';
-import { GetCompanyByID, GetPartsByCompany } from '../../utils/amplifyUtils';
+import {
+  GetCompanyByID,
+  GetPartsByCompany,
+  GetPartsByCompanySubscribe,
+} from '../../utils/amplifyUtils';
 
 const Inventory = () => {
-  const [data, setData] = useState([]);
-  const [parts, setParts] = useState([]);
+  const [data, setData] = useState({ company: null, parts: null });
+  const [company, setCompany] = useState(null);
 
   const {
     isAddPartOpen,
@@ -26,44 +30,34 @@ const Inventory = () => {
     setIsImportPartOpen,
   } = useContext(InventoryContext);
 
-  // useEffect(() => {
-  //   const GetParts = async () => {
-  //     try {
-  //       const parts = await GetPartsByCompany();
-  //       setParts(parts);
-  //     } catch (error) {
-  //       Alert(error, 'Error fetching parts.');
-  //     }
-  //   };
-  //   GetParts();
-  // }, []);
-
   useEffect(() => {
     const queryData = async () => {
       const userDetails = await DataStore.query(UserDetails);
       const companyID = userDetails[0].companyID;
 
       let company = null;
-      let parts = null;
-
       try {
         company = await GetCompanyByID(companyID);
-        parts = await GetPartsByCompany(companyID);
       } catch (error) {
-        alert('There was an error retrieving parts list.');
+        alert('There was an error retrieving Company.');
         console.log(error);
       }
-      if (company && parts) {
-        const data = new Object({
-          company: company,
-          parts: parts,
-        });
-        setData(data);
+
+      if (company) {
+        setCompany(company[0]);
       }
     };
     queryData();
   }, []);
-  console.log(data.parts);
+
+  useEffect(() => {
+    if (company) {
+      GetPartsByCompanySubscribe(company, setData);
+    }
+    // return () => {
+    //   subscription.unsubscribe();
+    // };
+  }, [company]);
 
   return (
     <div>
@@ -86,7 +80,7 @@ const Inventory = () => {
               </button>
             </div>
           </div>
-          <div style={{}}>
+          <div>
             <button onClick={() => setIsDeleteAllPartOpen(true)}>
               DELETE ALL DATA
             </button>

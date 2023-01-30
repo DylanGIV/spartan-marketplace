@@ -1,12 +1,12 @@
 import { Button, TextField } from '@mui/material';
-import { useContext, useState } from 'react';
+import { forwardRef, useContext, useState } from 'react';
 import './addPartPopUp.styles.scss';
 import { AddPartToInventory } from '../../utils/amplifyUtils';
 import { UserDetails } from '../../models';
 import { DataStore } from 'aws-amplify';
 import { InventoryContext } from '../../context/inventory.context';
 
-const AddPartPopUp = () => {
+const AddPartPopUp = forwardRef((props, ref) => {
   const [partID, setPartID] = useState('');
   const [nsn, setNsn] = useState('');
   const [partNumber, setPartNumber] = useState('');
@@ -143,6 +143,6 @@ const AddPartPopUp = () => {
       </Button>
     </div>
   );
-};
+});
 
 export default AddPartPopUp;

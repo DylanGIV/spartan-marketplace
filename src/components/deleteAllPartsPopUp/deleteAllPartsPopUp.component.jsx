@@ -1,6 +1,6 @@
 import { Button, TextField } from '@mui/material';
 import { DataStore } from 'aws-amplify';
-import { useContext, useEffect } from 'react';
+import { forwardRef, useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { InventoryContext } from '../../context/inventory.context';
 import { UserDetails } from '../../models';
@@ -9,7 +9,7 @@ import './deleteAllPartsPopUp.styles.scss';
 
 const DELETE_MATCH_WORD = 'delete';
 
-const DeleteAllPartsPopUp = () => {
+const DeleteAllPartsPopUp = forwardRef((props, ref) => {
   const [buttonInactive, setButtonInactive] = useState(true);
   const [deleteText, setDeleteText] = useState('');
 
@@ -31,8 +31,7 @@ const DeleteAllPartsPopUp = () => {
     const companyID = userDetails[0].companyID;
     if (companyID) {
       try {
-        const response = await DeleteAllPartsByCompany(companyID);
-        console.log(response);
+        await DeleteAllPartsByCompany(companyID);
         alert('Successfully deleted all items');
         setIsDeleteAllPartOpen(false);
       } catch (error) {
@@ -74,6 +73,6 @@ const DeleteAllPartsPopUp = () => {
       </div>
     </div>
   );
-};
+});
 
 export default DeleteAllPartsPopUp;

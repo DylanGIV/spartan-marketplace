@@ -10,7 +10,7 @@ import {
 import {
   GetAllCompanies,
   GetPartsByCompany,
-  GetPartsByCompanyAndSearch,
+  // GetPartsByCompanyAndSearch,
 } from '../../utils/amplifyUtils';
 import * as queries from '../../graphql/queries.ts';
 import * as mutations from '../../graphql/mutations.ts';
@@ -34,6 +34,31 @@ const Parts = () => {
 
   const handleCreateRFQClick = (company, item) => {
     setDataRFQ({ isOpen: true, company: company, item: item });
+  };
+
+  const TestFunction = async (companyID, search) => {
+    let parts = [];
+    const queryParts = await DataStore.query(Item, (p) =>
+      p.companyID.eq(companyID)
+    );
+
+    queryParts.forEach((p) => {
+      if (
+        (p.altPartNumber
+          ? p.altPartNumber.toLowerCase().includes(search.toLowerCase())
+          : false) ||
+        (p.nsn ? p.nsn.toLowerCase().includes(search.toLowerCase()) : false) ||
+        (p.partNumber
+          ? p.partNumber.toLowerCase().includes(search.toLowerCase())
+          : false) ||
+        (p.description
+          ? p.description.toLowerCase().includes(search.toLowerCase())
+          : false)
+      ) {
+        parts.push(p);
+      }
+    });
+    return parts;
   };
 
   useEffect(() => {
@@ -65,14 +90,7 @@ const Parts = () => {
           let parts = null;
           try {
             if (partSearch) {
-              const searchUpper = partSearch.toUpperCase();
-              const searchLower = partSearch.toLowerCase();
-              parts = await GetPartsByCompanyAndSearch(
-                companies[i].id,
-                partSearch,
-                searchUpper,
-                searchLower
-              );
+              parts = await TestFunction(companies[i].id, partSearch);
             } else {
               parts = await GetPartsByCompany(companies[i].id);
             }
@@ -131,6 +149,7 @@ const Parts = () => {
                   >
                     {(item, index) => (
                       <PartsListDetails
+                        key={item.id}
                         item={item}
                         overrides={{
                           'CREATE RFQ': {
