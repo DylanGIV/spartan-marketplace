@@ -11,7 +11,7 @@ import {
   GetAllCompanies,
   GetPartsByCompany,
   // GetPartsByCompanyAndSearch,
-} from '../../utils/amplifyUtils';
+} from '../../utils/utilsAmplify';
 import * as queries from '../../graphql/queries.ts';
 import * as mutations from '../../graphql/mutations.ts';
 import { API, Auth, DataStore } from 'aws-amplify';
@@ -134,13 +134,8 @@ const Parts = () => {
                     company={d.company}
                     style={{ margin: 5 }}
                   />
-                  {/* <PartsListDetailsCollection
-                    key={d.parts.id}
-                    items={d.parts}
-                    overrides={partsListOverrides}
-                    style={{ marginLeft: 5 }}
-                    /> */}
                   <Collection
+                    key={d.id}
                     type='grid'
                     items={d.parts}
                     style={{ marginLeft: 5 }}

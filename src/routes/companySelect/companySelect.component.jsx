@@ -16,11 +16,11 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 import { DataStore } from 'aws-amplify';
-import { Company } from '../../models';
-import { AddCompany, CreateUserDetails } from '../../utils/amplifyUtils';
+import { AddCompany, CreateUserDetails } from '../../utils/utilsAmplify';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { useNavigate } from 'react-router';
+import { Company } from '../../models';
 
 export default function CompanySelector() {
   const [open, setOpen] = useState(false);

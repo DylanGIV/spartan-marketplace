@@ -15,7 +15,7 @@ import {
   GetCompanyByID,
   GetPartsByCompany,
   GetPartsByCompanySubscribe,
-} from '../../utils/amplifyUtils';
+} from '../../utils/utilsAmplify';
 
 const Inventory = () => {
   const [data, setData] = useState({ company: null, parts: null });

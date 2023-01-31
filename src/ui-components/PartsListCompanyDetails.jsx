@@ -18,7 +18,7 @@ export default function PartsListCompanyDetails(props) {
     <Flex
       gap="0"
       direction="column"
-      width="1487px"
+      width="1440px"
       height="unset"
       justifyContent="flex-start"
       alignItems="flex-start"
@@ -31,7 +31,7 @@ export default function PartsListCompanyDetails(props) {
       <Flex
         gap="0"
         direction="column"
-        width="unset"
+        width="1440px"
         height="unset"
         justifyContent="flex-start"
         alignItems="flex-start"
@@ -39,7 +39,6 @@ export default function PartsListCompanyDetails(props) {
         shrink="0"
         position="relative"
         padding="0px 0px 0px 0px"
-        backgroundColor="rgba(254,254,254,1)"
         {...getOverrideProps(overrides, "Frame 420")}
       >
         <Flex
@@ -127,28 +126,7 @@ export default function PartsListCompanyDetails(props) {
             padding="0px 0px 0px 0px"
             whiteSpace="pre-wrap"
             children="Extra"
-            {...getOverrideProps(overrides, "Extra36562855")}
-          ></Text>
-          <Text
-            fontFamily="Inter"
-            fontSize="16px"
-            fontWeight="400"
-            color="rgba(0,0,0,1)"
-            lineHeight="24px"
-            textAlign="left"
-            display="block"
-            direction="column"
-            justifyContent="unset"
-            width="340px"
-            height="unset"
-            gap="unset"
-            alignItems="unset"
-            shrink="0"
-            position="relative"
-            padding="0px 0px 0px 0px"
-            whiteSpace="pre-wrap"
-            children="Extra"
-            {...getOverrideProps(overrides, "Extra36562856")}
+            {...getOverrideProps(overrides, "Extra")}
           ></Text>
           <Text
             fontFamily="Inter"
@@ -181,7 +159,7 @@ export default function PartsListCompanyDetails(props) {
             display="block"
             direction="column"
             justifyContent="unset"
-            width="76px"
+            width="117px"
             height="unset"
             gap="unset"
             alignItems="unset"
@@ -194,7 +172,7 @@ export default function PartsListCompanyDetails(props) {
           ></Text>
         </Flex>
         <Flex
-          gap="581px"
+          gap="200px"
           direction="row"
           width="1488px"
           height="unset"
@@ -216,7 +194,7 @@ export default function PartsListCompanyDetails(props) {
             display="block"
             direction="column"
             justifyContent="unset"
-            width="391px"
+            width="422px"
             height="unset"
             gap="unset"
             alignItems="unset"

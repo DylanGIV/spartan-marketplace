@@ -1,8 +1,3 @@
-import { DataStore } from 'aws-amplify';
-import { useEffect, useState } from 'react';
-import { Item } from '../../models';
-import { DeleteAllParts } from '../../utils/amplifyUtils';
-
 const Home = () => {
   // const [items, setItems] = useState([]);
 

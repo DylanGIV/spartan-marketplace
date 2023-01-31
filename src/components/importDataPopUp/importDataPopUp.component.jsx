@@ -4,7 +4,7 @@ import { DataStore } from 'aws-amplify';
 import React, { forwardRef, useContext, useState } from 'react';
 import { InventoryContext } from '../../context/inventory.context';
 import { Company, Item, UserDetails } from '../../models';
-import { BatchAddPartsToInventoryILS } from '../../utils/amplifyUtils';
+import { BatchAddPartsToInventoryILS } from '../../utils/utilsAmplify';
 import './importDataPopUp.styles.scss';
 
 const ImportDataPopUp = forwardRef((props, ref) => {

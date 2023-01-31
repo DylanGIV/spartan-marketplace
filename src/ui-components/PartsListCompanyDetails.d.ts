@@ -16,8 +16,7 @@ export declare type PartsListCompanyDetailsOverridesProps = {
     image36562867?: PrimitiveOverrideProps<ImageProps>;
     image36562868?: PrimitiveOverrideProps<ImageProps>;
     Company?: PrimitiveOverrideProps<TextProps>;
-    Extra36562855?: PrimitiveOverrideProps<TextProps>;
-    Extra36562856?: PrimitiveOverrideProps<TextProps>;
+    Extra?: PrimitiveOverrideProps<TextProps>;
     "Phone:"?: PrimitiveOverrideProps<TextProps>;
     Distance?: PrimitiveOverrideProps<TextProps>;
     "Frame 418"?: PrimitiveOverrideProps<FlexProps>;

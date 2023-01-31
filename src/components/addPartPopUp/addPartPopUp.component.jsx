@@ -1,7 +1,7 @@
 import { Button, TextField } from '@mui/material';
 import { forwardRef, useContext, useState } from 'react';
 import './addPartPopUp.styles.scss';
-import { AddPartToInventory } from '../../utils/amplifyUtils';
+import { AddPartToInventory } from '../../utils/utilsAmplify';
 import { UserDetails } from '../../models';
 import { DataStore } from 'aws-amplify';
 import { InventoryContext } from '../../context/inventory.context';

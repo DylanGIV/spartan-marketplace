@@ -1,6 +1,13 @@
 import { Alert } from '@mui/material';
 import { Auth, Predicates } from 'aws-amplify';
-import { Company, Item, UserDetails } from '../models';
+import {
+  Company,
+  Item,
+  RFQ,
+  ShippingAddress,
+  UserDetails,
+  UserDetailsShippingAddress,
+} from '../models';
 import { DataStore } from 'aws-amplify';
 import { useContext } from 'react';
 import { InventoryContext } from '../context/inventory.context';
@@ -88,10 +95,8 @@ export const GetPartsByCompany = async (companyID) => {
   return parts;
 };
 export const GetPartsByCompanySubscribe = (company, setData) => {
-  const subscription = DataStore.observeQuery(
-    Item,
-    (p) => p.companyID.eq(company.id),
-    { pollInterval: 2000 }
+  const subscription = DataStore.observeQuery(Item, (p) =>
+    p.companyID.eq(company.id)
   ).subscribe((snapshot) => {
     const { items, isSynced } = snapshot;
     setData({
@@ -154,6 +159,75 @@ export const CreateUserDetails = async (companyID, isOwner) => {
     })
   );
   return response;
+};
+export const CreateUserShippingAddress = async (shippingAddress) => {
+  const userDetails = await DataStore.query(UserDetails);
+  const newShippingAddress = await DataStore.save(
+    new ShippingAddress({
+      country: shippingAddress.country,
+      addressLine1: shippingAddress.addressLine1,
+      addressLine2: shippingAddress.addressLine2,
+      city: shippingAddress.city,
+      postalCode: shippingAddress.postalCode,
+      regi: shippingAddress.region,
+      streetNumber: shippingAddress.streetNumber,
+      unitNumber: shippingAddress.unitNumber,
+    })
+  );
+  await DataStore.save(
+    new UserDetailsShippingAddress({
+      shippingAddress: newShippingAddress,
+      userDetails: userDetails[0],
+    })
+  );
+};
+
+export const CreateRFQ = async (rfqDetails) => {
+  await DataStore.save(
+    new RFQ({
+      quotationNumber: rfqDetails.quotationNumber,
+      addressLine1: rfqDetails.addressLine1,
+      addressLine2: rfqDetails.addressLine2,
+      city: rfqDetails.city,
+      country: rfqDetails.country,
+      state: rfqDetails.state,
+      zip: rfqDetails.zip,
+      phone: rfqDetails.phone,
+      email: rfqDetails.email,
+      attr1: rfqDetails.attr1,
+      attr2: rfqDetails.attr2,
+      attr3: rfqDetails.attr3,
+      attr4: rfqDetails.attr4,
+      attr5: rfqDetails.attr5,
+      attr6: rfqDetails.attr6,
+      altPartNumber: rfqDetails.altPartNumber,
+      nsn: rfqDetails.nsn,
+      partNumber: rfqDetails.partNumber,
+      condition: rfqDetails.condition,
+      uom: rfqDetails.uom,
+      description: rfqDetails.description,
+      price: rfqDetails.price,
+      discount: rfqDetails.discount,
+      companyName: rfqDetails.companyName,
+      contact: rfqDetails.contact,
+      custRefNum: rfqDetails.custRefNum,
+      dateSent: rfqDetails.dateSent,
+      dueDate: rfqDetails.dueDate,
+      emailComments: rfqDetails.emailComments,
+      imageUrls: rfqDetails.imageUrls,
+      internalComments: rfqDetails.internalComments,
+      leadTime: rfqDetails.leadTime,
+      lineTotal: rfqDetails.lineTotal,
+      paymentTerms: rfqDetails.paymentTerms,
+      quantityQuoted: rfqDetails.quantityQuoted,
+      quantityRequested: rfqDetails.quantityRequested,
+      salesTax: rfqDetails.salesTax,
+      shippingMethod: rfqDetails.shippingMethod,
+      shippingTerms: rfqDetails.shippingTerms,
+      subtotal: rfqDetails.subtotal,
+      total: rfqDetails.total,
+    })
+  );
 };
 
 export const AddCompany = async (

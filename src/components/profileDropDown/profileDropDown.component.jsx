@@ -1,6 +1,6 @@
 import './profileDropDown.styles.scss';
 import { Button } from '@mui/material';
-import { SignOutAuth } from '../../utils/amplifyUtils';
+import { SignOutAuth } from '../../utils/utilsAmplify';
 import { useNavigate } from 'react-router';
 
 const ProfileDropDown = () => {

@@ -4,7 +4,7 @@ import { forwardRef, useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { InventoryContext } from '../../context/inventory.context';
 import { UserDetails } from '../../models';
-import { DeleteAllPartsByCompany } from '../../utils/amplifyUtils';
+import { DeleteAllPartsByCompany } from '../../utils/utilsAmplify';
 import './deleteAllPartsPopUp.styles.scss';
 
 const DELETE_MATCH_WORD = 'delete';
