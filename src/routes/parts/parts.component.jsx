@@ -127,15 +127,14 @@ const Parts = () => {
           <PartKey />
           {data.length ? (
             data.map((d) => {
+              console.log(d);
               return (
-                <div key={d.id} style={{ backgroundColor: '#f6f6f6' }}>
+                <div key={d.company.id} style={{ backgroundColor: '#f6f6f6' }}>
                   <PartsListCompanyDetails
-                    key={d.id}
                     company={d.company}
                     style={{ margin: 5 }}
                   />
                   <Collection
-                    key={d.id}
                     type='grid'
                     items={d.parts}
                     style={{ marginLeft: 5 }}

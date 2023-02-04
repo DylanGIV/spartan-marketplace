@@ -94,17 +94,33 @@ export const GetPartsByCompany = async (companyID) => {
   const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
   return parts;
 };
-export const GetPartsByCompanySubscribe = (company, setData) => {
-  const subscription = DataStore.observeQuery(Item, (p) =>
-    p.companyID.eq(company.id)
-  ).subscribe((snapshot) => {
-    const { items, isSynced } = snapshot;
-    setData({
-      company: company,
-      parts: items,
-    });
+export const GetPartsByCompanySubscribe = async (
+  company,
+  setData,
+  page,
+  itemsPerPage
+) => {
+  // const subscription = DataStore.observeQuery(
+  //   Item,
+  //   (p) => p.companyID.eq(company.id),
+  //   { page: page, limit: itemsPerPage }
+  // ).subscribe((snapshot) => {
+  //   const { items, isSynced } = snapshot;
+  //   setData({
+  //     company: company,
+  //     parts: items,
+  //   });
+  // });
+  // return subscription;
+  const parts = await DataStore.query(Item, (p) => p.companyID.eq(company.id), {
+    page: page,
+    limit: itemsPerPage,
   });
-  return subscription;
+  setData({ company: company, parts: parts });
+};
+export const GetPartCountByCompany = async (company) => {
+  const parts = await DataStore.query(Item, (p) => p.companyID.eq(company.id));
+  return parts.length;
 };
 export const GetPartsByCompanyAndSearch = async (
   companyID,

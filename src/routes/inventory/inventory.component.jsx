@@ -1,4 +1,9 @@
-import { Alert } from '@aws-amplify/ui-react';
+import {
+  Alert,
+  Collection,
+  Pagination,
+  SelectField,
+} from '@aws-amplify/ui-react';
 import { Box, Modal } from '@mui/material';
 import { DataStore } from 'aws-amplify';
 import { useContext, useEffect, useState } from 'react';
@@ -7,12 +12,10 @@ import DeleteAllPartsPopUp from '../../components/deleteAllPartsPopUp/deleteAllP
 import ImportDataPopUp from '../../components/importDataPopUp/importDataPopUp.component';
 import { InventoryContext } from '../../context/inventory.context';
 import { Item, UserDetails } from '../../models';
-import {
-  InventoryKey,
-  InventoryPartsDetailsCollection,
-} from '../../ui-components';
+import { InventoryKey, InventoryPartsDetails } from '../../ui-components';
 import {
   GetCompanyByID,
+  GetPartCountByCompany,
   GetPartsByCompany,
   GetPartsByCompanySubscribe,
 } from '../../utils/utilsAmplify';
@@ -20,6 +23,36 @@ import {
 const Inventory = () => {
   const [data, setData] = useState({ company: null, parts: null });
   const [company, setCompany] = useState(null);
+  const [allCheckboxValue, setAllCheckboxValue] = useState(false);
+  const [checkboxValues, setCheckboxValues] = useState({});
+  const [itemsPerPage, setItemsPerPage] = useState(25);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const handleCheckboxChange = (index) => {
+    let allTrue = true;
+    const tempValues = checkboxValues.map((c, i) => {
+      if (i === index) {
+        if (!c === false) {
+          allTrue = false;
+        }
+        return !c;
+      } else {
+        if (c === false) {
+          allTrue = false;
+        }
+        return c;
+      }
+    });
+    setCheckboxValues(tempValues);
+    setAllCheckboxValue(allTrue);
+  };
+
+  const changeAllCheckboxValues = (value) => {
+    setCheckboxValues(Array(checkboxValues.length).fill(value));
+
+    setAllCheckboxValue(value);
+  };
 
   const {
     isAddPartOpen,
@@ -51,13 +84,27 @@ const Inventory = () => {
   }, []);
 
   useEffect(() => {
+    const asyncGetData = async () => {
+      const count = await GetPartCountByCompany(company);
+      const index = currentPage - 1;
+      await GetPartsByCompanySubscribe(company, setData, index, itemsPerPage);
+      setTotalItems(Math.ceil(count / itemsPerPage));
+    };
     if (company) {
-      GetPartsByCompanySubscribe(company, setData);
+      asyncGetData();
     }
-    // return () => {
-    //   subscription.unsubscribe();
-    // };
-  }, [company]);
+  }, [company, currentPage, itemsPerPage]);
+
+  useEffect(() => {
+    if (data.parts) {
+      if (data.parts.length)
+        setCheckboxValues(Array(data.parts.length).fill(false));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setAllCheckboxValue(false);
+  }, [currentPage]);
 
   return (
     <div>
@@ -80,17 +127,55 @@ const Inventory = () => {
               </button>
             </div>
           </div>
-          <div>
+          <div style={{ display: 'flex' }}>
+            <SelectField
+              onChange={(e) => {
+                setItemsPerPage(parseInt(e.target.value));
+                setCurrentPage(1);
+              }}
+            >
+              <option value={25}>25</option>
+              <option value={50}>50</option>
+              <option value={75}>75</option>
+              <option value={100}>100</option>
+            </SelectField>
             <button onClick={() => setIsDeleteAllPartOpen(true)}>
               DELETE ALL DATA
             </button>
           </div>
         </div>
         <div style={{ paddingBottom: 10 }}>
-          <InventoryKey />
+          <InventoryKey
+            overrides={{
+              CheckboxField: {
+                checked: allCheckboxValue,
+                onChange: () => changeAllCheckboxValues(!allCheckboxValue),
+              },
+            }}
+          />
         </div>
 
-        <InventoryPartsDetailsCollection items={data.parts} />
+        <Collection items={data.parts} type='grid' itemsPerPage={itemsPerPage}>
+          {(item, index) => (
+            <InventoryPartsDetails
+              key={item.id}
+              item={item}
+              overrides={{
+                CheckboxField: {
+                  checked: checkboxValues[index] || false,
+                  onChange: () => handleCheckboxChange(index),
+                },
+              }}
+            />
+          )}
+        </Collection>
+        <Pagination
+          currentPage={currentPage}
+          onChange={(newPageIndex) => setCurrentPage(newPageIndex)}
+          totalPages={totalItems}
+          onNext={() => setCurrentPage(currentPage + 1)}
+          onPrevious={() => setCurrentPage(currentPage - 1)}
+        />
       </div>
 
       <Modal open={isAddPartOpen} onClose={() => setIsAddPartOpen(false)}>
