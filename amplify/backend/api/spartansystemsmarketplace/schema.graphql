@@ -41,14 +41,17 @@ type RFQ @model @auth(rules: [{allow: public}]) {
   state: String
   zip: String
   country: String
+  companyID: ID! @index(name: "byCompany")
+  userDetailsID: ID! @index(name: "byUserDetails")
 }
 
-type UserDetails @model @auth(rules: [{allow: owner} {allow: public}]) {
+type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
   id: ID!
   companyID: ID! @index(name: "byCompany")
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "UserDetailsBillingAddress")
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "UserDetailsShippingAddress")
   isCompanyOwner: Boolean
+  RFQS: [RFQ] @hasMany(indexName: "byUserDetails", fields: ["id"])
 }
 
 type Country @model @auth(rules: [{allow: public}]) {
@@ -99,6 +102,7 @@ type Company @model @auth(rules: [{allow: public}]) {
   profilePictureUrl: String
   fax: String
   companyDescription: String
+  RFQS: [RFQ] @hasMany(indexName: "byCompany", fields: ["id"])
 }
 
 type ItemMRO @model @auth(rules: [{allow: public}]) {

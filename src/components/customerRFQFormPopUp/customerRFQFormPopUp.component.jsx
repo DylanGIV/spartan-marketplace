@@ -1,8 +1,14 @@
 import { Text } from '@aws-amplify/ui-react';
 import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
+import { RFQ } from '../../models';
 import { CustomerRFQForm } from '../../ui-components';
-import { GetCountries } from '../../utils/utilsAmplify';
+import {
+  AddUserShippingAddress,
+  CreateRFQ,
+  GetCountries,
+  GetUserShippingAddresses,
+} from '../../utils/utilsAmplify';
 
 const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const { userDetails, dataRFQ } = props;
@@ -10,14 +16,14 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const [quotationNumber, setQuotationNumber] = useState('');
   const [countries, setCountries] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
+  const [saveAddressChecked, setSaveAddressChecked] = useState(false);
+  const [userShippingAddresses, setUserShippingAddresses] = useState(null);
+  const [saveAddressCheckDisabled, setSaveAddressCheckDisabled] =
+    useState(false);
+
   const [customerDetails, setCustomerDetails] = useState({
     contactEmail: userDetails.user.attributes.email,
     contactPhone: '',
-    country: '',
-    state: '',
-    city: '',
-    streetAddress: '',
-    zipcode: '',
     additionalComments: '',
     quantity: 1,
   });
@@ -37,6 +43,10 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     const { name, value } = event.target;
     setCustomerDetails({ ...customerDetails, [name]: value });
   };
+  const handleShippingAddressChange = (event) => {
+    const { name, value } = event.target;
+    setShippingAddress({ ...shippingAddress, [name]: value });
+  };
 
   const handleCountryChange = (e) => {
     setSelectedCountry(
@@ -44,6 +54,97 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
         ? countries.find((c) => c.countryName === e.target.value)
         : null
     );
+    setShippingAddress({
+      ...shippingAddress,
+      countryID: countries.find((c) => c.countryName === e.target.value).id,
+    });
+  };
+
+  const handleSavedAddressChange = (e) => {
+    if (e.target.value !== '') {
+      const index = parseInt(e.target.value) - 1;
+      const address = userShippingAddresses[index];
+      setShippingAddress({
+        addressLine1: address.addressLine1,
+        addressLine2: address.addressLine2,
+        city: address.city,
+        postalCode: address.postalCode,
+        regi: address.regi,
+        streetNumber: address.streetNumber,
+        unitNumber: address.unitNumber,
+        countryID: address.countryID,
+      });
+      setSelectedCountry(countries.find((c) => c.id === address.countryID));
+      setSaveAddressCheckDisabled(true);
+      setSaveAddressChecked(false);
+    } else {
+      setShippingAddress({
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        postalCode: '',
+        regi: '',
+        streetNumber: '',
+        unitNumber: '',
+        countryID: '',
+      });
+      setSelectedCountry(null);
+      setSaveAddressCheckDisabled(false);
+    }
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const rfqDetails = {
+      quotationNumber: quotationNumber,
+      addressLine1: shippingAddress.addressLine1,
+      addressLine2: shippingAddress.addressLine2,
+      city: shippingAddress.city,
+      country: selectedCountry.countryName,
+      state: shippingAddress.regi,
+      zip: shippingAddress.postalCode,
+      phone: customerDetails.contactPhone,
+      email: customerDetails.contactEmail,
+      attr1: '',
+      attr2: '',
+      attr3: '',
+      attr4: '',
+      attr5: '',
+      attr6: '',
+      altPartNumber: dataRFQ.item.altPartNumber,
+      nsn: dataRFQ.item.nsn,
+      partNumber: dataRFQ.item.partNumber,
+      condition: dataRFQ.item.condition,
+      uom: '',
+      description: dataRFQ.item.description,
+      price: dataRFQ.item.price,
+      discount: null,
+      companyName: dataRFQ.company.companyName,
+      contact: dataRFQ.company.contactEmail,
+      custRefNum: '',
+      dateSent: date.toISOString(),
+      dueDate: null,
+      emailComments: customerDetails.additionalComments,
+      internalComments: '',
+      leadTime: null,
+      paymentTerms: '',
+      quantityRequested: parseInt(customerDetails.quantity),
+      quantityQuoted: null,
+      shippingMethod: '',
+      shippingTerms: '',
+      lineTotal: null,
+      subtotal: null,
+      salesTax: null,
+      total: null,
+      imageUrls: null,
+      companyID: dataRFQ.company.id,
+      userDetailsID: userDetails.id,
+    };
+    await CreateRFQ(rfqDetails);
+    if (saveAddressChecked) {
+      await AddUserShippingAddress(shippingAddress);
+    }
   };
 
   //generate quotation number and retrieve countries
@@ -100,6 +201,14 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     handleGetCountries();
   }, []);
 
+  useEffect(() => {
+    const handleGetUserAddresses = async () => {
+      const userShippingAddresses = await GetUserShippingAddresses(userDetails);
+      setUserShippingAddresses(userShippingAddresses);
+    };
+    handleGetUserAddresses();
+  }, []);
+
   const rfqOverrides = {
     //Create Quotation
     CompanyName: { value: dataRFQ.company.companyName, disabled: true },
@@ -119,7 +228,11 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       disabled: true,
     },
     PartNumber: { value: dataRFQ.item.partNumber, disabled: true },
-    AlternatePartNumber: { value: dataRFQ.item.altPartNumber, disabled: true },
+    AlternatePartNumber: {
+      value: dataRFQ.item.altPartNumber,
+      disabled: true,
+      placeholder: 'N/A',
+    },
     Condition: { value: dataRFQ.item.condition, disabled: true },
     Description: { value: dataRFQ.item.description, disabled: true },
     QuantityRequested: {
@@ -138,41 +251,44 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     },
     SavedAddresses: {
       // value: ['1', '2', '3'],
+      options: userShippingAddresses
+        ? userShippingAddresses.map((sa, i) => `${i + 1}. ` + sa.addressLine1)
+        : null,
+      onChange: handleSavedAddressChange,
+      placeholder: 'Select Address',
       style: { width: '100%' },
     },
     Country: {
       options: countries ? countries.map((c) => c.countryName) : null,
 
-      // value: selectedCountry.countryName,
+      value: selectedCountry ? selectedCountry.countryName : '',
       onChange: handleCountryChange,
       placeholder: 'Select Country',
       isRequired: true,
     },
     State: {
-      name: 'state',
-      value: customerDetails.state,
+      name: 'regi',
+      value: shippingAddress.regi,
+      onChange: handleShippingAddressChange,
       isRequired: true,
-      onChange: handleCustomerDetailsChange,
     },
     City: {
       name: 'city',
-      value: customerDetails.city,
-      onChange: handleCustomerDetailsChange,
+      value: shippingAddress.city,
+      onChange: handleShippingAddressChange,
       isRequired: true,
-    },
-    StreetAddress: {
-      name: 'streetAddress',
-      value: customerDetails.streetAddress,
-      onChange: handleCustomerDetailsChange,
     },
     Zipcode: {
-      name: 'zipcode',
-      value: customerDetails.zipcode,
-      onChange: handleCustomerDetailsChange,
-      type: 'number',
+      name: 'postalCode',
+      value: shippingAddress.postalCode,
+      onChange: handleShippingAddressChange,
       isRequired: true,
     },
-    SaveAddressCheckbox: {},
+    SaveAddressCheckbox: {
+      checked: saveAddressChecked,
+      onChange: () => setSaveAddressChecked(!saveAddressChecked),
+      isDisabled: saveAddressCheckDisabled,
+    },
     AdditionalComments: {
       name: 'additionalComments',
       value: customerDetails.additionalComments,
@@ -181,11 +297,29 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     AddressLine1: {
       style: { paddingBottom: 7, paddingTop: 7 },
       isRequired: true,
+      name: 'addressLine1',
+      value: shippingAddress.addressLine1,
+      onChange: handleShippingAddressChange,
     },
-    UnitNumber: { style: { paddingBottom: 7, paddingTop: 7 } },
-    AddressLine2: { style: { paddingBottom: 7, paddingTop: 7 } },
-    StreetNumber: { style: { paddingBottom: 7, paddingTop: 7 } },
-    SubmitButton: { type: 'submit' },
+    UnitNumber: {
+      style: { paddingBottom: 7, paddingTop: 7 },
+      name: 'unitNumber',
+      value: shippingAddress.unitNumber,
+      onChange: handleShippingAddressChange,
+    },
+    AddressLine2: {
+      style: { paddingBottom: 7, paddingTop: 7 },
+      name: 'addressLine2',
+      value: shippingAddress.addressLine2,
+      onChange: handleShippingAddressChange,
+    },
+    StreetNumber: {
+      style: { paddingBottom: 7, paddingTop: 7 },
+      name: 'streetNumber',
+      value: shippingAddress.streetNumber,
+      onChange: handleShippingAddressChange,
+    },
+    SubmitButton: { onClick: handleFormSubmit },
   };
 
   return (

@@ -54,8 +54,12 @@ export default function CompanySelector() {
   useEffect(() => {
     const getExistingCompanies = async () => {
       try {
-        const companies = await DataStore.query(Company);
-        setExistingCompanies(companies);
+        await DataStore.query(Company)
+          .then((r) => {
+            console.log(r);
+            setExistingCompanies(r);
+          })
+          .catch((e) => console.log(e));
       } catch (error) {
         console.log(error);
       }
@@ -161,13 +165,15 @@ export default function CompanySelector() {
                 value={company}
                 onChange={handleChange}
               >
-                {existingCompanies.map((c) => {
-                  return (
-                    <MenuItem key={c.id} value={c.id}>
-                      {c.companyName}
-                    </MenuItem>
-                  );
-                })}
+                {existingCompanies
+                  ? existingCompanies.map((c) => {
+                      return (
+                        <MenuItem key={c.id} value={c.id}>
+                          {c.companyName}
+                        </MenuItem>
+                      );
+                    })
+                  : null}
               </Select>
             </FormControl>
             <Button

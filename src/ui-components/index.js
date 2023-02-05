@@ -42,8 +42,6 @@ export { default as CustomerRFQForm } from "./CustomerRFQForm";
 export { default as ProfileCard } from "./ProfileCard";
 export { default as StandardCard } from "./StandardCard";
 export { default as studioTheme } from "./studioTheme";
-export { default as RFQCreateForm } from "./RFQCreateForm";
-export { default as RFQUpdateForm } from "./RFQUpdateForm";
 export { default as CompanyCreateForm } from "./CompanyCreateForm";
 export { default as CompanyUpdateForm } from "./CompanyUpdateForm";
 export { default as CountryCreateForm } from "./CountryCreateForm";

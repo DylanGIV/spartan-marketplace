@@ -53,6 +53,8 @@ type EagerRFQ = {
   readonly state?: string | null;
   readonly zip?: string | null;
   readonly country?: string | null;
+  readonly companyID: string;
+  readonly userDetailsID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -104,6 +106,8 @@ type LazyRFQ = {
   readonly state?: string | null;
   readonly zip?: string | null;
   readonly country?: string | null;
+  readonly companyID: string;
+  readonly userDetailsID: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -124,6 +128,7 @@ type EagerUserDetails = {
   readonly BillingAddresses?: (UserDetailsBillingAddress | null)[] | null;
   readonly ShippingAddresses?: (UserDetailsShippingAddress | null)[] | null;
   readonly isCompanyOwner?: boolean | null;
+  readonly RFQS?: (RFQ | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -138,6 +143,7 @@ type LazyUserDetails = {
   readonly BillingAddresses: AsyncCollection<UserDetailsBillingAddress>;
   readonly ShippingAddresses: AsyncCollection<UserDetailsShippingAddress>;
   readonly isCompanyOwner?: boolean | null;
+  readonly RFQS: AsyncCollection<RFQ>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -211,6 +217,7 @@ type EagerCompany = {
   readonly profilePictureUrl?: string | null;
   readonly fax?: string | null;
   readonly companyDescription?: string | null;
+  readonly RFQS?: (RFQ | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -232,6 +239,7 @@ type LazyCompany = {
   readonly profilePictureUrl?: string | null;
   readonly fax?: string | null;
   readonly companyDescription?: string | null;
+  readonly RFQS: AsyncCollection<RFQ>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

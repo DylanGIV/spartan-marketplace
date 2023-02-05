@@ -298,6 +298,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "companyID": {
+                    "name": "companyID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userDetailsID": {
+                    "name": "userDetailsID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -321,6 +335,24 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCompany",
+                        "fields": [
+                            "companyID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUserDetails",
+                        "fields": [
+                            "userDetailsID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -395,6 +427,22 @@ export const schema = {
                     "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
+                },
+                "RFQS": {
+                    "name": "RFQS",
+                    "isArray": true,
+                    "type": {
+                        "model": "RFQ"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "userDetailsID"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -739,6 +787,22 @@ export const schema = {
                     "type": "String",
                     "isRequired": false,
                     "attributes": []
+                },
+                "RFQS": {
+                    "name": "RFQS",
+                    "isArray": true,
+                    "type": {
+                        "model": "RFQ"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "companyID"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -1675,5 +1739,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "c65664cfc7b9f8b909306db7c45623cb"
+    "version": "5a6819ae9ab6fc33ec422161d988c16d"
 };
