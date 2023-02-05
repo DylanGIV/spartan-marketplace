@@ -6,6 +6,7 @@
 
 export { default as InventoryPartsDetailsCollection } from "./InventoryPartsDetailsCollection";
 export { default as ProductCard } from "./ProductCard";
+export { default as PartSearchForm } from "./PartSearchForm";
 export { default as ContactUs } from "./ContactUs";
 export { default as HeroLayout3 } from "./HeroLayout3";
 export { default as Features2x2 } from "./Features2x2";

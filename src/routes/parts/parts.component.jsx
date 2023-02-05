@@ -1,36 +1,87 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Item, UserDetails } from '../../models';
 import {
-  CustomerRFQForm,
   PartKey,
+  PartSearchForm,
   PartsListCompanyDetails,
   PartsListDetails,
-  PartsListDetailsCollection,
 } from '../../ui-components';
 import {
   GetAllCompanies,
+  GetCountries,
   GetPartsByCompany,
-  // GetPartsByCompanyAndSearch,
 } from '../../utils/utilsAmplify';
-import * as queries from '../../graphql/queries.ts';
-import * as mutations from '../../graphql/mutations.ts';
-import { API, Auth, DataStore } from 'aws-amplify';
+import { Auth, DataStore } from 'aws-amplify';
 
 import './parts.styles.scss';
-import { Button, Modal, TextField } from '@mui/material';
-import { Collection, SearchField } from '@aws-amplify/ui-react';
+import { Modal } from '@mui/material';
+import {
+  Collection,
+  SearchField,
+  useTheme,
+  Button,
+} from '@aws-amplify/ui-react';
 import CustomerRFQFormPopUp from '../../components/customerRFQFormPopUp/customerRFQFormPopUp.component';
 
 const Parts = () => {
   const [data, setData] = useState([]);
   const [partSearchTextField, setPartSearchTextField] = useState('');
   const [partSearch, setPartSearch] = useState('');
+  const [partTypeSelected, setPartTypeSelected] = useState('part');
   const [dataRFQ, setDataRFQ] = useState({
     isOpen: false,
     company: {},
     item: {},
   });
   const [userDetails, setUserDetails] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [partSearchTextAreaField, setPartSearchTextAreaField] = useState('');
+  const { tokens } = useTheme();
+
+  const partSearchFormOverrides = {
+    Part: {
+      onClick: () => {
+        setPartTypeSelected('part');
+      },
+      style: {
+        cursor: 'pointer',
+        backgroundColor:
+          partTypeSelected === 'part' ? tokens.colors.brand.primary[80] : null,
+        color:
+          partTypeSelected === 'part' ? tokens.colors.font.inverse.value : null,
+      },
+    },
+    MRO: {
+      onClick: () => {
+        setPartTypeSelected('mro');
+      },
+      style: {
+        cursor: 'pointer',
+        backgroundColor:
+          partTypeSelected === 'mro' ? tokens.colors.brand.primary[80] : null,
+        color:
+          partTypeSelected === 'mro' ? tokens.colors.font.inverse.value : null,
+      },
+    },
+    CountrySelect: {
+      options: countries.map((c) => c.countryName),
+      onChange: (e) =>
+        setSelectedCountry(
+          e.target.value !== ''
+            ? countries.find((c) => c.countryName === e.target.value)
+            : null
+        ),
+      placeholder: 'Any Country',
+    },
+    PartTextAreaField: {
+      onChange: (e) => setPartSearchTextAreaField(e.target.value),
+      value: partSearchTextAreaField,
+    },
+    Button: {
+      onClick: () => setPartSearch(partSearchTextAreaField),
+    },
+  };
 
   const handleCreateRFQClick = (company, item) => {
     setDataRFQ({ isOpen: true, company: company, item: item });
@@ -62,7 +113,7 @@ const Parts = () => {
   };
 
   useEffect(() => {
-    const getUserDetails = async () => {
+    const getDetails = async () => {
       const userDetails = await DataStore.query(UserDetails);
       const user = await Auth.currentAuthenticatedUser();
       setUserDetails({
@@ -71,8 +122,10 @@ const Parts = () => {
         isCompanyOwner: userDetails[0].isCompanyOwner,
         id: userDetails[0].id,
       });
+      const countries = await GetCountries();
+      setCountries(countries);
     };
-    getUserDetails();
+    getDetails();
   }, []);
 
   useEffect(() => {
@@ -120,14 +173,26 @@ const Parts = () => {
           onChange={(event) => setPartSearchTextField(event.target.value)}
           onSubmit={(value) => setPartSearch(value)}
           onClear={() => setPartSearchTextField('')}
+          placeholder='Quick Search...'
+          width={420}
         />
+        {partSearch !== '' ? (
+          <Button
+            style={{ marginLeft: 20 }}
+            onClick={() => {
+              setPartSearch('');
+              setPartSearchTextField('');
+            }}
+          >
+            Modify search
+          </Button>
+        ) : null}
       </div>
       {partSearch ? (
         <div className='parts-list-container'>
           <PartKey />
           {data.length ? (
             data.map((d) => {
-              console.log(d);
               return (
                 <div key={d.company.id} style={{ backgroundColor: '#f6f6f6' }}>
                   <PartsListCompanyDetails
@@ -165,8 +230,29 @@ const Parts = () => {
           )}
         </div>
       ) : (
-        <div>
+        // in the case that there is no search made yet.
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: tokens.colors.background.tertiary.value,
+            paddingLeft: 20,
+            width: 420,
+            height: 580,
+            marginTop: 20,
+            marginLeft: 20,
+            borderRadius: 15,
+          }}
+        >
           <h1>Make a search</h1>
+          <div
+            style={{
+              height: 466,
+              width: 380,
+            }}
+          >
+            <PartSearchForm overrides={partSearchFormOverrides} />
+          </div>
         </div>
       )}
       <Modal

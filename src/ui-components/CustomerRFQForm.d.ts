@@ -6,7 +6,7 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { ButtonProps, CheckboxFieldProps, DividerProps, FlexProps, SelectFieldProps, StepperFieldProps, TextFieldProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
+import { ButtonProps, CheckboxFieldProps, DividerProps, FlexProps, SelectFieldProps, StepperFieldProps, TextAreaFieldProps, TextFieldProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CustomerRFQFormOverridesProps = {
     CustomerRFQForm?: PrimitiveOverrideProps<FlexProps>;
@@ -22,21 +22,28 @@ export declare type CustomerRFQFormOverridesProps = {
     Condition?: PrimitiveOverrideProps<TextFieldProps>;
     Description?: PrimitiveOverrideProps<TextFieldProps>;
     QuantityRequested?: PrimitiveOverrideProps<StepperFieldProps>;
+    SubmitButton?: PrimitiveOverrideProps<ButtonProps>;
     Divider?: PrimitiveOverrideProps<DividerProps>;
     CustomerDetails?: PrimitiveOverrideProps<FlexProps>;
     "Customer Details"?: PrimitiveOverrideProps<TextProps>;
     ContactEmail?: PrimitiveOverrideProps<TextFieldProps>;
     ContactPhone?: PrimitiveOverrideProps<ViewProps>;
+    "Frame 426"?: PrimitiveOverrideProps<FlexProps>;
     SavedAddresses?: PrimitiveOverrideProps<SelectFieldProps>;
-    Country?: PrimitiveOverrideProps<TextFieldProps>;
+    Country?: PrimitiveOverrideProps<SelectFieldProps>;
     State?: PrimitiveOverrideProps<TextFieldProps>;
     City?: PrimitiveOverrideProps<TextFieldProps>;
-    StreetAddress?: PrimitiveOverrideProps<TextFieldProps>;
+    "Frame 422"?: PrimitiveOverrideProps<FlexProps>;
+    "Frame 423"?: PrimitiveOverrideProps<FlexProps>;
+    UnitNumber?: PrimitiveOverrideProps<TextFieldProps>;
+    StreetNumber?: PrimitiveOverrideProps<TextFieldProps>;
+    "Frame 424"?: PrimitiveOverrideProps<FlexProps>;
+    AddressLine1?: PrimitiveOverrideProps<TextFieldProps>;
+    AddressLine2?: PrimitiveOverrideProps<TextFieldProps>;
+    "Frame 425"?: PrimitiveOverrideProps<FlexProps>;
     Zipcode?: PrimitiveOverrideProps<TextFieldProps>;
     SaveAddressCheckbox?: PrimitiveOverrideProps<CheckboxFieldProps>;
-    AdditionalComments?: PrimitiveOverrideProps<TextFieldProps>;
-    "Frame 421"?: PrimitiveOverrideProps<FlexProps>;
-    SubmitButton?: PrimitiveOverrideProps<ButtonProps>;
+    AdditionalComments?: PrimitiveOverrideProps<TextAreaFieldProps>;
 } & EscapeHatchProps;
 export declare type CustomerRFQFormProps = React.PropsWithChildren<Partial<FlexProps> & {
     contactPhone?: React.ReactNode;

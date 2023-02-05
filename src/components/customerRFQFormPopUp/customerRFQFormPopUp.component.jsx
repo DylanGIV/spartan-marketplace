@@ -2,11 +2,14 @@ import { Text } from '@aws-amplify/ui-react';
 import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import { CustomerRFQForm } from '../../ui-components';
+import { GetCountries } from '../../utils/utilsAmplify';
 
 const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const { userDetails, dataRFQ } = props;
   const date = new Date();
   const [quotationNumber, setQuotationNumber] = useState('');
+  const [countries, setCountries] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [customerDetails, setCustomerDetails] = useState({
     contactEmail: userDetails.user.attributes.email,
     contactPhone: '',
@@ -19,12 +22,31 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     quantity: 1,
   });
 
+  const [shippingAddress, setShippingAddress] = useState({
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    postalCode: '',
+    regi: '',
+    streetNumber: '',
+    unitNumber: '',
+    countryID: '',
+  });
+
   const handleCustomerDetailsChange = (event) => {
     const { name, value } = event.target;
     setCustomerDetails({ ...customerDetails, [name]: value });
   };
 
-  //generate quotation number
+  const handleCountryChange = (e) => {
+    setSelectedCountry(
+      e.target.value !== ''
+        ? countries.find((c) => c.countryName === e.target.value)
+        : null
+    );
+  };
+
+  //generate quotation number and retrieve countries
   useEffect(() => {
     let tempNum = '';
     tempNum += 'QN-';
@@ -70,6 +92,14 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     setQuotationNumber(tempNum);
   }, []);
 
+  useEffect(() => {
+    const handleGetCountries = async () => {
+      const data = await GetCountries();
+      setCountries(data);
+    };
+    handleGetCountries();
+  }, []);
+
   const rfqOverrides = {
     //Create Quotation
     CompanyName: { value: dataRFQ.company.companyName, disabled: true },
@@ -104,25 +134,31 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       name: 'contactEmail',
       value: customerDetails.contactEmail,
       onChange: handleCustomerDetailsChange,
+      isRequired: true,
     },
     SavedAddresses: {
       // value: ['1', '2', '3'],
       style: { width: '100%' },
     },
     Country: {
-      name: 'country',
-      value: customerDetails.country,
-      onChange: handleCustomerDetailsChange,
+      options: countries ? countries.map((c) => c.countryName) : null,
+
+      // value: selectedCountry.countryName,
+      onChange: handleCountryChange,
+      placeholder: 'Select Country',
+      isRequired: true,
     },
     State: {
       name: 'state',
       value: customerDetails.state,
+      isRequired: true,
       onChange: handleCustomerDetailsChange,
     },
     City: {
       name: 'city',
       value: customerDetails.city,
       onChange: handleCustomerDetailsChange,
+      isRequired: true,
     },
     StreetAddress: {
       name: 'streetAddress',
@@ -134,6 +170,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       value: customerDetails.zipcode,
       onChange: handleCustomerDetailsChange,
       type: 'number',
+      isRequired: true,
     },
     SaveAddressCheckbox: {},
     AdditionalComments: {
@@ -141,6 +178,14 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       value: customerDetails.additionalComments,
       onChange: handleCustomerDetailsChange,
     },
+    AddressLine1: {
+      style: { paddingBottom: 7, paddingTop: 7 },
+      isRequired: true,
+    },
+    UnitNumber: { style: { paddingBottom: 7, paddingTop: 7 } },
+    AddressLine2: { style: { paddingBottom: 7, paddingTop: 7 } },
+    StreetNumber: { style: { paddingBottom: 7, paddingTop: 7 } },
+    SubmitButton: { type: 'submit' },
   };
 
   return (
@@ -161,6 +206,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
         borderRadius: '15px',
         transform: 'translate(-50%, -50%) scale(0.8 , 0.8)',
       }}
+      as='form'
       overrides={rfqOverrides}
       contactPhone={
         <div

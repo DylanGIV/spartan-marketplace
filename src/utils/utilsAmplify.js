@@ -2,6 +2,7 @@ import { Alert } from '@mui/material';
 import { Auth, Predicates } from 'aws-amplify';
 import {
   Company,
+  Country,
   Item,
   RFQ,
   ShippingAddress,
@@ -11,6 +12,7 @@ import {
 import { DataStore } from 'aws-amplify';
 import { useContext } from 'react';
 import { InventoryContext } from '../context/inventory.context';
+import countryList from '../countryList.json';
 import React from 'react';
 
 export const SignOutAuth = async () => {
@@ -176,11 +178,11 @@ export const CreateUserDetails = async (companyID, isOwner) => {
   );
   return response;
 };
-export const CreateUserShippingAddress = async (shippingAddress) => {
+
+export const AddUserShippingAddress = async (shippingAddress) => {
   const userDetails = await DataStore.query(UserDetails);
   const newShippingAddress = await DataStore.save(
     new ShippingAddress({
-      country: shippingAddress.country,
       addressLine1: shippingAddress.addressLine1,
       addressLine2: shippingAddress.addressLine2,
       city: shippingAddress.city,
@@ -188,6 +190,7 @@ export const CreateUserShippingAddress = async (shippingAddress) => {
       regi: shippingAddress.region,
       streetNumber: shippingAddress.streetNumber,
       unitNumber: shippingAddress.unitNumber,
+      countryID: shippingAddress.countryID,
     })
   );
   await DataStore.save(
@@ -273,4 +276,25 @@ export const DeleteAllPartsByCompany = async (companyID) => {
 
 export const DeleteAllParts = async () => {
   return await DataStore.delete(Item, Predicates.ALL);
+};
+
+export const populateCountries = async () => {
+  countryList = countryList;
+  countryList.forEach(async (c) => {
+    const response = await DataStore.save(
+      new Country({
+        countryName: c.name,
+      })
+    );
+    console.log(response);
+  });
+};
+
+export const GetCountries = async () => {
+  try {
+    const countries = await DataStore.query(Country);
+    return countries;
+  } catch (error) {
+    console.log(error);
+  }
 };

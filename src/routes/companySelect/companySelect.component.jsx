@@ -55,7 +55,6 @@ export default function CompanySelector() {
     const getExistingCompanies = async () => {
       try {
         const companies = await DataStore.query(Company);
-        console.log(companies);
         setExistingCompanies(companies);
       } catch (error) {
         console.log(error);

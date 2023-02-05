@@ -29,7 +29,6 @@ function App() {
     const getUser = async () => {
       const userDetails = await DataStore.query(UserDetails);
       // const companyID = userDetails[0].companyID;
-      console.log(userDetails);
       if (userDetails.length > 0) {
         setUserDetailsExists(true);
       } else {
