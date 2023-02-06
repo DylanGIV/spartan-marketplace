@@ -20,6 +20,7 @@ import {
   SearchField,
   useTheme,
   Button,
+  useAuthenticator,
 } from '@aws-amplify/ui-react';
 import CustomerRFQFormPopUp from '../../components/customerRFQFormPopUp/customerRFQFormPopUp.component';
 
@@ -38,6 +39,7 @@ const Parts = () => {
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [partSearchTextAreaField, setPartSearchTextAreaField] = useState('');
   const { tokens } = useTheme();
+  const { user } = useAuthenticator();
 
   const partSearchFormOverrides = {
     Part: {
@@ -114,8 +116,10 @@ const Parts = () => {
 
   useEffect(() => {
     const getDetails = async () => {
-      const userDetails = await DataStore.query(UserDetails);
-      const user = await Auth.currentAuthenticatedUser();
+      const userDetails = await DataStore.query(UserDetails, (p) =>
+        p.userID.eq(user.username)
+      );
+      // const user = await Auth.currentAuthenticatedUser();
       setUserDetails({
         user: user,
         companyID: userDetails[0].companyID,
@@ -190,11 +194,18 @@ const Parts = () => {
       </div>
       {partSearch ? (
         <div className='parts-list-container'>
-          <PartKey />
+          <PartKey marginBottom={10} />
           {data.length ? (
             data.map((d) => {
               return (
-                <div key={d.company.id} style={{ backgroundColor: '#f6f6f6' }}>
+                <div
+                  key={d.company.id}
+                  style={{
+                    backgroundColor: tokens.colors.background.tertiary,
+                    borderRadius: 10,
+                    marginBottom: 10,
+                  }}
+                >
                   <PartsListCompanyDetails
                     company={d.company}
                     style={{ margin: 5 }}

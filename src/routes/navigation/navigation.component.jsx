@@ -10,15 +10,20 @@ import { DataStore } from 'aws-amplify';
 import TextTruncate from 'react-text-truncate';
 
 import './navigation.styles.scss';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const Navigation = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const [isSideBarCollapsed, setIsSideBarCollapsed] = useState(true);
+  const [isSideBarCollapsed, setIsSideBarCollapsed] = useState(false);
   const [company, setCompany] = useState(null);
+
+  const { user } = useAuthenticator();
 
   useEffect(() => {
     const getCompany = async () => {
-      const userDetails = await DataStore.query(UserDetails);
+      const userDetails = await DataStore.query(UserDetails, (p) =>
+        p.userID.eq(user.username)
+      );
       const companyID = userDetails[0].companyID;
       const company = await GetCompanyByID(companyID);
       setCompany(company[0]);
@@ -241,7 +246,7 @@ const Navigation = () => {
     },
   };
   return (
-    <div style={{ display: 'flex', flexDirection: 'row' }}>
+    <div style={{ display: 'flex', flexDirection: 'row', zIndex: 0 }}>
       {/* <NavBar width={'100vw'} minWidth={'1100px'} overrides={navOverrides} />
       {isProfileOpen && <ProfileDropDown />} */}
       <div
@@ -299,6 +304,10 @@ const Navigation = () => {
           display: 'flex',
           paddingTop: 10,
           paddingLeft: 10,
+          width: '100%',
+          justifyContent: 'center',
+          minWidth: 1500,
+          zIndex: 9999,
         }}
       >
         <Outlet />

@@ -6,7 +6,7 @@ import Navigation from './routes/navigation/navigation.component';
 import '@aws-amplify/ui-react/styles.css';
 import Parts from './routes/parts/parts.component';
 import Inventory from './routes/inventory/inventory.component';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { UserDetails } from './models';
 import { Hub } from 'aws-amplify';
 import { DataStore } from '@aws-amplify/datastore';
@@ -14,10 +14,15 @@ import CompanySelect from './routes/companySelect/companySelect.component';
 import UserAuth from './routes/auth/userAuth.component';
 import RFQ from './routes/rfq/rfq.component';
 import Settings from './routes/settings/settings.component';
+import { UserContext } from './context/user.context';
+import { GetCompanyByID } from './utils/utilsAmplify';
 
 function App() {
   const [userDetailsExists, setUserDetailsExists] = useState(false);
   const { user } = useAuthenticator();
+
+  const { userDetails, company, setCompany, setUser, setUserDetails } =
+    useContext(UserContext);
 
   Hub.listen('auth', async (data) => {
     if (data.payload.event === 'signOut') {
@@ -33,8 +38,10 @@ function App() {
         p.userID.eq(user.username)
       ).subscribe((snapshot) => {
         const { items, isSynced } = snapshot;
-        console.log(items);
+        console.log(items.length);
         if (items.length > 0) {
+          setUserDetails(items[0]);
+          setUser(user);
           setUserDetailsExists(true);
         }
       });
@@ -49,7 +56,17 @@ function App() {
     getUser();
   }, []);
 
-  if (user && userDetailsExists) {
+  useEffect(() => {
+    const getCompany = async () => {
+      if (userDetails) {
+        const tempCompany = await GetCompanyByID(userDetails.companyID);
+        setCompany(tempCompany[0]);
+      }
+    };
+    getCompany();
+  }, [userDetails]);
+
+  if (user && userDetailsExists && company) {
     return (
       <Routes>
         <Route path='/' element={<Navigation />}>

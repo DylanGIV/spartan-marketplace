@@ -17,6 +17,8 @@ import '@aws-amplify/ui-react/styles.css';
 import './index.css';
 import { InventoryProvider } from './context/inventory.context';
 import { ProSidebarProvider } from 'react-pro-sidebar';
+import { UserProvider } from './context/user.context';
+import { RFQProvider } from './context/rfq.context';
 
 Amplify.configure(awsconfig);
 
@@ -27,15 +29,17 @@ root.render(
     <BrowserRouter>
       <AmplifyProvider>
         <Authenticator.Provider>
-          <ProSidebarProvider>
+          <UserProvider>
             <InventoryProvider>
-              <ThemeProvider theme={studioTheme}>
-                <Authenticator>
-                  <App />
-                </Authenticator>
-              </ThemeProvider>
+              <RFQProvider>
+                <ThemeProvider theme={studioTheme}>
+                  <Authenticator>
+                    <App />
+                  </Authenticator>
+                </ThemeProvider>
+              </RFQProvider>
             </InventoryProvider>
-          </ProSidebarProvider>
+          </UserProvider>
         </Authenticator.Provider>
       </AmplifyProvider>
     </BrowserRouter>

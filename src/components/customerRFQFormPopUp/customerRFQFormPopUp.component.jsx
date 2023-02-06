@@ -1,4 +1,4 @@
-import { Text } from '@aws-amplify/ui-react';
+import { Text, useAuthenticator } from '@aws-amplify/ui-react';
 import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import { RFQ } from '../../models';
@@ -38,6 +38,8 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     unitNumber: '',
     countryID: '',
   });
+
+  const { user } = useAuthenticator();
 
   const handleCustomerDetailsChange = (event) => {
     const { name, value } = event.target;
@@ -143,7 +145,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     };
     await CreateRFQ(rfqDetails);
     if (saveAddressChecked) {
-      await AddUserShippingAddress(shippingAddress);
+      await AddUserShippingAddress(shippingAddress, user);
     }
   };
 

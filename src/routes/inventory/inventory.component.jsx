@@ -3,6 +3,8 @@ import {
   Collection,
   Pagination,
   SelectField,
+  useAuthenticator,
+  useTheme,
 } from '@aws-amplify/ui-react';
 import { Box, Modal } from '@mui/material';
 import { DataStore } from 'aws-amplify';
@@ -32,6 +34,9 @@ const Inventory = () => {
   const [itemsPerPage, setItemsPerPage] = useState(25);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+
+  const { user } = useAuthenticator();
+  const { tokens } = useTheme();
 
   const handleCheckboxChange = (index) => {
     let allTrue = true;
@@ -83,10 +88,11 @@ const Inventory = () => {
       options: [25, 50, 75, 100],
     },
   };
-  console.log(company);
   useEffect(() => {
     const queryData = async () => {
-      const userDetails = await DataStore.query(UserDetails);
+      const userDetails = await DataStore.query(UserDetails, (p) =>
+        p.userID.eq(user.username)
+      );
       const companyID = userDetails[0].companyID;
 
       let company = null;
@@ -107,8 +113,12 @@ const Inventory = () => {
   useEffect(() => {
     const asyncGetData = async () => {
       const count = await GetPartCountByCompany(company);
-      const index = currentPage - 1;
-      await GetPartsByCompanySubscribe(company, setData, index, itemsPerPage);
+      await GetPartsByCompanySubscribe(
+        company,
+        setData,
+        currentPage,
+        itemsPerPage
+      );
       setTotalItems(Math.ceil(count / itemsPerPage));
     };
     if (company) {
@@ -137,6 +147,9 @@ const Inventory = () => {
               CheckboxField: {
                 checked: allCheckboxValue,
                 onChange: () => changeAllCheckboxValues(!allCheckboxValue),
+                // backgroundColor: 'white',
+                // color: tokens.colors.brand.primary[80],
+                color: 'white',
               },
             }}
             width={1450}
@@ -155,6 +168,7 @@ const Inventory = () => {
                 },
               }}
               width={1450}
+              marginBottom={2}
             />
           )}
         </Collection>

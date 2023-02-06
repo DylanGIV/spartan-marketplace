@@ -116,10 +116,21 @@ export const GetPartsByCompanySubscribe = async (
   // });
   // return subscription;
   const parts = await DataStore.query(Item, (p) => p.companyID.eq(company.id), {
-    page: page,
+    page: page - 1,
     limit: itemsPerPage,
   });
   setData({ company: company, parts: parts });
+};
+export const GetRFQByCompany = async (company, setRFQs, page, itemsPerPage) => {
+  const count = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id));
+  const rfqs = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id), {
+    page: page - 1,
+    limit: itemsPerPage,
+  });
+  setRFQs({
+    items: rfqs,
+    count: Math.ceil(count.length / itemsPerPage),
+  });
 };
 export const GetPartCountByCompany = async (company) => {
   const parts = await DataStore.query(Item, (p) => p.companyID.eq(company.id));
@@ -182,8 +193,10 @@ export const CreateUserDetails = async (companyID, isOwner, user) => {
   return response;
 };
 
-export const AddUserShippingAddress = async (shippingAddress) => {
-  const userDetails = await DataStore.query(UserDetails);
+export const AddUserShippingAddress = async (shippingAddress, user) => {
+  const userDetails = await DataStore.query(UserDetails, (p) =>
+    p.userID.eq(user.username)
+  );
   try {
     const newShippingAddress = await DataStore.save(
       new ShippingAddress({

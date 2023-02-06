@@ -7,9 +7,15 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Button, Flex, Heading, SelectField } from "@aws-amplify/ui-react";
+import {
+  Badge,
+  Button,
+  Flex,
+  Heading,
+  SelectField,
+} from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
-export default function InventoryHeader(props) {
+export default function RFQHeader(props) {
   const { overrides, ...rest } = props;
   return (
     <Flex
@@ -19,11 +25,10 @@ export default function InventoryHeader(props) {
       height="210px"
       justifyContent="flex-start"
       alignItems="flex-start"
-      overflow="hidden"
       position="relative"
       padding="10px 10px 10px 10px"
       backgroundColor="rgba(255,255,255,1)"
-      {...getOverrideProps(overrides, "InventoryHeader")}
+      {...getOverrideProps(overrides, "RFQHeader")}
       {...rest}
     >
       <Flex
@@ -46,7 +51,7 @@ export default function InventoryHeader(props) {
         <Heading
           shrink="0"
           level="1"
-          children="Your Inventory"
+          children="RFQs"
           {...getOverrideProps(overrides, "HeadingText")}
         ></Heading>
       </Flex>
@@ -100,6 +105,45 @@ export default function InventoryHeader(props) {
             children="IMPORT"
             {...getOverrideProps(overrides, "ImportButton")}
           ></Button>
+        </Flex>
+        <Flex
+          gap="15px"
+          direction="row"
+          width="unset"
+          height="unset"
+          justifyContent="center"
+          alignItems="flex-end"
+          overflow="hidden"
+          grow="1"
+          shrink="1"
+          basis="0"
+          alignSelf="stretch"
+          position="relative"
+          padding="10px 10px 10px 10px"
+          backgroundColor="rgba(255,255,255,1)"
+          {...getOverrideProps(overrides, "Frame 436")}
+        >
+          <Badge
+            shrink="0"
+            size="default"
+            variation="default"
+            children="All"
+            {...getOverrideProps(overrides, "All")}
+          ></Badge>
+          <Badge
+            shrink="0"
+            size="default"
+            variation="default"
+            children="Sent"
+            {...getOverrideProps(overrides, "Sent")}
+          ></Badge>
+          <Badge
+            shrink="0"
+            size="default"
+            variation="default"
+            children="Received"
+            {...getOverrideProps(overrides, "Received")}
+          ></Badge>
         </Flex>
         <Flex
           gap="20px"

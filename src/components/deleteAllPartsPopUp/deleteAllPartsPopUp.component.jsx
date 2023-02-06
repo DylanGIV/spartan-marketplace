@@ -1,3 +1,4 @@
+import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Button, TextField } from '@mui/material';
 import { DataStore } from 'aws-amplify';
 import { forwardRef, useContext, useEffect } from 'react';
@@ -14,6 +15,7 @@ const DeleteAllPartsPopUp = forwardRef((props, ref) => {
   const [deleteText, setDeleteText] = useState('');
 
   const { setIsDeleteAllPartOpen } = useContext(InventoryContext);
+  const { user } = useAuthenticator();
 
   useEffect(() => {
     if (deleteText.toLocaleLowerCase() === DELETE_MATCH_WORD)
@@ -27,7 +29,9 @@ const DeleteAllPartsPopUp = forwardRef((props, ref) => {
   }, [deleteText]);
 
   const deleteAllPartsHandler = async () => {
-    const userDetails = await DataStore.query(UserDetails);
+    const userDetails = await DataStore.query(UserDetails, (p) =>
+      p.userID.eq(user.username)
+    );
     const companyID = userDetails[0].companyID;
     if (companyID) {
       try {

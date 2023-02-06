@@ -1,4 +1,4 @@
-import { ScrollView } from '@aws-amplify/ui-react';
+import { ScrollView, useAuthenticator } from '@aws-amplify/ui-react';
 import { Button } from '@mui/material';
 import { DataStore } from 'aws-amplify';
 import React, { forwardRef, useContext, useState } from 'react';
@@ -10,6 +10,7 @@ import './importDataPopUp.styles.scss';
 const ImportDataPopUp = forwardRef((props, ref) => {
   const [data, setData] = useState([]);
   const { setIsImportPartOpen } = useContext(InventoryContext);
+  const { user } = useAuthenticator();
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
@@ -40,7 +41,9 @@ const ImportDataPopUp = forwardRef((props, ref) => {
   };
 
   const batchAddHandler = async () => {
-    const userDetails = await DataStore.query(UserDetails);
+    const userDetails = await DataStore.query(UserDetails, (p) =>
+      p.userID.eq(user.username)
+    );
     const companyID = userDetails[0].companyID;
     try {
       await TestFunctionBatch(data, companyID, setIsImportPartOpen);

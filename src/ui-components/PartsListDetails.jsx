@@ -20,10 +20,9 @@ export default function PartsListDetails(props) {
       alignItems="flex-start"
       overflow="hidden"
       position="relative"
-      border="1px SOLID rgba(0,0,0,0.1)"
-      borderRadius="9px"
+      borderRadius="8px"
       padding="0px 10px 0px 10px"
-      backgroundColor="rgba(245,245,245,1)"
+      backgroundColor="rgba(250,250,250,1)"
       {...getOverrideProps(overrides, "PartsListDetails")}
       {...rest}
     >

@@ -8,8 +8,8 @@
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { CheckboxField, Flex, Text } from "@aws-amplify/ui-react";
-export default function InventoryKey(props) {
-  const { overrides, ...rest } = props;
+export default function RFQOverview(props) {
+  const { rFQ, overrides, ...rest } = props;
   return (
     <Flex
       gap="57px"
@@ -18,13 +18,11 @@ export default function InventoryKey(props) {
       height="unset"
       justifyContent="flex-start"
       alignItems="flex-start"
-      overflow="hidden"
       position="relative"
-      boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-      borderRadius="10px"
-      padding="10px 10px 10px 10px"
-      backgroundColor="rgba(4,125,149,1)"
-      {...getOverrideProps(overrides, "InventoryKey")}
+      borderRadius="8px"
+      padding="0px 10px 0px 10px"
+      backgroundColor="rgba(250,250,250,1)"
+      {...getOverrideProps(overrides, "RFQOverview")}
       {...rest}
     >
       <CheckboxField
@@ -40,13 +38,13 @@ export default function InventoryKey(props) {
         fontFamily="Inter"
         fontSize="16px"
         fontWeight="400"
-        color="rgba(255,255,255,1)"
+        color="rgba(0,0,0,1)"
         lineHeight="24px"
         textAlign="left"
         display="block"
         direction="column"
         justifyContent="unset"
-        width="91px"
+        width="180px"
         height="unset"
         gap="unset"
         alignItems="unset"
@@ -54,14 +52,14 @@ export default function InventoryKey(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children="Part No"
-        {...getOverrideProps(overrides, "Part No")}
+        children={rFQ?.quotationNumber}
+        {...getOverrideProps(overrides, "RFQ Number")}
       ></Text>
       <Text
         fontFamily="Inter"
         fontSize="16px"
         fontWeight="400"
-        color="rgba(255,255,255,1)"
+        color="rgba(0,0,0,1)"
         lineHeight="24px"
         textAlign="left"
         display="block"
@@ -75,20 +73,20 @@ export default function InventoryKey(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children="Alt Part No"
-        {...getOverrideProps(overrides, "Alt Part No")}
+        children={rFQ?.partNumber}
+        {...getOverrideProps(overrides, "Part Number")}
       ></Text>
       <Text
         fontFamily="Inter"
         fontSize="16px"
         fontWeight="400"
-        color="rgba(255,255,255,1)"
+        color="rgba(0,0,0,1)"
         lineHeight="24px"
         textAlign="left"
         display="block"
         direction="column"
         justifyContent="unset"
-        width="85px"
+        width="197px"
         height="unset"
         gap="unset"
         alignItems="unset"
@@ -96,20 +94,20 @@ export default function InventoryKey(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children="NSN"
-        {...getOverrideProps(overrides, "NSN")}
+        children={rFQ?.dateSent}
+        {...getOverrideProps(overrides, "Date Sent")}
       ></Text>
       <Text
         fontFamily="Inter"
         fontSize="16px"
         fontWeight="400"
-        color="rgba(255,255,255,1)"
+        color="rgba(0,0,0,1)"
         lineHeight="24px"
         textAlign="left"
         display="block"
         direction="column"
         justifyContent="unset"
-        width="35px"
+        width="408px"
         height="unset"
         gap="unset"
         alignItems="unset"
@@ -117,20 +115,20 @@ export default function InventoryKey(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children="QTY"
-        {...getOverrideProps(overrides, "QTY")}
+        children={rFQ?.emailComments}
+        {...getOverrideProps(overrides, "Comments")}
       ></Text>
       <Text
         fontFamily="Inter"
         fontSize="16px"
         fontWeight="400"
-        color="rgba(255,255,255,1)"
+        color="rgba(0,0,0,1)"
         lineHeight="24px"
         textAlign="left"
         display="block"
         direction="column"
         justifyContent="unset"
-        width="120px"
+        width="136px"
         height="unset"
         gap="unset"
         alignItems="unset"
@@ -138,71 +136,8 @@ export default function InventoryKey(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children="Condition"
-        {...getOverrideProps(overrides, "Condition")}
-      ></Text>
-      <Text
-        fontFamily="Inter"
-        fontSize="16px"
-        fontWeight="400"
-        color="rgba(255,255,255,1)"
-        lineHeight="24px"
-        textAlign="left"
-        display="block"
-        direction="column"
-        justifyContent="unset"
-        width="282px"
-        height="unset"
-        gap="unset"
-        alignItems="unset"
-        shrink="0"
-        position="relative"
-        padding="0px 0px 0px 0px"
-        whiteSpace="pre-wrap"
-        children="Description"
-        {...getOverrideProps(overrides, "Description")}
-      ></Text>
-      <Text
-        fontFamily="Inter"
-        fontSize="16px"
-        fontWeight="400"
-        color="rgba(255,255,255,1)"
-        lineHeight="24px"
-        textAlign="left"
-        display="block"
-        direction="column"
-        justifyContent="unset"
-        width="100px"
-        height="unset"
-        gap="unset"
-        alignItems="unset"
-        shrink="0"
-        position="relative"
-        padding="0px 0px 0px 0px"
-        whiteSpace="pre-wrap"
-        children="Control"
+        children={rFQ?.country}
         {...getOverrideProps(overrides, "Control")}
-      ></Text>
-      <Text
-        fontFamily="Inter"
-        fontSize="16px"
-        fontWeight="400"
-        color="rgba(255,255,255,1)"
-        lineHeight="24px"
-        textAlign="left"
-        display="block"
-        direction="column"
-        justifyContent="unset"
-        width="39px"
-        height="unset"
-        gap="unset"
-        alignItems="unset"
-        shrink="0"
-        position="relative"
-        padding="0px 0px 0px 0px"
-        whiteSpace="pre-wrap"
-        children="Price"
-        {...getOverrideProps(overrides, "Price")}
       ></Text>
     </Flex>
   );

@@ -5,6 +5,7 @@ import { AddPartToInventory } from '../../utils/utilsAmplify';
 import { UserDetails } from '../../models';
 import { DataStore } from 'aws-amplify';
 import { InventoryContext } from '../../context/inventory.context';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 const AddPartPopUp = forwardRef((props, ref) => {
   const [partID, setPartID] = useState('');
@@ -19,6 +20,7 @@ const AddPartPopUp = forwardRef((props, ref) => {
   const [price, setPrice] = useState(0.0);
 
   const { setIsAddPartOpen } = useContext(InventoryContext);
+  const { user } = useAuthenticator();
 
   const handlePartSubmit = async () => {
     const newPrice = parseFloat(price);
@@ -35,7 +37,9 @@ const AddPartPopUp = forwardRef((props, ref) => {
       control.length > 0 &&
       newPrice > 0
     ) {
-      const userDetails = await DataStore.query(UserDetails);
+      const userDetails = await DataStore.query(UserDetails, (p) =>
+        p.userID.eq(user.username)
+      );
       const companyID = userDetails[0].companyID;
 
       if (companyID) {
