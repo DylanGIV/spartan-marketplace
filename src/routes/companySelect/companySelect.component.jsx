@@ -21,6 +21,7 @@ import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { useNavigate } from 'react-router';
 import { Company } from '../../models';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 export default function CompanySelector() {
   const [open, setOpen] = useState(false);
@@ -31,6 +32,7 @@ export default function CompanySelector() {
     useState(true);
 
   const navigate = useNavigate();
+  const { user } = useAuthenticator();
 
   const [newCompany, setNewCompany] = useState({
     name: '',
@@ -54,11 +56,10 @@ export default function CompanySelector() {
   useEffect(() => {
     const getExistingCompanies = async () => {
       try {
-        await DataStore.query(Company)
-          .then((r) => {
-            setExistingCompanies(r);
-          })
-          .catch((e) => console.log(e));
+        DataStore.observeQuery(Company).subscribe((snapshot) => {
+          const { items, isSynced } = snapshot;
+          setExistingCompanies(items);
+        });
       } catch (error) {
         console.log(error);
       }
@@ -95,7 +96,7 @@ export default function CompanySelector() {
   const handleJoinCompany = async (event) => {
     event.preventDefault();
     try {
-      const userResponse = await CreateUserDetails(company, false);
+      const userResponse = await CreateUserDetails(company, false, user);
       console.log(userResponse);
       navigate('/');
     } catch (error) {
@@ -117,7 +118,7 @@ export default function CompanySelector() {
       );
       console.log(response);
       try {
-        const userResponse = await CreateUserDetails(response.id, true);
+        const userResponse = await CreateUserDetails(response.id, true, user);
         console.log(userResponse);
         navigate('/');
       } catch (error) {

@@ -47,6 +47,7 @@ type RFQ @model @auth(rules: [{allow: public}]) {
 
 type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
   id: ID!
+  userID: ID
   companyID: ID! @index(name: "byCompany")
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "UserDetailsBillingAddress")
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "UserDetailsShippingAddress")

@@ -124,6 +124,7 @@ type EagerUserDetails = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly userID?: string | null;
   readonly companyID: string;
   readonly BillingAddresses?: (UserDetailsBillingAddress | null)[] | null;
   readonly ShippingAddresses?: (UserDetailsShippingAddress | null)[] | null;
@@ -139,6 +140,7 @@ type LazyUserDetails = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
+  readonly userID?: string | null;
   readonly companyID: string;
   readonly BillingAddresses: AsyncCollection<UserDetailsBillingAddress>;
   readonly ShippingAddresses: AsyncCollection<UserDetailsShippingAddress>;

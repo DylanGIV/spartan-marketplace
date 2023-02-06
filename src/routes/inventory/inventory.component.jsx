@@ -83,7 +83,7 @@ const Inventory = () => {
       options: [25, 50, 75, 100],
     },
   };
-
+  console.log(company);
   useEffect(() => {
     const queryData = async () => {
       const userDetails = await DataStore.query(UserDetails);

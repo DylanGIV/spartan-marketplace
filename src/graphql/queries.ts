@@ -47,6 +47,8 @@ export const getRFQ = /* GraphQL */ `
       state
       zip
       country
+      companyID
+      userDetailsID
       createdAt
       updatedAt
       _version
@@ -105,6 +107,8 @@ export const listRFQS = /* GraphQL */ `
         state
         zip
         country
+        companyID
+        userDetailsID
         createdAt
         updatedAt
         _version
@@ -172,6 +176,150 @@ export const syncRFQS = /* GraphQL */ `
         state
         zip
         country
+        companyID
+        userDetailsID
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const rFQSByCompanyID = /* GraphQL */ `
+  query RFQSByCompanyID(
+    $companyID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRFQFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rFQSByCompanyID(
+      companyID: $companyID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        quotationNumber
+        dateSent
+        custRefNum
+        companyName
+        contact
+        phone
+        email
+        shippingTerms
+        shippingMethod
+        leadTime
+        paymentTerms
+        dueDate
+        quantityRequested
+        quantityQuoted
+        nsn
+        partNumber
+        altPartNumber
+        condition
+        uom
+        description
+        price
+        discount
+        attr1
+        attr2
+        attr3
+        lineTotal
+        subtotal
+        salesTax
+        total
+        internalComments
+        emailComments
+        attr4
+        attr5
+        attr6
+        imageUrls
+        addressLine1
+        addressLine2
+        city
+        state
+        zip
+        country
+        companyID
+        userDetailsID
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const rFQSByUserDetailsID = /* GraphQL */ `
+  query RFQSByUserDetailsID(
+    $userDetailsID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRFQFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rFQSByUserDetailsID(
+      userDetailsID: $userDetailsID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        quotationNumber
+        dateSent
+        custRefNum
+        companyName
+        contact
+        phone
+        email
+        shippingTerms
+        shippingMethod
+        leadTime
+        paymentTerms
+        dueDate
+        quantityRequested
+        quantityQuoted
+        nsn
+        partNumber
+        altPartNumber
+        condition
+        uom
+        description
+        price
+        discount
+        attr1
+        attr2
+        attr3
+        lineTotal
+        subtotal
+        salesTax
+        total
+        internalComments
+        emailComments
+        attr4
+        attr5
+        attr6
+        imageUrls
+        addressLine1
+        addressLine2
+        city
+        state
+        zip
+        country
+        companyID
+        userDetailsID
         createdAt
         updatedAt
         _version
@@ -187,6 +335,7 @@ export const getUserDetails = /* GraphQL */ `
   query GetUserDetails($id: ID!) {
     getUserDetails(id: $id) {
       id
+      userID
       companyID
       BillingAddresses {
         items {
@@ -195,6 +344,7 @@ export const getUserDetails = /* GraphQL */ `
           billingAddressId
           userDetails {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -237,6 +387,7 @@ export const getUserDetails = /* GraphQL */ `
           shippingAddressId
           userDetails {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -273,6 +424,61 @@ export const getUserDetails = /* GraphQL */ `
         startedAt
       }
       isCompanyOwner
+      RFQS {
+        items {
+          id
+          quotationNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          nsn
+          partNumber
+          altPartNumber
+          condition
+          uom
+          description
+          price
+          discount
+          attr1
+          attr2
+          attr3
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          attr4
+          attr5
+          attr6
+          imageUrls
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          companyID
+          userDetailsID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -291,6 +497,7 @@ export const listUserDetails = /* GraphQL */ `
     listUserDetails(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        userID
         companyID
         BillingAddresses {
           items {
@@ -323,6 +530,61 @@ export const listUserDetails = /* GraphQL */ `
           startedAt
         }
         isCompanyOwner
+        RFQS {
+          items {
+            id
+            quotationNumber
+            dateSent
+            custRefNum
+            companyName
+            contact
+            phone
+            email
+            shippingTerms
+            shippingMethod
+            leadTime
+            paymentTerms
+            dueDate
+            quantityRequested
+            quantityQuoted
+            nsn
+            partNumber
+            altPartNumber
+            condition
+            uom
+            description
+            price
+            discount
+            attr1
+            attr2
+            attr3
+            lineTotal
+            subtotal
+            salesTax
+            total
+            internalComments
+            emailComments
+            attr4
+            attr5
+            attr6
+            imageUrls
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+            companyID
+            userDetailsID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -350,6 +612,7 @@ export const syncUserDetails = /* GraphQL */ `
     ) {
       items {
         id
+        userID
         companyID
         BillingAddresses {
           items {
@@ -382,6 +645,61 @@ export const syncUserDetails = /* GraphQL */ `
           startedAt
         }
         isCompanyOwner
+        RFQS {
+          items {
+            id
+            quotationNumber
+            dateSent
+            custRefNum
+            companyName
+            contact
+            phone
+            email
+            shippingTerms
+            shippingMethod
+            leadTime
+            paymentTerms
+            dueDate
+            quantityRequested
+            quantityQuoted
+            nsn
+            partNumber
+            altPartNumber
+            condition
+            uom
+            description
+            price
+            discount
+            attr1
+            attr2
+            attr3
+            lineTotal
+            subtotal
+            salesTax
+            total
+            internalComments
+            emailComments
+            attr4
+            attr5
+            attr6
+            imageUrls
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+            companyID
+            userDetailsID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -411,6 +729,7 @@ export const userDetailsByCompanyID = /* GraphQL */ `
     ) {
       items {
         id
+        userID
         companyID
         BillingAddresses {
           items {
@@ -443,6 +762,61 @@ export const userDetailsByCompanyID = /* GraphQL */ `
           startedAt
         }
         isCompanyOwner
+        RFQS {
+          items {
+            id
+            quotationNumber
+            dateSent
+            custRefNum
+            companyName
+            contact
+            phone
+            email
+            shippingTerms
+            shippingMethod
+            leadTime
+            paymentTerms
+            dueDate
+            quantityRequested
+            quantityQuoted
+            nsn
+            partNumber
+            altPartNumber
+            condition
+            uom
+            description
+            price
+            discount
+            attr1
+            attr2
+            attr3
+            lineTotal
+            subtotal
+            salesTax
+            total
+            internalComments
+            emailComments
+            attr4
+            attr5
+            attr6
+            imageUrls
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+            companyID
+            userDetailsID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -671,6 +1045,7 @@ export const getShippingAddress = /* GraphQL */ `
           shippingAddressId
           userDetails {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -1010,6 +1385,7 @@ export const getBillingAddress = /* GraphQL */ `
           billingAddressId
           userDetails {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -1252,6 +1628,7 @@ export const getCompany = /* GraphQL */ `
       Items {
         items {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -1262,6 +1639,10 @@ export const getCompany = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -1275,6 +1656,7 @@ export const getCompany = /* GraphQL */ `
       ItemMROS {
         items {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -1285,6 +1667,10 @@ export const getCompany = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -1342,6 +1728,7 @@ export const getCompany = /* GraphQL */ `
       CompanyMembers {
         items {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -1352,6 +1739,10 @@ export const getCompany = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -1409,6 +1800,61 @@ export const getCompany = /* GraphQL */ `
       profilePictureUrl
       fax
       companyDescription
+      RFQS {
+        items {
+          id
+          quotationNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          nsn
+          partNumber
+          altPartNumber
+          condition
+          uom
+          description
+          price
+          discount
+          attr1
+          attr2
+          attr3
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          attr4
+          attr5
+          attr6
+          imageUrls
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          companyID
+          userDetailsID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -1432,6 +1878,7 @@ export const listCompanies = /* GraphQL */ `
         Items {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -1447,6 +1894,7 @@ export const listCompanies = /* GraphQL */ `
         ItemMROS {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -1476,6 +1924,7 @@ export const listCompanies = /* GraphQL */ `
         CompanyMembers {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -1505,6 +1954,61 @@ export const listCompanies = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
+        RFQS {
+          items {
+            id
+            quotationNumber
+            dateSent
+            custRefNum
+            companyName
+            contact
+            phone
+            email
+            shippingTerms
+            shippingMethod
+            leadTime
+            paymentTerms
+            dueDate
+            quantityRequested
+            quantityQuoted
+            nsn
+            partNumber
+            altPartNumber
+            condition
+            uom
+            description
+            price
+            discount
+            attr1
+            attr2
+            attr3
+            lineTotal
+            subtotal
+            salesTax
+            total
+            internalComments
+            emailComments
+            attr4
+            attr5
+            attr6
+            imageUrls
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+            companyID
+            userDetailsID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1537,6 +2041,7 @@ export const syncCompanies = /* GraphQL */ `
         Items {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -1552,6 +2057,7 @@ export const syncCompanies = /* GraphQL */ `
         ItemMROS {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -1581,6 +2087,7 @@ export const syncCompanies = /* GraphQL */ `
         CompanyMembers {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -1610,6 +2117,61 @@ export const syncCompanies = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
+        RFQS {
+          items {
+            id
+            quotationNumber
+            dateSent
+            custRefNum
+            companyName
+            contact
+            phone
+            email
+            shippingTerms
+            shippingMethod
+            leadTime
+            paymentTerms
+            dueDate
+            quantityRequested
+            quantityQuoted
+            nsn
+            partNumber
+            altPartNumber
+            condition
+            uom
+            description
+            price
+            discount
+            attr1
+            attr2
+            attr3
+            lineTotal
+            subtotal
+            salesTax
+            total
+            internalComments
+            emailComments
+            attr4
+            attr5
+            attr6
+            imageUrls
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+            companyID
+            userDetailsID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1877,6 +2439,7 @@ export const getUserDetailsBillingAddress = /* GraphQL */ `
       billingAddressId
       userDetails {
         id
+        userID
         companyID
         BillingAddresses {
           items {
@@ -1909,6 +2472,61 @@ export const getUserDetailsBillingAddress = /* GraphQL */ `
           startedAt
         }
         isCompanyOwner
+        RFQS {
+          items {
+            id
+            quotationNumber
+            dateSent
+            custRefNum
+            companyName
+            contact
+            phone
+            email
+            shippingTerms
+            shippingMethod
+            leadTime
+            paymentTerms
+            dueDate
+            quantityRequested
+            quantityQuoted
+            nsn
+            partNumber
+            altPartNumber
+            condition
+            uom
+            description
+            price
+            discount
+            attr1
+            attr2
+            attr3
+            lineTotal
+            subtotal
+            salesTax
+            total
+            internalComments
+            emailComments
+            attr4
+            attr5
+            attr6
+            imageUrls
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+            companyID
+            userDetailsID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1987,6 +2605,7 @@ export const listUserDetailsBillingAddresses = /* GraphQL */ `
         billingAddressId
         userDetails {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -1997,6 +2616,10 @@ export const listUserDetailsBillingAddresses = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -2059,6 +2682,7 @@ export const syncUserDetailsBillingAddresses = /* GraphQL */ `
         billingAddressId
         userDetails {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -2069,6 +2693,10 @@ export const syncUserDetailsBillingAddresses = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -2133,6 +2761,7 @@ export const userDetailsBillingAddressesByUserDetailsId = /* GraphQL */ `
         billingAddressId
         userDetails {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -2143,6 +2772,10 @@ export const userDetailsBillingAddressesByUserDetailsId = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -2207,6 +2840,7 @@ export const userDetailsBillingAddressesByBillingAddressId = /* GraphQL */ `
         billingAddressId
         userDetails {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -2217,6 +2851,10 @@ export const userDetailsBillingAddressesByBillingAddressId = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -2268,6 +2906,7 @@ export const getUserDetailsShippingAddress = /* GraphQL */ `
       shippingAddressId
       userDetails {
         id
+        userID
         companyID
         BillingAddresses {
           items {
@@ -2300,6 +2939,61 @@ export const getUserDetailsShippingAddress = /* GraphQL */ `
           startedAt
         }
         isCompanyOwner
+        RFQS {
+          items {
+            id
+            quotationNumber
+            dateSent
+            custRefNum
+            companyName
+            contact
+            phone
+            email
+            shippingTerms
+            shippingMethod
+            leadTime
+            paymentTerms
+            dueDate
+            quantityRequested
+            quantityQuoted
+            nsn
+            partNumber
+            altPartNumber
+            condition
+            uom
+            description
+            price
+            discount
+            attr1
+            attr2
+            attr3
+            lineTotal
+            subtotal
+            salesTax
+            total
+            internalComments
+            emailComments
+            attr4
+            attr5
+            attr6
+            imageUrls
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+            companyID
+            userDetailsID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -2378,6 +3072,7 @@ export const listUserDetailsShippingAddresses = /* GraphQL */ `
         shippingAddressId
         userDetails {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -2388,6 +3083,10 @@ export const listUserDetailsShippingAddresses = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -2450,6 +3149,7 @@ export const syncUserDetailsShippingAddresses = /* GraphQL */ `
         shippingAddressId
         userDetails {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -2460,6 +3160,10 @@ export const syncUserDetailsShippingAddresses = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -2524,6 +3228,7 @@ export const userDetailsShippingAddressesByUserDetailsId = /* GraphQL */ `
         shippingAddressId
         userDetails {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -2534,6 +3239,10 @@ export const userDetailsShippingAddressesByUserDetailsId = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -2598,6 +3307,7 @@ export const userDetailsShippingAddressesByShippingAddressId = /* GraphQL */ `
         shippingAddressId
         userDetails {
           id
+          userID
           companyID
           BillingAddresses {
             nextToken
@@ -2608,6 +3318,10 @@ export const userDetailsShippingAddressesByShippingAddressId = /* GraphQL */ `
             startedAt
           }
           isCompanyOwner
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -2710,6 +3424,7 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         Items {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -2725,6 +3440,7 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         ItemMROS {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -2754,6 +3470,7 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         CompanyMembers {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -2783,6 +3500,61 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
+        RFQS {
+          items {
+            id
+            quotationNumber
+            dateSent
+            custRefNum
+            companyName
+            contact
+            phone
+            email
+            shippingTerms
+            shippingMethod
+            leadTime
+            paymentTerms
+            dueDate
+            quantityRequested
+            quantityQuoted
+            nsn
+            partNumber
+            altPartNumber
+            condition
+            uom
+            description
+            price
+            discount
+            attr1
+            attr2
+            attr3
+            lineTotal
+            subtotal
+            salesTax
+            total
+            internalComments
+            emailComments
+            attr4
+            attr5
+            attr6
+            imageUrls
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+            companyID
+            userDetailsID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -2864,6 +3636,10 @@ export const listCompanyShippingAddresses = /* GraphQL */ `
           profilePictureUrl
           fax
           companyDescription
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -2950,6 +3726,10 @@ export const syncCompanyShippingAddresses = /* GraphQL */ `
           profilePictureUrl
           fax
           companyDescription
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -3038,6 +3818,10 @@ export const companyShippingAddressesByShippingAddressId = /* GraphQL */ `
           profilePictureUrl
           fax
           companyDescription
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -3126,6 +3910,10 @@ export const companyShippingAddressesByCompanyId = /* GraphQL */ `
           profilePictureUrl
           fax
           companyDescription
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -3202,6 +3990,7 @@ export const getCompanyBillingAddress = /* GraphQL */ `
         Items {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -3217,6 +4006,7 @@ export const getCompanyBillingAddress = /* GraphQL */ `
         ItemMROS {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -3246,6 +4036,7 @@ export const getCompanyBillingAddress = /* GraphQL */ `
         CompanyMembers {
           items {
             id
+            userID
             companyID
             isCompanyOwner
             createdAt
@@ -3275,6 +4066,61 @@ export const getCompanyBillingAddress = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
+        RFQS {
+          items {
+            id
+            quotationNumber
+            dateSent
+            custRefNum
+            companyName
+            contact
+            phone
+            email
+            shippingTerms
+            shippingMethod
+            leadTime
+            paymentTerms
+            dueDate
+            quantityRequested
+            quantityQuoted
+            nsn
+            partNumber
+            altPartNumber
+            condition
+            uom
+            description
+            price
+            discount
+            attr1
+            attr2
+            attr3
+            lineTotal
+            subtotal
+            salesTax
+            total
+            internalComments
+            emailComments
+            attr4
+            attr5
+            attr6
+            imageUrls
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+            companyID
+            userDetailsID
+            createdAt
+            updatedAt
+            _version
+            _deleted
+            _lastChangedAt
+          }
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -3356,6 +4202,10 @@ export const listCompanyBillingAddresses = /* GraphQL */ `
           profilePictureUrl
           fax
           companyDescription
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -3442,6 +4292,10 @@ export const syncCompanyBillingAddresses = /* GraphQL */ `
           profilePictureUrl
           fax
           companyDescription
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -3530,6 +4384,10 @@ export const companyBillingAddressesByBillingAddressId = /* GraphQL */ `
           profilePictureUrl
           fax
           companyDescription
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version
@@ -3618,6 +4476,10 @@ export const companyBillingAddressesByCompanyId = /* GraphQL */ `
           profilePictureUrl
           fax
           companyDescription
+          RFQS {
+            nextToken
+            startedAt
+          }
           createdAt
           updatedAt
           _version

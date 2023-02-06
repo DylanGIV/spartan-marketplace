@@ -14,6 +14,7 @@ import { useContext } from 'react';
 import { InventoryContext } from '../context/inventory.context';
 import countryList from '../countryList.json';
 import React from 'react';
+import { useAuthenticator } from '@aws-amplify/ui-react';
 
 export const SignOutAuth = async () => {
   return await Auth.signOut();
@@ -169,11 +170,13 @@ const sendData = async () => {
   console.log(response);
 };
 
-export const CreateUserDetails = async (companyID, isOwner) => {
+export const CreateUserDetails = async (companyID, isOwner, user) => {
+  console.log(user.username);
   const response = await DataStore.save(
     new UserDetails({
       companyID: companyID,
       isCompanyOwner: isOwner,
+      userID: user.username,
     })
   );
   return response;
@@ -321,6 +324,18 @@ export const GetUserShippingAddresses = async (userDetails) => {
       p.UserShippingAddresses.userDetails.id.eq(userDetails.id)
     );
     return userShippingAddresses;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const GetCurrentUserDetails = async () => {
+  const { user } = useAuthenticator();
+  try {
+    const userDetails = await DataStore.query(UserDetails, (p) =>
+      p.userID.eq(user.username)
+    );
+    return userDetails;
   } catch (error) {
     console.log(error);
   }

@@ -13,36 +13,42 @@ import { DataStore } from '@aws-amplify/datastore';
 import CompanySelect from './routes/companySelect/companySelect.component';
 import UserAuth from './routes/auth/userAuth.component';
 import RFQ from './routes/rfq/rfq.component';
+import Settings from './routes/settings/settings.component';
 
 function App() {
+  const [userDetailsExists, setUserDetailsExists] = useState(false);
+  const { user } = useAuthenticator();
+
   Hub.listen('auth', async (data) => {
     if (data.payload.event === 'signOut') {
       await DataStore.clear();
       // await DataStore.start();
     }
   });
-
-  const [userDetailsExists, setUserDetailsExists] = useState(false);
-  const { user } = useAuthenticator();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   useEffect(() => {
     const getUser = async () => {
-      const userDetails = await DataStore.query(UserDetails);
-      // const companyID = userDetails[0].companyID;
-      if (userDetails.length > 0) {
-        setUserDetailsExists(true);
-      } else {
-        setUserDetailsExists(false);
+      DataStore.observeQuery(UserDetails).subscribe();
+      const subscription = DataStore.observeQuery(UserDetails, (p) =>
+        p.userID.eq(user.username)
+      ).subscribe((snapshot) => {
+        const { items, isSynced } = snapshot;
+        console.log(items);
+        if (items.length > 0) {
+          setUserDetailsExists(true);
+        }
+      });
+
+      if (userDetailsExists) {
+        subscription.unsubscribe();
       }
+
+      // const companyID = userDetails[0].companyID;
+      // console.log(userDetails);
     };
     getUser();
-  }, [user]);
-  useEffect(() => {
-    // const startDataStore = async () => {
-    //   await DataStore.start();
-    // };
-    // startDataStore();
   }, []);
+
   if (user && userDetailsExists) {
     return (
       <Routes>
@@ -51,6 +57,7 @@ function App() {
           <Route path='parts' element={<Parts />} />
           <Route path='inventory' element={<Inventory />} />
           <Route path='rfq' element={<RFQ />} />
+          <Route path='settings' element={<Settings />} />
         </Route>
       </Routes>
     );

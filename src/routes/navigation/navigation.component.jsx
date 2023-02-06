@@ -147,7 +147,7 @@ const Navigation = () => {
     },
     SettingsFrame: {
       onClick: () => {
-        navigate('/');
+        navigate('/settings');
       },
       style: {
         cursor: 'pointer',
