@@ -30,6 +30,7 @@ export { default as ItemCard } from "./ItemCard";
 export { default as Features4x1 } from "./Features4x1";
 export { default as PartsListDetailsCollection } from "./PartsListDetailsCollection";
 export { default as FAQItem } from "./FAQItem";
+export { default as InventoryHeader } from "./InventoryHeader";
 export { default as MarketingFooter } from "./MarketingFooter";
 export { default as EditProfile } from "./EditProfile";
 export { default as InventoryPartsDetails } from "./InventoryPartsDetails";

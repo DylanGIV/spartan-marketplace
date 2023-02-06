@@ -7,14 +7,7 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import {
-  Flex,
-  Icon,
-  Image,
-  SearchField,
-  Text,
-  View,
-} from "@aws-amplify/ui-react";
+import { Flex, Icon, Image, Text, View } from "@aws-amplify/ui-react";
 export default function NavBar(props) {
   const { overrides, ...rest } = props;
   return (
@@ -203,15 +196,6 @@ export default function NavBar(props) {
         padding="0px 0px 0px 0px"
         {...getOverrideProps(overrides, "Frame 32129767081")}
       >
-        <SearchField
-          shrink="0"
-          placeholder="Placeholder"
-          size="default"
-          isDisabled={false}
-          labelHidden={true}
-          variation="default"
-          {...getOverrideProps(overrides, "SearchField")}
-        ></SearchField>
         <View
           width="24px"
           height="24px"

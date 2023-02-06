@@ -12,7 +12,11 @@ import DeleteAllPartsPopUp from '../../components/deleteAllPartsPopUp/deleteAllP
 import ImportDataPopUp from '../../components/importDataPopUp/importDataPopUp.component';
 import { InventoryContext } from '../../context/inventory.context';
 import { Item, UserDetails } from '../../models';
-import { InventoryKey, InventoryPartsDetails } from '../../ui-components';
+import {
+  InventoryHeader,
+  InventoryKey,
+  InventoryPartsDetails,
+} from '../../ui-components';
 import {
   GetCompanyByID,
   GetPartCountByCompany,
@@ -63,6 +67,23 @@ const Inventory = () => {
     setIsImportPartOpen,
   } = useContext(InventoryContext);
 
+  const inventoryHeaderOverrides = {
+    AddButton: {
+      onClick: () => setIsAddPartOpen(true),
+    },
+    ImportButton: {
+      onClick: () => setIsImportPartOpen(true),
+    },
+    ItemSelect: {
+      onChange: (e) => {
+        const value = parseInt(e.target.value);
+        setItemsPerPage(isNaN(value) ? 25 : value);
+        setCurrentPage(1);
+      },
+      options: [25, 50, 75, 100],
+    },
+  };
+
   useEffect(() => {
     const queryData = async () => {
       const userDetails = await DataStore.query(UserDetails);
@@ -107,43 +128,9 @@ const Inventory = () => {
   }, [currentPage]);
 
   return (
-    <div>
+    <div style={{ display: 'flex' }}>
       <div style={{ padding: 10 }}>
-        <h1>Inventory Page</h1>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            padding: 5,
-          }}
-        >
-          <div style={{ display: 'flex' }}>
-            <div style={{ paddingBottom: 10, marginRight: 10 }}>
-              <button onClick={() => setIsAddPartOpen(true)}>ADD PART</button>
-            </div>
-            <div style={{ paddingBottom: 10 }}>
-              <button onClick={() => setIsImportPartOpen(true)}>
-                IMPORT DATA
-              </button>
-            </div>
-          </div>
-          <div style={{ display: 'flex' }}>
-            <SelectField
-              onChange={(e) => {
-                setItemsPerPage(parseInt(e.target.value));
-                setCurrentPage(1);
-              }}
-            >
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-              <option value={75}>75</option>
-              <option value={100}>100</option>
-            </SelectField>
-            <button onClick={() => setIsDeleteAllPartOpen(true)}>
-              DELETE ALL DATA
-            </button>
-          </div>
-        </div>
+        <InventoryHeader overrides={inventoryHeaderOverrides} width={1450} />
         <div style={{ paddingBottom: 10 }}>
           <InventoryKey
             overrides={{
@@ -152,6 +139,7 @@ const Inventory = () => {
                 onChange: () => changeAllCheckboxValues(!allCheckboxValue),
               },
             }}
+            width={1450}
           />
         </div>
 
@@ -166,6 +154,7 @@ const Inventory = () => {
                   onChange: () => handleCheckboxChange(index),
                 },
               }}
+              width={1450}
             />
           )}
         </Collection>

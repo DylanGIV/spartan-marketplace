@@ -6,7 +6,7 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { FlexProps, IconProps, ImageProps, SearchFieldProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
+import { FlexProps, IconProps, ImageProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type NavBarOverridesProps = {
     NavBar?: PrimitiveOverrideProps<FlexProps>;
@@ -19,7 +19,6 @@ export declare type NavBarOverridesProps = {
     Inventory?: PrimitiveOverrideProps<TextProps>;
     RFQs?: PrimitiveOverrideProps<TextProps>;
     "Frame 32129767081"?: PrimitiveOverrideProps<FlexProps>;
-    SearchField?: PrimitiveOverrideProps<SearchFieldProps>;
     Icon?: PrimitiveOverrideProps<ViewProps>;
     Vector?: PrimitiveOverrideProps<IconProps>;
     image?: PrimitiveOverrideProps<ImageProps>;

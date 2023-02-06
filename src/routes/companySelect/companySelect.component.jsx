@@ -56,7 +56,6 @@ export default function CompanySelector() {
       try {
         await DataStore.query(Company)
           .then((r) => {
-            console.log(r);
             setExistingCompanies(r);
           })
           .catch((e) => console.log(e));
