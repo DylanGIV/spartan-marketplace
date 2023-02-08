@@ -246,7 +246,7 @@ const Navigation = () => {
     },
   };
   return (
-    <div style={{ display: 'flex', flexDirection: 'row', zIndex: 0 }}>
+    <div style={{ display: 'flex', flexDirection: 'row' }}>
       {/* <NavBar width={'100vw'} minWidth={'1100px'} overrides={navOverrides} />
       {isProfileOpen && <ProfileDropDown />} */}
       <div
@@ -307,7 +307,6 @@ const Navigation = () => {
           width: '100%',
           justifyContent: 'center',
           minWidth: 1500,
-          zIndex: 9999,
         }}
       >
         <Outlet />

@@ -13,6 +13,7 @@ import AddPartPopUp from '../../components/addPartPopUp/addPartPopUp.component';
 import DeleteAllPartsPopUp from '../../components/deleteAllPartsPopUp/deleteAllPartsPopUp.component';
 import ImportDataPopUp from '../../components/importDataPopUp/importDataPopUp.component';
 import { InventoryContext } from '../../context/inventory.context';
+import { UserContext } from '../../context/user.context';
 import { Item, UserDetails } from '../../models';
 import {
   InventoryHeader,
@@ -30,37 +31,60 @@ const Inventory = () => {
   const [data, setData] = useState({ company: null, parts: null });
   const [company, setCompany] = useState(null);
   const [allCheckboxValue, setAllCheckboxValue] = useState(false);
-  const [checkboxValues, setCheckboxValues] = useState({});
+  const [checkboxValues, setCheckboxValues] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(25);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [deletePartsList, setDeletePartsList] = useState(null);
+  const [allowDelete, setAllowDelete] = useState(false);
 
   const { user } = useAuthenticator();
   const { tokens } = useTheme();
 
+  const { refreshPage } = useContext(UserContext);
+
   const handleCheckboxChange = (index) => {
     let allTrue = true;
+    let allFalse = false;
     const tempValues = checkboxValues.map((c, i) => {
       if (i === index) {
         if (!c === false) {
           allTrue = false;
+        } else {
+          allFalse = true;
         }
         return !c;
       } else {
         if (c === false) {
           allTrue = false;
+        } else {
+          allFalse = true;
         }
         return c;
       }
     });
+    setAllowDelete(allFalse);
     setCheckboxValues(tempValues);
     setAllCheckboxValue(allTrue);
   };
 
   const changeAllCheckboxValues = (value) => {
     setCheckboxValues(Array(checkboxValues.length).fill(value));
+    setAllowDelete(value);
 
     setAllCheckboxValue(value);
+  };
+
+  const handleDeleteParts = () => {
+    const partsToDelete = [];
+    checkboxValues.forEach((c, index) => {
+      if (c) {
+        console.log('entered');
+        partsToDelete.push(data.parts[index]);
+      }
+    });
+    setDeletePartsList(partsToDelete);
+    setIsDeleteAllPartOpen(true);
   };
 
   const {
@@ -87,6 +111,12 @@ const Inventory = () => {
       },
       options: [25, 50, 75, 100],
     },
+    DeleteIcon: {
+      onClick: () => (allowDelete ? handleDeleteParts() : null),
+      style: {
+        cursor: allowDelete ? 'pointer' : 'not-allowed',
+      },
+    },
   };
   useEffect(() => {
     const queryData = async () => {
@@ -108,7 +138,7 @@ const Inventory = () => {
       }
     };
     queryData();
-  }, []);
+  }, [refreshPage]);
 
   useEffect(() => {
     const asyncGetData = async () => {
@@ -191,7 +221,10 @@ const Inventory = () => {
         open={isDeleteAllPartOpen}
         onClose={() => setIsDeleteAllPartOpen(false)}
       >
-        <DeleteAllPartsPopUp />
+        <DeleteAllPartsPopUp
+          deletePartsList={deletePartsList}
+          setDeletePartsList={setDeletePartsList}
+        />
       </Modal>
     </div>
   );

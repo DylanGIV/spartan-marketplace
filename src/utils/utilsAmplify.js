@@ -353,3 +353,22 @@ export const GetCurrentUserDetails = async () => {
     console.log(error);
   }
 };
+
+export const DeleteListOfParts = async (listOfParts) => {
+  const promises = listOfParts.map(async (item) => {
+    try {
+      const response = await DataStore.delete(Item, (p) => p.id.eq(item.id));
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  });
+  await Promise.all(promises)
+    .then(() => {
+      alert('Successfully deleted all selected items.');
+    })
+    .catch((err) => {
+      alert('Error while deleting items');
+      console.log(err);
+    });
+};

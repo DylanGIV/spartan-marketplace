@@ -4,8 +4,9 @@ import { DataStore } from 'aws-amplify';
 import { forwardRef, useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { InventoryContext } from '../../context/inventory.context';
+import { UserContext } from '../../context/user.context';
 import { UserDetails } from '../../models';
-import { DeleteAllPartsByCompany } from '../../utils/utilsAmplify';
+import { DeleteListOfParts } from '../../utils/utilsAmplify';
 import './deleteAllPartsPopUp.styles.scss';
 
 const DELETE_MATCH_WORD = 'delete';
@@ -16,6 +17,9 @@ const DeleteAllPartsPopUp = forwardRef((props, ref) => {
 
   const { setIsDeleteAllPartOpen } = useContext(InventoryContext);
   const { user } = useAuthenticator();
+  const { deletePartsList, setDeletePartsList } = props;
+
+  const { refreshPage, setRefreshPage } = useContext(UserContext);
 
   useEffect(() => {
     if (deleteText.toLocaleLowerCase() === DELETE_MATCH_WORD)
@@ -29,22 +33,10 @@ const DeleteAllPartsPopUp = forwardRef((props, ref) => {
   }, [deleteText]);
 
   const deleteAllPartsHandler = async () => {
-    const userDetails = await DataStore.query(UserDetails, (p) =>
-      p.userID.eq(user.username)
-    );
-    const companyID = userDetails[0].companyID;
-    if (companyID) {
-      try {
-        await DeleteAllPartsByCompany(companyID);
-        alert('Successfully deleted all items');
-        setIsDeleteAllPartOpen(false);
-      } catch (error) {
-        console.log(error);
-        alert('There was an error trying to delete all items.');
-      }
-    } else {
-      alert('There was an error trying to find your company.');
-    }
+    await DeleteListOfParts(deletePartsList);
+    setRefreshPage(!refreshPage);
+    setDeletePartsList(null);
+    setIsDeleteAllPartOpen(false);
   };
 
   return (
