@@ -7,12 +7,13 @@
 import * as React from "react";
 import { Company } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { FlexProps, ImageProps, TextProps } from "@aws-amplify/ui-react";
+import { FlexProps, ImageProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type PartsListCompanyDetailsOverridesProps = {
     PartsListCompanyDetails?: PrimitiveOverrideProps<FlexProps>;
     "Frame 420"?: PrimitiveOverrideProps<FlexProps>;
     "Frame 419"?: PrimitiveOverrideProps<FlexProps>;
+    CheckboxField?: PrimitiveOverrideProps<ViewProps>;
     image36562867?: PrimitiveOverrideProps<ImageProps>;
     image36562868?: PrimitiveOverrideProps<ImageProps>;
     Company?: PrimitiveOverrideProps<TextProps>;
@@ -25,6 +26,7 @@ export declare type PartsListCompanyDetailsOverridesProps = {
 } & EscapeHatchProps;
 export declare type PartsListCompanyDetailsProps = React.PropsWithChildren<Partial<FlexProps> & {
     company?: Company;
+    frame437?: React.ReactNode;
 } & {
     overrides?: PartsListCompanyDetailsOverridesProps | undefined | null;
 }>;

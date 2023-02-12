@@ -20,7 +20,6 @@ export declare type PartsListDetailsOverridesProps = {
     Description?: PrimitiveOverrideProps<TextProps>;
     Control?: PrimitiveOverrideProps<TextProps>;
     Price?: PrimitiveOverrideProps<TextProps>;
-    "CREATE RFQ"?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
 export declare type PartsListDetailsProps = React.PropsWithChildren<Partial<FlexProps> & {
     item?: Item;

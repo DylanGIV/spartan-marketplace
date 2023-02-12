@@ -7,14 +7,14 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { CheckboxField, Flex, Text } from "@aws-amplify/ui-react";
+import { Flex, Text } from "@aws-amplify/ui-react";
 export default function PartKey(props) {
   const { overrides, ...rest } = props;
   return (
     <Flex
       gap="57px"
       direction="row"
-      width="unset"
+      width="1440px"
       height="unset"
       justifyContent="flex-start"
       alignItems="flex-start"
@@ -27,15 +27,20 @@ export default function PartKey(props) {
       {...getOverrideProps(overrides, "PartKey")}
       {...rest}
     >
-      <CheckboxField
-        padding="2px 0px 0px 0px"
+      <Flex
+        gap="10px"
+        direction="column"
+        width="20px"
+        height="20px"
+        justifyContent="flex-start"
+        alignItems="flex-start"
+        overflow="hidden"
         shrink="0"
-        size="large"
-        defaultChecked={false}
-        isDisabled={false}
-        labelPosition="start"
-        {...getOverrideProps(overrides, "CheckboxField")}
-      ></CheckboxField>
+        position="relative"
+        padding="10px 10px 10px 10px"
+        backgroundColor="rgba(4,125,149,1)"
+        {...getOverrideProps(overrides, "Blank")}
+      ></Flex>
       <Text
         fontFamily="Inter"
         fontSize="16px"

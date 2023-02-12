@@ -3,6 +3,7 @@ import { Item, UserDetails } from '../../models';
 import {
   PartKey,
   PartSearchForm,
+  PartsHeader,
   PartsListCompanyDetails,
   PartsListDetails,
 } from '../../ui-components';
@@ -21,14 +22,20 @@ import {
   useTheme,
   Button,
   useAuthenticator,
+  CheckboxField,
 } from '@aws-amplify/ui-react';
 import CustomerRFQFormPopUp from '../../components/customerRFQFormPopUp/customerRFQFormPopUp.component';
+import { useLocation } from 'react-router';
 
-const Parts = () => {
+const Parts = (props) => {
+  const { state } = useLocation();
+
   const [data, setData] = useState([]);
   const [partSearchTextField, setPartSearchTextField] = useState('');
   const [partSearch, setPartSearch] = useState('');
-  const [partTypeSelected, setPartTypeSelected] = useState('part');
+  const [partTypeSelected, setPartTypeSelected] = useState(
+    state.partTypeSelected ? state.partTypeSelected : 'parts'
+  );
   const [dataRFQ, setDataRFQ] = useState({
     isOpen: false,
     company: {},
@@ -38,8 +45,60 @@ const Parts = () => {
   const [countries, setCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [partSearchTextAreaField, setPartSearchTextAreaField] = useState('');
+  const [allowRFQ, setAllowRFQ] = useState(false);
+
   const { tokens } = useTheme();
   const { user } = useAuthenticator();
+
+  const handleCheckboxChange = (partID) => {
+    let anyTrue = false;
+    const tempData = data.map((d, i) => {
+      let tempCompany = d.company;
+      const tempParts = d.parts.map((p, i) => {
+        let tempPart = null;
+        if (partID === p.id) {
+          tempPart = { ...p, isChecked: !p.isChecked };
+        } else {
+          tempPart = { ...p, isChecked: p.isChecked };
+        }
+
+        if (tempPart.isChecked || d.company.isChecked) {
+          anyTrue = true;
+        }
+        return tempPart;
+      });
+      return { company: tempCompany, parts: tempParts };
+    });
+
+    setAllowRFQ(anyTrue);
+    setData(tempData);
+  };
+
+  const handleCompanyCheckboxChange = (companyID) => {
+    let anyTrue = false;
+    const tempData = data.map((d, i) => {
+      let tempCompany = d.company;
+
+      if (tempCompany.id === companyID) {
+        tempCompany.isChecked = !tempCompany.isChecked;
+      }
+
+      if (tempCompany.isChecked) {
+        anyTrue = true;
+      }
+
+      const tempParts = d.parts.map((p, i) => {
+        let tempPart = p;
+        if (tempPart.isChecked) {
+          anyTrue = true;
+        }
+        return tempPart;
+      });
+      return { company: tempCompany, parts: tempParts };
+    });
+    setData(tempData);
+    setAllowRFQ(anyTrue);
+  };
 
   const partSearchFormOverrides = {
     Part: {
@@ -108,7 +167,7 @@ const Parts = () => {
           ? p.description.toLowerCase().includes(search.toLowerCase())
           : false)
       ) {
-        parts.push(p);
+        parts.push({ ...p, isChecked: false });
       }
     });
     return parts;
@@ -157,7 +216,7 @@ const Parts = () => {
           }
           if (parts && parts.length > 0) {
             tempData.push({
-              company: companies[i],
+              company: { ...companies[i], isChecked: false },
               parts: parts,
             });
           }
@@ -194,7 +253,15 @@ const Parts = () => {
       </div>
       {partSearch ? (
         <div className='parts-list-container'>
-          <PartKey marginBottom={10} />
+          <PartsHeader
+            width={'100%'}
+            overrides={{
+              CreateRFQ: {
+                disabled: !allowRFQ,
+              },
+            }}
+          />
+          <PartKey marginBottom={10} width='100%' />
           {data.length ? (
             data.map((d) => {
               return (
@@ -208,7 +275,27 @@ const Parts = () => {
                 >
                   <PartsListCompanyDetails
                     company={d.company}
-                    style={{ margin: 5 }}
+                    frame437={
+                      <div
+                        style={{
+                          backgroundColor: tokens.colors.background.tertiary,
+                          width: '100%',
+                          height: '100%',
+                        }}
+                      >
+                        <CheckboxField
+                          size='large'
+                          marginLeft={2}
+                          marginTop={2}
+                          checked={d.company.isChecked || false}
+                          onChange={() =>
+                            handleCompanyCheckboxChange(d.company.id)
+                          }
+                        />
+                      </div>
+                    }
+                    marginTop={5}
+                    backgroundColor={tokens.colors.background.tertiary}
                   />
                   <Collection
                     type='grid'
@@ -228,8 +315,13 @@ const Parts = () => {
                             },
                             style: { cursor: 'pointer' },
                           },
+                          CheckboxField: {
+                            checked:
+                              d.company.isChecked || item.isChecked || false,
+                            onChange: () => handleCheckboxChange(item.id),
+                          },
                         }}
-                        style={{ marginBottom: 5 }}
+                        style={{ marginBottom: 5, marginLeft: 5 }}
                       />
                     )}
                   </Collection>

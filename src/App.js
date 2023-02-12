@@ -8,7 +8,7 @@ import Parts from './routes/parts/parts.component';
 import Inventory from './routes/inventory/inventory.component';
 import { useContext, useEffect, useState } from 'react';
 import { UserDetails } from './models';
-import { Hub } from 'aws-amplify';
+import { Amplify, Hub } from 'aws-amplify';
 import { DataStore } from '@aws-amplify/datastore';
 import CompanySelect from './routes/companySelect/companySelect.component';
 import UserAuth from './routes/auth/userAuth.component';
@@ -19,6 +19,7 @@ import { GetCompanyByID } from './utils/utilsAmplify';
 
 function App() {
   const [userDetailsExists, setUserDetailsExists] = useState(false);
+  const [retrievalComplete, setRetrievalComplete] = useState(false);
   const { user } = useAuthenticator();
 
   const { userDetails, company, setCompany, setUser, setUserDetails } =
@@ -56,6 +57,16 @@ function App() {
     getUser();
   }, []);
 
+  // useEffect(() => {
+  //   // DataStore.start();
+  // }, []);
+
+  // const hubSubscription = Hub.listen('storage', (data) => {
+  //   if (data.payload.event == 'ready') {
+  //     console.log('ready');
+  //   }
+  // });
+
   useEffect(() => {
     const getCompany = async () => {
       if (userDetails) {
@@ -78,9 +89,10 @@ function App() {
         </Route>
       </Routes>
     );
+  } else if (!retrievalComplete) {
+    return null;
   } else if (user) {
     return <CompanySelect />;
-  } else {
     // return (
     //   // <Routes>
     //   //   <Route path='/auth' element={<UserAuth />} />;

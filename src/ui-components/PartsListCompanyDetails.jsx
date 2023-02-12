@@ -10,9 +10,9 @@ import {
   getOverrideProps,
   useNavigateAction,
 } from "@aws-amplify/ui-react/internal";
-import { Flex, Image, Text } from "@aws-amplify/ui-react";
+import { Flex, Image, Text, View } from "@aws-amplify/ui-react";
 export default function PartsListCompanyDetails(props) {
-  const { company, overrides, ...rest } = props;
+  const { company, frame437, overrides, ...rest } = props;
   const companyOnClick = useNavigateAction({ type: "url", url: "" });
   return (
     <Flex
@@ -47,13 +47,28 @@ export default function PartsListCompanyDetails(props) {
           width="unset"
           height="unset"
           justifyContent="flex-start"
-          alignItems="flex-start"
+          alignItems="center"
           overflow="hidden"
           shrink="0"
           position="relative"
           padding="0px 10px 0px 10px"
           {...getOverrideProps(overrides, "Frame 419")}
         >
+          <View
+            width="24px"
+            height="24px"
+            display="block"
+            gap="unset"
+            alignItems="unset"
+            justifyContent="unset"
+            overflow="hidden"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            backgroundColor="rgba(255,255,255,1)"
+            children={frame437}
+            {...getOverrideProps(overrides, "CheckboxField")}
+          ></View>
           <Image
             width="24px"
             height="unset"
@@ -174,7 +189,7 @@ export default function PartsListCompanyDetails(props) {
         <Flex
           gap="200px"
           direction="row"
-          width="1488px"
+          width="1440px"
           height="unset"
           justifyContent="flex-start"
           alignItems="center"
@@ -194,7 +209,7 @@ export default function PartsListCompanyDetails(props) {
             display="block"
             direction="column"
             justifyContent="unset"
-            width="422px"
+            width="452px"
             height="unset"
             gap="unset"
             alignItems="unset"

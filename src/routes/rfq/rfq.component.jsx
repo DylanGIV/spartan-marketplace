@@ -118,6 +118,13 @@ const RFQ = () => {
                   checked: checkboxValues[index] || false,
                   onChange: () => handleCheckboxChange(index),
                 },
+                'RFQ Number': {
+                  style: {
+                    cursor: 'pointer',
+                    textDecoration: 'underline',
+                  },
+                  color: 'blue',
+                },
               }}
               width={1450}
               marginBottom={2}

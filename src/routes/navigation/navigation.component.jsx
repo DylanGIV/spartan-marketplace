@@ -120,7 +120,7 @@ const Navigation = () => {
     },
     PartsFrame: {
       onClick: () => {
-        navigate('/parts');
+        navigate('/parts', { state: { partTypeSelected: 'part' } });
       },
       style: {
         cursor: 'pointer',
@@ -128,7 +128,7 @@ const Navigation = () => {
     },
     MROFrame: {
       onClick: () => {
-        navigate('/parts');
+        navigate('/parts', { state: { partTypeSelected: 'mro' } });
       },
       style: {
         cursor: 'pointer',

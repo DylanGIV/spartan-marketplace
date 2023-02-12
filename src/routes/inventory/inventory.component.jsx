@@ -45,7 +45,7 @@ const Inventory = () => {
 
   const handleCheckboxChange = (index) => {
     let allTrue = true;
-    let allFalse = false;
+    let allFalse = true;
     const tempValues = checkboxValues.map((c, i) => {
       if (i === index) {
         if (!c === false) {
@@ -63,6 +63,7 @@ const Inventory = () => {
         return c;
       }
     });
+
     setAllowDelete(allFalse);
     setCheckboxValues(tempValues);
     setAllCheckboxValue(allTrue);
