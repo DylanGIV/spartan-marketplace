@@ -9,7 +9,6 @@ import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import {
   Button,
-  CheckboxField,
   Divider,
   Flex,
   SelectField,
@@ -20,7 +19,7 @@ import {
   View,
 } from "@aws-amplify/ui-react";
 export default function CustomerRFQForm(props) {
-  const { contactPhone, overrides, ...rest } = props;
+  const { contactPhone, saveAddressCheckbox, overrides, ...rest } = props;
   return (
     <Flex
       gap="14px"
@@ -286,7 +285,7 @@ export default function CustomerRFQForm(props) {
             position="relative"
             borderRadius="15px"
             padding="1px 1px 1px 1px"
-            backgroundColor="rgba(245,245,245,1)"
+            backgroundColor="rgba(250,250,250,1)"
             {...getOverrideProps(overrides, "Frame 426")}
           >
             <SelectField
@@ -346,7 +345,7 @@ export default function CustomerRFQForm(props) {
               shrink="0"
               position="relative"
               padding="0px 0px 0px 0px"
-              backgroundColor="rgba(245,245,245,1)"
+              backgroundColor="rgba(250,250,250,1)"
               {...getOverrideProps(overrides, "Frame 422")}
             >
               <Flex
@@ -360,7 +359,7 @@ export default function CustomerRFQForm(props) {
                 shrink="0"
                 position="relative"
                 padding="0px 0px 0px 0px"
-                backgroundColor="rgba(245,245,245,1)"
+                backgroundColor="rgba(250,250,250,1)"
                 {...getOverrideProps(overrides, "Frame 423")}
               >
                 <TextField
@@ -399,7 +398,7 @@ export default function CustomerRFQForm(props) {
                 shrink="0"
                 position="relative"
                 padding="0px 0px 0px 0px"
-                backgroundColor="rgba(245,245,245,1)"
+                backgroundColor="rgba(250,250,250,1)"
                 {...getOverrideProps(overrides, "Frame 424")}
               >
                 <TextField
@@ -434,12 +433,12 @@ export default function CustomerRFQForm(props) {
               width="493.5px"
               height="unset"
               justifyContent="flex-start"
-              alignItems="center"
+              alignItems="flex-end"
               overflow="hidden"
               shrink="0"
               position="relative"
               padding="0px 0px 0px 0px"
-              backgroundColor="rgba(245,245,245,1)"
+              backgroundColor="rgba(250,250,250,1)"
               {...getOverrideProps(overrides, "Frame 425")}
             >
               <TextField
@@ -454,16 +453,21 @@ export default function CustomerRFQForm(props) {
                 variation="default"
                 {...getOverrideProps(overrides, "Zipcode")}
               ></TextField>
-              <CheckboxField
-                label="Save Address?"
-                padding="25px 0px 0px 0px"
+              <View
+                width="136px"
+                height="49px"
+                display="block"
+                gap="unset"
+                alignItems="unset"
+                justifyContent="unset"
+                overflow="hidden"
                 shrink="0"
-                size="default"
-                defaultChecked={false}
-                isDisabled={false}
-                labelPosition="start"
+                position="relative"
+                padding="0px 0px 0px 0px"
+                backgroundColor="rgba(250,250,250,1)"
+                children={saveAddressCheckbox}
                 {...getOverrideProps(overrides, "SaveAddressCheckbox")}
-              ></CheckboxField>
+              ></View>
             </Flex>
           </Flex>
           <TextAreaField

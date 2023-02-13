@@ -7,9 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { CheckboxField, Flex, Text } from "@aws-amplify/ui-react";
+import { Flex, Text } from "@aws-amplify/ui-react";
 export default function InventoryPartsDetails(props) {
-  const { item, overrides, ...rest } = props;
+  const { item, checkboxField, overrides, ...rest } = props;
   return (
     <Flex
       gap="57px"
@@ -26,15 +26,6 @@ export default function InventoryPartsDetails(props) {
       {...getOverrideProps(overrides, "InventoryPartsDetails")}
       {...rest}
     >
-      <CheckboxField
-        padding="2px 0px 0px 0px"
-        shrink="0"
-        size="large"
-        defaultChecked={false}
-        isDisabled={false}
-        labelPosition="start"
-        {...getOverrideProps(overrides, "CheckboxField")}
-      ></CheckboxField>
       <Text
         fontFamily="Inter"
         fontSize="16px"

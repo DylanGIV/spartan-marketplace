@@ -14,7 +14,7 @@ export default function PartKey(props) {
     <Flex
       gap="57px"
       direction="row"
-      width="1440px"
+      width="1444px"
       height="unset"
       justifyContent="flex-start"
       alignItems="flex-start"
@@ -30,7 +30,7 @@ export default function PartKey(props) {
       <Flex
         gap="10px"
         direction="column"
-        width="20px"
+        width="24px"
         height="20px"
         justifyContent="flex-start"
         alignItems="flex-start"

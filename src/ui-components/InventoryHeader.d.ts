@@ -6,7 +6,7 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { ButtonProps, FlexProps, HeadingProps, SelectFieldProps } from "@aws-amplify/ui-react";
+import { ButtonProps, FlexProps, HeadingProps, SelectFieldProps, ViewProps } from "@aws-amplify/ui-react";
 import { MyIconProps } from "./MyIcon";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type InventoryHeaderOverridesProps = {
@@ -17,11 +17,14 @@ export declare type InventoryHeaderOverridesProps = {
     "Frame 429"?: PrimitiveOverrideProps<FlexProps>;
     AddButton?: PrimitiveOverrideProps<ButtonProps>;
     ImportButton?: PrimitiveOverrideProps<ButtonProps>;
+    ItemCount?: PrimitiveOverrideProps<ViewProps>;
     "Frame 430"?: PrimitiveOverrideProps<FlexProps>;
     ItemSelect?: PrimitiveOverrideProps<SelectFieldProps>;
     DeleteIcon?: MyIconProps;
 } & EscapeHatchProps;
 export declare type InventoryHeaderProps = React.PropsWithChildren<Partial<FlexProps> & {
+    itemCount?: React.ReactNode;
+} & {
     overrides?: InventoryHeaderOverridesProps | undefined | null;
 }>;
 export default function InventoryHeader(props: InventoryHeaderProps): React.ReactElement;

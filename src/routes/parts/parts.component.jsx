@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Item, UserDetails } from '../../models';
 import {
   PartKey,
@@ -38,8 +38,7 @@ const Parts = (props) => {
   );
   const [dataRFQ, setDataRFQ] = useState({
     isOpen: false,
-    company: {},
-    item: {},
+    rfqs: [],
   });
   const [userDetails, setUserDetails] = useState(false);
   const [countries, setCountries] = useState([]);
@@ -49,6 +48,16 @@ const Parts = (props) => {
 
   const { tokens } = useTheme();
   const { user } = useAuthenticator();
+
+  const [isHovering, setIsHovering] = useState(null);
+
+  const handleMouseEnter = (id) => {
+    setIsHovering(id);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovering(null);
+  };
 
   const handleCheckboxChange = (partID) => {
     let anyTrue = false;
@@ -145,7 +154,33 @@ const Parts = (props) => {
   };
 
   const handleCreateRFQClick = (company, item) => {
-    setDataRFQ({ isOpen: true, company: company, item: item });
+    setDataRFQ({
+      isOpen: true,
+      company: company,
+      item: item,
+    });
+  };
+  const handleMultiRFQClick = () => {
+    const rfqs = [];
+
+    data.map((d) => {
+      const parts = [];
+      let entered = false;
+      d.parts.foreach((p) => {
+        if (d.company.isChecked || p.isChecked) {
+          parts.push(p);
+          entered = true;
+        }
+      });
+      if (entered) {
+        rfqs.push({ company: d, parts: parts });
+      }
+    });
+
+    setDataRFQ({
+      isOpen: true,
+      rfqs: rfqs,
+    });
   };
 
   const TestFunction = async (companyID, search) => {
@@ -258,6 +293,7 @@ const Parts = (props) => {
             overrides={{
               CreateRFQ: {
                 disabled: !allowRFQ,
+                onClick: handleCreateRFQClick,
               },
             }}
           />
@@ -295,34 +331,69 @@ const Parts = (props) => {
                       </div>
                     }
                     marginTop={5}
+                    marginBottom={5}
                     backgroundColor={tokens.colors.background.tertiary}
                   />
                   <Collection
                     type='grid'
                     items={d.parts}
                     style={{ marginLeft: 5 }}
-                    isPaginated
+                    isPaginated={d.parts.length > 5}
                     itemsPerPage={5}
                   >
                     {(item, index) => (
-                      <PartsListDetails
+                      <div
                         key={item.id}
-                        item={item}
-                        overrides={{
-                          'CREATE RFQ': {
-                            onClick: () => {
-                              handleCreateRFQClick(d.company, item);
-                            },
-                            style: { cursor: 'pointer' },
-                          },
-                          CheckboxField: {
-                            checked:
-                              d.company.isChecked || item.isChecked || false,
-                            onChange: () => handleCheckboxChange(item.id),
-                          },
+                        style={{
+                          display: 'flex',
+                          marginBottom: 5,
+                          marginLeft: 30,
+                          marginRight: 10,
                         }}
-                        style={{ marginBottom: 5, marginLeft: 5 }}
-                      />
+                      >
+                        <div
+                          style={{
+                            backgroundColor: tokens.colors.background.tertiary,
+                          }}
+                        >
+                          <CheckboxField
+                            label='checkbox'
+                            labelHidden={true}
+                            size='large'
+                            // marginLeft={2}
+                            // marginTop={2}
+                            checked={
+                              d.company.isChecked || item.isChecked || false
+                            }
+                            onChange={() => handleCheckboxChange(item.id)}
+                          />
+                        </div>
+                        <div
+                          style={{
+                            cursor: 'pointer',
+                            backgroundColor:
+                              isHovering === item.id
+                                ? tokens.colors.brand.primary[80]
+                                : tokens.colors.background.secondary,
+                            padding: 1,
+                            paddingLeft: 10,
+                            borderRadius: 9,
+                            marginLeft: 25,
+                            width: '100%',
+                          }}
+                          onMouseEnter={() => handleMouseEnter(item.id)}
+                          onMouseLeave={() => handleMouseLeave()}
+                        >
+                          <div>
+                            <PartsListDetails
+                              item={item}
+                              onClick={() =>
+                                handleCreateRFQClick(d.company, item)
+                              }
+                            />
+                          </div>
+                        </div>
+                      </div>
                     )}
                   </Collection>
                 </div>

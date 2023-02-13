@@ -7,11 +7,10 @@
 import * as React from "react";
 import { Item } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { CheckboxFieldProps, FlexProps, TextProps } from "@aws-amplify/ui-react";
+import { FlexProps, TextProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type InventoryPartsDetailsOverridesProps = {
     InventoryPartsDetails?: PrimitiveOverrideProps<FlexProps>;
-    CheckboxField?: PrimitiveOverrideProps<CheckboxFieldProps>;
     "Part No"?: PrimitiveOverrideProps<TextProps>;
     "Alt Part No"?: PrimitiveOverrideProps<TextProps>;
     NSN?: PrimitiveOverrideProps<TextProps>;
@@ -23,6 +22,7 @@ export declare type InventoryPartsDetailsOverridesProps = {
 } & EscapeHatchProps;
 export declare type InventoryPartsDetailsProps = React.PropsWithChildren<Partial<FlexProps> & {
     item?: Item;
+    checkboxField?: React.ReactNode;
 } & {
     overrides?: InventoryPartsDetailsOverridesProps | undefined | null;
 }>;

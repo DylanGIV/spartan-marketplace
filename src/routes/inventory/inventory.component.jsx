@@ -1,8 +1,10 @@
 import {
   Alert,
+  CheckboxField,
   Collection,
   Pagination,
   SelectField,
+  Text,
   useAuthenticator,
   useTheme,
 } from '@aws-amplify/ui-react';
@@ -150,7 +152,7 @@ const Inventory = () => {
         currentPage,
         itemsPerPage
       );
-      setTotalItems(Math.ceil(count / itemsPerPage));
+      setTotalItems(count);
     };
     if (company) {
       asyncGetData();
@@ -171,42 +173,109 @@ const Inventory = () => {
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ padding: 10 }}>
-        <InventoryHeader overrides={inventoryHeaderOverrides} width={1450} />
+        <InventoryHeader
+          overrides={inventoryHeaderOverrides}
+          width={1444}
+          itemCount={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'flex-end',
+                height: '100%',
+              }}
+            >
+              <Text>
+                {'Total Items: '} {totalItems}
+              </Text>
+            </div>
+          }
+        />
         <div style={{ paddingBottom: 10 }}>
           <InventoryKey
-            overrides={{
-              CheckboxField: {
-                checked: allCheckboxValue,
-                onChange: () => changeAllCheckboxValues(!allCheckboxValue),
-                // backgroundColor: 'white',
-                // color: tokens.colors.brand.primary[80],
-                color: 'white',
-              },
-            }}
-            width={1450}
+            // overrides={{
+            //   CheckboxField: {
+            //     checked: allCheckboxValue,
+            //     onChange: () => changeAllCheckboxValues(!allCheckboxValue),
+            //     // backgroundColor: 'white',
+            //     // color: tokens.colors.brand.primary[80],
+            //     color: 'white',
+            //   },
+            // }}
+            width={1444}
+            checkboxField={
+              <div
+                style={{
+                  backgroundColor: tokens.colors.brand.primary[80],
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <CheckboxField
+                  checked={allCheckboxValue}
+                  onChange={() => changeAllCheckboxValues(!allCheckboxValue)}
+                  size='large'
+                  marginLeft={2}
+                  marginTop={2}
+                  // backgroundColor: 'white',
+                  // color: tokens.colors.brand.primary[80],
+                  // color='white'
+                />
+              </div>
+            }
           />
         </div>
 
-        <Collection items={data.parts} type='grid' itemsPerPage={itemsPerPage}>
+        <Collection
+          items={data.parts}
+          type='grid'
+          itemsPerPage={itemsPerPage}
+          style={{
+            paddingLeft: 12,
+            paddingBottom: 12,
+            paddingTop: 12,
+            backgroundColor: tokens.colors.background.tertiary,
+            width: 1444,
+            borderRadius: 10,
+            marginBottom: 10,
+          }}
+        >
           {(item, index) => (
-            <InventoryPartsDetails
-              key={item.id}
-              item={item}
-              overrides={{
-                CheckboxField: {
-                  checked: checkboxValues[index] || false,
-                  onChange: () => handleCheckboxChange(index),
-                },
+            <div
+              style={{
+                display: 'flex',
+                width: 1444,
               }}
-              width={1450}
-              marginBottom={2}
-            />
+            >
+              <div
+                style={{
+                  width: 69,
+                }}
+              >
+                <CheckboxField
+                  checked={checkboxValues[index] || false}
+                  onChange={() => handleCheckboxChange(index)}
+                  size='large'
+                  // marginLeft={2}
+                  // marginTop={2}
+                  // backgroundColor: 'white',
+                  // color: tokens.colors.brand.primary[80],
+                  // color='white'
+                />
+              </div>
+              <InventoryPartsDetails
+                key={item.id}
+                item={item}
+                width={1360}
+                marginBottom={4}
+              />
+            </div>
           )}
         </Collection>
         <Pagination
           currentPage={currentPage}
           onChange={(newPageIndex) => setCurrentPage(newPageIndex)}
-          totalPages={totalItems}
+          totalPages={Math.ceil(totalItems / itemsPerPage)}
           onNext={() => setCurrentPage(currentPage + 1)}
           onPrevious={() => setCurrentPage(currentPage - 1)}
         />

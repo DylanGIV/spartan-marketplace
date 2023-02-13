@@ -121,12 +121,42 @@ export const GetPartsByCompanySubscribe = async (
   });
   setData({ company: company, parts: parts });
 };
-export const GetRFQByCompany = async (company, setRFQs, page, itemsPerPage) => {
-  const count = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id));
-  const rfqs = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id), {
-    page: page - 1,
-    limit: itemsPerPage,
-  });
+export const GetRFQByCompany = async (
+  company,
+  setRFQs,
+  page,
+  itemsPerPage,
+  filter,
+  userDetails
+) => {
+  let count = 0;
+  let rfqs = null;
+  if (filter === 'sent') {
+    count = await DataStore.query(
+      RFQ,
+      (p) => p.companyID.eq(company.id) && p.userDetailsID.eq(userDetails.id)
+    );
+    rfqs = await DataStore.query(
+      RFQ,
+      (p) => p.companyID.eq(company.id) && p.userDetailsID.eq(userDetails.id),
+      {
+        page: page - 1,
+        limit: itemsPerPage,
+      }
+    );
+  } else if (filter === 'received') {
+    count = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id));
+    rfqs = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id), {
+      page: page - 1,
+      limit: itemsPerPage,
+    });
+  } else {
+    count = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id));
+    rfqs = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id), {
+      page: page - 1,
+      limit: itemsPerPage,
+    });
+  }
   setRFQs({
     items: rfqs,
     count: Math.ceil(count.length / itemsPerPage),

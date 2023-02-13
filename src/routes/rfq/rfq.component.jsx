@@ -1,4 +1,9 @@
-import { Collection, Pagination, useTheme } from '@aws-amplify/ui-react';
+import {
+  CheckboxField,
+  Collection,
+  Pagination,
+  useTheme,
+} from '@aws-amplify/ui-react';
 import { useContext, useEffect, useState } from 'react';
 import { RFQContext } from '../../context/rfq.context';
 import { UserContext } from '../../context/user.context';
@@ -12,8 +17,8 @@ const RFQ = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [allCheckboxValue, setAllCheckboxValue] = useState(false);
-  const [checkboxValues, setCheckboxValues] = useState({});
-  const [partTypeSelected, setPartTypeSelected] = useState('all');
+  const [checkboxValues, setCheckboxValues] = useState([]);
+  const [rfqTypeSelected, setRFQTypeSelected] = useState('all');
 
   const { tokens } = useTheme();
 
@@ -23,40 +28,40 @@ const RFQ = () => {
   const rfqHeaderOverrides = {
     All: {
       onClick: () => {
-        setPartTypeSelected('all');
+        setRFQTypeSelected('all');
       },
       style: {
         cursor: 'pointer',
         backgroundColor:
-          partTypeSelected === 'all' ? tokens.colors.brand.primary[80] : null,
+          rfqTypeSelected === 'all' ? tokens.colors.brand.primary[80] : null,
         color:
-          partTypeSelected === 'all' ? tokens.colors.font.inverse.value : null,
+          rfqTypeSelected === 'all' ? tokens.colors.font.inverse.value : null,
       },
     },
     Sent: {
       onClick: () => {
-        setPartTypeSelected('sent');
+        setRFQTypeSelected('sent');
       },
       style: {
         cursor: 'pointer',
         backgroundColor:
-          partTypeSelected === 'sent' ? tokens.colors.brand.primary[80] : null,
+          rfqTypeSelected === 'sent' ? tokens.colors.brand.primary[80] : null,
         color:
-          partTypeSelected === 'sent' ? tokens.colors.font.inverse.value : null,
+          rfqTypeSelected === 'sent' ? tokens.colors.font.inverse.value : null,
       },
     },
     Received: {
       onClick: () => {
-        setPartTypeSelected('received');
+        setRFQTypeSelected('received');
       },
       style: {
         cursor: 'pointer',
         backgroundColor:
-          partTypeSelected === 'received'
+          rfqTypeSelected === 'received'
             ? tokens.colors.brand.primary[80]
             : null,
         color:
-          partTypeSelected === 'received'
+          rfqTypeSelected === 'received'
             ? tokens.colors.font.inverse.value
             : null,
       },
@@ -64,8 +69,15 @@ const RFQ = () => {
   };
 
   useEffect(() => {
-    GetRFQByCompany(company, setRFQs, currentPage, itemsPerPage);
-  }, []);
+    GetRFQByCompany(
+      company,
+      setRFQs,
+      currentPage,
+      itemsPerPage,
+      rfqTypeSelected,
+      userDetails
+    );
+  }, [rfqTypeSelected]);
 
   const handleCheckboxChange = (index) => {
     let allTrue = true;
@@ -92,13 +104,25 @@ const RFQ = () => {
         <RFQHeader overrides={rfqHeaderOverrides} width={1450} />
         <div style={{ paddingBottom: 10 }}>
           <RFQKey
-            overrides={
-              {
-                // CheckboxField: {
-                //   checked: allCheckboxValue,
-                //   onChange: () => changeAllCheckboxValues(!allCheckboxValue),
-                // },
-              }
+            checkboxField={
+              <div
+                style={{
+                  backgroundColor: tokens.colors.brand.primary[80],
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <CheckboxField
+                  // checked={checkboxValues[index] || false}
+                  // onChange={() => handleCheckboxChange(index)}
+                  size='large'
+                  marginLeft={2}
+                  marginTop={2}
+                  // backgroundColor: 'white',
+                  // color: tokens.colors.brand.primary[80],
+                  // color='white'
+                />
+              </div>
             }
             width={1450}
           />
@@ -126,6 +150,26 @@ const RFQ = () => {
                   color: 'blue',
                 },
               }}
+              checkboxField={
+                <div
+                  style={{
+                    backgroundColor: tokens.colors.background.secondary,
+                    width: '100%',
+                    height: '100%',
+                  }}
+                >
+                  <CheckboxField
+                    checked={checkboxValues[index] || false}
+                    onChange={() => handleCheckboxChange(index)}
+                    size='large'
+                    marginLeft={2}
+                    marginTop={2}
+                    // backgroundColor: 'white',
+                    // color: tokens.colors.brand.primary[80],
+                    // color='white'
+                  />
+                </div>
+              }
               width={1450}
               marginBottom={2}
             />

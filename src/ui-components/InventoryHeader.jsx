@@ -7,10 +7,16 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Button, Flex, Heading, SelectField } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Flex,
+  Heading,
+  SelectField,
+  View,
+} from "@aws-amplify/ui-react";
 import MyIcon from "./MyIcon";
 export default function InventoryHeader(props) {
-  const { overrides, ...rest } = props;
+  const { itemCount, overrides, ...rest } = props;
   return (
     <Flex
       gap="10px"
@@ -100,6 +106,21 @@ export default function InventoryHeader(props) {
             children="IMPORT"
             {...getOverrideProps(overrides, "ImportButton")}
           ></Button>
+          <View
+            width="150px"
+            height="33px"
+            display="block"
+            gap="unset"
+            alignItems="unset"
+            justifyContent="unset"
+            overflow="hidden"
+            shrink="0"
+            position="relative"
+            padding="0px 0px 0px 0px"
+            backgroundColor="rgba(255,255,255,1)"
+            children={itemCount}
+            {...getOverrideProps(overrides, "ItemCount")}
+          ></View>
         </Flex>
         <Flex
           gap="20px"

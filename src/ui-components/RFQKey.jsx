@@ -7,9 +7,9 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { CheckboxField, Flex, Text } from "@aws-amplify/ui-react";
+import { Flex, Text, View } from "@aws-amplify/ui-react";
 export default function RFQKey(props) {
-  const { overrides, ...rest } = props;
+  const { checkboxField, overrides, ...rest } = props;
   return (
     <Flex
       gap="57px"
@@ -26,15 +26,21 @@ export default function RFQKey(props) {
       {...getOverrideProps(overrides, "RFQKey")}
       {...rest}
     >
-      <CheckboxField
-        padding="2px 0px 0px 0px"
+      <View
+        width="24px"
+        height="24px"
+        display="block"
+        gap="unset"
+        alignItems="unset"
+        justifyContent="unset"
+        overflow="hidden"
         shrink="0"
-        size="large"
-        defaultChecked={false}
-        isDisabled={false}
-        labelPosition="start"
+        position="relative"
+        padding="0px 0px 0px 0px"
+        backgroundColor="rgba(255,255,255,1)"
+        children={checkboxField}
         {...getOverrideProps(overrides, "CheckboxField")}
-      ></CheckboxField>
+      ></View>
       <Text
         fontFamily="Inter"
         fontSize="16px"

@@ -39,7 +39,6 @@ function App() {
         p.userID.eq(user.username)
       ).subscribe((snapshot) => {
         const { items, isSynced } = snapshot;
-        console.log(items.length);
         if (items.length > 0) {
           setUserDetails(items[0]);
           setUser(user);
@@ -89,7 +88,7 @@ function App() {
         </Route>
       </Routes>
     );
-  } else if (!retrievalComplete) {
+  } else if (!retrievalComplete && userDetailsExists) {
     return null;
   } else if (user) {
     return <CompanySelect />;

@@ -6,11 +6,11 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { CheckboxFieldProps, FlexProps, TextProps } from "@aws-amplify/ui-react";
+import { FlexProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type InventoryKeyOverridesProps = {
     InventoryKey?: PrimitiveOverrideProps<FlexProps>;
-    CheckboxField?: PrimitiveOverrideProps<CheckboxFieldProps>;
+    CheckboxField?: PrimitiveOverrideProps<ViewProps>;
     "Part No"?: PrimitiveOverrideProps<TextProps>;
     "Alt Part No"?: PrimitiveOverrideProps<TextProps>;
     NSN?: PrimitiveOverrideProps<TextProps>;
@@ -21,6 +21,8 @@ export declare type InventoryKeyOverridesProps = {
     Price?: PrimitiveOverrideProps<TextProps>;
 } & EscapeHatchProps;
 export declare type InventoryKeyProps = React.PropsWithChildren<Partial<FlexProps> & {
+    checkboxField?: React.ReactNode;
+} & {
     overrides?: InventoryKeyOverridesProps | undefined | null;
 }>;
 export default function InventoryKey(props: InventoryKeyProps): React.ReactElement;

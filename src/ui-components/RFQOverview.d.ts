@@ -7,11 +7,11 @@
 import * as React from "react";
 import { RFQ } from "../models";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { CheckboxFieldProps, FlexProps, TextProps } from "@aws-amplify/ui-react";
+import { FlexProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type RFQOverviewOverridesProps = {
     RFQOverview?: PrimitiveOverrideProps<FlexProps>;
-    CheckboxField?: PrimitiveOverrideProps<CheckboxFieldProps>;
+    CheckboxField?: PrimitiveOverrideProps<ViewProps>;
     "RFQ Number"?: PrimitiveOverrideProps<TextProps>;
     "Part Number"?: PrimitiveOverrideProps<TextProps>;
     "Date Sent"?: PrimitiveOverrideProps<TextProps>;
@@ -20,6 +20,7 @@ export declare type RFQOverviewOverridesProps = {
 } & EscapeHatchProps;
 export declare type RFQOverviewProps = React.PropsWithChildren<Partial<FlexProps> & {
     rFQ?: RFQ;
+    checkboxField?: React.ReactNode;
 } & {
     overrides?: RFQOverviewOverridesProps | undefined | null;
 }>;

@@ -1,4 +1,4 @@
-import { Text, useAuthenticator } from '@aws-amplify/ui-react';
+import { CheckboxField, Text, useAuthenticator } from '@aws-amplify/ui-react';
 import React, { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import { RFQ } from '../../models';
@@ -344,6 +344,23 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       }}
       as='form'
       overrides={rfqOverrides}
+      saveAddressCheckbox={
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            padding: 2,
+            marginTop: 12,
+          }}
+        >
+          <CheckboxField
+            label='Save Address?'
+            checked={saveAddressChecked}
+            onChange={() => setSaveAddressChecked(!saveAddressChecked)}
+            isDisabled={saveAddressCheckDisabled}
+          />
+        </div>
+      }
       contactPhone={
         <div
           style={{

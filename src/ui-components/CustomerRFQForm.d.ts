@@ -6,7 +6,7 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { ButtonProps, CheckboxFieldProps, DividerProps, FlexProps, SelectFieldProps, StepperFieldProps, TextAreaFieldProps, TextFieldProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
+import { ButtonProps, DividerProps, FlexProps, SelectFieldProps, StepperFieldProps, TextAreaFieldProps, TextFieldProps, TextProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CustomerRFQFormOverridesProps = {
     CustomerRFQForm?: PrimitiveOverrideProps<FlexProps>;
@@ -42,11 +42,12 @@ export declare type CustomerRFQFormOverridesProps = {
     AddressLine2?: PrimitiveOverrideProps<TextFieldProps>;
     "Frame 425"?: PrimitiveOverrideProps<FlexProps>;
     Zipcode?: PrimitiveOverrideProps<TextFieldProps>;
-    SaveAddressCheckbox?: PrimitiveOverrideProps<CheckboxFieldProps>;
+    SaveAddressCheckbox?: PrimitiveOverrideProps<ViewProps>;
     AdditionalComments?: PrimitiveOverrideProps<TextAreaFieldProps>;
 } & EscapeHatchProps;
 export declare type CustomerRFQFormProps = React.PropsWithChildren<Partial<FlexProps> & {
     contactPhone?: React.ReactNode;
+    saveAddressCheckbox?: React.ReactNode;
 } & {
     overrides?: CustomerRFQFormOverridesProps | undefined | null;
 }>;
