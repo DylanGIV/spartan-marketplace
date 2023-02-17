@@ -27,12 +27,7 @@ export declare type RFQCreateFormInputValues = {
     dueDate?: string;
     quantityRequested?: number;
     quantityQuoted?: number;
-    nsn?: string;
-    partNumber?: string;
-    altPartNumber?: string;
-    condition?: string;
     uom?: string;
-    description?: string;
     price?: number;
     discount?: number;
     attr1?: string;
@@ -54,6 +49,9 @@ export declare type RFQCreateFormInputValues = {
     state?: string;
     zip?: string;
     country?: string;
+    receivingCompanyID?: string;
+    userDetailsID?: string;
+    sendingCompanyID?: string;
 };
 export declare type RFQCreateFormValidationValues = {
     quotationNumber?: ValidationFunction<string>;
@@ -70,12 +68,7 @@ export declare type RFQCreateFormValidationValues = {
     dueDate?: ValidationFunction<string>;
     quantityRequested?: ValidationFunction<number>;
     quantityQuoted?: ValidationFunction<number>;
-    nsn?: ValidationFunction<string>;
-    partNumber?: ValidationFunction<string>;
-    altPartNumber?: ValidationFunction<string>;
-    condition?: ValidationFunction<string>;
     uom?: ValidationFunction<string>;
-    description?: ValidationFunction<string>;
     price?: ValidationFunction<number>;
     discount?: ValidationFunction<number>;
     attr1?: ValidationFunction<string>;
@@ -97,6 +90,9 @@ export declare type RFQCreateFormValidationValues = {
     state?: ValidationFunction<string>;
     zip?: ValidationFunction<string>;
     country?: ValidationFunction<string>;
+    receivingCompanyID?: ValidationFunction<string>;
+    userDetailsID?: ValidationFunction<string>;
+    sendingCompanyID?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type RFQCreateFormOverridesProps = {
@@ -115,12 +111,7 @@ export declare type RFQCreateFormOverridesProps = {
     dueDate?: PrimitiveOverrideProps<TextFieldProps>;
     quantityRequested?: PrimitiveOverrideProps<TextFieldProps>;
     quantityQuoted?: PrimitiveOverrideProps<TextFieldProps>;
-    nsn?: PrimitiveOverrideProps<TextFieldProps>;
-    partNumber?: PrimitiveOverrideProps<TextFieldProps>;
-    altPartNumber?: PrimitiveOverrideProps<TextFieldProps>;
-    condition?: PrimitiveOverrideProps<TextFieldProps>;
     uom?: PrimitiveOverrideProps<TextFieldProps>;
-    description?: PrimitiveOverrideProps<TextFieldProps>;
     price?: PrimitiveOverrideProps<TextFieldProps>;
     discount?: PrimitiveOverrideProps<TextFieldProps>;
     attr1?: PrimitiveOverrideProps<TextFieldProps>;
@@ -142,6 +133,9 @@ export declare type RFQCreateFormOverridesProps = {
     state?: PrimitiveOverrideProps<TextFieldProps>;
     zip?: PrimitiveOverrideProps<TextFieldProps>;
     country?: PrimitiveOverrideProps<TextFieldProps>;
+    receivingCompanyID?: PrimitiveOverrideProps<TextFieldProps>;
+    userDetailsID?: PrimitiveOverrideProps<TextFieldProps>;
+    sendingCompanyID?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type RFQCreateFormProps = React.PropsWithChildren<{
     overrides?: RFQCreateFormOverridesProps | undefined | null;

@@ -1,5 +1,7 @@
 import { Button, SearchField, SelectField } from '@aws-amplify/ui-react';
-import { populateCountries } from '../../utils/utilsAmplify';
+import { DataStore } from 'aws-amplify';
+import { UserDetails } from '../../models';
+import { AddOwnerToCompany, populateCountries } from '../../utils/utilsAmplify';
 
 const Home = () => {
   // const [items, setItems] = useState([]);
@@ -12,6 +14,16 @@ const Home = () => {
   //   };
   //   itemquery();
   // }, []);
+
+  const handleClick = async () => {
+    const userDetails = await DataStore.query(UserDetails);
+    // console.log(userDetails[0]);
+    const companyResponse = await AddOwnerToCompany(
+      userDetails[0],
+      'edb8e4ba-7b13-404e-94d5-bc16bf2bc810'
+    );
+    console.log(companyResponse);
+  };
   return (
     <div
       style={{
@@ -36,7 +48,7 @@ const Home = () => {
           <option value='partNumber'>Part Number</option>
           <option value='partName'>Part Name</option>
         </SelectField>
-        <Button>Search</Button>
+        <Button onClick={handleClick}>Search</Button>
       </div>
     </div>
   );

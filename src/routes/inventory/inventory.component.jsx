@@ -242,6 +242,7 @@ const Inventory = () => {
         >
           {(item, index) => (
             <div
+              key={item.id}
               style={{
                 display: 'flex',
                 width: 1444,
@@ -264,7 +265,6 @@ const Inventory = () => {
                 />
               </div>
               <InventoryPartsDetails
-                key={item.id}
                 item={item}
                 width={1360}
                 marginBottom={4}

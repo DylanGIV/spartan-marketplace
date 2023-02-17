@@ -6,7 +6,7 @@ export const onCreateRFQ = /* GraphQL */ `
   subscription OnCreateRFQ($filter: ModelSubscriptionRFQFilterInput) {
     onCreateRFQ(filter: $filter) {
       id
-      quotationNumber
+      rfqNumber
       dateSent
       custRefNum
       companyName
@@ -20,13 +20,8 @@ export const onCreateRFQ = /* GraphQL */ `
       dueDate
       quantityRequested
       quantityQuoted
-      nsn
-      partNumber
-      altPartNumber
-      condition
       uom
-      description
-      price
+      urgency
       discount
       attr1
       attr2
@@ -40,20 +35,154 @@ export const onCreateRFQ = /* GraphQL */ `
       attr4
       attr5
       attr6
-      imageUrls
       addressLine1
       addressLine2
       city
       state
       zip
       country
-      companyID
-      userDetailsID
+      receivingCompanyID
+      sendingCompanyID
+      ReceivingCompany {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      SendingCompany {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      Items {
+        items {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          rFQItemsId
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      companySentRFQsId
+      companyReceivedRFQsId
     }
   }
 `;
@@ -61,7 +190,7 @@ export const onUpdateRFQ = /* GraphQL */ `
   subscription OnUpdateRFQ($filter: ModelSubscriptionRFQFilterInput) {
     onUpdateRFQ(filter: $filter) {
       id
-      quotationNumber
+      rfqNumber
       dateSent
       custRefNum
       companyName
@@ -75,13 +204,8 @@ export const onUpdateRFQ = /* GraphQL */ `
       dueDate
       quantityRequested
       quantityQuoted
-      nsn
-      partNumber
-      altPartNumber
-      condition
       uom
-      description
-      price
+      urgency
       discount
       attr1
       attr2
@@ -95,20 +219,154 @@ export const onUpdateRFQ = /* GraphQL */ `
       attr4
       attr5
       attr6
-      imageUrls
       addressLine1
       addressLine2
       city
       state
       zip
       country
-      companyID
-      userDetailsID
+      receivingCompanyID
+      sendingCompanyID
+      ReceivingCompany {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      SendingCompany {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      Items {
+        items {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          rFQItemsId
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
+      companySentRFQsId
+      companyReceivedRFQsId
     }
   }
 `;
@@ -116,7 +374,7 @@ export const onDeleteRFQ = /* GraphQL */ `
   subscription OnDeleteRFQ($filter: ModelSubscriptionRFQFilterInput) {
     onDeleteRFQ(filter: $filter) {
       id
-      quotationNumber
+      rfqNumber
       dateSent
       custRefNum
       companyName
@@ -130,13 +388,8 @@ export const onDeleteRFQ = /* GraphQL */ `
       dueDate
       quantityRequested
       quantityQuoted
-      nsn
-      partNumber
-      altPartNumber
-      condition
       uom
-      description
-      price
+      urgency
       discount
       attr1
       attr2
@@ -150,65 +403,40 @@ export const onDeleteRFQ = /* GraphQL */ `
       attr4
       attr5
       attr6
-      imageUrls
       addressLine1
       addressLine2
       city
       state
       zip
       country
-      companyID
-      userDetailsID
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateUserDetails = /* GraphQL */ `
-  subscription OnCreateUserDetails(
-    $filter: ModelSubscriptionUserDetailsFilterInput
-    $owner: String
-  ) {
-    onCreateUserDetails(filter: $filter, owner: $owner) {
-      id
-      userID
-      companyID
-      BillingAddresses {
-        items {
+      receivingCompanyID
+      sendingCompanyID
+      ReceivingCompany {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
           id
-          userDetailsId
-          billingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
+          userID
+          companyID
+          isCompanyOwner
           createdAt
           updatedAt
           _version
@@ -216,42 +444,54 @@ export const onCreateUserDetails = /* GraphQL */ `
           _lastChangedAt
           owner
         }
-        nextToken
-        startedAt
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
       }
-      ShippingAddresses {
-        items {
+      SendingCompany {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
           id
-          userDetailsId
-          shippingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
+          userID
+          companyID
+          isCompanyOwner
           createdAt
           updatedAt
           _version
@@ -259,61 +499,47 @@ export const onCreateUserDetails = /* GraphQL */ `
           _lastChangedAt
           owner
         }
-        nextToken
-        startedAt
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
       }
-      isCompanyOwner
-      RFQS {
+      Items {
         items {
           id
-          quotationNumber
-          dateSent
-          custRefNum
-          companyName
-          contact
-          phone
-          email
-          shippingTerms
-          shippingMethod
-          leadTime
-          paymentTerms
-          dueDate
-          quantityRequested
-          quantityQuoted
           nsn
           partNumber
           altPartNumber
-          condition
-          uom
           description
+          quantity
+          condition
+          control
           price
-          discount
-          attr1
-          attr2
-          attr3
-          lineTotal
-          subtotal
-          salesTax
-          total
-          internalComments
-          emailComments
-          attr4
-          attr5
-          attr6
-          imageUrls
-          addressLine1
-          addressLine2
-          city
-          state
-          zip
-          country
           companyID
-          userDetailsID
+          imageUrls
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          rFQItemsId
         }
         nextToken
         startedAt
@@ -323,327 +549,8 @@ export const onCreateUserDetails = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onUpdateUserDetails = /* GraphQL */ `
-  subscription OnUpdateUserDetails(
-    $filter: ModelSubscriptionUserDetailsFilterInput
-    $owner: String
-  ) {
-    onUpdateUserDetails(filter: $filter, owner: $owner) {
-      id
-      userID
-      companyID
-      BillingAddresses {
-        items {
-          id
-          userDetailsId
-          billingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      ShippingAddresses {
-        items {
-          id
-          userDetailsId
-          shippingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      isCompanyOwner
-      RFQS {
-        items {
-          id
-          quotationNumber
-          dateSent
-          custRefNum
-          companyName
-          contact
-          phone
-          email
-          shippingTerms
-          shippingMethod
-          leadTime
-          paymentTerms
-          dueDate
-          quantityRequested
-          quantityQuoted
-          nsn
-          partNumber
-          altPartNumber
-          condition
-          uom
-          description
-          price
-          discount
-          attr1
-          attr2
-          attr3
-          lineTotal
-          subtotal
-          salesTax
-          total
-          internalComments
-          emailComments
-          attr4
-          attr5
-          attr6
-          imageUrls
-          addressLine1
-          addressLine2
-          city
-          state
-          zip
-          country
-          companyID
-          userDetailsID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onDeleteUserDetails = /* GraphQL */ `
-  subscription OnDeleteUserDetails(
-    $filter: ModelSubscriptionUserDetailsFilterInput
-    $owner: String
-  ) {
-    onDeleteUserDetails(filter: $filter, owner: $owner) {
-      id
-      userID
-      companyID
-      BillingAddresses {
-        items {
-          id
-          userDetailsId
-          billingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      ShippingAddresses {
-        items {
-          id
-          userDetailsId
-          shippingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      isCompanyOwner
-      RFQS {
-        items {
-          id
-          quotationNumber
-          dateSent
-          custRefNum
-          companyName
-          contact
-          phone
-          email
-          shippingTerms
-          shippingMethod
-          leadTime
-          paymentTerms
-          dueDate
-          quantityRequested
-          quantityQuoted
-          nsn
-          partNumber
-          altPartNumber
-          condition
-          uom
-          description
-          price
-          discount
-          attr1
-          attr2
-          attr3
-          lineTotal
-          subtotal
-          salesTax
-          total
-          internalComments
-          emailComments
-          attr4
-          attr5
-          attr6
-          imageUrls
-          addressLine1
-          addressLine2
-          city
-          state
-          zip
-          country
-          companyID
-          userDetailsID
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-        }
-        nextToken
-        startedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
+      companySentRFQsId
+      companyReceivedRFQsId
     }
   }
 `;
@@ -662,15 +569,7 @@ export const onCreateCountry = /* GraphQL */ `
           city
           region
           postalCode
-          CompanyBillingAddresses {
-            nextToken
-            startedAt
-          }
           countryID
-          UserBillingAddresses {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -691,14 +590,6 @@ export const onCreateCountry = /* GraphQL */ `
           regi
           postalCode
           countryID
-          UserShippingAddresses {
-            nextToken
-            startedAt
-          }
-          CompanyShippingAddresses {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -731,15 +622,7 @@ export const onUpdateCountry = /* GraphQL */ `
           city
           region
           postalCode
-          CompanyBillingAddresses {
-            nextToken
-            startedAt
-          }
           countryID
-          UserBillingAddresses {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -760,14 +643,6 @@ export const onUpdateCountry = /* GraphQL */ `
           regi
           postalCode
           countryID
-          UserShippingAddresses {
-            nextToken
-            startedAt
-          }
-          CompanyShippingAddresses {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -800,15 +675,7 @@ export const onDeleteCountry = /* GraphQL */ `
           city
           region
           postalCode
-          CompanyBillingAddresses {
-            nextToken
-            startedAt
-          }
           countryID
-          UserBillingAddresses {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -829,14 +696,6 @@ export const onDeleteCountry = /* GraphQL */ `
           regi
           postalCode
           countryID
-          UserShippingAddresses {
-            nextToken
-            startedAt
-          }
-          CompanyShippingAddresses {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -873,34 +732,6 @@ export const onCreateShippingAddress = /* GraphQL */ `
           id
           userDetailsId
           shippingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -916,36 +747,6 @@ export const onCreateShippingAddress = /* GraphQL */ `
           id
           shippingAddressId
           companyId
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -982,34 +783,6 @@ export const onUpdateShippingAddress = /* GraphQL */ `
           id
           userDetailsId
           shippingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1025,36 +798,6 @@ export const onUpdateShippingAddress = /* GraphQL */ `
           id
           shippingAddressId
           companyId
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1091,34 +834,6 @@ export const onDeleteShippingAddress = /* GraphQL */ `
           id
           userDetailsId
           shippingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1134,36 +849,6 @@ export const onDeleteShippingAddress = /* GraphQL */ `
           id
           shippingAddressId
           companyId
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1199,36 +884,6 @@ export const onCreateBillingAddress = /* GraphQL */ `
           id
           billingAddressId
           companyId
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1244,34 +899,6 @@ export const onCreateBillingAddress = /* GraphQL */ `
           id
           userDetailsId
           billingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1308,36 +935,6 @@ export const onUpdateBillingAddress = /* GraphQL */ `
           id
           billingAddressId
           companyId
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1353,34 +950,6 @@ export const onUpdateBillingAddress = /* GraphQL */ `
           id
           userDetailsId
           billingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1417,36 +986,6 @@ export const onDeleteBillingAddress = /* GraphQL */ `
           id
           billingAddressId
           companyId
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1462,34 +1001,6 @@ export const onDeleteBillingAddress = /* GraphQL */ `
           id
           userDetailsId
           billingAddressId
-          userDetails {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1518,27 +1029,22 @@ export const onCreateCompany = /* GraphQL */ `
       Items {
         items {
           id
-          userID
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
           companyID
-          BillingAddresses {
-            nextToken
-            startedAt
-          }
-          ShippingAddresses {
-            nextToken
-            startedAt
-          }
-          isCompanyOwner
-          RFQS {
-            nextToken
-            startedAt
-          }
+          imageUrls
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
+          rFQItemsId
         }
         nextToken
         startedAt
@@ -1546,27 +1052,20 @@ export const onCreateCompany = /* GraphQL */ `
       ItemMROS {
         items {
           id
-          userID
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          price
+          certification
           companyID
-          BillingAddresses {
-            nextToken
-            startedAt
-          }
-          ShippingAddresses {
-            nextToken
-            startedAt
-          }
-          isCompanyOwner
-          RFQS {
-            nextToken
-            startedAt
-          }
+          imageUrls
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         nextToken
         startedAt
@@ -1576,36 +1075,6 @@ export const onCreateCompany = /* GraphQL */ `
           id
           billingAddressId
           companyId
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1620,19 +1089,7 @@ export const onCreateCompany = /* GraphQL */ `
           id
           userID
           companyID
-          BillingAddresses {
-            nextToken
-            startedAt
-          }
-          ShippingAddresses {
-            nextToken
-            startedAt
-          }
           isCompanyOwner
-          RFQS {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1643,41 +1100,31 @@ export const onCreateCompany = /* GraphQL */ `
         nextToken
         startedAt
       }
+      CompanyOwner {
+        id
+        userID
+        companyID
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        isCompanyOwner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
       ShippingAddresses {
         items {
           id
           shippingAddressId
           companyId
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1690,10 +1137,10 @@ export const onCreateCompany = /* GraphQL */ `
       profilePictureUrl
       fax
       companyDescription
-      RFQS {
+      sentRFQs {
         items {
           id
-          quotationNumber
+          rfqNumber
           dateSent
           custRefNum
           companyName
@@ -1707,13 +1154,8 @@ export const onCreateCompany = /* GraphQL */ `
           dueDate
           quantityRequested
           quantityQuoted
-          nsn
-          partNumber
-          altPartNumber
-          condition
           uom
-          description
-          price
+          urgency
           discount
           attr1
           attr2
@@ -1727,20 +1169,72 @@ export const onCreateCompany = /* GraphQL */ `
           attr4
           attr5
           attr6
-          imageUrls
           addressLine1
           addressLine2
           city
           state
           zip
           country
-          companyID
-          userDetailsID
+          receivingCompanyID
+          sendingCompanyID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          companySentRFQsId
+          companyReceivedRFQsId
+        }
+        nextToken
+        startedAt
+      }
+      receivedRFQs {
+        items {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          attr1
+          attr2
+          attr3
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          attr4
+          attr5
+          attr6
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRFQsId
+          companyReceivedRFQsId
         }
         nextToken
         startedAt
@@ -1750,6 +1244,7 @@ export const onCreateCompany = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      companyCompanyOwnerId
     }
   }
 `;
@@ -1763,27 +1258,22 @@ export const onUpdateCompany = /* GraphQL */ `
       Items {
         items {
           id
-          userID
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
           companyID
-          BillingAddresses {
-            nextToken
-            startedAt
-          }
-          ShippingAddresses {
-            nextToken
-            startedAt
-          }
-          isCompanyOwner
-          RFQS {
-            nextToken
-            startedAt
-          }
+          imageUrls
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
+          rFQItemsId
         }
         nextToken
         startedAt
@@ -1791,27 +1281,20 @@ export const onUpdateCompany = /* GraphQL */ `
       ItemMROS {
         items {
           id
-          userID
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          price
+          certification
           companyID
-          BillingAddresses {
-            nextToken
-            startedAt
-          }
-          ShippingAddresses {
-            nextToken
-            startedAt
-          }
-          isCompanyOwner
-          RFQS {
-            nextToken
-            startedAt
-          }
+          imageUrls
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         nextToken
         startedAt
@@ -1821,36 +1304,6 @@ export const onUpdateCompany = /* GraphQL */ `
           id
           billingAddressId
           companyId
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1865,19 +1318,7 @@ export const onUpdateCompany = /* GraphQL */ `
           id
           userID
           companyID
-          BillingAddresses {
-            nextToken
-            startedAt
-          }
-          ShippingAddresses {
-            nextToken
-            startedAt
-          }
           isCompanyOwner
-          RFQS {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1888,41 +1329,31 @@ export const onUpdateCompany = /* GraphQL */ `
         nextToken
         startedAt
       }
+      CompanyOwner {
+        id
+        userID
+        companyID
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        isCompanyOwner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
       ShippingAddresses {
         items {
           id
           shippingAddressId
           companyId
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -1935,10 +1366,10 @@ export const onUpdateCompany = /* GraphQL */ `
       profilePictureUrl
       fax
       companyDescription
-      RFQS {
+      sentRFQs {
         items {
           id
-          quotationNumber
+          rfqNumber
           dateSent
           custRefNum
           companyName
@@ -1952,13 +1383,8 @@ export const onUpdateCompany = /* GraphQL */ `
           dueDate
           quantityRequested
           quantityQuoted
-          nsn
-          partNumber
-          altPartNumber
-          condition
           uom
-          description
-          price
+          urgency
           discount
           attr1
           attr2
@@ -1972,20 +1398,72 @@ export const onUpdateCompany = /* GraphQL */ `
           attr4
           attr5
           attr6
-          imageUrls
           addressLine1
           addressLine2
           city
           state
           zip
           country
-          companyID
-          userDetailsID
+          receivingCompanyID
+          sendingCompanyID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          companySentRFQsId
+          companyReceivedRFQsId
+        }
+        nextToken
+        startedAt
+      }
+      receivedRFQs {
+        items {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          attr1
+          attr2
+          attr3
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          attr4
+          attr5
+          attr6
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRFQsId
+          companyReceivedRFQsId
         }
         nextToken
         startedAt
@@ -1995,6 +1473,7 @@ export const onUpdateCompany = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      companyCompanyOwnerId
     }
   }
 `;
@@ -2008,27 +1487,22 @@ export const onDeleteCompany = /* GraphQL */ `
       Items {
         items {
           id
-          userID
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
           companyID
-          BillingAddresses {
-            nextToken
-            startedAt
-          }
-          ShippingAddresses {
-            nextToken
-            startedAt
-          }
-          isCompanyOwner
-          RFQS {
-            nextToken
-            startedAt
-          }
+          imageUrls
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
+          rFQItemsId
         }
         nextToken
         startedAt
@@ -2036,27 +1510,20 @@ export const onDeleteCompany = /* GraphQL */ `
       ItemMROS {
         items {
           id
-          userID
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          price
+          certification
           companyID
-          BillingAddresses {
-            nextToken
-            startedAt
-          }
-          ShippingAddresses {
-            nextToken
-            startedAt
-          }
-          isCompanyOwner
-          RFQS {
-            nextToken
-            startedAt
-          }
+          imageUrls
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          owner
         }
         nextToken
         startedAt
@@ -2066,36 +1533,6 @@ export const onDeleteCompany = /* GraphQL */ `
           id
           billingAddressId
           companyId
-          billingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            region
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -2110,19 +1547,7 @@ export const onDeleteCompany = /* GraphQL */ `
           id
           userID
           companyID
-          BillingAddresses {
-            nextToken
-            startedAt
-          }
-          ShippingAddresses {
-            nextToken
-            startedAt
-          }
           isCompanyOwner
-          RFQS {
-            nextToken
-            startedAt
-          }
           createdAt
           updatedAt
           _version
@@ -2133,41 +1558,31 @@ export const onDeleteCompany = /* GraphQL */ `
         nextToken
         startedAt
       }
+      CompanyOwner {
+        id
+        userID
+        companyID
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        isCompanyOwner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
       ShippingAddresses {
         items {
           id
           shippingAddressId
           companyId
-          shippingAddress {
-            id
-            unitNumber
-            streetNumber
-            addressLine1
-            addressLine2
-            city
-            regi
-            postalCode
-            countryID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          company {
-            id
-            companyName
-            phone
-            contactEmail
-            profilePictureUrl
-            fax
-            companyDescription
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           createdAt
           updatedAt
           _version
@@ -2180,10 +1595,10 @@ export const onDeleteCompany = /* GraphQL */ `
       profilePictureUrl
       fax
       companyDescription
-      RFQS {
+      sentRFQs {
         items {
           id
-          quotationNumber
+          rfqNumber
           dateSent
           custRefNum
           companyName
@@ -2197,13 +1612,8 @@ export const onDeleteCompany = /* GraphQL */ `
           dueDate
           quantityRequested
           quantityQuoted
-          nsn
-          partNumber
-          altPartNumber
-          condition
           uom
-          description
-          price
+          urgency
           discount
           attr1
           attr2
@@ -2217,20 +1627,72 @@ export const onDeleteCompany = /* GraphQL */ `
           attr4
           attr5
           attr6
-          imageUrls
           addressLine1
           addressLine2
           city
           state
           zip
           country
-          companyID
-          userDetailsID
+          receivingCompanyID
+          sendingCompanyID
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
+          companySentRFQsId
+          companyReceivedRFQsId
+        }
+        nextToken
+        startedAt
+      }
+      receivedRFQs {
+        items {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          attr1
+          attr2
+          attr3
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          attr4
+          attr5
+          attr6
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRFQsId
+          companyReceivedRFQsId
         }
         nextToken
         startedAt
@@ -2240,6 +1702,7 @@ export const onDeleteCompany = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      companyCompanyOwnerId
     }
   }
 `;
@@ -2325,6 +1788,7 @@ export const onCreateItem = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      rFQItemsId
     }
   }
 `;
@@ -2347,6 +1811,7 @@ export const onUpdateItem = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      rFQItemsId
     }
   }
 `;
@@ -2369,6 +1834,724 @@ export const onDeleteItem = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      rFQItemsId
+    }
+  }
+`;
+export const onCreateCompanyShippingAddress = /* GraphQL */ `
+  subscription OnCreateCompanyShippingAddress(
+    $filter: ModelSubscriptionCompanyShippingAddressFilterInput
+  ) {
+    onCreateCompanyShippingAddress(filter: $filter) {
+      id
+      shippingAddressId
+      companyId
+      shippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        countryID
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateCompanyShippingAddress = /* GraphQL */ `
+  subscription OnUpdateCompanyShippingAddress(
+    $filter: ModelSubscriptionCompanyShippingAddressFilterInput
+  ) {
+    onUpdateCompanyShippingAddress(filter: $filter) {
+      id
+      shippingAddressId
+      companyId
+      shippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        countryID
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteCompanyShippingAddress = /* GraphQL */ `
+  subscription OnDeleteCompanyShippingAddress(
+    $filter: ModelSubscriptionCompanyShippingAddressFilterInput
+  ) {
+    onDeleteCompanyShippingAddress(filter: $filter) {
+      id
+      shippingAddressId
+      companyId
+      shippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        countryID
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateCompanyBillingAddress = /* GraphQL */ `
+  subscription OnCreateCompanyBillingAddress(
+    $filter: ModelSubscriptionCompanyBillingAddressFilterInput
+  ) {
+    onCreateCompanyBillingAddress(filter: $filter) {
+      id
+      billingAddressId
+      companyId
+      billingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        region
+        postalCode
+        CompanyBillingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        UserBillingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateCompanyBillingAddress = /* GraphQL */ `
+  subscription OnUpdateCompanyBillingAddress(
+    $filter: ModelSubscriptionCompanyBillingAddressFilterInput
+  ) {
+    onUpdateCompanyBillingAddress(filter: $filter) {
+      id
+      billingAddressId
+      companyId
+      billingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        region
+        postalCode
+        CompanyBillingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        UserBillingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteCompanyBillingAddress = /* GraphQL */ `
+  subscription OnDeleteCompanyBillingAddress(
+    $filter: ModelSubscriptionCompanyBillingAddressFilterInput
+  ) {
+    onDeleteCompanyBillingAddress(filter: $filter) {
+      id
+      billingAddressId
+      companyId
+      billingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        region
+        postalCode
+        CompanyBillingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        UserBillingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRFQs {
+          nextToken
+          startedAt
+        }
+        receivedRFQs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onCreateUserDetails = /* GraphQL */ `
+  subscription OnCreateUserDetails(
+    $filter: ModelSubscriptionUserDetailsFilterInput
+    $owner: String
+  ) {
+    onCreateUserDetails(filter: $filter, owner: $owner) {
+      id
+      userID
+      companyID
+      BillingAddresses {
+        items {
+          id
+          userDetailsId
+          billingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      ShippingAddresses {
+        items {
+          id
+          userDetailsId
+          shippingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      isCompanyOwner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onUpdateUserDetails = /* GraphQL */ `
+  subscription OnUpdateUserDetails(
+    $filter: ModelSubscriptionUserDetailsFilterInput
+    $owner: String
+  ) {
+    onUpdateUserDetails(filter: $filter, owner: $owner) {
+      id
+      userID
+      companyID
+      BillingAddresses {
+        items {
+          id
+          userDetailsId
+          billingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      ShippingAddresses {
+        items {
+          id
+          userDetailsId
+          shippingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      isCompanyOwner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onDeleteUserDetails = /* GraphQL */ `
+  subscription OnDeleteUserDetails(
+    $filter: ModelSubscriptionUserDetailsFilterInput
+    $owner: String
+  ) {
+    onDeleteUserDetails(filter: $filter, owner: $owner) {
+      id
+      userID
+      companyID
+      BillingAddresses {
+        items {
+          id
+          userDetailsId
+          billingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      ShippingAddresses {
+        items {
+          id
+          userDetailsId
+          shippingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      isCompanyOwner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
     }
   }
 `;
@@ -2386,91 +2569,14 @@ export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
         userID
         companyID
         BillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         ShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         isCompanyOwner
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
         createdAt
         updatedAt
         _version
@@ -2488,32 +2594,11 @@ export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
         region
         postalCode
         CompanyBillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           nextToken
           startedAt
         }
         countryID
         UserBillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
@@ -2546,91 +2631,14 @@ export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
         userID
         companyID
         BillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         ShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         isCompanyOwner
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
         createdAt
         updatedAt
         _version
@@ -2648,32 +2656,11 @@ export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
         region
         postalCode
         CompanyBillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           nextToken
           startedAt
         }
         countryID
         UserBillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
@@ -2706,91 +2693,14 @@ export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
         userID
         companyID
         BillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         ShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         isCompanyOwner
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
         createdAt
         updatedAt
         _version
@@ -2808,32 +2718,11 @@ export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
         region
         postalCode
         CompanyBillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           nextToken
           startedAt
         }
         countryID
         UserBillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
@@ -2866,91 +2755,14 @@ export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
         userID
         companyID
         BillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         ShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         isCompanyOwner
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
         createdAt
         updatedAt
         _version
@@ -2969,31 +2781,10 @@ export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
         postalCode
         countryID
         UserShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         CompanyShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           nextToken
           startedAt
         }
@@ -3026,91 +2817,14 @@ export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
         userID
         companyID
         BillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         ShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         isCompanyOwner
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
         createdAt
         updatedAt
         _version
@@ -3129,31 +2843,10 @@ export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
         postalCode
         countryID
         UserShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         CompanyShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           nextToken
           startedAt
         }
@@ -3186,91 +2879,14 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
         userID
         companyID
         BillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         ShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         isCompanyOwner
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
         createdAt
         updatedAt
         _version
@@ -3289,31 +2905,10 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
         postalCode
         countryID
         UserShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
           nextToken
           startedAt
         }
         CompanyShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
           nextToken
           startedAt
         }
@@ -3329,1242 +2924,6 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
       _deleted
       _lastChangedAt
       owner
-    }
-  }
-`;
-export const onCreateCompanyShippingAddress = /* GraphQL */ `
-  subscription OnCreateCompanyShippingAddress(
-    $filter: ModelSubscriptionCompanyShippingAddressFilterInput
-  ) {
-    onCreateCompanyShippingAddress(filter: $filter) {
-      id
-      shippingAddressId
-      companyId
-      shippingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        regi
-        postalCode
-        countryID
-        UserShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        CompanyShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      company {
-        id
-        companyName
-        phone
-        contactEmail
-        Items {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ItemMROS {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        BillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        CompanyMembers {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        profilePictureUrl
-        fax
-        companyDescription
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateCompanyShippingAddress = /* GraphQL */ `
-  subscription OnUpdateCompanyShippingAddress(
-    $filter: ModelSubscriptionCompanyShippingAddressFilterInput
-  ) {
-    onUpdateCompanyShippingAddress(filter: $filter) {
-      id
-      shippingAddressId
-      companyId
-      shippingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        regi
-        postalCode
-        countryID
-        UserShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        CompanyShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      company {
-        id
-        companyName
-        phone
-        contactEmail
-        Items {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ItemMROS {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        BillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        CompanyMembers {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        profilePictureUrl
-        fax
-        companyDescription
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteCompanyShippingAddress = /* GraphQL */ `
-  subscription OnDeleteCompanyShippingAddress(
-    $filter: ModelSubscriptionCompanyShippingAddressFilterInput
-  ) {
-    onDeleteCompanyShippingAddress(filter: $filter) {
-      id
-      shippingAddressId
-      companyId
-      shippingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        regi
-        postalCode
-        countryID
-        UserShippingAddresses {
-          items {
-            id
-            userDetailsId
-            shippingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        CompanyShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      company {
-        id
-        companyName
-        phone
-        contactEmail
-        Items {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ItemMROS {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        BillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        CompanyMembers {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        profilePictureUrl
-        fax
-        companyDescription
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onCreateCompanyBillingAddress = /* GraphQL */ `
-  subscription OnCreateCompanyBillingAddress(
-    $filter: ModelSubscriptionCompanyBillingAddressFilterInput
-  ) {
-    onCreateCompanyBillingAddress(filter: $filter) {
-      id
-      billingAddressId
-      companyId
-      billingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        region
-        postalCode
-        CompanyBillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        countryID
-        UserBillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      company {
-        id
-        companyName
-        phone
-        contactEmail
-        Items {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ItemMROS {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        BillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        CompanyMembers {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        profilePictureUrl
-        fax
-        companyDescription
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onUpdateCompanyBillingAddress = /* GraphQL */ `
-  subscription OnUpdateCompanyBillingAddress(
-    $filter: ModelSubscriptionCompanyBillingAddressFilterInput
-  ) {
-    onUpdateCompanyBillingAddress(filter: $filter) {
-      id
-      billingAddressId
-      companyId
-      billingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        region
-        postalCode
-        CompanyBillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        countryID
-        UserBillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      company {
-        id
-        companyName
-        phone
-        contactEmail
-        Items {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ItemMROS {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        BillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        CompanyMembers {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        profilePictureUrl
-        fax
-        companyDescription
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-    }
-  }
-`;
-export const onDeleteCompanyBillingAddress = /* GraphQL */ `
-  subscription OnDeleteCompanyBillingAddress(
-    $filter: ModelSubscriptionCompanyBillingAddressFilterInput
-  ) {
-    onDeleteCompanyBillingAddress(filter: $filter) {
-      id
-      billingAddressId
-      companyId
-      billingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        region
-        postalCode
-        CompanyBillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        countryID
-        UserBillingAddresses {
-          items {
-            id
-            userDetailsId
-            billingAddressId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      company {
-        id
-        companyName
-        phone
-        contactEmail
-        Items {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ItemMROS {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        BillingAddresses {
-          items {
-            id
-            billingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        CompanyMembers {
-          items {
-            id
-            userID
-            companyID
-            isCompanyOwner
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-            owner
-          }
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          items {
-            id
-            shippingAddressId
-            companyId
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        profilePictureUrl
-        fax
-        companyDescription
-        RFQS {
-          items {
-            id
-            quotationNumber
-            dateSent
-            custRefNum
-            companyName
-            contact
-            phone
-            email
-            shippingTerms
-            shippingMethod
-            leadTime
-            paymentTerms
-            dueDate
-            quantityRequested
-            quantityQuoted
-            nsn
-            partNumber
-            altPartNumber
-            condition
-            uom
-            description
-            price
-            discount
-            attr1
-            attr2
-            attr3
-            lineTotal
-            subtotal
-            salesTax
-            total
-            internalComments
-            emailComments
-            attr4
-            attr5
-            attr6
-            imageUrls
-            addressLine1
-            addressLine2
-            city
-            state
-            zip
-            country
-            companyID
-            userDetailsID
-            createdAt
-            updatedAt
-            _version
-            _deleted
-            _lastChangedAt
-          }
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
     }
   }
 `;

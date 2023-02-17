@@ -4,19 +4,19 @@ import { schema } from './schema';
 
 
 
-const { RFQ, UserDetails, BillingAddress, Company, ShippingAddress, Country, ItemMRO, Item, UserDetailsBillingAddress, UserDetailsShippingAddress, CompanyBillingAddress, CompanyShippingAddress } = initSchema(schema);
+const { RFQ, Company, Item, ItemMRO, BillingAddress, UserDetails, ShippingAddress, Country, CompanyBillingAddress, CompanyShippingAddress, UserDetailsBillingAddress, UserDetailsShippingAddress } = initSchema(schema);
 
 export {
   RFQ,
-  UserDetails,
-  BillingAddress,
   Company,
+  Item,
+  ItemMRO,
+  BillingAddress,
+  UserDetails,
   ShippingAddress,
   Country,
-  ItemMRO,
-  Item,
-  UserDetailsBillingAddress,
-  UserDetailsShippingAddress,
   CompanyBillingAddress,
-  CompanyShippingAddress
+  CompanyShippingAddress,
+  UserDetailsBillingAddress,
+  UserDetailsShippingAddress
 };

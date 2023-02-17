@@ -10,8 +10,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "quotationNumber": {
-                    "name": "quotationNumber",
+                "rfqNumber": {
+                    "name": "rfqNumber",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -96,45 +96,19 @@ export const schema = {
                 },
                 "quantityRequested": {
                     "name": "quantityRequested",
-                    "isArray": false,
+                    "isArray": true,
                     "type": "Int",
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
                 "quantityQuoted": {
                     "name": "quantityQuoted",
-                    "isArray": false,
+                    "isArray": true,
                     "type": "Int",
                     "isRequired": false,
-                    "attributes": []
-                },
-                "nsn": {
-                    "name": "nsn",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "partNumber": {
-                    "name": "partNumber",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "altPartNumber": {
-                    "name": "altPartNumber",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "condition": {
-                    "name": "condition",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true
                 },
                 "uom": {
                     "name": "uom",
@@ -143,17 +117,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "description": {
-                    "name": "description",
+                "urgency": {
+                    "name": "urgency",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "price": {
-                    "name": "price",
-                    "isArray": false,
-                    "type": "Float",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -248,14 +215,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "imageUrls": {
-                    "name": "imageUrls",
-                    "isArray": true,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
                 "addressLine1": {
                     "name": "addressLine1",
                     "isArray": false,
@@ -298,19 +257,65 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "companyID": {
-                    "name": "companyID",
+                "receivingCompanyID": {
+                    "name": "receivingCompanyID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
                 },
-                "userDetailsID": {
-                    "name": "userDetailsID",
+                "sendingCompanyID": {
+                    "name": "sendingCompanyID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
                     "attributes": []
+                },
+                "ReceivingCompany": {
+                    "name": "ReceivingCompany",
+                    "isArray": false,
+                    "type": {
+                        "model": "Company"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "receivingCompanyID"
+                        ]
+                    }
+                },
+                "SendingCompany": {
+                    "name": "SendingCompany",
+                    "isArray": false,
+                    "type": {
+                        "model": "Company"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "sendingCompanyID"
+                        ]
+                    }
+                },
+                "Items": {
+                    "name": "Items",
+                    "isArray": true,
+                    "type": {
+                        "model": "Item"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "rFQItemsId"
+                        ]
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -327,10 +332,385 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "companySentRFQsId": {
+                    "name": "companySentRFQsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "companyReceivedRFQsId": {
+                    "name": "companyReceivedRFQsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
             "pluralName": "RFQS",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Company": {
+            "name": "Company",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "companyName": {
+                    "name": "companyName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "phone": {
+                    "name": "phone",
+                    "isArray": false,
+                    "type": "AWSPhone",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "contactEmail": {
+                    "name": "contactEmail",
+                    "isArray": false,
+                    "type": "AWSEmail",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "Items": {
+                    "name": "Items",
+                    "isArray": true,
+                    "type": {
+                        "model": "Item"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "companyID"
+                        ]
+                    }
+                },
+                "ItemMROS": {
+                    "name": "ItemMROS",
+                    "isArray": true,
+                    "type": {
+                        "model": "ItemMRO"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "companyID"
+                        ]
+                    }
+                },
+                "BillingAddresses": {
+                    "name": "BillingAddresses",
+                    "isArray": true,
+                    "type": {
+                        "model": "CompanyBillingAddress"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "company"
+                        ]
+                    }
+                },
+                "CompanyMembers": {
+                    "name": "CompanyMembers",
+                    "isArray": true,
+                    "type": {
+                        "model": "UserDetails"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "companyID"
+                        ]
+                    }
+                },
+                "CompanyOwner": {
+                    "name": "CompanyOwner",
+                    "isArray": false,
+                    "type": {
+                        "model": "UserDetails"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
+                        "targetNames": [
+                            "companyCompanyOwnerId"
+                        ]
+                    }
+                },
+                "ShippingAddresses": {
+                    "name": "ShippingAddresses",
+                    "isArray": true,
+                    "type": {
+                        "model": "CompanyShippingAddress"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "company"
+                        ]
+                    }
+                },
+                "profilePictureUrl": {
+                    "name": "profilePictureUrl",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "fax": {
+                    "name": "fax",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "companyDescription": {
+                    "name": "companyDescription",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "sentRFQs": {
+                    "name": "sentRFQs",
+                    "isArray": true,
+                    "type": {
+                        "model": "RFQ"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "companySentRFQsId"
+                        ]
+                    }
+                },
+                "receivedRFQs": {
+                    "name": "receivedRFQs",
+                    "isArray": true,
+                    "type": {
+                        "model": "RFQ"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "companyReceivedRFQsId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "companyCompanyOwnerId": {
+                    "name": "companyCompanyOwnerId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "Companies",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "Item": {
+            "name": "Item",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "nsn": {
+                    "name": "nsn",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "partNumber": {
+                    "name": "partNumber",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "altPartNumber": {
+                    "name": "altPartNumber",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "quantity": {
+                    "name": "quantity",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "condition": {
+                    "name": "condition",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "control": {
+                    "name": "control",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "price": {
+                    "name": "price",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "companyID": {
+                    "name": "companyID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "imageUrls": {
+                    "name": "imageUrls",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "rFQItemsId": {
+                    "name": "rFQItemsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                }
+            },
+            "syncable": true,
+            "pluralName": "Items",
             "attributes": [
                 {
                     "type": "model",
@@ -348,9 +728,9 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byUserDetails",
+                        "name": "gsi-RFQ.Items",
                         "fields": [
-                            "userDetailsID"
+                            "rFQItemsId"
                         ]
                     }
                 },
@@ -372,8 +752,8 @@ export const schema = {
                 }
             ]
         },
-        "UserDetails": {
-            "name": "UserDetails",
+        "ItemMRO": {
+            "name": "ItemMRO",
             "fields": {
                 "id": {
                     "name": "id",
@@ -382,10 +762,52 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userID": {
-                    "name": "userID",
+                "nsn": {
+                    "name": "nsn",
                     "isArray": false,
-                    "type": "ID",
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "partNumber": {
+                    "name": "partNumber",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "altPartNumber": {
+                    "name": "altPartNumber",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "description": {
+                    "name": "description",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "quantity": {
+                    "name": "quantity",
+                    "isArray": false,
+                    "type": "Int",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "price": {
+                    "name": "price",
+                    "isArray": false,
+                    "type": "Float",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "certification": {
+                    "name": "certification",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -396,60 +818,13 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "BillingAddresses": {
-                    "name": "BillingAddresses",
+                "imageUrls": {
+                    "name": "imageUrls",
                     "isArray": true,
-                    "type": {
-                        "model": "UserDetailsBillingAddress"
-                    },
+                    "type": "String",
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "userDetails"
-                        ]
-                    }
-                },
-                "ShippingAddresses": {
-                    "name": "ShippingAddresses",
-                    "isArray": true,
-                    "type": {
-                        "model": "UserDetailsShippingAddress"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "userDetails"
-                        ]
-                    }
-                },
-                "isCompanyOwner": {
-                    "name": "isCompanyOwner",
-                    "isArray": false,
-                    "type": "Boolean",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "RFQS": {
-                    "name": "RFQS",
-                    "isArray": true,
-                    "type": {
-                        "model": "RFQ"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "userDetailsID"
-                        ]
-                    }
+                    "isArrayNullable": true
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -469,7 +844,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "UserDetails",
+            "pluralName": "ItemMROS",
             "attributes": [
                 {
                     "type": "model",
@@ -488,18 +863,6 @@ export const schema = {
                     "type": "auth",
                     "properties": {
                         "rules": [
-                            {
-                                "provider": "userPools",
-                                "ownerField": "owner",
-                                "allow": "owner",
-                                "identityClaim": "cognito:username",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            },
                             {
                                 "allow": "public",
                                 "operations": [
@@ -663,8 +1026,8 @@ export const schema = {
                 }
             ]
         },
-        "Company": {
-            "name": "Company",
+        "UserDetails": {
+            "name": "UserDetails",
             "fields": {
                 "id": {
                     "name": "id",
@@ -673,64 +1036,25 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "companyName": {
-                    "name": "companyName",
+                "userID": {
+                    "name": "userID",
                     "isArray": false,
-                    "type": "String",
+                    "type": "ID",
                     "isRequired": false,
                     "attributes": []
                 },
-                "phone": {
-                    "name": "phone",
+                "companyID": {
+                    "name": "companyID",
                     "isArray": false,
-                    "type": "AWSPhone",
-                    "isRequired": false,
+                    "type": "ID",
+                    "isRequired": true,
                     "attributes": []
-                },
-                "contactEmail": {
-                    "name": "contactEmail",
-                    "isArray": false,
-                    "type": "AWSEmail",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "Items": {
-                    "name": "Items",
-                    "isArray": true,
-                    "type": {
-                        "model": "UserDetails"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "companyID"
-                        ]
-                    }
-                },
-                "ItemMROS": {
-                    "name": "ItemMROS",
-                    "isArray": true,
-                    "type": {
-                        "model": "UserDetails"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "companyID"
-                        ]
-                    }
                 },
                 "BillingAddresses": {
                     "name": "BillingAddresses",
                     "isArray": true,
                     "type": {
-                        "model": "CompanyBillingAddress"
+                        "model": "UserDetailsBillingAddress"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -738,23 +1062,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "company"
-                        ]
-                    }
-                },
-                "CompanyMembers": {
-                    "name": "CompanyMembers",
-                    "isArray": true,
-                    "type": {
-                        "model": "UserDetails"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "companyID"
+                            "userDetails"
                         ]
                     }
                 },
@@ -762,7 +1070,7 @@ export const schema = {
                     "name": "ShippingAddresses",
                     "isArray": true,
                     "type": {
-                        "model": "CompanyShippingAddress"
+                        "model": "UserDetailsShippingAddress"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -770,46 +1078,16 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "company"
+                            "userDetails"
                         ]
                     }
                 },
-                "profilePictureUrl": {
-                    "name": "profilePictureUrl",
+                "isCompanyOwner": {
+                    "name": "isCompanyOwner",
                     "isArray": false,
-                    "type": "String",
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
-                },
-                "fax": {
-                    "name": "fax",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "companyDescription": {
-                    "name": "companyDescription",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "RFQS": {
-                    "name": "RFQS",
-                    "isArray": true,
-                    "type": {
-                        "model": "RFQ"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "companyID"
-                        ]
-                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -829,16 +1107,37 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Companies",
+            "pluralName": "UserDetails",
             "attributes": [
                 {
                     "type": "model",
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCompany",
+                        "fields": [
+                            "companyID"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
+                            {
+                                "provider": "userPools",
+                                "ownerField": "owner",
+                                "allow": "owner",
+                                "identityClaim": "cognito:username",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            },
                             {
                                 "allow": "public",
                                 "operations": [
@@ -1093,459 +1392,6 @@ export const schema = {
                 }
             ]
         },
-        "ItemMRO": {
-            "name": "ItemMRO",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "nsn": {
-                    "name": "nsn",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "partNumber": {
-                    "name": "partNumber",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "altPartNumber": {
-                    "name": "altPartNumber",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "description": {
-                    "name": "description",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "quantity": {
-                    "name": "quantity",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "price": {
-                    "name": "price",
-                    "isArray": false,
-                    "type": "Float",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "certification": {
-                    "name": "certification",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "companyID": {
-                    "name": "companyID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "imageUrls": {
-                    "name": "imageUrls",
-                    "isArray": true,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "ItemMROS",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byCompany",
-                        "fields": [
-                            "companyID"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "Item": {
-            "name": "Item",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "nsn": {
-                    "name": "nsn",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "partNumber": {
-                    "name": "partNumber",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "altPartNumber": {
-                    "name": "altPartNumber",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "description": {
-                    "name": "description",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "quantity": {
-                    "name": "quantity",
-                    "isArray": false,
-                    "type": "Int",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "condition": {
-                    "name": "condition",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "control": {
-                    "name": "control",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "price": {
-                    "name": "price",
-                    "isArray": false,
-                    "type": "Float",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "companyID": {
-                    "name": "companyID",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "imageUrls": {
-                    "name": "imageUrls",
-                    "isArray": true,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "Items",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byCompany",
-                        "fields": [
-                            "companyID"
-                        ]
-                    }
-                },
-                {
-                    "type": "auth",
-                    "properties": {
-                        "rules": [
-                            {
-                                "allow": "public",
-                                "operations": [
-                                    "create",
-                                    "update",
-                                    "delete",
-                                    "read"
-                                ]
-                            }
-                        ]
-                    }
-                }
-            ]
-        },
-        "UserDetailsBillingAddress": {
-            "name": "UserDetailsBillingAddress",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userDetailsId": {
-                    "name": "userDetailsId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "billingAddressId": {
-                    "name": "billingAddressId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "userDetails": {
-                    "name": "userDetails",
-                    "isArray": false,
-                    "type": {
-                        "model": "UserDetails"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "userDetailsId"
-                        ]
-                    }
-                },
-                "billingAddress": {
-                    "name": "billingAddress",
-                    "isArray": false,
-                    "type": {
-                        "model": "BillingAddress"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "billingAddressId"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "UserDetailsBillingAddresses",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUserDetails",
-                        "fields": [
-                            "userDetailsId"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byBillingAddress",
-                        "fields": [
-                            "billingAddressId"
-                        ]
-                    }
-                }
-            ]
-        },
-        "UserDetailsShippingAddress": {
-            "name": "UserDetailsShippingAddress",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "userDetailsId": {
-                    "name": "userDetailsId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "shippingAddressId": {
-                    "name": "shippingAddressId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "userDetails": {
-                    "name": "userDetails",
-                    "isArray": false,
-                    "type": {
-                        "model": "UserDetails"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "userDetailsId"
-                        ]
-                    }
-                },
-                "shippingAddress": {
-                    "name": "shippingAddress",
-                    "isArray": false,
-                    "type": {
-                        "model": "ShippingAddress"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "shippingAddressId"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "UserDetailsShippingAddresses",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byUserDetails",
-                        "fields": [
-                            "userDetailsId"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byShippingAddress",
-                        "fields": [
-                            "shippingAddressId"
-                        ]
-                    }
-                }
-            ]
-        },
         "CompanyBillingAddress": {
             "name": "CompanyBillingAddress",
             "fields": {
@@ -1556,13 +1402,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "billingAddressId": {
-                    "name": "billingAddressId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "companyId": {
                     "name": "companyId",
                     "isArray": false,
@@ -1570,20 +1409,12 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "billingAddress": {
-                    "name": "billingAddress",
+                "billingAddressId": {
+                    "name": "billingAddressId",
                     "isArray": false,
-                    "type": {
-                        "model": "BillingAddress"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "billingAddressId"
-                        ]
-                    }
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 },
                 "company": {
                     "name": "company",
@@ -1597,6 +1428,21 @@ export const schema = {
                         "connectionType": "BELONGS_TO",
                         "targetNames": [
                             "companyId"
+                        ]
+                    }
+                },
+                "billingAddress": {
+                    "name": "billingAddress",
+                    "isArray": false,
+                    "type": {
+                        "model": "BillingAddress"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "billingAddressId"
                         ]
                     }
                 },
@@ -1627,18 +1473,18 @@ export const schema = {
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byBillingAddress",
+                        "name": "byCompany",
                         "fields": [
-                            "billingAddressId"
+                            "companyId"
                         ]
                     }
                 },
                 {
                     "type": "key",
                     "properties": {
-                        "name": "byCompany",
+                        "name": "byBillingAddress",
                         "fields": [
-                            "companyId"
+                            "billingAddressId"
                         ]
                     }
                 }
@@ -1741,10 +1587,206 @@ export const schema = {
                     }
                 }
             ]
+        },
+        "UserDetailsBillingAddress": {
+            "name": "UserDetailsBillingAddress",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "billingAddressId": {
+                    "name": "billingAddressId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "userDetailsId": {
+                    "name": "userDetailsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "billingAddress": {
+                    "name": "billingAddress",
+                    "isArray": false,
+                    "type": {
+                        "model": "BillingAddress"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "billingAddressId"
+                        ]
+                    }
+                },
+                "userDetails": {
+                    "name": "userDetails",
+                    "isArray": false,
+                    "type": {
+                        "model": "UserDetails"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "userDetailsId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "UserDetailsBillingAddresses",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byBillingAddress",
+                        "fields": [
+                            "billingAddressId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUserDetails",
+                        "fields": [
+                            "userDetailsId"
+                        ]
+                    }
+                }
+            ]
+        },
+        "UserDetailsShippingAddress": {
+            "name": "UserDetailsShippingAddress",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userDetailsId": {
+                    "name": "userDetailsId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "shippingAddressId": {
+                    "name": "shippingAddressId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "userDetails": {
+                    "name": "userDetails",
+                    "isArray": false,
+                    "type": {
+                        "model": "UserDetails"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "userDetailsId"
+                        ]
+                    }
+                },
+                "shippingAddress": {
+                    "name": "shippingAddress",
+                    "isArray": false,
+                    "type": {
+                        "model": "ShippingAddress"
+                    },
+                    "isRequired": true,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "shippingAddressId"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "UserDetailsShippingAddresses",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byUserDetails",
+                        "fields": [
+                            "userDetailsId"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byShippingAddress",
+                        "fields": [
+                            "shippingAddressId"
+                        ]
+                    }
+                }
+            ]
         }
     },
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "eb62cb5c88fd3b417998ecf8e9f781aa"
+    "version": "9a34943ac12b56612976481dfad25037"
 };

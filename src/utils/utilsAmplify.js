@@ -274,13 +274,7 @@ export const CreateRFQ = async (rfqDetails) => {
         attr4: rfqDetails.attr4,
         attr5: rfqDetails.attr5,
         attr6: rfqDetails.attr6,
-        altPartNumber: rfqDetails.altPartNumber,
-        nsn: rfqDetails.nsn,
-        partNumber: rfqDetails.partNumber,
-        condition: rfqDetails.condition,
         uom: rfqDetails.uom,
-        description: rfqDetails.description,
-        price: rfqDetails.price,
         discount: rfqDetails.discount,
         companyName: rfqDetails.companyName,
         contact: rfqDetails.contact,
@@ -300,8 +294,10 @@ export const CreateRFQ = async (rfqDetails) => {
         shippingTerms: rfqDetails.shippingTerms,
         subtotal: rfqDetails.subtotal,
         total: rfqDetails.total,
-        companyID: rfqDetails.companyID,
+        receivingCompanyID: rfqDetails.receivingCompanyID,
         userDetailsID: rfqDetails.userDetailsID,
+        sendingCompanyID: rfqDetails.sendingCompanyID,
+        Items: rfqDetails.items,
       })
     );
   } catch (error) {
@@ -325,6 +321,26 @@ export const AddCompany = async (
       phone: phone,
       fax: fax,
       profilePictureUrl: profilePictureUrl,
+    })
+  );
+  return response;
+};
+export const AddUserToCompany = async (userDetails, companyID) => {
+  const userToAdd = await DataStore.query(UserDetails, userDetails.id);
+  const original = await DataStore.query(Company, companyID);
+  const response = await DataStore.save(
+    Company.copyOf(original, (newCompany) => {
+      newCompany.CompanyMembers.push(userToAdd);
+    })
+  );
+  return response;
+};
+export const AddOwnerToCompany = async (userDetails, companyID) => {
+  const userToAdd = await DataStore.query(UserDetails, userDetails.id);
+  const original = await DataStore.query(Company, companyID);
+  const response = await DataStore.save(
+    Company.copyOf(original, (newCompany) => {
+      newCompany.CompanyOwner = userToAdd;
     })
   );
   return response;

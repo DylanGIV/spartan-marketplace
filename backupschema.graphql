@@ -1,6 +1,6 @@
 type RFQ @model @auth(rules: [{allow: public}]) {
   id: ID!
-  quotationNumber: String
+  rfqNumber: String
   dateSent: AWSDateTime
   custRefNum: String
   companyName: String
@@ -12,15 +12,10 @@ type RFQ @model @auth(rules: [{allow: public}]) {
   leadTime: Int
   paymentTerms: String
   dueDate: AWSDateTime
-  quantityRequested: Int
-  quantityQuoted: Int
-  nsn: String
-  partNumber: String
-  altPartNumber: String
-  condition: String
+  quantityRequested: [Int]
+  quantityQuoted: [Int]
   uom: String
-  description: String
-  price: Float
+  urgency: String
   discount: Float
   attr1: String
   attr2: String
@@ -34,15 +29,17 @@ type RFQ @model @auth(rules: [{allow: public}]) {
   attr4: String
   attr5: String
   attr6: String
-  imageUrls: [String]
   addressLine1: String
   addressLine2: String
   city: String
   state: String
   zip: String
   country: String
-  companyID: ID! @index(name: "byCompany")
-  userDetailsID: ID! @index(name: "byUserDetails")
+  receivingCompanyID: ID! 
+  sendingCompanyID: ID!
+  ReceivingCompany: Company @belongsTo(fields: ["receivingCompanyID"])
+  SendingCompany: Company @belongsTo(fields: ["sendingCompanyID"])
+  Items: [Item] @hasMany
 }
 
 type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
@@ -52,7 +49,6 @@ type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "UserDetailsBillingAddress")
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "UserDetailsShippingAddress")
   isCompanyOwner: Boolean
-  RFQS: [RFQ] @hasMany(indexName: "byUserDetails", fields: ["id"])
 }
 
 type Country @model @auth(rules: [{allow: public}]) {
@@ -95,15 +91,17 @@ type Company @model @auth(rules: [{allow: public}]) {
   companyName: String
   phone: AWSPhone
   contactEmail: AWSEmail
-  Items: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
-  ItemMROS: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
+  Items: [Item] @hasMany(indexName: "byCompany", fields: ["id"])
+  ItemMROS: [ItemMRO] @hasMany(indexName: "byCompany", fields: ["id"])
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "CompanyBillingAddress")
   CompanyMembers: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
+  CompanyOwner: UserDetails @hasOne
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "CompanyShippingAddress")
   profilePictureUrl: String
   fax: String
   companyDescription: String
-  RFQS: [RFQ] @hasMany(indexName: "byCompany", fields: ["id"])
+  sentRFQs: [RFQ] @hasMany
+  receivedRFQs: [RFQ] @hasMany
 }
 
 type ItemMRO @model @auth(rules: [{allow: public}]) {

@@ -1,6 +1,6 @@
 {
   "api": {
-    "spartansystemsmarketplace": {
+    "spartansystemsmarket": {
       "dependsOn": [
         {
           "attributes": [
@@ -14,9 +14,6 @@
         "authConfig": {
           "additionalAuthenticationProviders": [
             {
-              "authenticationType": "AWS_IAM"
-            },
-            {
               "authenticationType": "AMAZON_COGNITO_USER_POOLS",
               "userPoolConfig": {
                 "userPoolId": "authspartansystemsmarketplace"
@@ -25,8 +22,9 @@
           ],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 30,
-              "description": "api key description"
+              "apiKeyExpirationDate": "2024-02-17T02:13:33.333Z",
+              "apiKeyExpirationDays": 365,
+              "description": ""
             },
             "authenticationType": "API_KEY"
           }

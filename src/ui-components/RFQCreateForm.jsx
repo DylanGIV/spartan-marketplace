@@ -195,12 +195,7 @@ export default function RFQCreateForm(props) {
     dueDate: "",
     quantityRequested: "",
     quantityQuoted: "",
-    nsn: "",
-    partNumber: "",
-    altPartNumber: "",
-    condition: "",
     uom: "",
-    description: "",
     price: "",
     discount: "",
     attr1: "",
@@ -222,6 +217,9 @@ export default function RFQCreateForm(props) {
     state: "",
     zip: "",
     country: "",
+    receivingCompanyID: "",
+    userDetailsID: "",
+    sendingCompanyID: "",
   };
   const [quotationNumber, setQuotationNumber] = React.useState(
     initialValues.quotationNumber
@@ -251,16 +249,7 @@ export default function RFQCreateForm(props) {
   const [quantityQuoted, setQuantityQuoted] = React.useState(
     initialValues.quantityQuoted
   );
-  const [nsn, setNsn] = React.useState(initialValues.nsn);
-  const [partNumber, setPartNumber] = React.useState(initialValues.partNumber);
-  const [altPartNumber, setAltPartNumber] = React.useState(
-    initialValues.altPartNumber
-  );
-  const [condition, setCondition] = React.useState(initialValues.condition);
   const [uom, setUom] = React.useState(initialValues.uom);
-  const [description, setDescription] = React.useState(
-    initialValues.description
-  );
   const [price, setPrice] = React.useState(initialValues.price);
   const [discount, setDiscount] = React.useState(initialValues.discount);
   const [attr1, setAttr1] = React.useState(initialValues.attr1);
@@ -290,6 +279,15 @@ export default function RFQCreateForm(props) {
   const [state, setState] = React.useState(initialValues.state);
   const [zip, setZip] = React.useState(initialValues.zip);
   const [country, setCountry] = React.useState(initialValues.country);
+  const [receivingCompanyID, setReceivingCompanyID] = React.useState(
+    initialValues.receivingCompanyID
+  );
+  const [userDetailsID, setUserDetailsID] = React.useState(
+    initialValues.userDetailsID
+  );
+  const [sendingCompanyID, setSendingCompanyID] = React.useState(
+    initialValues.sendingCompanyID
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setQuotationNumber(initialValues.quotationNumber);
@@ -306,12 +304,7 @@ export default function RFQCreateForm(props) {
     setDueDate(initialValues.dueDate);
     setQuantityRequested(initialValues.quantityRequested);
     setQuantityQuoted(initialValues.quantityQuoted);
-    setNsn(initialValues.nsn);
-    setPartNumber(initialValues.partNumber);
-    setAltPartNumber(initialValues.altPartNumber);
-    setCondition(initialValues.condition);
     setUom(initialValues.uom);
-    setDescription(initialValues.description);
     setPrice(initialValues.price);
     setDiscount(initialValues.discount);
     setAttr1(initialValues.attr1);
@@ -334,6 +327,9 @@ export default function RFQCreateForm(props) {
     setState(initialValues.state);
     setZip(initialValues.zip);
     setCountry(initialValues.country);
+    setReceivingCompanyID(initialValues.receivingCompanyID);
+    setUserDetailsID(initialValues.userDetailsID);
+    setSendingCompanyID(initialValues.sendingCompanyID);
     setErrors({});
   };
   const [currentImageUrlsValue, setCurrentImageUrlsValue] = React.useState("");
@@ -353,12 +349,7 @@ export default function RFQCreateForm(props) {
     dueDate: [],
     quantityRequested: [],
     quantityQuoted: [],
-    nsn: [],
-    partNumber: [],
-    altPartNumber: [],
-    condition: [],
     uom: [],
-    description: [],
     price: [],
     discount: [],
     attr1: [],
@@ -380,6 +371,9 @@ export default function RFQCreateForm(props) {
     state: [],
     zip: [],
     country: [],
+    receivingCompanyID: [],
+    userDetailsID: [{ type: "Required" }],
+    sendingCompanyID: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -437,12 +431,7 @@ export default function RFQCreateForm(props) {
           dueDate,
           quantityRequested,
           quantityQuoted,
-          nsn,
-          partNumber,
-          altPartNumber,
-          condition,
           uom,
-          description,
           price,
           discount,
           attr1,
@@ -464,6 +453,9 @@ export default function RFQCreateForm(props) {
           state,
           zip,
           country,
+          receivingCompanyID,
+          userDetailsID,
+          sendingCompanyID,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -532,12 +524,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -559,6 +546,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.quotationNumber ?? value;
@@ -598,12 +588,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -625,6 +610,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.dateSent ?? value;
@@ -662,12 +650,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -689,6 +672,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.custRefNum ?? value;
@@ -726,12 +712,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -753,6 +734,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.companyName ?? value;
@@ -790,12 +774,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -817,6 +796,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.contact ?? value;
@@ -855,12 +837,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -882,6 +859,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.phone ?? value;
@@ -919,12 +899,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -946,6 +921,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -983,12 +961,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -1010,6 +983,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.shippingTerms ?? value;
@@ -1047,12 +1023,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -1074,6 +1045,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.shippingMethod ?? value;
@@ -1115,12 +1089,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -1142,6 +1111,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.leadTime ?? value;
@@ -1179,12 +1151,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -1206,6 +1173,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.paymentTerms ?? value;
@@ -1245,12 +1215,7 @@ export default function RFQCreateForm(props) {
               dueDate: value,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -1272,6 +1237,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.dueDate ?? value;
@@ -1313,12 +1281,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested: value,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -1340,6 +1303,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.quantityRequested ?? value;
@@ -1383,12 +1349,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted: value,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -1410,6 +1371,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.quantityQuoted ?? value;
@@ -1423,262 +1387,6 @@ export default function RFQCreateForm(props) {
         errorMessage={errors.quantityQuoted?.errorMessage}
         hasError={errors.quantityQuoted?.hasError}
         {...getOverrideProps(overrides, "quantityQuoted")}
-      ></TextField>
-      <TextField
-        label="Nsn"
-        isRequired={false}
-        isReadOnly={false}
-        value={nsn}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              quotationNumber,
-              dateSent,
-              custRefNum,
-              companyName,
-              contact,
-              phone,
-              email,
-              shippingTerms,
-              shippingMethod,
-              leadTime,
-              paymentTerms,
-              dueDate,
-              quantityRequested,
-              quantityQuoted,
-              nsn: value,
-              partNumber,
-              altPartNumber,
-              condition,
-              uom,
-              description,
-              price,
-              discount,
-              attr1,
-              attr2,
-              attr3,
-              lineTotal,
-              subtotal,
-              salesTax,
-              total,
-              internalComments,
-              emailComments,
-              attr4,
-              attr5,
-              attr6,
-              imageUrls,
-              addressLine1,
-              addressLine2,
-              city,
-              state,
-              zip,
-              country,
-            };
-            const result = onChange(modelFields);
-            value = result?.nsn ?? value;
-          }
-          if (errors.nsn?.hasError) {
-            runValidationTasks("nsn", value);
-          }
-          setNsn(value);
-        }}
-        onBlur={() => runValidationTasks("nsn", nsn)}
-        errorMessage={errors.nsn?.errorMessage}
-        hasError={errors.nsn?.hasError}
-        {...getOverrideProps(overrides, "nsn")}
-      ></TextField>
-      <TextField
-        label="Part number"
-        isRequired={false}
-        isReadOnly={false}
-        value={partNumber}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              quotationNumber,
-              dateSent,
-              custRefNum,
-              companyName,
-              contact,
-              phone,
-              email,
-              shippingTerms,
-              shippingMethod,
-              leadTime,
-              paymentTerms,
-              dueDate,
-              quantityRequested,
-              quantityQuoted,
-              nsn,
-              partNumber: value,
-              altPartNumber,
-              condition,
-              uom,
-              description,
-              price,
-              discount,
-              attr1,
-              attr2,
-              attr3,
-              lineTotal,
-              subtotal,
-              salesTax,
-              total,
-              internalComments,
-              emailComments,
-              attr4,
-              attr5,
-              attr6,
-              imageUrls,
-              addressLine1,
-              addressLine2,
-              city,
-              state,
-              zip,
-              country,
-            };
-            const result = onChange(modelFields);
-            value = result?.partNumber ?? value;
-          }
-          if (errors.partNumber?.hasError) {
-            runValidationTasks("partNumber", value);
-          }
-          setPartNumber(value);
-        }}
-        onBlur={() => runValidationTasks("partNumber", partNumber)}
-        errorMessage={errors.partNumber?.errorMessage}
-        hasError={errors.partNumber?.hasError}
-        {...getOverrideProps(overrides, "partNumber")}
-      ></TextField>
-      <TextField
-        label="Alt part number"
-        isRequired={false}
-        isReadOnly={false}
-        value={altPartNumber}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              quotationNumber,
-              dateSent,
-              custRefNum,
-              companyName,
-              contact,
-              phone,
-              email,
-              shippingTerms,
-              shippingMethod,
-              leadTime,
-              paymentTerms,
-              dueDate,
-              quantityRequested,
-              quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber: value,
-              condition,
-              uom,
-              description,
-              price,
-              discount,
-              attr1,
-              attr2,
-              attr3,
-              lineTotal,
-              subtotal,
-              salesTax,
-              total,
-              internalComments,
-              emailComments,
-              attr4,
-              attr5,
-              attr6,
-              imageUrls,
-              addressLine1,
-              addressLine2,
-              city,
-              state,
-              zip,
-              country,
-            };
-            const result = onChange(modelFields);
-            value = result?.altPartNumber ?? value;
-          }
-          if (errors.altPartNumber?.hasError) {
-            runValidationTasks("altPartNumber", value);
-          }
-          setAltPartNumber(value);
-        }}
-        onBlur={() => runValidationTasks("altPartNumber", altPartNumber)}
-        errorMessage={errors.altPartNumber?.errorMessage}
-        hasError={errors.altPartNumber?.hasError}
-        {...getOverrideProps(overrides, "altPartNumber")}
-      ></TextField>
-      <TextField
-        label="Condition"
-        isRequired={false}
-        isReadOnly={false}
-        value={condition}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              quotationNumber,
-              dateSent,
-              custRefNum,
-              companyName,
-              contact,
-              phone,
-              email,
-              shippingTerms,
-              shippingMethod,
-              leadTime,
-              paymentTerms,
-              dueDate,
-              quantityRequested,
-              quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition: value,
-              uom,
-              description,
-              price,
-              discount,
-              attr1,
-              attr2,
-              attr3,
-              lineTotal,
-              subtotal,
-              salesTax,
-              total,
-              internalComments,
-              emailComments,
-              attr4,
-              attr5,
-              attr6,
-              imageUrls,
-              addressLine1,
-              addressLine2,
-              city,
-              state,
-              zip,
-              country,
-            };
-            const result = onChange(modelFields);
-            value = result?.condition ?? value;
-          }
-          if (errors.condition?.hasError) {
-            runValidationTasks("condition", value);
-          }
-          setCondition(value);
-        }}
-        onBlur={() => runValidationTasks("condition", condition)}
-        errorMessage={errors.condition?.errorMessage}
-        hasError={errors.condition?.hasError}
-        {...getOverrideProps(overrides, "condition")}
       ></TextField>
       <TextField
         label="Uom"
@@ -1703,12 +1411,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom: value,
-              description,
               price,
               discount,
               attr1,
@@ -1730,6 +1433,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.uom ?? value;
@@ -1743,70 +1449,6 @@ export default function RFQCreateForm(props) {
         errorMessage={errors.uom?.errorMessage}
         hasError={errors.uom?.hasError}
         {...getOverrideProps(overrides, "uom")}
-      ></TextField>
-      <TextField
-        label="Description"
-        isRequired={false}
-        isReadOnly={false}
-        value={description}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              quotationNumber,
-              dateSent,
-              custRefNum,
-              companyName,
-              contact,
-              phone,
-              email,
-              shippingTerms,
-              shippingMethod,
-              leadTime,
-              paymentTerms,
-              dueDate,
-              quantityRequested,
-              quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
-              uom,
-              description: value,
-              price,
-              discount,
-              attr1,
-              attr2,
-              attr3,
-              lineTotal,
-              subtotal,
-              salesTax,
-              total,
-              internalComments,
-              emailComments,
-              attr4,
-              attr5,
-              attr6,
-              imageUrls,
-              addressLine1,
-              addressLine2,
-              city,
-              state,
-              zip,
-              country,
-            };
-            const result = onChange(modelFields);
-            value = result?.description ?? value;
-          }
-          if (errors.description?.hasError) {
-            runValidationTasks("description", value);
-          }
-          setDescription(value);
-        }}
-        onBlur={() => runValidationTasks("description", description)}
-        errorMessage={errors.description?.errorMessage}
-        hasError={errors.description?.hasError}
-        {...getOverrideProps(overrides, "description")}
       ></TextField>
       <TextField
         label="Price"
@@ -1835,12 +1477,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price: value,
               discount,
               attr1,
@@ -1862,6 +1499,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -1903,12 +1543,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount: value,
               attr1,
@@ -1930,6 +1565,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.discount ?? value;
@@ -1967,12 +1605,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1: value,
@@ -1994,6 +1627,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.attr1 ?? value;
@@ -2031,12 +1667,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2058,6 +1689,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.attr2 ?? value;
@@ -2095,12 +1729,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2122,6 +1751,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.attr3 ?? value;
@@ -2163,12 +1795,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2190,6 +1817,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.lineTotal ?? value;
@@ -2231,12 +1861,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2258,6 +1883,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.subtotal ?? value;
@@ -2299,12 +1927,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2326,6 +1949,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.salesTax ?? value;
@@ -2367,12 +1993,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2394,6 +2015,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.total ?? value;
@@ -2431,12 +2055,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2458,6 +2077,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.internalComments ?? value;
@@ -2495,12 +2117,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2522,6 +2139,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.emailComments ?? value;
@@ -2559,12 +2179,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2586,6 +2201,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.attr4 ?? value;
@@ -2623,12 +2241,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2650,6 +2263,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.attr5 ?? value;
@@ -2687,12 +2303,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2714,6 +2325,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.attr6 ?? value;
@@ -2747,12 +2361,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2774,6 +2383,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             values = result?.imageUrls ?? values;
@@ -2832,12 +2444,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2859,6 +2466,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.addressLine1 ?? value;
@@ -2896,12 +2506,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2923,6 +2528,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.addressLine2 ?? value;
@@ -2960,12 +2568,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -2987,6 +2590,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.city ?? value;
@@ -3024,12 +2630,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -3051,6 +2652,9 @@ export default function RFQCreateForm(props) {
               state: value,
               zip,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.state ?? value;
@@ -3088,12 +2692,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -3115,6 +2714,9 @@ export default function RFQCreateForm(props) {
               state,
               zip: value,
               country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.zip ?? value;
@@ -3152,12 +2754,7 @@ export default function RFQCreateForm(props) {
               dueDate,
               quantityRequested,
               quantityQuoted,
-              nsn,
-              partNumber,
-              altPartNumber,
-              condition,
               uom,
-              description,
               price,
               discount,
               attr1,
@@ -3179,6 +2776,9 @@ export default function RFQCreateForm(props) {
               state,
               zip,
               country: value,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID,
             };
             const result = onChange(modelFields);
             value = result?.country ?? value;
@@ -3192,6 +2792,194 @@ export default function RFQCreateForm(props) {
         errorMessage={errors.country?.errorMessage}
         hasError={errors.country?.hasError}
         {...getOverrideProps(overrides, "country")}
+      ></TextField>
+      <TextField
+        label="Receiving company id"
+        isRequired={false}
+        isReadOnly={false}
+        value={receivingCompanyID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              quotationNumber,
+              dateSent,
+              custRefNum,
+              companyName,
+              contact,
+              phone,
+              email,
+              shippingTerms,
+              shippingMethod,
+              leadTime,
+              paymentTerms,
+              dueDate,
+              quantityRequested,
+              quantityQuoted,
+              uom,
+              price,
+              discount,
+              attr1,
+              attr2,
+              attr3,
+              lineTotal,
+              subtotal,
+              salesTax,
+              total,
+              internalComments,
+              emailComments,
+              attr4,
+              attr5,
+              attr6,
+              imageUrls,
+              addressLine1,
+              addressLine2,
+              city,
+              state,
+              zip,
+              country,
+              receivingCompanyID: value,
+              userDetailsID,
+              sendingCompanyID,
+            };
+            const result = onChange(modelFields);
+            value = result?.receivingCompanyID ?? value;
+          }
+          if (errors.receivingCompanyID?.hasError) {
+            runValidationTasks("receivingCompanyID", value);
+          }
+          setReceivingCompanyID(value);
+        }}
+        onBlur={() =>
+          runValidationTasks("receivingCompanyID", receivingCompanyID)
+        }
+        errorMessage={errors.receivingCompanyID?.errorMessage}
+        hasError={errors.receivingCompanyID?.hasError}
+        {...getOverrideProps(overrides, "receivingCompanyID")}
+      ></TextField>
+      <TextField
+        label="User details id"
+        isRequired={true}
+        isReadOnly={false}
+        value={userDetailsID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              quotationNumber,
+              dateSent,
+              custRefNum,
+              companyName,
+              contact,
+              phone,
+              email,
+              shippingTerms,
+              shippingMethod,
+              leadTime,
+              paymentTerms,
+              dueDate,
+              quantityRequested,
+              quantityQuoted,
+              uom,
+              price,
+              discount,
+              attr1,
+              attr2,
+              attr3,
+              lineTotal,
+              subtotal,
+              salesTax,
+              total,
+              internalComments,
+              emailComments,
+              attr4,
+              attr5,
+              attr6,
+              imageUrls,
+              addressLine1,
+              addressLine2,
+              city,
+              state,
+              zip,
+              country,
+              receivingCompanyID,
+              userDetailsID: value,
+              sendingCompanyID,
+            };
+            const result = onChange(modelFields);
+            value = result?.userDetailsID ?? value;
+          }
+          if (errors.userDetailsID?.hasError) {
+            runValidationTasks("userDetailsID", value);
+          }
+          setUserDetailsID(value);
+        }}
+        onBlur={() => runValidationTasks("userDetailsID", userDetailsID)}
+        errorMessage={errors.userDetailsID?.errorMessage}
+        hasError={errors.userDetailsID?.hasError}
+        {...getOverrideProps(overrides, "userDetailsID")}
+      ></TextField>
+      <TextField
+        label="Sending company id"
+        isRequired={false}
+        isReadOnly={false}
+        value={sendingCompanyID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              quotationNumber,
+              dateSent,
+              custRefNum,
+              companyName,
+              contact,
+              phone,
+              email,
+              shippingTerms,
+              shippingMethod,
+              leadTime,
+              paymentTerms,
+              dueDate,
+              quantityRequested,
+              quantityQuoted,
+              uom,
+              price,
+              discount,
+              attr1,
+              attr2,
+              attr3,
+              lineTotal,
+              subtotal,
+              salesTax,
+              total,
+              internalComments,
+              emailComments,
+              attr4,
+              attr5,
+              attr6,
+              imageUrls,
+              addressLine1,
+              addressLine2,
+              city,
+              state,
+              zip,
+              country,
+              receivingCompanyID,
+              userDetailsID,
+              sendingCompanyID: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.sendingCompanyID ?? value;
+          }
+          if (errors.sendingCompanyID?.hasError) {
+            runValidationTasks("sendingCompanyID", value);
+          }
+          setSendingCompanyID(value);
+        }}
+        onBlur={() => runValidationTasks("sendingCompanyID", sendingCompanyID)}
+        errorMessage={errors.sendingCompanyID?.errorMessage}
+        hasError={errors.sendingCompanyID?.hasError}
+        {...getOverrideProps(overrides, "sendingCompanyID")}
       ></TextField>
       <Flex
         justifyContent="space-between"

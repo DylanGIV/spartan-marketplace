@@ -16,7 +16,12 @@ import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
 import { DataStore } from 'aws-amplify';
-import { AddCompany, CreateUserDetails } from '../../utils/utilsAmplify';
+import {
+  AddCompany,
+  AddOwnerToCompany,
+  AddUserToCompany,
+  CreateUserDetails,
+} from '../../utils/utilsAmplify';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { useNavigate } from 'react-router';
@@ -98,7 +103,16 @@ export default function CompanySelector() {
     try {
       const userResponse = await CreateUserDetails(company, false, user);
       console.log(userResponse);
-      navigate('/');
+      try {
+        const companyResponse = await AddUserToCompany(
+          userResponse,
+          company.id
+        );
+        console.log(companyResponse);
+        navigate('/inventory');
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       alert('Could not join company.');
     }
@@ -120,7 +134,16 @@ export default function CompanySelector() {
       try {
         const userResponse = await CreateUserDetails(response.id, true, user);
         console.log(userResponse);
-        navigate('/');
+        try {
+          const companyResponse = await AddOwnerToCompany(
+            userResponse,
+            company.id
+          );
+          console.log(companyResponse);
+          navigate('/inventory');
+        } catch (error) {
+          console.log(error);
+        }
       } catch (error) {
         alert('Failed to Add user to company', error);
       }

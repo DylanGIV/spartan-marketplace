@@ -1,26 +1,24 @@
 {
   "version": 1,
   "serviceConfiguration": {
-    "apiName": "spartansystemsmarketplace",
+    "apiName": "spartansystemsmarket",
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "keyDescription": "api key description",
-      "expirationTime": 30
+      "expirationTime": 365,
+      "apiKeyExpirationDate": "2024-02-17T02:13:33.333Z",
+      "keyDescription": ""
     },
-    "additionalAuthTypes": [
-      {
-        "mode": "AWS_IAM"
-      },
-      {
-        "mode": "AMAZON_COGNITO_USER_POOLS",
-        "cognitoUserPoolId": "authspartansystemsmarketplace"
-      }
-    ],
     "conflictResolution": {
       "defaultResolutionStrategy": {
         "type": "AUTOMERGE"
       }
-    }
+    },
+    "additionalAuthTypes": [
+      {
+        "mode": "AMAZON_COGNITO_USER_POOLS",
+        "cognitoUserPoolId": "authspartansystemsmarketplace"
+      }
+    ]
   }
 }

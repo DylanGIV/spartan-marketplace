@@ -1,6 +1,6 @@
 projects:
-  spartansystemsmarketplace:
-    schemaPath: amplify/backend/api/spartansystemsmarketplace/build/schema.graphql
+  spartansystemsmarket:
+    schemaPath: src/graphql/schema.json
     includes:
       - src/graphql/**/*.ts
     excludes:
@@ -8,11 +8,5 @@ projects:
     extensions:
       amplify:
         codeGenTarget: typescript
-        generatedFileName: src/API.ts
+        generatedFileName: ''
         docsFilePath: src/graphql
-        region: us-west-2
-        apiId: null
-        maxDepth: 4
-extensions:
-  amplify:
-    version: 3

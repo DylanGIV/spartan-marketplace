@@ -7,12 +7,11 @@ import '@aws-amplify/ui-react/styles.css';
 import Parts from './routes/parts/parts.component';
 import Inventory from './routes/inventory/inventory.component';
 import { useContext, useEffect, useState } from 'react';
-import { UserDetails } from './models';
+import { RFQ, RFQItem, UserDetails } from './models';
 import { Amplify, Hub } from 'aws-amplify';
-import { DataStore } from '@aws-amplify/datastore';
+import { DataStore, Predicates } from '@aws-amplify/datastore';
 import CompanySelect from './routes/companySelect/companySelect.component';
 import UserAuth from './routes/auth/userAuth.component';
-import RFQ from './routes/rfq/rfq.component';
 import Settings from './routes/settings/settings.component';
 import { UserContext } from './context/user.context';
 import { GetCompanyByID } from './utils/utilsAmplify';
@@ -75,7 +74,6 @@ function App() {
     };
     getCompany();
   }, [userDetails]);
-
   if (user && userDetailsExists && company) {
     return (
       <Routes>
