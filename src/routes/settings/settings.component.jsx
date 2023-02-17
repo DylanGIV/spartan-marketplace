@@ -1,6 +1,6 @@
 import { Button } from '@aws-amplify/ui-react';
 import { useNavigate } from 'react-router';
-import { populateCountries, SignOutAuth } from '../../utils/utilsAmplify';
+import { PopulateCountries, SignOutAuth } from '../../utils/utilsAmplify';
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Settings = () => {
       {/* <Button onClick={() => populateCountries()}>
         Populate all Countries
       </Button> */}
-      <Button>Settings</Button>
+      <Button>Populate Countries</Button>
       <Button onClick={() => signOutHandler()}>SIGN OUT</Button>
     </div>
   );

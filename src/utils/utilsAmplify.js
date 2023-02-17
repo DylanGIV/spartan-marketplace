@@ -132,30 +132,48 @@ export const GetRFQByCompany = async (
   let count = 0;
   let rfqs = null;
   if (filter === 'sent') {
-    count = await DataStore.query(
-      RFQ,
-      (p) => p.companyID.eq(company.id) && p.userDetailsID.eq(userDetails.id)
+    count = await DataStore.query(RFQ, (p) =>
+      p.sendingCompanyID.eq(company.id)
     );
     rfqs = await DataStore.query(
       RFQ,
-      (p) => p.companyID.eq(company.id) && p.userDetailsID.eq(userDetails.id),
+      (p) => p.sendingCompanyID.eq(company.id),
       {
         page: page - 1,
         limit: itemsPerPage,
       }
     );
   } else if (filter === 'received') {
-    count = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id));
-    rfqs = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id), {
-      page: page - 1,
-      limit: itemsPerPage,
-    });
+    count = await DataStore.query(RFQ, (p) =>
+      p.receivingCompanyID.eq(company.id)
+    );
+    rfqs = await DataStore.query(
+      RFQ,
+      (p) => p.receivingCompanyID.eq(company.id),
+      {
+        page: page - 1,
+        limit: itemsPerPage,
+      }
+    );
   } else {
-    count = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id));
-    rfqs = await DataStore.query(RFQ, (p) => p.companyID.eq(company.id), {
-      page: page - 1,
-      limit: itemsPerPage,
-    });
+    count = await DataStore.query(RFQ, (p) =>
+      p.or((p) => [
+        p.receivingCompanyID.eq(company.id),
+        p.sendingCompanyID.eq(company.id),
+      ])
+    );
+    rfqs = await DataStore.query(
+      RFQ,
+      (p) =>
+        p.or((p) => [
+          p.receivingCompanyID.eq(company.id),
+          p.sendingCompanyID.eq(company.id),
+        ]),
+      {
+        page: page - 1,
+        limit: itemsPerPage,
+      }
+    );
   }
   setRFQs({
     items: rfqs,
@@ -198,17 +216,6 @@ export const GetCompanyByID = async (companyID) => {
 export const GetAllCompanies = async () => {
   const companies = await DataStore.query(Company);
   return companies;
-};
-
-const sendData = async () => {
-  const response = await DataStore.save(
-    new Company({
-      companyName: 'My company',
-      phone: '+16617448383',
-      contactEmail: 'dylangiv123@gmail.com',
-    })
-  );
-  console.log(response);
 };
 
 export const CreateUserDetails = async (companyID, isOwner, user) => {
@@ -257,9 +264,12 @@ export const AddUserShippingAddress = async (shippingAddress, user) => {
 
 export const CreateRFQ = async (rfqDetails) => {
   try {
-    await DataStore.save(
+    const items = await DataStore.query(Item, (p) =>
+      p.id.eq(rfqDetails.items[0].id)
+    );
+    const response = await DataStore.save(
       new RFQ({
-        quotationNumber: rfqDetails.quotationNumber,
+        rfqNumber: rfqDetails.rfqNumber,
         addressLine1: rfqDetails.addressLine1,
         addressLine2: rfqDetails.addressLine2,
         city: rfqDetails.city,
@@ -295,11 +305,13 @@ export const CreateRFQ = async (rfqDetails) => {
         subtotal: rfqDetails.subtotal,
         total: rfqDetails.total,
         receivingCompanyID: rfqDetails.receivingCompanyID,
-        userDetailsID: rfqDetails.userDetailsID,
         sendingCompanyID: rfqDetails.sendingCompanyID,
-        Items: rfqDetails.items,
+        urgency: rfqDetails.urgency,
+        Items: items,
       })
     );
+    console.log(response);
+    alert('Successfully sent RFQ to ' + rfqDetails.companyName);
   } catch (error) {
     console.log(error);
   }
@@ -354,7 +366,7 @@ export const DeleteAllParts = async () => {
   return await DataStore.delete(Item, Predicates.ALL);
 };
 
-export const populateCountries = async () => {
+export const PopulateCountries = async () => {
   countryList = countryList;
   countryList.forEach(async (c) => {
     const response = await DataStore.save(
@@ -417,4 +429,9 @@ export const DeleteListOfParts = async (listOfParts) => {
       alert('Error while deleting items');
       console.log(err);
     });
+};
+
+export const GetAllCompanyUsers = async (companyID) => {
+  const response = await DataStore.query(Company, companyID);
+  return response.CompanyMembers;
 };

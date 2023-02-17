@@ -58,7 +58,7 @@ export default function RFQOverview(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children={rFQ?.quotationNumber}
+        children={rFQ?.rfqNumber}
         {...getOverrideProps(overrides, "RFQ Number")}
       ></Text>
       <Text
@@ -79,7 +79,7 @@ export default function RFQOverview(props) {
         position="relative"
         padding="0px 0px 0px 0px"
         whiteSpace="pre-wrap"
-        children={rFQ?.partNumber}
+        children="Part Number"
         {...getOverrideProps(overrides, "Part Number")}
       ></Text>
       <Text

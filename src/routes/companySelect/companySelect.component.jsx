@@ -137,7 +137,7 @@ export default function CompanySelector() {
         try {
           const companyResponse = await AddOwnerToCompany(
             userResponse,
-            company.id
+            response.id
           );
           console.log(companyResponse);
           navigate('/inventory');

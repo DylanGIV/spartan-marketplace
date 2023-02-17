@@ -1,6 +1,6 @@
 import './profileDropDown.styles.scss';
 import { Button } from '@mui/material';
-import { populateCountries, SignOutAuth } from '../../utils/utilsAmplify';
+import { SignOutAuth } from '../../utils/utilsAmplify';
 import { useNavigate } from 'react-router';
 
 const ProfileDropDown = () => {
@@ -18,9 +18,9 @@ const ProfileDropDown = () => {
   return (
     <div className='profile-dropdown-container'>
       <h1>profile container</h1>
-      <Button onClick={() => populateCountries()}>
+      {/* <Button onClick={() => populateCountries()}>
         Populate all Countries
-      </Button>
+      </Button> */}
       <Button>Settings</Button>
       <Button onClick={() => signOutHandler()}>SIGN OUT</Button>
     </div>

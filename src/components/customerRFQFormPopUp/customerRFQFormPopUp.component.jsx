@@ -1,7 +1,9 @@
 import { CheckboxField, Text, useAuthenticator } from '@aws-amplify/ui-react';
-import React, { useEffect, useState } from 'react';
+import { DataStore } from 'aws-amplify';
+import React, { useContext, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
-import { RFQ } from '../../models';
+import { UserContext } from '../../context/user.context';
+import { Item, RFQ } from '../../models';
 import { CustomerRFQForm } from '../../ui-components';
 import {
   AddUserShippingAddress,
@@ -38,6 +40,8 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     unitNumber: '',
     countryID: '',
   });
+
+  const { company } = useContext(UserContext);
 
   const { user } = useAuthenticator();
 
@@ -99,7 +103,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     event.preventDefault();
     event.stopPropagation();
     const rfqDetails = {
-      quotationNumber: quotationNumber,
+      rfqNumber: quotationNumber,
       addressLine1: shippingAddress.addressLine1,
       addressLine2: shippingAddress.addressLine2,
       city: shippingAddress.city,
@@ -114,13 +118,8 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       attr4: '',
       attr5: '',
       attr6: '',
-      altPartNumber: dataRFQ.item.altPartNumber,
-      nsn: dataRFQ.item.nsn,
-      partNumber: dataRFQ.item.partNumber,
       condition: dataRFQ.item.condition,
       uom: '',
-      description: dataRFQ.item.description,
-      price: dataRFQ.item.price,
       discount: null,
       companyName: dataRFQ.company.companyName,
       contact: dataRFQ.company.contactEmail,
@@ -131,8 +130,8 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       internalComments: '',
       leadTime: null,
       paymentTerms: '',
-      quantityRequested: parseInt(customerDetails.quantity),
-      quantityQuoted: null,
+      quantityRequested: [parseInt(customerDetails.quantity)],
+      quantityQuoted: [null],
       shippingMethod: '',
       shippingTerms: '',
       lineTotal: null,
@@ -140,10 +139,13 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       salesTax: null,
       total: null,
       imageUrls: null,
-      companyID: dataRFQ.company.id,
-      userDetailsID: userDetails.id,
+      receivingCompanyID: dataRFQ.company.id,
+      sendingCompanyID: company.id,
+      urgency: '',
+      items: [dataRFQ.item],
     };
     await CreateRFQ(rfqDetails);
+
     if (saveAddressChecked) {
       await AddUserShippingAddress(shippingAddress, user);
     }
@@ -257,7 +259,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
         ? userShippingAddresses.map((sa, i) => `${i + 1}. ` + sa.addressLine1)
         : null,
       onChange: handleSavedAddressChange,
-      placeholder: 'Select Address',
+      placeholder: 'New Address',
       style: { width: '100%' },
     },
     Country: {

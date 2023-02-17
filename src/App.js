@@ -7,7 +7,7 @@ import '@aws-amplify/ui-react/styles.css';
 import Parts from './routes/parts/parts.component';
 import Inventory from './routes/inventory/inventory.component';
 import { useContext, useEffect, useState } from 'react';
-import { RFQ, RFQItem, UserDetails } from './models';
+import { RFQItem, UserDetails } from './models';
 import { Amplify, Hub } from 'aws-amplify';
 import { DataStore, Predicates } from '@aws-amplify/datastore';
 import CompanySelect from './routes/companySelect/companySelect.component';
@@ -15,6 +15,7 @@ import UserAuth from './routes/auth/userAuth.component';
 import Settings from './routes/settings/settings.component';
 import { UserContext } from './context/user.context';
 import { GetCompanyByID } from './utils/utilsAmplify';
+import RFQ from './routes/rfq/rfq.component';
 
 function App() {
   const [userDetailsExists, setUserDetailsExists] = useState(false);
