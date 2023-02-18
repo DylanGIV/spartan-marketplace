@@ -24,6 +24,7 @@ const RFQ = () => {
 
   const { userDetails, company } = useContext(UserContext);
   const { rfqs, setRFQs } = useContext(RFQContext);
+  // console.log(rfqs.items[0]);
 
   const rfqHeaderOverrides = {
     All: {
@@ -148,6 +149,9 @@ const RFQ = () => {
                     textDecoration: 'underline',
                   },
                   color: 'blue',
+                },
+                'Part Number': {
+                  children: 'item',
                 },
               }}
               checkboxField={

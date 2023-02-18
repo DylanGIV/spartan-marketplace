@@ -4,7 +4,8 @@ import {
   Company,
   Country,
   Item,
-  RFQ,
+  Rfq,
+  RfqItems,
   ShippingAddress,
   UserDetails,
   UserDetailsShippingAddress,
@@ -132,11 +133,11 @@ export const GetRFQByCompany = async (
   let count = 0;
   let rfqs = null;
   if (filter === 'sent') {
-    count = await DataStore.query(RFQ, (p) =>
+    count = await DataStore.query(Rfq, (p) =>
       p.sendingCompanyID.eq(company.id)
     );
     rfqs = await DataStore.query(
-      RFQ,
+      Rfq,
       (p) => p.sendingCompanyID.eq(company.id),
       {
         page: page - 1,
@@ -144,11 +145,11 @@ export const GetRFQByCompany = async (
       }
     );
   } else if (filter === 'received') {
-    count = await DataStore.query(RFQ, (p) =>
+    count = await DataStore.query(Rfq, (p) =>
       p.receivingCompanyID.eq(company.id)
     );
     rfqs = await DataStore.query(
-      RFQ,
+      Rfq,
       (p) => p.receivingCompanyID.eq(company.id),
       {
         page: page - 1,
@@ -156,14 +157,14 @@ export const GetRFQByCompany = async (
       }
     );
   } else {
-    count = await DataStore.query(RFQ, (p) =>
+    count = await DataStore.query(Rfq, (p) =>
       p.or((p) => [
         p.receivingCompanyID.eq(company.id),
         p.sendingCompanyID.eq(company.id),
       ])
     );
     rfqs = await DataStore.query(
-      RFQ,
+      Rfq,
       (p) =>
         p.or((p) => [
           p.receivingCompanyID.eq(company.id),
@@ -264,11 +265,13 @@ export const AddUserShippingAddress = async (shippingAddress, user) => {
 
 export const CreateRFQ = async (rfqDetails) => {
   try {
-    const items = await DataStore.query(Item, (p) =>
-      p.id.eq(rfqDetails.items[0].id)
-    );
-    const response = await DataStore.save(
-      new RFQ({
+    const items = [];
+    for (let i = 0; i < rfqDetails.items.length; i++) {
+      const item = await DataStore.query(Item, rfqDetails.items[i].id);
+      items.push(item);
+    }
+    const rfqResponse = await DataStore.save(
+      new Rfq({
         rfqNumber: rfqDetails.rfqNumber,
         addressLine1: rfqDetails.addressLine1,
         addressLine2: rfqDetails.addressLine2,
@@ -307,10 +310,19 @@ export const CreateRFQ = async (rfqDetails) => {
         receivingCompanyID: rfqDetails.receivingCompanyID,
         sendingCompanyID: rfqDetails.sendingCompanyID,
         urgency: rfqDetails.urgency,
-        Items: items,
+        Items: rfqDetails.items,
       })
     );
-    console.log(response);
+    for (let i = 0; i < items.length; i++) {
+      const response = await DataStore.save(
+        new RfqItems({
+          item: items[i],
+          rfq: rfqResponse,
+        })
+      );
+      console.log(response);
+    }
+    console.log(rfqResponse);
     alert('Successfully sent RFQ to ' + rfqDetails.companyName);
   } catch (error) {
     console.log(error);

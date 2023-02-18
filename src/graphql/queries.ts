@@ -2,9 +2,9 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getRFQ = /* GraphQL */ `
-  query GetRFQ($id: ID!) {
-    getRFQ(id: $id) {
+export const getRfq = /* GraphQL */ `
+  query GetRfq($id: ID!) {
+    getRfq(id: $id) {
       id
       rfqNumber
       dateSent
@@ -83,11 +83,11 @@ export const getRFQ = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
-        sentRFQs {
+        sentRfqs {
           nextToken
           startedAt
         }
-        receivedRFQs {
+        receivedRfqs {
           nextToken
           startedAt
         }
@@ -138,11 +138,11 @@ export const getRFQ = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
-        sentRFQs {
+        sentRfqs {
           nextToken
           startedAt
         }
-        receivedRFQs {
+        receivedRfqs {
           nextToken
           startedAt
         }
@@ -156,22 +156,13 @@ export const getRFQ = /* GraphQL */ `
       Items {
         items {
           id
-          nsn
-          partNumber
-          altPartNumber
-          description
-          quantity
-          condition
-          control
-          price
-          companyID
-          imageUrls
+          rfqId
+          itemId
           createdAt
           updatedAt
           _version
           _deleted
           _lastChangedAt
-          rFQItemsId
         }
         nextToken
         startedAt
@@ -181,18 +172,18 @@ export const getRFQ = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-      companySentRFQsId
-      companyReceivedRFQsId
+      companySentRfqsId
+      companyReceivedRfqsId
     }
   }
 `;
-export const listRFQS = /* GraphQL */ `
-  query ListRFQS(
-    $filter: ModelRFQFilterInput
+export const listRfqs = /* GraphQL */ `
+  query ListRfqs(
+    $filter: ModelRfqFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listRFQS(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listRfqs(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         rfqNumber
@@ -271,22 +262,22 @@ export const listRFQS = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        companySentRFQsId
-        companyReceivedRFQsId
+        companySentRfqsId
+        companyReceivedRfqsId
       }
       nextToken
       startedAt
     }
   }
 `;
-export const syncRFQS = /* GraphQL */ `
-  query SyncRFQS(
-    $filter: ModelRFQFilterInput
+export const syncRfqs = /* GraphQL */ `
+  query SyncRfqs(
+    $filter: ModelRfqFilterInput
     $limit: Int
     $nextToken: String
     $lastSync: AWSTimestamp
   ) {
-    syncRFQS(
+    syncRfqs(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -370,8 +361,8 @@ export const syncRFQS = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
-        companySentRFQsId
-        companyReceivedRFQsId
+        companySentRfqsId
+        companyReceivedRfqsId
       }
       nextToken
       startedAt
@@ -782,7 +773,6 @@ export const getCompany = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          rFQItemsId
         }
         nextToken
         startedAt
@@ -875,7 +865,7 @@ export const getCompany = /* GraphQL */ `
       profilePictureUrl
       fax
       companyDescription
-      sentRFQs {
+      sentRfqs {
         items {
           id
           rfqNumber
@@ -920,13 +910,13 @@ export const getCompany = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          companySentRFQsId
-          companyReceivedRFQsId
+          companySentRfqsId
+          companyReceivedRfqsId
         }
         nextToken
         startedAt
       }
-      receivedRFQs {
+      receivedRfqs {
         items {
           id
           rfqNumber
@@ -971,8 +961,8 @@ export const getCompany = /* GraphQL */ `
           _version
           _deleted
           _lastChangedAt
-          companySentRFQsId
-          companyReceivedRFQsId
+          companySentRfqsId
+          companyReceivedRfqsId
         }
         nextToken
         startedAt
@@ -1033,11 +1023,11 @@ export const listCompanies = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
-        sentRFQs {
+        sentRfqs {
           nextToken
           startedAt
         }
-        receivedRFQs {
+        receivedRfqs {
           nextToken
           startedAt
         }
@@ -1106,11 +1096,11 @@ export const syncCompanies = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
-        sentRFQs {
+        sentRfqs {
           nextToken
           startedAt
         }
-        receivedRFQs {
+        receivedRfqs {
           nextToken
           startedAt
         }
@@ -1225,12 +1215,25 @@ export const getItem = /* GraphQL */ `
       price
       companyID
       imageUrls
+      Rfqs {
+        items {
+          id
+          rfqId
+          itemId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
       _deleted
       _lastChangedAt
-      rFQItemsId
     }
   }
 `;
@@ -1253,12 +1256,15 @@ export const listItems = /* GraphQL */ `
         price
         companyID
         imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        rFQItemsId
       }
       nextToken
       startedAt
@@ -1290,12 +1296,312 @@ export const syncItems = /* GraphQL */ `
         price
         companyID
         imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        rFQItemsId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const getRfqItems = /* GraphQL */ `
+  query GetRfqItems($id: ID!) {
+    getRfqItems(id: $id) {
+      id
+      rfqId
+      itemId
+      rfq {
+        id
+        rfqNumber
+        dateSent
+        custRefNum
+        companyName
+        contact
+        phone
+        email
+        shippingTerms
+        shippingMethod
+        leadTime
+        paymentTerms
+        dueDate
+        quantityRequested
+        quantityQuoted
+        uom
+        urgency
+        discount
+        attr1
+        attr2
+        attr3
+        lineTotal
+        subtotal
+        salesTax
+        total
+        internalComments
+        emailComments
+        attr4
+        attr5
+        attr6
+        addressLine1
+        addressLine2
+        city
+        state
+        zip
+        country
+        receivingCompanyID
+        sendingCompanyID
+        ReceivingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerId
+        }
+        SendingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerId
+        }
+        Items {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companySentRfqsId
+        companyReceivedRfqsId
+      }
+      item {
+        id
+        nsn
+        partNumber
+        altPartNumber
+        description
+        quantity
+        condition
+        control
+        price
+        companyID
+        imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listRfqItems = /* GraphQL */ `
+  query ListRfqItems(
+    $filter: ModelRfqItemsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRfqItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        rfqId
+        itemId
+        rfq {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          attr1
+          attr2
+          attr3
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          attr4
+          attr5
+          attr6
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRfqsId
+          companyReceivedRfqsId
+        }
+        item {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncRfqItems = /* GraphQL */ `
+  query SyncRfqItems(
+    $filter: ModelRfqItemsFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncRfqItems(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        rfqId
+        itemId
+        rfq {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          attr1
+          attr2
+          attr3
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          attr4
+          attr5
+          attr6
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRfqsId
+          companyReceivedRfqsId
+        }
+        item {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
       startedAt
@@ -1372,11 +1678,11 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
-        sentRFQs {
+        sentRfqs {
           nextToken
           startedAt
         }
-        receivedRFQs {
+        receivedRfqs {
           nextToken
           startedAt
         }
@@ -1581,11 +1887,11 @@ export const getCompanyBillingAddress = /* GraphQL */ `
         profilePictureUrl
         fax
         companyDescription
-        sentRFQs {
+        sentRfqs {
           nextToken
           startedAt
         }
-        receivedRFQs {
+        receivedRfqs {
           nextToken
           startedAt
         }
@@ -1872,12 +2178,205 @@ export const itemsByCompanyID = /* GraphQL */ `
         price
         companyID
         imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
         _deleted
         _lastChangedAt
-        rFQItemsId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const rfqItemsByRfqId = /* GraphQL */ `
+  query RfqItemsByRfqId(
+    $rfqId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRfqItemsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rfqItemsByRfqId(
+      rfqId: $rfqId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        rfqId
+        itemId
+        rfq {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          attr1
+          attr2
+          attr3
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          attr4
+          attr5
+          attr6
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRfqsId
+          companyReceivedRfqsId
+        }
+        item {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const rfqItemsByItemId = /* GraphQL */ `
+  query RfqItemsByItemId(
+    $itemId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRfqItemsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rfqItemsByItemId(
+      itemId: $itemId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        rfqId
+        itemId
+        rfq {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          attr1
+          attr2
+          attr3
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          attr4
+          attr5
+          attr6
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRfqsId
+          companyReceivedRfqsId
+        }
+        item {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       nextToken
       startedAt

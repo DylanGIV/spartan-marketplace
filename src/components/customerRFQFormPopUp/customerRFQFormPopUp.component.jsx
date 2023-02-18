@@ -144,6 +144,8 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       urgency: '',
       items: [dataRFQ.item],
     };
+    console.log(rfqDetails.items);
+
     await CreateRFQ(rfqDetails);
 
     if (saveAddressChecked) {

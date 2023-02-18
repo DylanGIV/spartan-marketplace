@@ -5,8 +5,9 @@
     "serviceName": "AppSync",
     "defaultAuthType": {
       "mode": "API_KEY",
-      "keyDescription": "api key description",
-      "expirationTime": 30
+      "expirationTime": 365,
+      "apiKeyExpirationDate": "2024-02-17T22:56:35.848Z",
+      "keyDescription": ""
     },
     "conflictResolution": {
       "defaultResolutionStrategy": {
@@ -14,9 +15,6 @@
       }
     },
     "additionalAuthTypes": [
-      {
-        "mode": "AWS_IAM"
-      },
       {
         "mode": "AMAZON_COGNITO_USER_POOLS",
         "cognitoUserPoolId": "authspartansystemsmarketplace"

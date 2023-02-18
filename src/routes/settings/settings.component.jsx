@@ -17,7 +17,7 @@ const Settings = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <h1>Settings Page</h1>
-      {/* <Button onClick={() => populateCountries()}>
+      {/* <Button onClick={() => PopulateCountries()}>
         Populate all Countries
       </Button> */}
       <Button>Populate Countries</Button>

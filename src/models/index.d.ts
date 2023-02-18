@@ -6,9 +6,9 @@ import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@a
 
 
 
-type EagerRFQ = {
+type EagerRfq = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<RFQ, 'id'>;
+    identifier: ManagedIdentifier<Rfq, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -51,16 +51,16 @@ type EagerRFQ = {
   readonly sendingCompanyID: string;
   readonly ReceivingCompany?: Company | null;
   readonly SendingCompany?: Company | null;
-  readonly Items?: (Item | null)[] | null;
+  readonly Items?: (RfqItems | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly companySentRFQsId?: string | null;
-  readonly companyReceivedRFQsId?: string | null;
+  readonly companySentRfqsId?: string | null;
+  readonly companyReceivedRfqsId?: string | null;
 }
 
-type LazyRFQ = {
+type LazyRfq = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<RFQ, 'id'>;
+    identifier: ManagedIdentifier<Rfq, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -103,17 +103,17 @@ type LazyRFQ = {
   readonly sendingCompanyID: string;
   readonly ReceivingCompany: AsyncItem<Company | undefined>;
   readonly SendingCompany: AsyncItem<Company | undefined>;
-  readonly Items: AsyncCollection<Item>;
+  readonly Items: AsyncCollection<RfqItems>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly companySentRFQsId?: string | null;
-  readonly companyReceivedRFQsId?: string | null;
+  readonly companySentRfqsId?: string | null;
+  readonly companyReceivedRfqsId?: string | null;
 }
 
-export declare type RFQ = LazyLoading extends LazyLoadingDisabled ? EagerRFQ : LazyRFQ
+export declare type Rfq = LazyLoading extends LazyLoadingDisabled ? EagerRfq : LazyRfq
 
-export declare const RFQ: (new (init: ModelInit<RFQ>) => RFQ) & {
-  copyOf(source: RFQ, mutator: (draft: MutableModel<RFQ>) => MutableModel<RFQ> | void): RFQ;
+export declare const Rfq: (new (init: ModelInit<Rfq>) => Rfq) & {
+  copyOf(source: Rfq, mutator: (draft: MutableModel<Rfq>) => MutableModel<Rfq> | void): Rfq;
 }
 
 type EagerCompany = {
@@ -134,8 +134,8 @@ type EagerCompany = {
   readonly profilePictureUrl?: string | null;
   readonly fax?: string | null;
   readonly companyDescription?: string | null;
-  readonly sentRFQs?: (RFQ | null)[] | null;
-  readonly receivedRFQs?: (RFQ | null)[] | null;
+  readonly sentRfqs?: (Rfq | null)[] | null;
+  readonly receivedRfqs?: (Rfq | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly companyCompanyOwnerId?: string | null;
@@ -159,8 +159,8 @@ type LazyCompany = {
   readonly profilePictureUrl?: string | null;
   readonly fax?: string | null;
   readonly companyDescription?: string | null;
-  readonly sentRFQs: AsyncCollection<RFQ>;
-  readonly receivedRFQs: AsyncCollection<RFQ>;
+  readonly sentRfqs: AsyncCollection<Rfq>;
+  readonly receivedRfqs: AsyncCollection<Rfq>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly companyCompanyOwnerId?: string | null;
@@ -188,9 +188,9 @@ type EagerItem = {
   readonly price?: number | null;
   readonly companyID: string;
   readonly imageUrls?: (string | null)[] | null;
+  readonly Rfqs?: (RfqItems | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly rFQItemsId?: string | null;
 }
 
 type LazyItem = {
@@ -209,9 +209,9 @@ type LazyItem = {
   readonly price?: number | null;
   readonly companyID: string;
   readonly imageUrls?: (string | null)[] | null;
+  readonly Rfqs: AsyncCollection<RfqItems>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly rFQItemsId?: string | null;
 }
 
 export declare type Item = LazyLoading extends LazyLoadingDisabled ? EagerItem : LazyItem
@@ -422,6 +422,40 @@ export declare type Country = LazyLoading extends LazyLoadingDisabled ? EagerCou
 
 export declare const Country: (new (init: ModelInit<Country>) => Country) & {
   copyOf(source: Country, mutator: (draft: MutableModel<Country>) => MutableModel<Country> | void): Country;
+}
+
+type EagerRfqItems = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<RfqItems, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly rfqId?: string | null;
+  readonly itemId?: string | null;
+  readonly rfq: Rfq;
+  readonly item: Item;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyRfqItems = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<RfqItems, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly rfqId?: string | null;
+  readonly itemId?: string | null;
+  readonly rfq: AsyncItem<Rfq>;
+  readonly item: AsyncItem<Item>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type RfqItems = LazyLoading extends LazyLoadingDisabled ? EagerRfqItems : LazyRfqItems
+
+export declare const RfqItems: (new (init: ModelInit<RfqItems>) => RfqItems) & {
+  copyOf(source: RfqItems, mutator: (draft: MutableModel<RfqItems>) => MutableModel<RfqItems> | void): RfqItems;
 }
 
 type EagerCompanyBillingAddress = {
