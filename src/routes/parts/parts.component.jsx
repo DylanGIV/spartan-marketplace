@@ -154,11 +154,13 @@ const Parts = (props) => {
   };
 
   const handleCreateRFQClick = (company, item) => {
+    const rfqs = [];
+
+    rfqs.push({ company: company, parts: [item] });
     setDataRFQ({
       isOpen: true,
-      type: 'single',
-      company: company,
-      item: item,
+      type: 'multi',
+      rfqs: rfqs,
     });
   };
   const handleMultiRFQClick = () => {

@@ -30,7 +30,7 @@ import {
 const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const { userDetails, dataRFQ } = props;
   const date = new Date();
-  const [quotationNumber, setQuotationNumber] = useState('');
+  const [quotationNumber, setQuotationNumber] = useState([]);
   const [countries, setCountries] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [saveAddressChecked, setSaveAddressChecked] = useState(false);
@@ -39,6 +39,8 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     useState(false);
   const [rfqIndex, setRfqIndex] = useState(0);
   const [expanded, setExpanded] = useState(false);
+  const [quantities, setQuantities] = useState([[]]);
+  const [additionalComments, setAdditionalComments] = useState([]);
 
   const [customerDetails, setCustomerDetails] = useState({
     contactEmail: userDetails.user.attributes.email,
@@ -119,51 +121,56 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     event.stopPropagation();
-    const rfqDetails = {
-      rfqNumber: quotationNumber,
-      addressLine1: shippingAddress.addressLine1,
-      addressLine2: shippingAddress.addressLine2,
-      city: shippingAddress.city,
-      country: selectedCountry.countryName,
-      state: shippingAddress.regi,
-      zip: shippingAddress.postalCode,
-      phone: customerDetails.contactPhone,
-      email: customerDetails.contactEmail,
-      attr1: '',
-      attr2: '',
-      attr3: '',
-      attr4: '',
-      attr5: '',
-      attr6: '',
-      condition: dataRFQ.item.condition,
-      uom: '',
-      discount: null,
-      companyName: dataRFQ.company.companyName,
-      contact: dataRFQ.company.contactEmail,
-      custRefNum: '',
-      dateSent: date.toISOString(),
-      dueDate: null,
-      emailComments: customerDetails.additionalComments,
-      internalComments: '',
-      leadTime: null,
-      paymentTerms: '',
-      quantityRequested: [parseInt(customerDetails.quantity)],
-      quantityQuoted: [null],
-      shippingMethod: '',
-      shippingTerms: '',
-      lineTotal: null,
-      subtotal: null,
-      salesTax: null,
-      total: null,
-      imageUrls: null,
-      receivingCompanyID: dataRFQ.company.id,
-      sendingCompanyID: company.id,
-      urgency: '',
-      items: [dataRFQ.item],
-    };
-    console.log(rfqDetails.items);
+    const rfqDetails = [];
+    dataRFQ.rfqs.forEach((r, rIndex) => {
+      const tempRfqDetails = {
+        rfqNumber: quotationNumber[rIndex],
+        addressLine1: shippingAddress.addressLine1,
+        addressLine2: shippingAddress.addressLine2,
+        city: shippingAddress.city,
+        country: selectedCountry.countryName,
+        state: shippingAddress.regi,
+        zip: shippingAddress.postalCode,
+        phone: customerDetails.contactPhone,
+        email: customerDetails.contactEmail,
+        attr1: '',
+        attr2: '',
+        attr3: '',
+        attr4: '',
+        attr5: '',
+        attr6: '',
+        uom: '',
+        discount: null,
+        companyName: dataRFQ.company.companyName,
+        contact: dataRFQ.company.contactEmail,
+        custRefNum: '',
+        dateSent: date.toISOString(),
+        dueDate: null,
+        emailComments: customerDetails.additionalComments,
+        internalComments: '',
+        leadTime: null,
+        paymentTerms: '',
+        quantityRequested: [parseInt(customerDetails.quantity)],
+        quantityQuoted: [null],
+        shippingMethod: '',
+        shippingTerms: '',
+        lineTotal: null,
+        subtotal: null,
+        salesTax: null,
+        total: null,
+        imageUrls: null,
+        receivingCompanyID: dataRFQ.company.id,
+        sendingCompanyID: company.id,
+        urgency: '',
+        items: [r.parts],
+      };
+      rfqDetails.push(tempRfqDetails);
+    });
+    {
+    }
+    console.log(rfqDetails);
 
-    await CreateRFQ(rfqDetails);
+    // await CreateRFQ(rfqDetails);
 
     if (saveAddressChecked) {
       await AddUserShippingAddress(shippingAddress, user);
@@ -246,6 +253,24 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       setUserShippingAddresses(userShippingAddresses);
     };
     handleGetUserAddresses();
+  }, []);
+  // fill quantities with part count per company
+  useEffect(() => {
+    const tempQuantities = [];
+    dataRFQ.rfqs.forEach((r, rIndex) => {
+      tempQuantities.push([]);
+      r.parts.forEach((p, pIndex) => {
+        tempQuantities[rIndex].push(1);
+      });
+    });
+    setQuantities(tempQuantities);
+  }, []);
+  useEffect(() => {
+    const comments = [];
+    dataRFQ.rfqs.forEach((r) => {
+      comments.push('');
+    });
+    setAdditionalComments(comments);
   }, []);
   const companyDetailsOverrides = {
     CompanyName: {
@@ -350,7 +375,6 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   //     setCustomerDetails({ ...customerDetails, quantity: value });
   //   },
   // },
-  // Customer Details
 
   const addressOverrides = {
     SavedAddresses: {
@@ -420,6 +444,8 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     },
   };
 
+  console.log(additionalComments);
+
   return (
     <div style={{ width: 590 }}>
       <CustomerRFQFormContainer
@@ -430,8 +456,12 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
         overrides={{
           AdditionalComments: {
             name: 'additionalComments',
-            value: customerDetails.additionalComments,
-            onChange: handleCustomerDetailsChange,
+            value: additionalComments[rfqIndex],
+            onChange: (event) => {
+              const newArray = Array.from(additionalComments);
+              newArray[rfqIndex] = event.target.value;
+              setAdditionalComments(newArray);
+            },
           },
           PrevButton: {
             isDisabled: rfqIndex === 0 ? true : false,
@@ -471,13 +501,24 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
                 <Typography>Part Details</Typography>
               </AccordionSummary>
               <div>
-                {dataRFQ.rfqs[rfqIndex].parts.map((p) => (
+                {dataRFQ.rfqs[rfqIndex].parts.map((p, pIndex) => (
                   <RfqFormPartNumber
                     key={p.id}
                     overrides={{
                       PartNumber: {
                         value: p.partNumber,
                         isDisabled: true,
+                      },
+                      QuantityRequested: {
+                        onStepChange: (value) => {
+                          if (value > 0) {
+                            const newArray = Array.from(quantities);
+                            newArray[rfqIndex][pIndex] = value;
+                            setQuantities(newArray);
+                          }
+                        },
+                        value: quantities[rfqIndex][pIndex],
+                        min: 1,
                       },
                     }}
                   />
