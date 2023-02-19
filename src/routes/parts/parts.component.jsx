@@ -156,30 +156,33 @@ const Parts = (props) => {
   const handleCreateRFQClick = (company, item) => {
     setDataRFQ({
       isOpen: true,
+      type: 'single',
       company: company,
       item: item,
     });
   };
   const handleMultiRFQClick = () => {
     const rfqs = [];
-
     data.map((d) => {
       const parts = [];
       let entered = false;
-      d.parts.foreach((p) => {
+      d.parts.forEach((p) => {
         if (d.company.isChecked || p.isChecked) {
           parts.push(p);
           entered = true;
         }
       });
       if (entered) {
-        rfqs.push({ company: d, parts: parts });
+        rfqs.push({ company: d.company, parts: parts });
       }
     });
 
     setDataRFQ({
       isOpen: true,
+      type: 'multi',
       rfqs: rfqs,
+      company: null,
+      item: null,
     });
   };
 
@@ -280,6 +283,7 @@ const Parts = (props) => {
             onClick={() => {
               setPartSearch('');
               setPartSearchTextField('');
+              setAllowRFQ(false);
             }}
           >
             Modify search
@@ -293,7 +297,7 @@ const Parts = (props) => {
             overrides={{
               CreateRFQ: {
                 disabled: !allowRFQ,
-                onClick: handleCreateRFQClick,
+                onClick: handleMultiRFQClick,
               },
             }}
           />
@@ -376,7 +380,7 @@ const Parts = (props) => {
                                 ? tokens.colors.brand.primary[80]
                                 : tokens.colors.background.secondary,
                             padding: 1,
-                            paddingLeft: 10,
+                            paddingLeft: 1,
                             borderRadius: 9,
                             marginLeft: 25,
                             width: '100%',
