@@ -28,7 +28,7 @@ import {
 } from '../../utils/utilsAmplify';
 
 const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
-  const { userDetails, dataRFQ } = props;
+  const { userDetails, dataRFQ, setDataRFQ } = props;
   const date = new Date();
   const [quotationNumber, setQuotationNumber] = useState([]);
   const [countries, setCountries] = useState(null);
@@ -123,6 +123,10 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     event.stopPropagation();
     const rfqDetails = [];
     dataRFQ.rfqs.forEach((r, rIndex) => {
+      const partIDs = [];
+      r.parts.forEach((p) => {
+        partIDs.push(p.id);
+      });
       const tempRfqDetails = {
         rfqNumber: quotationNumber[rIndex],
         addressLine1: shippingAddress.addressLine1,
@@ -141,17 +145,17 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
         attr6: '',
         uom: '',
         discount: null,
-        companyName: dataRFQ.company.companyName,
-        contact: dataRFQ.company.contactEmail,
+        companyName: r.company.companyName,
+        contact: r.company.contactEmail,
         custRefNum: '',
         dateSent: date.toISOString(),
         dueDate: null,
-        emailComments: customerDetails.additionalComments,
+        emailComments: additionalComments[rIndex],
         internalComments: '',
         leadTime: null,
         paymentTerms: '',
-        quantityRequested: [parseInt(customerDetails.quantity)],
-        quantityQuoted: [null],
+        quantityRequested: quantities[rIndex],
+        quantityQuoted: quantities[rIndex],
         shippingMethod: '',
         shippingTerms: '',
         lineTotal: null,
@@ -159,22 +163,23 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
         salesTax: null,
         total: null,
         imageUrls: null,
-        receivingCompanyID: dataRFQ.company.id,
+        receivingCompanyID: r.company.id,
         sendingCompanyID: company.id,
         urgency: '',
-        items: [r.parts],
+        itemIDs: r.partIDs,
       };
       rfqDetails.push(tempRfqDetails);
     });
-    {
-    }
-    console.log(rfqDetails);
 
-    // await CreateRFQ(rfqDetails);
+    rfqDetails.forEach(async (r) => {
+      await CreateRFQ(r);
+    });
 
     if (saveAddressChecked) {
       await AddUserShippingAddress(shippingAddress, user);
     }
+
+    setDataRFQ({ isOpen: false, company: {}, item: {} });
   };
   const handlePanelChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -265,6 +270,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     });
     setQuantities(tempQuantities);
   }, []);
+  // initialize additional comments array
   useEffect(() => {
     const comments = [];
     dataRFQ.rfqs.forEach((r) => {
@@ -443,8 +449,6 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       onChange: handleShippingAddressChange,
     },
   };
-
-  console.log(additionalComments);
 
   return (
     <div style={{ width: 590 }}>

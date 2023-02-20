@@ -257,6 +257,14 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "itemIDs": {
+                    "name": "itemIDs",
+                    "isArray": true,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
                 "receivingCompanyID": {
                     "name": "receivingCompanyID",
                     "isArray": false,
@@ -298,22 +306,6 @@ export const schema = {
                         "connectionType": "BELONGS_TO",
                         "targetNames": [
                             "sendingCompanyID"
-                        ]
-                    }
-                },
-                "Items": {
-                    "name": "Items",
-                    "isArray": true,
-                    "type": {
-                        "model": "RfqItems"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "rfq"
                         ]
                     }
                 },
@@ -684,22 +676,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isArrayNullable": true
-                },
-                "Rfqs": {
-                    "name": "Rfqs",
-                    "isArray": true,
-                    "type": {
-                        "model": "RfqItems"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "isArrayNullable": true,
-                    "association": {
-                        "connectionType": "HAS_MANY",
-                        "associatedWith": [
-                            "item"
-                        ]
-                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -1392,104 +1368,6 @@ export const schema = {
                 }
             ]
         },
-        "RfqItems": {
-            "name": "RfqItems",
-            "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
-                "rfqId": {
-                    "name": "rfqId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "itemId": {
-                    "name": "itemId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "rfq": {
-                    "name": "rfq",
-                    "isArray": false,
-                    "type": {
-                        "model": "Rfq"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "rfqId"
-                        ]
-                    }
-                },
-                "item": {
-                    "name": "item",
-                    "isArray": false,
-                    "type": {
-                        "model": "Item"
-                    },
-                    "isRequired": true,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "itemId"
-                        ]
-                    }
-                },
-                "createdAt": {
-                    "name": "createdAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                },
-                "updatedAt": {
-                    "name": "updatedAt",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": [],
-                    "isReadOnly": true
-                }
-            },
-            "syncable": true,
-            "pluralName": "RfqItems",
-            "attributes": [
-                {
-                    "type": "model",
-                    "properties": {}
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byRfq",
-                        "fields": [
-                            "rfqId"
-                        ]
-                    }
-                },
-                {
-                    "type": "key",
-                    "properties": {
-                        "name": "byItem",
-                        "fields": [
-                            "itemId"
-                        ]
-                    }
-                }
-            ]
-        },
         "CompanyBillingAddress": {
             "name": "CompanyBillingAddress",
             "fields": {
@@ -1886,5 +1764,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "3bfb80daf17c1e3cf4d2bf59669010ec"
+    "version": "b42653e04ef70da0bf76f2772f680c1e"
 };

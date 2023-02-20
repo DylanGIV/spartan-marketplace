@@ -35,11 +35,11 @@ type Rfq @model @auth(rules: [{allow: public}]) {
   state: String
   zip: String
   country: String
+  itemIDs: [ID]
   receivingCompanyID: ID!
   sendingCompanyID: ID!
   ReceivingCompany: Company @belongsTo(fields: ["receivingCompanyID"])
   SendingCompany: Company @belongsTo(fields: ["sendingCompanyID"])
-  Items: [Item] @manyToMany(relationName: "RfqItems")
 }
 
 type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
@@ -129,5 +129,4 @@ type Item @model @auth(rules: [{allow: public}]) {
   price: Float
   companyID: ID! @index(name: "byCompany")
   imageUrls: [String]
-  Rfqs: [Rfq] @manyToMany(relationName: "RfqItems")
 } 

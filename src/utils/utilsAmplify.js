@@ -265,11 +265,6 @@ export const AddUserShippingAddress = async (shippingAddress, user) => {
 
 export const CreateRFQ = async (rfqDetails) => {
   try {
-    const items = [];
-    for (let i = 0; i < rfqDetails.items.length; i++) {
-      const item = await DataStore.query(Item, rfqDetails.items[i].id);
-      items.push(item);
-    }
     const rfqResponse = await DataStore.save(
       new Rfq({
         rfqNumber: rfqDetails.rfqNumber,
@@ -310,22 +305,24 @@ export const CreateRFQ = async (rfqDetails) => {
         receivingCompanyID: rfqDetails.receivingCompanyID,
         sendingCompanyID: rfqDetails.sendingCompanyID,
         urgency: rfqDetails.urgency,
-        Items: rfqDetails.items,
+        itemIDs: rfqDetails.itemIDs,
       })
     );
-    for (let i = 0; i < items.length; i++) {
-      const response = await DataStore.save(
-        new RfqItems({
-          item: items[i],
-          rfq: rfqResponse,
-        })
-      );
-      console.log(response);
-    }
     console.log(rfqResponse);
+    // const rfq = await DataStore.query(Rfq, rfqResponse.id);
+    // for (let i = 0; i < items.length; i++) {
+    //   const response = await DataStore.save(
+    //     new RfqItems({
+    //       item: items[i],
+    //       rfq: rfq,
+    //     })
+    //   );
+    //   console.log(response);
+    // }
     alert('Successfully sent RFQ to ' + rfqDetails.companyName);
   } catch (error) {
     console.log(error);
+    alert('failed');
   }
 };
 

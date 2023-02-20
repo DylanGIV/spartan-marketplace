@@ -18,7 +18,7 @@ const RFQ = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [allCheckboxValue, setAllCheckboxValue] = useState(false);
   const [checkboxValues, setCheckboxValues] = useState([]);
-  const [rfqTypeSelected, setRFQTypeSelected] = useState('all');
+  const [rfqTypeSelected, setRFQTypeSelected] = useState('received');
 
   const { tokens } = useTheme();
 

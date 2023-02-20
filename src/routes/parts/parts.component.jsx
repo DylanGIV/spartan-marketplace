@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Item, UserDetails } from '../../models';
 import {
   PartKey,
@@ -26,6 +26,7 @@ import {
 } from '@aws-amplify/ui-react';
 import CustomerRFQFormPopUp from '../../components/customerRFQFormPopUp/customerRFQFormPopUp.component';
 import { useLocation } from 'react-router';
+import { UserContext } from '../../context/user.context';
 
 const Parts = (props) => {
   const { state } = useLocation();
@@ -50,6 +51,7 @@ const Parts = (props) => {
   const { user } = useAuthenticator();
 
   const [isHovering, setIsHovering] = useState(null);
+  const { company } = useContext(UserContext);
 
   const handleMouseEnter = (id) => {
     setIsHovering(id);
@@ -326,6 +328,7 @@ const Parts = (props) => {
                         }}
                       >
                         <CheckboxField
+                          isDisabled={d.company.id === company.id}
                           size='large'
                           marginLeft={2}
                           marginTop={2}
@@ -333,6 +336,8 @@ const Parts = (props) => {
                           onChange={() =>
                             handleCompanyCheckboxChange(d.company.id)
                           }
+                          backgroundColor={tokens.colors.background.primary}
+                          borderRadius={5}
                         />
                       </div>
                     }
@@ -363,6 +368,7 @@ const Parts = (props) => {
                           }}
                         >
                           <CheckboxField
+                            isDisabled={d.company.id === company.id}
                             label='checkbox'
                             labelHidden={true}
                             size='large'
@@ -372,13 +378,19 @@ const Parts = (props) => {
                               d.company.isChecked || item.isChecked || false
                             }
                             onChange={() => handleCheckboxChange(item.id)}
+                            backgroundColor={tokens.colors.background.primary}
+                            borderRadius={5}
                           />
                         </div>
                         <div
                           style={{
-                            cursor: 'pointer',
+                            cursor:
+                              d.company.id !== company.id
+                                ? 'pointer'
+                                : 'default',
                             backgroundColor:
-                              isHovering === item.id
+                              isHovering === item.id &&
+                              d.company.id !== company.id
                                 ? tokens.colors.brand.primary[80]
                                 : tokens.colors.background.secondary,
                             padding: 1,
@@ -394,7 +406,9 @@ const Parts = (props) => {
                             <PartsListDetails
                               item={item}
                               onClick={() =>
-                                handleCreateRFQClick(d.company, item)
+                                d.company.id !== company.id
+                                  ? handleCreateRFQClick(d.company, item)
+                                  : null
                               }
                             />
                           </div>
@@ -439,7 +453,11 @@ const Parts = (props) => {
         open={dataRFQ.isOpen}
         onClose={() => setDataRFQ({ isOpen: false, company: {}, item: {} })}
       >
-        <CustomerRFQFormPopUp userDetails={userDetails} dataRFQ={dataRFQ} />
+        <CustomerRFQFormPopUp
+          userDetails={userDetails}
+          dataRFQ={dataRFQ}
+          setDataRFQ={setDataRFQ}
+        />
       </Modal>
     </div>
   );

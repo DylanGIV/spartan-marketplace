@@ -1,4 +1,4 @@
-type RFQ @model @auth(rules: [{allow: public}]) {
+type Rfq @model @auth(rules: [{allow: public}]) {
   id: ID!
   rfqNumber: String
   dateSent: AWSDateTime
@@ -35,11 +35,11 @@ type RFQ @model @auth(rules: [{allow: public}]) {
   state: String
   zip: String
   country: String
+  itemIDs: [ID]
   receivingCompanyID: ID!
   sendingCompanyID: ID!
   ReceivingCompany: Company @belongsTo(fields: ["receivingCompanyID"])
   SendingCompany: Company @belongsTo(fields: ["sendingCompanyID"])
-  Items: [Item] @manyToMany(relationName: "RFQItems")
 }
 
 type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
@@ -100,8 +100,8 @@ type Company @model @auth(rules: [{allow: public}]) {
   profilePictureUrl: String
   fax: String
   companyDescription: String
-  sentRFQs: [RFQ] @hasMany
-  receivedRFQs: [RFQ] @hasMany
+  sentRfqs: [Rfq] @hasMany
+  receivedRfqs: [Rfq] @hasMany
 }
 
 type ItemMRO @model @auth(rules: [{allow: public}]) {
@@ -129,5 +129,4 @@ type Item @model @auth(rules: [{allow: public}]) {
   price: Float
   companyID: ID! @index(name: "byCompany")
   imageUrls: [String]
-  RFQs: [RFQ] @manyToMany(relationName: "RFQItems")
 } 
