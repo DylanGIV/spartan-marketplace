@@ -26,6 +26,7 @@ export default function CompanyCreateForm(props) {
     companyName: "",
     phone: "",
     contactEmail: "",
+    countryID: "",
     profilePictureUrl: "",
     fax: "",
     companyDescription: "",
@@ -37,6 +38,7 @@ export default function CompanyCreateForm(props) {
   const [contactEmail, setContactEmail] = React.useState(
     initialValues.contactEmail
   );
+  const [countryID, setCountryID] = React.useState(initialValues.countryID);
   const [profilePictureUrl, setProfilePictureUrl] = React.useState(
     initialValues.profilePictureUrl
   );
@@ -49,6 +51,7 @@ export default function CompanyCreateForm(props) {
     setCompanyName(initialValues.companyName);
     setPhone(initialValues.phone);
     setContactEmail(initialValues.contactEmail);
+    setCountryID(initialValues.countryID);
     setProfilePictureUrl(initialValues.profilePictureUrl);
     setFax(initialValues.fax);
     setCompanyDescription(initialValues.companyDescription);
@@ -58,6 +61,7 @@ export default function CompanyCreateForm(props) {
     companyName: [],
     phone: [{ type: "Phone" }],
     contactEmail: [{ type: "Email" }],
+    countryID: [{ type: "Required" }],
     profilePictureUrl: [],
     fax: [],
     companyDescription: [],
@@ -90,6 +94,7 @@ export default function CompanyCreateForm(props) {
           companyName,
           phone,
           contactEmail,
+          countryID,
           profilePictureUrl,
           fax,
           companyDescription,
@@ -150,6 +155,7 @@ export default function CompanyCreateForm(props) {
               companyName: value,
               phone,
               contactEmail,
+              countryID,
               profilePictureUrl,
               fax,
               companyDescription,
@@ -180,6 +186,7 @@ export default function CompanyCreateForm(props) {
               companyName,
               phone: value,
               contactEmail,
+              countryID,
               profilePictureUrl,
               fax,
               companyDescription,
@@ -209,6 +216,7 @@ export default function CompanyCreateForm(props) {
               companyName,
               phone,
               contactEmail: value,
+              countryID,
               profilePictureUrl,
               fax,
               companyDescription,
@@ -227,6 +235,36 @@ export default function CompanyCreateForm(props) {
         {...getOverrideProps(overrides, "contactEmail")}
       ></TextField>
       <TextField
+        label="Country id"
+        isRequired={true}
+        isReadOnly={false}
+        value={countryID}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              companyName,
+              phone,
+              contactEmail,
+              countryID: value,
+              profilePictureUrl,
+              fax,
+              companyDescription,
+            };
+            const result = onChange(modelFields);
+            value = result?.countryID ?? value;
+          }
+          if (errors.countryID?.hasError) {
+            runValidationTasks("countryID", value);
+          }
+          setCountryID(value);
+        }}
+        onBlur={() => runValidationTasks("countryID", countryID)}
+        errorMessage={errors.countryID?.errorMessage}
+        hasError={errors.countryID?.hasError}
+        {...getOverrideProps(overrides, "countryID")}
+      ></TextField>
+      <TextField
         label="Profile picture url"
         isRequired={false}
         isReadOnly={false}
@@ -238,6 +276,7 @@ export default function CompanyCreateForm(props) {
               companyName,
               phone,
               contactEmail,
+              countryID,
               profilePictureUrl: value,
               fax,
               companyDescription,
@@ -269,6 +308,7 @@ export default function CompanyCreateForm(props) {
               companyName,
               phone,
               contactEmail,
+              countryID,
               profilePictureUrl,
               fax: value,
               companyDescription,
@@ -298,6 +338,7 @@ export default function CompanyCreateForm(props) {
               companyName,
               phone,
               contactEmail,
+              countryID,
               profilePictureUrl,
               fax,
               companyDescription: value,

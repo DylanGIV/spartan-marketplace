@@ -29,18 +29,12 @@ type EagerRfq = {
   readonly uom?: string | null;
   readonly urgency?: string | null;
   readonly discount?: number | null;
-  readonly attr1?: string | null;
-  readonly attr2?: string | null;
-  readonly attr3?: string | null;
   readonly lineTotal?: number | null;
   readonly subtotal?: number | null;
   readonly salesTax?: number | null;
   readonly total?: number | null;
   readonly internalComments?: string | null;
   readonly emailComments?: string | null;
-  readonly attr4?: string | null;
-  readonly attr5?: string | null;
-  readonly attr6?: string | null;
   readonly addressLine1?: string | null;
   readonly addressLine2?: string | null;
   readonly city?: string | null;
@@ -81,18 +75,12 @@ type LazyRfq = {
   readonly uom?: string | null;
   readonly urgency?: string | null;
   readonly discount?: number | null;
-  readonly attr1?: string | null;
-  readonly attr2?: string | null;
-  readonly attr3?: string | null;
   readonly lineTotal?: number | null;
   readonly subtotal?: number | null;
   readonly salesTax?: number | null;
   readonly total?: number | null;
   readonly internalComments?: string | null;
   readonly emailComments?: string | null;
-  readonly attr4?: string | null;
-  readonly attr5?: string | null;
-  readonly attr6?: string | null;
   readonly addressLine1?: string | null;
   readonly addressLine2?: string | null;
   readonly city?: string | null;
@@ -131,6 +119,7 @@ type EagerCompany = {
   readonly CompanyMembers?: (UserDetails | null)[] | null;
   readonly CompanyOwner?: UserDetails | null;
   readonly ShippingAddresses?: (CompanyShippingAddress | null)[] | null;
+  readonly countryID: string;
   readonly profilePictureUrl?: string | null;
   readonly fax?: string | null;
   readonly companyDescription?: string | null;
@@ -156,6 +145,7 @@ type LazyCompany = {
   readonly CompanyMembers: AsyncCollection<UserDetails>;
   readonly CompanyOwner: AsyncItem<UserDetails | undefined>;
   readonly ShippingAddresses: AsyncCollection<CompanyShippingAddress>;
+  readonly countryID: string;
   readonly profilePictureUrl?: string | null;
   readonly fax?: string | null;
   readonly companyDescription?: string | null;
@@ -275,6 +265,7 @@ type EagerBillingAddress = {
   readonly city?: string | null;
   readonly region?: string | null;
   readonly postalCode?: string | null;
+  readonly isDefault?: boolean | null;
   readonly CompanyBillingAddresses?: (CompanyBillingAddress | null)[] | null;
   readonly countryID: string;
   readonly UserBillingAddresses?: (UserDetailsBillingAddress | null)[] | null;
@@ -295,6 +286,7 @@ type LazyBillingAddress = {
   readonly city?: string | null;
   readonly region?: string | null;
   readonly postalCode?: string | null;
+  readonly isDefault?: boolean | null;
   readonly CompanyBillingAddresses: AsyncCollection<CompanyBillingAddress>;
   readonly countryID: string;
   readonly UserBillingAddresses: AsyncCollection<UserDetailsBillingAddress>;
@@ -315,6 +307,8 @@ type EagerUserDetails = {
   };
   readonly id: string;
   readonly userID?: string | null;
+  readonly contactEmail?: string | null;
+  readonly contactPhone?: string | null;
   readonly companyID: string;
   readonly BillingAddresses?: (UserDetailsBillingAddress | null)[] | null;
   readonly ShippingAddresses?: (UserDetailsShippingAddress | null)[] | null;
@@ -330,6 +324,8 @@ type LazyUserDetails = {
   };
   readonly id: string;
   readonly userID?: string | null;
+  readonly contactEmail?: string | null;
+  readonly contactPhone?: string | null;
   readonly companyID: string;
   readonly BillingAddresses: AsyncCollection<UserDetailsBillingAddress>;
   readonly ShippingAddresses: AsyncCollection<UserDetailsShippingAddress>;
@@ -357,6 +353,7 @@ type EagerShippingAddress = {
   readonly city?: string | null;
   readonly regi?: string | null;
   readonly postalCode?: string | null;
+  readonly isDefault?: boolean | null;
   readonly countryID: string;
   readonly UserShippingAddresses?: (UserDetailsShippingAddress | null)[] | null;
   readonly CompanyShippingAddresses?: (CompanyShippingAddress | null)[] | null;
@@ -377,6 +374,7 @@ type LazyShippingAddress = {
   readonly city?: string | null;
   readonly regi?: string | null;
   readonly postalCode?: string | null;
+  readonly isDefault?: boolean | null;
   readonly countryID: string;
   readonly UserShippingAddresses: AsyncCollection<UserDetailsShippingAddress>;
   readonly CompanyShippingAddresses: AsyncCollection<CompanyShippingAddress>;

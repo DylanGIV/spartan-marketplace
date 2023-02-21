@@ -23,18 +23,12 @@ export const onCreateRfq = /* GraphQL */ `
       uom
       urgency
       discount
-      attr1
-      attr2
-      attr3
       lineTotal
       subtotal
       salesTax
       total
       internalComments
       emailComments
-      attr4
-      attr5
-      attr6
       addressLine1
       addressLine2
       city
@@ -68,6 +62,8 @@ export const onCreateRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -81,6 +77,7 @@ export const onCreateRfq = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -123,6 +120,8 @@ export const onCreateRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -136,6 +135,7 @@ export const onCreateRfq = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -185,18 +185,12 @@ export const onUpdateRfq = /* GraphQL */ `
       uom
       urgency
       discount
-      attr1
-      attr2
-      attr3
       lineTotal
       subtotal
       salesTax
       total
       internalComments
       emailComments
-      attr4
-      attr5
-      attr6
       addressLine1
       addressLine2
       city
@@ -230,6 +224,8 @@ export const onUpdateRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -243,6 +239,7 @@ export const onUpdateRfq = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -285,6 +282,8 @@ export const onUpdateRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -298,6 +297,7 @@ export const onUpdateRfq = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -347,18 +347,12 @@ export const onDeleteRfq = /* GraphQL */ `
       uom
       urgency
       discount
-      attr1
-      attr2
-      attr3
       lineTotal
       subtotal
       salesTax
       total
       internalComments
       emailComments
-      attr4
-      attr5
-      attr6
       addressLine1
       addressLine2
       city
@@ -392,6 +386,8 @@ export const onDeleteRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -405,6 +401,7 @@ export const onDeleteRfq = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -447,6 +444,8 @@ export const onDeleteRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -460,6 +459,7 @@ export const onDeleteRfq = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -496,6 +496,8 @@ export const onCreateUserDetails = /* GraphQL */ `
     onCreateUserDetails(filter: $filter, owner: $owner) {
       id
       userID
+      contactEmail
+      contactPhone
       companyID
       BillingAddresses {
         items {
@@ -545,6 +547,8 @@ export const onUpdateUserDetails = /* GraphQL */ `
     onUpdateUserDetails(filter: $filter, owner: $owner) {
       id
       userID
+      contactEmail
+      contactPhone
       companyID
       BillingAddresses {
         items {
@@ -594,6 +598,8 @@ export const onDeleteUserDetails = /* GraphQL */ `
     onDeleteUserDetails(filter: $filter, owner: $owner) {
       id
       userID
+      contactEmail
+      contactPhone
       companyID
       BillingAddresses {
         items {
@@ -650,6 +656,7 @@ export const onCreateCountry = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -670,6 +677,7 @@ export const onCreateCountry = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -703,6 +711,7 @@ export const onUpdateCountry = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -723,6 +732,7 @@ export const onUpdateCountry = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -756,6 +766,7 @@ export const onDeleteCountry = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -776,6 +787,7 @@ export const onDeleteCountry = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -807,6 +819,7 @@ export const onCreateShippingAddress = /* GraphQL */ `
       city
       regi
       postalCode
+      isDefault
       countryID
       UserShippingAddresses {
         items {
@@ -858,6 +871,7 @@ export const onUpdateShippingAddress = /* GraphQL */ `
       city
       regi
       postalCode
+      isDefault
       countryID
       UserShippingAddresses {
         items {
@@ -909,6 +923,7 @@ export const onDeleteShippingAddress = /* GraphQL */ `
       city
       regi
       postalCode
+      isDefault
       countryID
       UserShippingAddresses {
         items {
@@ -960,6 +975,7 @@ export const onCreateBillingAddress = /* GraphQL */ `
       city
       region
       postalCode
+      isDefault
       CompanyBillingAddresses {
         items {
           id
@@ -1011,6 +1027,7 @@ export const onUpdateBillingAddress = /* GraphQL */ `
       city
       region
       postalCode
+      isDefault
       CompanyBillingAddresses {
         items {
           id
@@ -1062,6 +1079,7 @@ export const onDeleteBillingAddress = /* GraphQL */ `
       city
       region
       postalCode
+      isDefault
       CompanyBillingAddresses {
         items {
           id
@@ -1168,6 +1186,8 @@ export const onCreateCompany = /* GraphQL */ `
         items {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1183,6 +1203,8 @@ export const onCreateCompany = /* GraphQL */ `
       CompanyOwner {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -1214,6 +1236,7 @@ export const onCreateCompany = /* GraphQL */ `
         nextToken
         startedAt
       }
+      countryID
       profilePictureUrl
       fax
       companyDescription
@@ -1237,18 +1260,12 @@ export const onCreateCompany = /* GraphQL */ `
           uom
           urgency
           discount
-          attr1
-          attr2
-          attr3
           lineTotal
           subtotal
           salesTax
           total
           internalComments
           emailComments
-          attr4
-          attr5
-          attr6
           addressLine1
           addressLine2
           city
@@ -1289,18 +1306,12 @@ export const onCreateCompany = /* GraphQL */ `
           uom
           urgency
           discount
-          attr1
-          attr2
-          attr3
           lineTotal
           subtotal
           salesTax
           total
           internalComments
           emailComments
-          attr4
-          attr5
-          attr6
           addressLine1
           addressLine2
           city
@@ -1398,6 +1409,8 @@ export const onUpdateCompany = /* GraphQL */ `
         items {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1413,6 +1426,8 @@ export const onUpdateCompany = /* GraphQL */ `
       CompanyOwner {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -1444,6 +1459,7 @@ export const onUpdateCompany = /* GraphQL */ `
         nextToken
         startedAt
       }
+      countryID
       profilePictureUrl
       fax
       companyDescription
@@ -1467,18 +1483,12 @@ export const onUpdateCompany = /* GraphQL */ `
           uom
           urgency
           discount
-          attr1
-          attr2
-          attr3
           lineTotal
           subtotal
           salesTax
           total
           internalComments
           emailComments
-          attr4
-          attr5
-          attr6
           addressLine1
           addressLine2
           city
@@ -1519,18 +1529,12 @@ export const onUpdateCompany = /* GraphQL */ `
           uom
           urgency
           discount
-          attr1
-          attr2
-          attr3
           lineTotal
           subtotal
           salesTax
           total
           internalComments
           emailComments
-          attr4
-          attr5
-          attr6
           addressLine1
           addressLine2
           city
@@ -1628,6 +1632,8 @@ export const onDeleteCompany = /* GraphQL */ `
         items {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1643,6 +1649,8 @@ export const onDeleteCompany = /* GraphQL */ `
       CompanyOwner {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -1674,6 +1682,7 @@ export const onDeleteCompany = /* GraphQL */ `
         nextToken
         startedAt
       }
+      countryID
       profilePictureUrl
       fax
       companyDescription
@@ -1697,18 +1706,12 @@ export const onDeleteCompany = /* GraphQL */ `
           uom
           urgency
           discount
-          attr1
-          attr2
-          attr3
           lineTotal
           subtotal
           salesTax
           total
           internalComments
           emailComments
-          attr4
-          attr5
-          attr6
           addressLine1
           addressLine2
           city
@@ -1749,18 +1752,12 @@ export const onDeleteCompany = /* GraphQL */ `
           uom
           urgency
           discount
-          attr1
-          attr2
-          attr3
           lineTotal
           subtotal
           salesTax
           total
           internalComments
           emailComments
-          attr4
-          attr5
-          attr6
           addressLine1
           addressLine2
           city
@@ -1931,6 +1928,8 @@ export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -1957,6 +1956,7 @@ export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -1993,6 +1993,8 @@ export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -2019,6 +2021,7 @@ export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -2055,6 +2058,8 @@ export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -2081,6 +2086,7 @@ export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -2117,6 +2123,8 @@ export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -2143,6 +2151,7 @@ export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -2179,6 +2188,8 @@ export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -2205,6 +2216,7 @@ export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -2241,6 +2253,8 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -2267,6 +2281,7 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -2308,6 +2323,7 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -2347,6 +2363,8 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2360,6 +2378,7 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -2403,6 +2422,7 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -2442,6 +2462,8 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2455,6 +2477,7 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -2498,6 +2521,7 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -2537,6 +2561,8 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2550,6 +2576,7 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -2593,6 +2620,7 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -2632,6 +2660,8 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2645,6 +2675,7 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -2688,6 +2719,7 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -2727,6 +2759,8 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2740,6 +2774,7 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -2783,6 +2818,7 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -2822,6 +2858,8 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2835,6 +2873,7 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription

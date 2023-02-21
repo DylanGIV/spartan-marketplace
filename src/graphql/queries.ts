@@ -23,18 +23,12 @@ export const getRfq = /* GraphQL */ `
       uom
       urgency
       discount
-      attr1
-      attr2
-      attr3
       lineTotal
       subtotal
       salesTax
       total
       internalComments
       emailComments
-      attr4
-      attr5
-      attr6
       addressLine1
       addressLine2
       city
@@ -68,6 +62,8 @@ export const getRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -81,6 +77,7 @@ export const getRfq = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -123,6 +120,8 @@ export const getRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -136,6 +135,7 @@ export const getRfq = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -190,18 +190,12 @@ export const listRfqs = /* GraphQL */ `
         uom
         urgency
         discount
-        attr1
-        attr2
-        attr3
         lineTotal
         subtotal
         salesTax
         total
         internalComments
         emailComments
-        attr4
-        attr5
-        attr6
         addressLine1
         addressLine2
         city
@@ -216,6 +210,7 @@ export const listRfqs = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -231,6 +226,7 @@ export const listRfqs = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -286,18 +282,12 @@ export const syncRfqs = /* GraphQL */ `
         uom
         urgency
         discount
-        attr1
-        attr2
-        attr3
         lineTotal
         subtotal
         salesTax
         total
         internalComments
         emailComments
-        attr4
-        attr5
-        attr6
         addressLine1
         addressLine2
         city
@@ -312,6 +302,7 @@ export const syncRfqs = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -327,6 +318,7 @@ export const syncRfqs = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -355,6 +347,8 @@ export const getUserDetails = /* GraphQL */ `
     getUserDetails(id: $id) {
       id
       userID
+      contactEmail
+      contactPhone
       companyID
       BillingAddresses {
         items {
@@ -406,6 +400,8 @@ export const listUserDetails = /* GraphQL */ `
       items {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -444,6 +440,8 @@ export const syncUserDetails = /* GraphQL */ `
       items {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -484,6 +482,8 @@ export const userDetailsByCompanyID = /* GraphQL */ `
       items {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -521,6 +521,7 @@ export const getCountry = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -541,6 +542,7 @@ export const getCountry = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -634,6 +636,7 @@ export const getShippingAddress = /* GraphQL */ `
       city
       regi
       postalCode
+      isDefault
       countryID
       UserShippingAddresses {
         items {
@@ -692,6 +695,7 @@ export const listShippingAddresses = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -734,6 +738,7 @@ export const syncShippingAddresses = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -778,6 +783,7 @@ export const shippingAddressesByCountryID = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -809,6 +815,7 @@ export const getBillingAddress = /* GraphQL */ `
       city
       region
       postalCode
+      isDefault
       CompanyBillingAddresses {
         items {
           id
@@ -867,6 +874,7 @@ export const listBillingAddresses = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -909,6 +917,7 @@ export const syncBillingAddresses = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -953,6 +962,7 @@ export const billingAddressesByCountryID = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -1041,6 +1051,8 @@ export const getCompany = /* GraphQL */ `
         items {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1056,6 +1068,8 @@ export const getCompany = /* GraphQL */ `
       CompanyOwner {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -1087,6 +1101,7 @@ export const getCompany = /* GraphQL */ `
         nextToken
         startedAt
       }
+      countryID
       profilePictureUrl
       fax
       companyDescription
@@ -1110,18 +1125,12 @@ export const getCompany = /* GraphQL */ `
           uom
           urgency
           discount
-          attr1
-          attr2
-          attr3
           lineTotal
           subtotal
           salesTax
           total
           internalComments
           emailComments
-          attr4
-          attr5
-          attr6
           addressLine1
           addressLine2
           city
@@ -1162,18 +1171,12 @@ export const getCompany = /* GraphQL */ `
           uom
           urgency
           discount
-          attr1
-          attr2
-          attr3
           lineTotal
           subtotal
           salesTax
           total
           internalComments
           emailComments
-          attr4
-          attr5
-          attr6
           addressLine1
           addressLine2
           city
@@ -1234,6 +1237,8 @@ export const listCompanies = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1247,6 +1252,7 @@ export const listCompanies = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -1307,6 +1313,8 @@ export const syncCompanies = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1320,6 +1328,85 @@ export const syncCompanies = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRfqs {
+          nextToken
+          startedAt
+        }
+        receivedRfqs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const companiesByCountryID = /* GraphQL */ `
+  query CompaniesByCountryID(
+    $countryID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelCompanyFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    companiesByCountryID(
+      countryID: $countryID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          id
+          userID
+          contactEmail
+          contactPhone
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -1600,6 +1687,8 @@ export const getUserDetailsBillingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -1626,6 +1715,7 @@ export const getUserDetailsBillingAddress = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -1668,6 +1758,8 @@ export const listUserDetailsBillingAddresses = /* GraphQL */ `
         userDetails {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1686,6 +1778,7 @@ export const listUserDetailsBillingAddresses = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -1725,6 +1818,8 @@ export const syncUserDetailsBillingAddresses = /* GraphQL */ `
         userDetails {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1743,6 +1838,7 @@ export const syncUserDetailsBillingAddresses = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -1784,6 +1880,8 @@ export const userDetailsBillingAddressesByUserDetailsId = /* GraphQL */ `
         userDetails {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1802,6 +1900,7 @@ export const userDetailsBillingAddressesByUserDetailsId = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -1843,6 +1942,8 @@ export const userDetailsBillingAddressesByBillingAddressId = /* GraphQL */ `
         userDetails {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1861,6 +1962,7 @@ export const userDetailsBillingAddressesByBillingAddressId = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -1889,6 +1991,8 @@ export const getUserDetailsShippingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        contactEmail
+        contactPhone
         companyID
         BillingAddresses {
           nextToken
@@ -1915,6 +2019,7 @@ export const getUserDetailsShippingAddress = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -1957,6 +2062,8 @@ export const listUserDetailsShippingAddresses = /* GraphQL */ `
         userDetails {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -1975,6 +2082,7 @@ export const listUserDetailsShippingAddresses = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2014,6 +2122,8 @@ export const syncUserDetailsShippingAddresses = /* GraphQL */ `
         userDetails {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2032,6 +2142,7 @@ export const syncUserDetailsShippingAddresses = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2073,6 +2184,8 @@ export const userDetailsShippingAddressesByUserDetailsId = /* GraphQL */ `
         userDetails {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2091,6 +2204,7 @@ export const userDetailsShippingAddressesByUserDetailsId = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2132,6 +2246,8 @@ export const userDetailsShippingAddressesByShippingAddressId = /* GraphQL */ `
         userDetails {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2150,6 +2266,7 @@ export const userDetailsShippingAddressesByShippingAddressId = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2184,6 +2301,7 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         city
         regi
         postalCode
+        isDefault
         countryID
         UserShippingAddresses {
           nextToken
@@ -2223,6 +2341,8 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2236,6 +2356,7 @@ export const getCompanyShippingAddress = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -2286,6 +2407,7 @@ export const listCompanyShippingAddresses = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2298,6 +2420,7 @@ export const listCompanyShippingAddresses = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -2345,6 +2468,7 @@ export const syncCompanyShippingAddresses = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2357,6 +2481,7 @@ export const syncCompanyShippingAddresses = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -2406,6 +2531,7 @@ export const companyShippingAddressesByShippingAddressId = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2418,6 +2544,7 @@ export const companyShippingAddressesByShippingAddressId = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -2467,6 +2594,7 @@ export const companyShippingAddressesByCompanyId = /* GraphQL */ `
           city
           regi
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2479,6 +2607,7 @@ export const companyShippingAddressesByCompanyId = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -2515,6 +2644,7 @@ export const getCompanyBillingAddress = /* GraphQL */ `
         city
         region
         postalCode
+        isDefault
         CompanyBillingAddresses {
           nextToken
           startedAt
@@ -2554,6 +2684,8 @@ export const getCompanyBillingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          contactEmail
+          contactPhone
           companyID
           isCompanyOwner
           createdAt
@@ -2567,6 +2699,7 @@ export const getCompanyBillingAddress = /* GraphQL */ `
           nextToken
           startedAt
         }
+        countryID
         profilePictureUrl
         fax
         companyDescription
@@ -2617,6 +2750,7 @@ export const listCompanyBillingAddresses = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2629,6 +2763,7 @@ export const listCompanyBillingAddresses = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -2676,6 +2811,7 @@ export const syncCompanyBillingAddresses = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2688,6 +2824,7 @@ export const syncCompanyBillingAddresses = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -2737,6 +2874,7 @@ export const companyBillingAddressesByBillingAddressId = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2749,6 +2887,7 @@ export const companyBillingAddressesByBillingAddressId = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription
@@ -2798,6 +2937,7 @@ export const companyBillingAddressesByCompanyId = /* GraphQL */ `
           city
           region
           postalCode
+          isDefault
           countryID
           createdAt
           updatedAt
@@ -2810,6 +2950,7 @@ export const companyBillingAddressesByCompanyId = /* GraphQL */ `
           companyName
           phone
           contactEmail
+          countryID
           profilePictureUrl
           fax
           companyDescription

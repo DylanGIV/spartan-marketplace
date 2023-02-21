@@ -131,27 +131,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "attr1": {
-                    "name": "attr1",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "attr2": {
-                    "name": "attr2",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "attr3": {
-                    "name": "attr3",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
                 "lineTotal": {
                     "name": "lineTotal",
                     "isArray": false,
@@ -189,27 +168,6 @@ export const schema = {
                 },
                 "emailComments": {
                     "name": "emailComments",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "attr4": {
-                    "name": "attr4",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "attr5": {
-                    "name": "attr5",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "attr6": {
-                    "name": "attr6",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -494,6 +452,13 @@ export const schema = {
                         ]
                     }
                 },
+                "countryID": {
+                    "name": "countryID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "profilePictureUrl": {
                     "name": "profilePictureUrl",
                     "isArray": false,
@@ -577,6 +542,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byCountry",
+                        "fields": [
+                            "countryID"
+                        ]
+                    }
                 },
                 {
                     "type": "auth",
@@ -912,6 +886,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "isDefault": {
+                    "name": "isDefault",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "CompanyBillingAddresses": {
                     "name": "CompanyBillingAddresses",
                     "isArray": true,
@@ -1016,6 +997,20 @@ export const schema = {
                     "name": "userID",
                     "isArray": false,
                     "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "contactEmail": {
+                    "name": "contactEmail",
+                    "isArray": false,
+                    "type": "AWSEmail",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "contactPhone": {
+                    "name": "contactPhone",
+                    "isArray": false,
+                    "type": "AWSPhone",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1184,6 +1179,13 @@ export const schema = {
                     "name": "postalCode",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isDefault": {
+                    "name": "isDefault",
+                    "isArray": false,
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -1764,5 +1766,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "b42653e04ef70da0bf76f2772f680c1e"
+    "version": "edc7070e1db6211422c00c41e56a1b2d"
 };

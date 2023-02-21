@@ -85,11 +85,13 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     });
   };
 
-  const handleSavedAddressChange = (e) => {
+  const handleSavedAddressChange = (e, saResponse = null) => {
+    // console.log(saResponse);
     if (e.target.value !== '') {
       const index = parseInt(e.target.value) - 1;
-      const address = userShippingAddresses[index];
+      const address = saResponse ? saResponse : userShippingAddresses[index];
       setShippingAddress({
+        id: index,
         addressLine1: address.addressLine1,
         addressLine2: address.addressLine2,
         city: address.city,
@@ -104,6 +106,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       setSaveAddressChecked(false);
     } else {
       setShippingAddress({
+        id: null,
         addressLine1: '',
         addressLine2: '',
         city: '',
@@ -116,6 +119,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       setSelectedCountry(null);
       setSaveAddressCheckDisabled(false);
     }
+    setExpanded('panel2');
   };
 
   const handleFormSubmit = async (event) => {
@@ -254,11 +258,23 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   // get saved addresses
   useEffect(() => {
     const handleGetUserAddresses = async () => {
-      const userShippingAddresses = await GetUserShippingAddresses(userDetails);
-      setUserShippingAddresses(userShippingAddresses);
+      const userShippingAddressesResponse = await GetUserShippingAddresses(
+        userDetails
+      );
+      setUserShippingAddresses(userShippingAddressesResponse);
+      if (userShippingAddressesResponse.length > 0) {
+        const e = {
+          target: {
+            value: '1. ' + userShippingAddressesResponse[0].addressLine1,
+          },
+        };
+        handleSavedAddressChange(e, userShippingAddressesResponse[0]);
+      }
     };
-    handleGetUserAddresses();
-  }, []);
+    if (countries) {
+      handleGetUserAddresses();
+    }
+  }, [countries]);
   // fill quantities with part count per company
   useEffect(() => {
     const tempQuantities = [];
@@ -391,6 +407,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       onChange: handleSavedAddressChange,
       placeholder: 'New Address',
       style: { width: '100%' },
+      value: `${shippingAddress.id + 1}. ` + shippingAddress.addressLine1,
     },
     Country: {
       options: countries ? countries.map((c) => c.countryName) : null,
@@ -480,7 +497,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
           },
         }}
         createQuoteDropdown={
-          <ScrollView height={740}>
+          <ScrollView height={740} padding={8} paddingTop={20}>
             <Accordion
               expanded={expanded === 'panel1'}
               onChange={handlePanelChange('panel1')}
@@ -593,6 +610,9 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
                 id='panel1a-header'
               >
                 <Typography>Address</Typography>
+                <Typography sx={{ color: 'text.secondary' }}>
+                  {shippingAddress.addressLine1}
+                </Typography>
               </AccordionSummary>
               <RfqCustomerAddress
                 overrides={addressOverrides}

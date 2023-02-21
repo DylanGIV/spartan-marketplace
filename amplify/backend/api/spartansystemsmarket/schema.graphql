@@ -17,18 +17,12 @@ type Rfq @model @auth(rules: [{allow: public}]) {
   uom: String
   urgency: String
   discount: Float
-  attr1: String
-  attr2: String
-  attr3: String
   lineTotal: Float
   subtotal: Float
   salesTax: Float
   total: Float
   internalComments: String
   emailComments: String
-  attr4: String
-  attr5: String
-  attr6: String
   addressLine1: String
   addressLine2: String
   city: String
@@ -45,6 +39,8 @@ type Rfq @model @auth(rules: [{allow: public}]) {
 type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
   id: ID!
   userID: ID
+  contactEmail: AWSEmail
+  contactPhone: AWSPhone
   companyID: ID! @index(name: "byCompany")
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "UserDetailsBillingAddress")
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "UserDetailsShippingAddress")
@@ -67,6 +63,7 @@ type ShippingAddress @model @auth(rules: [{allow: public}]) {
   city: String
   regi: String
   postalCode: String
+  isDefault: Boolean
   countryID: ID! @index(name: "byCountry")
   UserShippingAddresses: [UserDetails] @manyToMany(relationName: "UserDetailsShippingAddress")
   CompanyShippingAddresses: [Company] @manyToMany(relationName: "CompanyShippingAddress")
@@ -81,6 +78,7 @@ type BillingAddress @model @auth(rules: [{allow: public}]) {
   city: String
   region: String
   postalCode: String
+  isDefault: Boolean
   CompanyBillingAddresses: [Company] @manyToMany(relationName: "CompanyBillingAddress")
   countryID: ID! @index(name: "byCountry")
   UserBillingAddresses: [UserDetails] @manyToMany(relationName: "UserDetailsBillingAddress")
@@ -97,6 +95,7 @@ type Company @model @auth(rules: [{allow: public}]) {
   CompanyMembers: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
   CompanyOwner: UserDetails @hasOne
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "CompanyShippingAddress")
+  countryID: ID! @index(name: "byCountry")
   profilePictureUrl: String
   fax: String
   companyDescription: String
