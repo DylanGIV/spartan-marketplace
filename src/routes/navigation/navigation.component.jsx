@@ -261,8 +261,9 @@ const Navigation = () => {
           // width: isSideBarCollapsed ? 84 : 245,
           transition: 'width 0.2s ease-in-out',
           border: '1 solid black',
+          zIndex: 11,
         }}
-        className='sub-heading'
+        // className='sub-heading'
       >
         <SideBar
           height='100%'
@@ -307,6 +308,7 @@ const Navigation = () => {
           width: '100%',
           justifyContent: 'center',
           minWidth: 1500,
+          zIndex: 10,
         }}
       >
         <Outlet />

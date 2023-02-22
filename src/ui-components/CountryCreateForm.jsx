@@ -24,17 +24,21 @@ export default function CountryCreateForm(props) {
   } = props;
   const initialValues = {
     countryName: "",
+    code: "",
   };
   const [countryName, setCountryName] = React.useState(
     initialValues.countryName
   );
+  const [code, setCode] = React.useState(initialValues.code);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setCountryName(initialValues.countryName);
+    setCode(initialValues.code);
     setErrors({});
   };
   const validations = {
     countryName: [],
+    code: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -62,6 +66,7 @@ export default function CountryCreateForm(props) {
         event.preventDefault();
         let modelFields = {
           countryName,
+          code,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -117,6 +122,7 @@ export default function CountryCreateForm(props) {
           if (onChange) {
             const modelFields = {
               countryName: value,
+              code,
             };
             const result = onChange(modelFields);
             value = result?.countryName ?? value;
@@ -130,6 +136,31 @@ export default function CountryCreateForm(props) {
         errorMessage={errors.countryName?.errorMessage}
         hasError={errors.countryName?.hasError}
         {...getOverrideProps(overrides, "countryName")}
+      ></TextField>
+      <TextField
+        label="Code"
+        isRequired={false}
+        isReadOnly={false}
+        value={code}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              countryName,
+              code: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.code ?? value;
+          }
+          if (errors.code?.hasError) {
+            runValidationTasks("code", value);
+          }
+          setCode(value);
+        }}
+        onBlur={() => runValidationTasks("code", code)}
+        errorMessage={errors.code?.errorMessage}
+        hasError={errors.code?.hasError}
+        {...getOverrideProps(overrides, "code")}
       ></TextField>
       <Flex
         justifyContent="space-between"

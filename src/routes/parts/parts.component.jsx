@@ -53,6 +53,8 @@ const Parts = (props) => {
   const [isHovering, setIsHovering] = useState(null);
   const { company } = useContext(UserContext);
 
+  // console.log(selectedCountry);
+
   const handleMouseEnter = (id) => {
     setIsHovering(id);
   };
@@ -138,6 +140,7 @@ const Parts = (props) => {
     },
     CountrySelect: {
       options: countries.map((c) => c.countryName),
+      value: selectedCountry ? selectedCountry.countryName : '',
       onChange: (e) =>
         setSelectedCountry(
           e.target.value !== ''
@@ -246,6 +249,14 @@ const Parts = (props) => {
       if (companies) {
         for (let i = 0; i < companies.length; i++) {
           let parts = null;
+          if (selectedCountry) {
+            if (
+              companies[i].countryID.toLowerCase() !==
+              selectedCountry.code.toLowerCase()
+            ) {
+              continue;
+            }
+          }
           try {
             if (partSearch) {
               parts = await TestFunction(companies[i].id, partSearch);
@@ -297,7 +308,6 @@ const Parts = (props) => {
       {partSearch ? (
         <div className='parts-list-container'>
           <PartsHeader
-            width={'100%'}
             overrides={{
               CreateRFQ: {
                 disabled: !allowRFQ,
@@ -305,7 +315,7 @@ const Parts = (props) => {
               },
             }}
           />
-          <PartKey marginBottom={10} width='100%' />
+          <PartKey marginBottom={10} width={1500} />
           {data.length ? (
             data.map((d) => {
               return (
@@ -319,6 +329,18 @@ const Parts = (props) => {
                 >
                   <PartsListCompanyDetails
                     company={d.company}
+                    overrides={{
+                      image36562867: {
+                        // backgroundImage: `url(https://countryflagsapi.com/png/ae)`,
+                        src: `https://countryflagsapi.com/svg/${d.company.countryID}`,
+                        crossOrigin: 'true',
+                        width: '40px',
+                        alt: d.company.countryID,
+                      },
+                      image36562868: {
+                        width: d.company.profilePictureUrl === null ? 0 : 30,
+                      },
+                    }}
                     frame437={
                       <div
                         style={{

@@ -119,7 +119,7 @@ type EagerCompany = {
   readonly CompanyMembers?: (UserDetails | null)[] | null;
   readonly CompanyOwner?: UserDetails | null;
   readonly ShippingAddresses?: (CompanyShippingAddress | null)[] | null;
-  readonly countryID: string;
+  readonly countryID?: string | null;
   readonly profilePictureUrl?: string | null;
   readonly fax?: string | null;
   readonly companyDescription?: string | null;
@@ -145,7 +145,7 @@ type LazyCompany = {
   readonly CompanyMembers: AsyncCollection<UserDetails>;
   readonly CompanyOwner: AsyncItem<UserDetails | undefined>;
   readonly ShippingAddresses: AsyncCollection<CompanyShippingAddress>;
-  readonly countryID: string;
+  readonly countryID?: string | null;
   readonly profilePictureUrl?: string | null;
   readonly fax?: string | null;
   readonly companyDescription?: string | null;
@@ -395,6 +395,7 @@ type EagerCountry = {
   };
   readonly id: string;
   readonly countryName?: string | null;
+  readonly code?: string | null;
   readonly BillingAddresses?: (BillingAddress | null)[] | null;
   readonly ShippingAddresses?: (ShippingAddress | null)[] | null;
   readonly createdAt?: string | null;
@@ -408,6 +409,7 @@ type LazyCountry = {
   };
   readonly id: string;
   readonly countryName?: string | null;
+  readonly code?: string | null;
   readonly BillingAddresses: AsyncCollection<BillingAddress>;
   readonly ShippingAddresses: AsyncCollection<ShippingAddress>;
   readonly createdAt?: string | null;

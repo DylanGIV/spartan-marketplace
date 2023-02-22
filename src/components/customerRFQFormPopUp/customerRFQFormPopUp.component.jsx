@@ -3,6 +3,7 @@ import {
   ScrollView,
   Text,
   useAuthenticator,
+  useTheme,
 } from '@aws-amplify/ui-react';
 import { Accordion, AccordionSummary, Typography } from '@mui/material';
 import { DataStore } from 'aws-amplify';
@@ -41,6 +42,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const [expanded, setExpanded] = useState(false);
   const [quantities, setQuantities] = useState([[]]);
   const [additionalComments, setAdditionalComments] = useState([]);
+  const { tokens } = useTheme();
 
   const [customerDetails, setCustomerDetails] = useState({
     contactEmail: userDetails.user.attributes.email,
@@ -296,22 +298,22 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   }, []);
   const companyDetailsOverrides = {
     CompanyName: {
-      value:
+      placeholder:
         dataRFQ.type === 'multi'
           ? dataRFQ.rfqs[rfqIndex].company.companyName
           : dataRFQ.company.companyName,
       disabled: true,
     },
     CompanyContactEmail: {
-      value:
+      placeholder:
         dataRFQ.type === 'multi'
           ? dataRFQ.rfqs[rfqIndex].company.contactEmail
           : dataRFQ.company.companyName,
       disabled: true,
     },
-    QuotationNumber: { value: quotationNumber[rfqIndex], disabled: true },
+    QuotationNumber: { placeholder: quotationNumber[rfqIndex], disabled: true },
     QuotationDate: {
-      value:
+      placeholder:
         parseInt(date.getMonth()) +
         1 +
         '-' +
@@ -321,7 +323,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       disabled: true,
     },
     PartNumber: {
-      value:
+      placeholder:
         dataRFQ.type === 'multi'
           ? dataRFQ.rfqs.map((r) => {
               return r.parts.reduce(
@@ -338,7 +340,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       disabled: true,
     },
     AlternatePartNumber: {
-      value:
+      placeholder:
         dataRFQ.type === 'multi'
           ? dataRFQ.rfqs.map((r) => {
               return r.parts.reduce(
@@ -356,7 +358,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       placeholder: 'N/A',
     },
     Condition: {
-      value:
+      placeholder:
         dataRFQ.type === 'multi'
           ? dataRFQ.rfqs.map((r) => {
               return r.parts.reduce(
@@ -373,7 +375,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       disabled: true,
     },
     Description: {
-      value:
+      placeholder:
         dataRFQ.type === 'multi'
           ? dataRFQ.rfqs.map((r) => {
               return r.parts.reduce(
@@ -390,13 +392,6 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
       disabled: true,
     },
   };
-  // QuantityRequested: {
-  //   name: 'quantity',
-  //   value: customerDetails.quantity,
-  //   onStepChange: (value) => {
-  //     setCustomerDetails({ ...customerDetails, quantity: value });
-  //   },
-  // },
 
   const addressOverrides = {
     SavedAddresses: {
@@ -468,15 +463,20 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   };
 
   return (
-    <div style={{ width: 590 }}>
+    <div
+      style={{
+        width: 590,
+        position: 'absolute',
+        left: '50%',
+        top: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+    >
       <CustomerRFQFormContainer
         as='form'
         width={590}
-        left='62vh'
-        top={'10vh'}
         overrides={{
           AdditionalComments: {
-            name: 'additionalComments',
             value: additionalComments[rfqIndex],
             onChange: (event) => {
               const newArray = Array.from(additionalComments);
@@ -497,14 +497,14 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
           },
         }}
         createQuoteDropdown={
-          <ScrollView height={740} padding={8} paddingTop={20}>
+          <ScrollView height={740} padding={8} marginTop={20}>
             <Accordion
               expanded={expanded === 'panel1'}
               onChange={handlePanelChange('panel1')}
             >
               <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                 <Typography>Company Details</Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
+                <Typography sx={{ color: 'text.secondary', marginLeft: 20 }}>
                   {dataRFQ.rfqs[rfqIndex].company.companyName}
                 </Typography>
               </AccordionSummary>
@@ -610,7 +610,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
                 id='panel1a-header'
               >
                 <Typography>Address</Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
+                <Typography sx={{ color: 'text.secondary', marginLeft: 28 }}>
                   {shippingAddress.addressLine1}
                 </Typography>
               </AccordionSummary>

@@ -61,7 +61,7 @@ export default function CompanyCreateForm(props) {
     companyName: [],
     phone: [{ type: "Phone" }],
     contactEmail: [{ type: "Email" }],
-    countryID: [{ type: "Required" }],
+    countryID: [],
     profilePictureUrl: [],
     fax: [],
     companyDescription: [],
@@ -236,7 +236,7 @@ export default function CompanyCreateForm(props) {
       ></TextField>
       <TextField
         label="Country id"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         value={countryID}
         onChange={(e) => {

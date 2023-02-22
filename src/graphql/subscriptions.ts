@@ -646,6 +646,7 @@ export const onCreateCountry = /* GraphQL */ `
     onCreateCountry(filter: $filter) {
       id
       countryName
+      code
       BillingAddresses {
         items {
           id
@@ -701,6 +702,7 @@ export const onUpdateCountry = /* GraphQL */ `
     onUpdateCountry(filter: $filter) {
       id
       countryName
+      code
       BillingAddresses {
         items {
           id
@@ -756,6 +758,7 @@ export const onDeleteCountry = /* GraphQL */ `
     onDeleteCountry(filter: $filter) {
       id
       countryName
+      code
       BillingAddresses {
         items {
           id

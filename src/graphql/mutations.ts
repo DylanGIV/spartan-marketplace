@@ -658,6 +658,7 @@ export const createCountry = /* GraphQL */ `
     createCountry(input: $input, condition: $condition) {
       id
       countryName
+      code
       BillingAddresses {
         items {
           id
@@ -716,6 +717,7 @@ export const updateCountry = /* GraphQL */ `
     updateCountry(input: $input, condition: $condition) {
       id
       countryName
+      code
       BillingAddresses {
         items {
           id
@@ -774,6 +776,7 @@ export const deleteCountry = /* GraphQL */ `
     deleteCountry(input: $input, condition: $condition) {
       id
       countryName
+      code
       BillingAddresses {
         items {
           id

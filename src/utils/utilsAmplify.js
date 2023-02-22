@@ -1,5 +1,11 @@
 import { Alert } from '@mui/material';
-import { Auth, Predicates, SortDirection } from 'aws-amplify';
+import {
+  API,
+  Auth,
+  graphqlOperation,
+  Predicates,
+  SortDirection,
+} from 'aws-amplify';
 import {
   Company,
   Country,
@@ -16,6 +22,9 @@ import { InventoryContext } from '../context/inventory.context';
 import countryList from '../countryList.json';
 import React from 'react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+// import { ItemsByCompanyIDQuery } from '../API';
+// import {} from '../API.ts';
+// import * as queries from '../graphql/queries';
 
 export const SignOutAuth = async () => {
   return await Auth.signOut();
@@ -98,6 +107,7 @@ export const GetPartsByCompany = async (companyID) => {
   const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
   return parts;
 };
+
 export const GetPartsByCompanySubscribe = async (
   company,
   setData,
@@ -381,9 +391,18 @@ export const PopulateCountries = async () => {
     const response = await DataStore.save(
       new Country({
         countryName: c.name,
+        code: c.code,
       })
     );
     console.log(response);
+    // const original = await DataStore.query(Country, (p) =>
+    //   p.countryName.eq(c.name)
+    // );
+    // const response = await DataStore.save(
+    //   Country.copyOf(original[0], (item) => {
+    //     item.code = c.code;
+    //   })
+    // );
   });
 };
 

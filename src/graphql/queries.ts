@@ -511,6 +511,7 @@ export const getCountry = /* GraphQL */ `
     getCountry(id: $id) {
       id
       countryName
+      code
       BillingAddresses {
         items {
           id
@@ -571,6 +572,7 @@ export const listCountries = /* GraphQL */ `
       items {
         id
         countryName
+        code
         BillingAddresses {
           nextToken
           startedAt
@@ -606,6 +608,7 @@ export const syncCountries = /* GraphQL */ `
       items {
         id
         countryName
+        code
         BillingAddresses {
           nextToken
           startedAt

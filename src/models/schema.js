@@ -456,7 +456,7 @@ export const schema = {
                     "name": "countryID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "profilePictureUrl": {
@@ -1296,6 +1296,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "code": {
+                    "name": "code",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "BillingAddresses": {
                     "name": "BillingAddresses",
                     "isArray": true,
@@ -1766,5 +1773,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "edc7070e1db6211422c00c41e56a1b2d"
+    "version": "19df0916438a99c276f89dd50093d377"
 };
