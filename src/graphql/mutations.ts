@@ -65,6 +65,8 @@ export const createRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -123,6 +125,8 @@ export const createRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -230,6 +234,8 @@ export const updateRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -288,6 +294,8 @@ export const updateRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -395,6 +403,8 @@ export const deleteRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -453,6 +463,8 @@ export const deleteRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -505,6 +517,8 @@ export const createUserDetails = /* GraphQL */ `
     createUserDetails(input: $input, condition: $condition) {
       id
       userID
+      firstName
+      lastName
       contactEmail
       contactPhone
       companyID
@@ -556,6 +570,8 @@ export const updateUserDetails = /* GraphQL */ `
     updateUserDetails(input: $input, condition: $condition) {
       id
       userID
+      firstName
+      lastName
       contactEmail
       contactPhone
       companyID
@@ -607,6 +623,8 @@ export const deleteUserDetails = /* GraphQL */ `
     deleteUserDetails(input: $input, condition: $condition) {
       id
       userID
+      firstName
+      lastName
       contactEmail
       contactPhone
       companyID
@@ -1216,6 +1234,8 @@ export const createCompany = /* GraphQL */ `
         items {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1233,6 +1253,8 @@ export const createCompany = /* GraphQL */ `
       CompanyOwner {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -1442,6 +1464,8 @@ export const updateCompany = /* GraphQL */ `
         items {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1459,6 +1483,8 @@ export const updateCompany = /* GraphQL */ `
       CompanyOwner {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -1668,6 +1694,8 @@ export const deleteCompany = /* GraphQL */ `
         items {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1685,6 +1713,8 @@ export const deleteCompany = /* GraphQL */ `
       CompanyOwner {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -1982,6 +2012,8 @@ export const createUserDetailsBillingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -2047,6 +2079,8 @@ export const updateUserDetailsBillingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -2112,6 +2146,8 @@ export const deleteUserDetailsBillingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -2177,6 +2213,8 @@ export const createUserDetailsShippingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -2242,6 +2280,8 @@ export const updateUserDetailsShippingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -2307,6 +2347,8 @@ export const deleteUserDetailsShippingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -2418,6 +2460,8 @@ export const createCompanyShippingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2518,6 +2562,8 @@ export const updateCompanyShippingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2618,6 +2664,8 @@ export const deleteCompanyShippingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2718,6 +2766,8 @@ export const createCompanyBillingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2818,6 +2868,8 @@ export const updateCompanyBillingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2918,6 +2970,8 @@ export const deleteCompanyBillingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID

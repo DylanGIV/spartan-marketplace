@@ -12,7 +12,7 @@ import {
   GetCountries,
   GetPartsByCompany,
 } from '../../utils/utilsAmplify';
-import { Auth, DataStore } from 'aws-amplify';
+import { API, Auth, DataStore, graphqlOperation } from 'aws-amplify';
 
 import './parts.styles.scss';
 import { Modal } from '@mui/material';
@@ -23,13 +23,18 @@ import {
   Button,
   useAuthenticator,
   CheckboxField,
+  ScrollView,
 } from '@aws-amplify/ui-react';
 import CustomerRFQFormPopUp from '../../components/customerRFQFormPopUp/customerRFQFormPopUp.component';
 import { useLocation } from 'react-router';
 import { UserContext } from '../../context/user.context';
+// import { itemsByCompanyID } from '../../graphql/queries';
+import * as queries from '../../graphql/queries.ts';
 
 const Parts = (props) => {
   const { state } = useLocation();
+
+  // const { itemsByCompanyID } = queries;
 
   const [data, setData] = useState([]);
   const [partSearchTextField, setPartSearchTextField] = useState('');
@@ -194,28 +199,48 @@ const Parts = (props) => {
   };
 
   const TestFunction = async (companyID, search) => {
-    let parts = [];
-    const queryParts = await DataStore.query(Item, (p) =>
-      p.companyID.eq(companyID)
+    // let parts = [];
+    const normalizedSearch = search.toUpperCase();
+
+    const filter = {
+      or: [
+        { partNumber: { contains: normalizedSearch } },
+        { altPartNumber: { contains: normalizedSearch } },
+        { description: { contains: normalizedSearch } },
+        { nsn: { contains: normalizedSearch } },
+      ],
+    };
+
+    const queryParts = await DataStore.query(
+      Item,
+      (p) =>
+        p.and((p) => [
+          p.companyID.eq(companyID),
+          p.or((p) => [
+            p.altPartNumber.contains(normalizedSearch),
+            p.nsn.contains(normalizedSearch),
+            p.partNumber.contains(normalizedSearch),
+            p.description.contains(normalizedSearch),
+          ]),
+        ]),
+      {
+        page: 0,
+        limit: 5,
+      }
     );
 
-    queryParts.forEach((p) => {
-      if (
-        (p.altPartNumber
-          ? p.altPartNumber.toLowerCase().includes(search.toLowerCase())
-          : false) ||
-        (p.nsn ? p.nsn.toLowerCase().includes(search.toLowerCase()) : false) ||
-        (p.partNumber
-          ? p.partNumber.toLowerCase().includes(search.toLowerCase())
-          : false) ||
-        (p.description
-          ? p.description.toLowerCase().includes(search.toLowerCase())
-          : false)
-      ) {
-        parts.push({ ...p, isChecked: false });
-      }
-    });
-    return parts;
+    // const queryParts = await API.graphql(
+    //   graphqlOperation(queries.itemsByCompanyID, {
+    //     companyID: companyID,
+    //     filter: filter,
+    //     limit: 5,
+    //   })
+    // );
+
+    // console.log(queryParts.data.itemsByCompanyID.items);
+    // console.log(queryParts.data.itemsByCompanyID.nextToken);
+    // return queryParts.data.itemsByCompanyID.items;
+    return queryParts;
   };
 
   useEffect(() => {
@@ -229,6 +254,8 @@ const Parts = (props) => {
         companyID: userDetails[0].companyID,
         isCompanyOwner: userDetails[0].isCompanyOwner,
         id: userDetails[0].id,
+        contactEmail: userDetails[0].contactEmail,
+        contactPhone: userDetails[0].contactPhone,
       });
       const countries = await GetCountries();
       setCountries(countries);
@@ -264,8 +291,8 @@ const Parts = (props) => {
               parts = await GetPartsByCompany(companies[i].id);
             }
           } catch (error) {
-            alert('There was an error retrieving parts');
             console.log(error);
+            alert('There was an error retrieving parts');
           }
           if (parts && parts.length > 0) {
             tempData.push({
@@ -277,12 +304,19 @@ const Parts = (props) => {
         setData(tempData);
       }
     };
-    queryData();
+    if (partSearch !== '') queryData();
   }, [partSearch]);
 
   return (
     <div>
-      <div className='search-bar-container'>
+      <div
+        className='search-bar-container'
+        style={{
+          display: 'flex',
+          position: 'fixed',
+          zIndex: 1,
+        }}
+      >
         <SearchField
           label='Search'
           value={partSearchTextField}
@@ -331,7 +365,6 @@ const Parts = (props) => {
                     company={d.company}
                     overrides={{
                       image36562867: {
-                        // backgroundImage: `url(https://countryflagsapi.com/png/ae)`,
                         src: `https://countryflagsapi.com/svg/${d.company.countryID}`,
                         crossOrigin: 'true',
                         width: '40px',
@@ -339,6 +372,24 @@ const Parts = (props) => {
                       },
                       image36562868: {
                         width: d.company.profilePictureUrl === null ? 0 : 30,
+                      },
+                      'Fax:': {
+                        children: 'Fax:\t\t' + d.company.fax,
+                      },
+                      'Phone:': {
+                        children: 'Phone:\t' + d.company.phone,
+                        style: { marginLeft: 3.8 },
+                      },
+                      Extra: {
+                        children: '',
+                      },
+                      Distance: {
+                        children: '',
+                      },
+                      'Description:': {
+                        children: d.company.companyDescription,
+                        fontSize: 13,
+                        paddingLeft: 100,
                       },
                     }}
                     frame437={
@@ -427,6 +478,14 @@ const Parts = (props) => {
                           <div>
                             <PartsListDetails
                               item={item}
+                              overrides={{
+                                Control: {
+                                  children:
+                                    d.company.id === company.id
+                                      ? item.control
+                                      : '-',
+                                },
+                              }}
                               onClick={() =>
                                 d.company.id !== company.id
                                   ? handleCreateRFQClick(d.company, item)

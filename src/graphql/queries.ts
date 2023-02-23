@@ -62,6 +62,8 @@ export const getRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -120,6 +122,8 @@ export const getRfq = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -347,6 +351,8 @@ export const getUserDetails = /* GraphQL */ `
     getUserDetails(id: $id) {
       id
       userID
+      firstName
+      lastName
       contactEmail
       contactPhone
       companyID
@@ -400,6 +406,8 @@ export const listUserDetails = /* GraphQL */ `
       items {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -440,6 +448,8 @@ export const syncUserDetails = /* GraphQL */ `
       items {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -482,6 +492,8 @@ export const userDetailsByCompanyID = /* GraphQL */ `
       items {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -1054,6 +1066,8 @@ export const getCompany = /* GraphQL */ `
         items {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1071,6 +1085,8 @@ export const getCompany = /* GraphQL */ `
       CompanyOwner {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -1240,6 +1256,8 @@ export const listCompanies = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1316,6 +1334,8 @@ export const syncCompanies = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1394,6 +1414,8 @@ export const companiesByCountryID = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1690,6 +1712,8 @@ export const getUserDetailsBillingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -1761,6 +1785,8 @@ export const listUserDetailsBillingAddresses = /* GraphQL */ `
         userDetails {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1821,6 +1847,8 @@ export const syncUserDetailsBillingAddresses = /* GraphQL */ `
         userDetails {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1883,6 +1911,8 @@ export const userDetailsBillingAddressesByUserDetailsId = /* GraphQL */ `
         userDetails {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1945,6 +1975,8 @@ export const userDetailsBillingAddressesByBillingAddressId = /* GraphQL */ `
         userDetails {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -1994,6 +2026,8 @@ export const getUserDetailsShippingAddress = /* GraphQL */ `
       userDetails {
         id
         userID
+        firstName
+        lastName
         contactEmail
         contactPhone
         companyID
@@ -2065,6 +2099,8 @@ export const listUserDetailsShippingAddresses = /* GraphQL */ `
         userDetails {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2125,6 +2161,8 @@ export const syncUserDetailsShippingAddresses = /* GraphQL */ `
         userDetails {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2187,6 +2225,8 @@ export const userDetailsShippingAddressesByUserDetailsId = /* GraphQL */ `
         userDetails {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2249,6 +2289,8 @@ export const userDetailsShippingAddressesByShippingAddressId = /* GraphQL */ `
         userDetails {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2344,6 +2386,8 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID
@@ -2687,6 +2731,8 @@ export const getCompanyBillingAddress = /* GraphQL */ `
         CompanyOwner {
           id
           userID
+          firstName
+          lastName
           contactEmail
           contactPhone
           companyID

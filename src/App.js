@@ -10,12 +10,12 @@ import { useContext, useEffect, useState } from 'react';
 import { RFQItem, UserDetails } from './models';
 import { Amplify, Hub } from 'aws-amplify';
 import { DataStore, Predicates } from '@aws-amplify/datastore';
-import CompanySelect from './routes/companySelect/companySelect.component';
 import UserAuth from './routes/auth/userAuth.component';
 import Settings from './routes/settings/settings.component';
 import { UserContext } from './context/user.context';
 import { GetCompanyByID } from './utils/utilsAmplify';
 import RFQ from './routes/rfq/rfq.component';
+import CompanyAndUserDetailsForm from './routes/companyUserDetails/companyAndUserDetailsForm.component';
 
 function App() {
   const [userDetailsExists, setUserDetailsExists] = useState(false);
@@ -28,10 +28,18 @@ function App() {
   Hub.listen('auth', async (data) => {
     if (data.payload.event === 'signOut') {
       await DataStore.clear();
-      // await DataStore.start();
     }
   });
-  // const navigate = useNavigate();
+
+  useEffect(() => {
+    const startAmplifyDataStore = async () => {
+      await DataStore.start();
+      await waitForDataStoreLoad();
+      setRetrievalComplete(true);
+    };
+    startAmplifyDataStore();
+  }, []);
+
   useEffect(() => {
     const getUser = async () => {
       DataStore.observeQuery(UserDetails).subscribe();
@@ -54,17 +62,18 @@ function App() {
       // console.log(userDetails);
     };
     getUser();
-  }, []);
+  }, [retrievalComplete]);
 
-  // useEffect(() => {
-  //   // DataStore.start();
-  // }, []);
-
-  // const hubSubscription = Hub.listen('storage', (data) => {
-  //   if (data.payload.event == 'ready') {
-  //     console.log('ready');
-  //   }
-  // });
+  const waitForDataStoreLoad = async () => {
+    await new Promise((resolve) => {
+      Hub.listen('datastore', (data) => {
+        if (data.payload.event == 'ready') {
+          console.log('ready');
+          resolve();
+        }
+      });
+    });
+  };
 
   useEffect(() => {
     const getCompany = async () => {
@@ -74,8 +83,17 @@ function App() {
       }
     };
     getCompany();
-  }, [userDetails]);
-  if (user && userDetailsExists && company) {
+  }, [userDetails, retrievalComplete]);
+
+  if (!retrievalComplete) {
+    return <div>loading...</div>;
+  } else if (
+    false &&
+    user &&
+    userDetailsExists &&
+    company &&
+    retrievalComplete
+  ) {
     return (
       <Routes>
         <Route path='/' element={<Navigation />}>
@@ -87,10 +105,8 @@ function App() {
         </Route>
       </Routes>
     );
-  } else if (!retrievalComplete && userDetailsExists) {
-    return null;
-  } else if (user) {
-    return <CompanySelect />;
+  } else if (user && retrievalComplete) {
+    return <CompanyAndUserDetailsForm />;
     // return (
     //   // <Routes>
     //   //   <Route path='/auth' element={<UserAuth />} />;

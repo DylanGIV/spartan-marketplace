@@ -145,7 +145,8 @@ const Inventory = () => {
 
   useEffect(() => {
     const asyncGetData = async () => {
-      const count = await GetPartCountByCompany(company);
+      // const count = await GetPartCountByCompany(company);
+      const count = 1;
       await GetPartsByCompanySubscribe(
         company,
         setData,
@@ -275,7 +276,7 @@ const Inventory = () => {
         <Pagination
           currentPage={currentPage}
           onChange={(newPageIndex) => setCurrentPage(newPageIndex)}
-          totalPages={Math.ceil(totalItems / itemsPerPage)}
+          // totalPages={Math.ceil(totalItems / itemsPerPage)}
           onNext={() => setCurrentPage(currentPage + 1)}
           onPrevious={() => setCurrentPage(currentPage - 1)}
         />

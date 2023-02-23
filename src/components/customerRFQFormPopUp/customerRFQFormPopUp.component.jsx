@@ -43,10 +43,9 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const [quantities, setQuantities] = useState([[]]);
   const [additionalComments, setAdditionalComments] = useState([]);
   const { tokens } = useTheme();
-
   const [customerDetails, setCustomerDetails] = useState({
     contactEmail: userDetails.user.attributes.email,
-    contactPhone: '',
+    contactPhone: userDetails.contactPhone,
     additionalComments: '',
     quantity: 1,
   });
@@ -474,7 +473,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     >
       <CustomerRFQFormContainer
         as='form'
-        width={590}
+        width={604}
         overrides={{
           AdditionalComments: {
             value: additionalComments[rfqIndex],
@@ -520,6 +519,12 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
                 id='panel1a-header'
               >
                 <Typography>Part Details</Typography>
+                <Typography sx={{ color: 'text.secondary', marginLeft: 25 }}>
+                  {dataRFQ.rfqs[rfqIndex].parts.length +
+                    (dataRFQ.rfqs[rfqIndex].parts.length === 1
+                      ? ' part'
+                      : ' parts')}
+                </Typography>
               </AccordionSummary>
               <div>
                 {dataRFQ.rfqs[rfqIndex].parts.map((p, pIndex) => (

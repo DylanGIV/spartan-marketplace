@@ -307,6 +307,8 @@ type EagerUserDetails = {
   };
   readonly id: string;
   readonly userID?: string | null;
+  readonly firstName?: string | null;
+  readonly lastName?: string | null;
   readonly contactEmail?: string | null;
   readonly contactPhone?: string | null;
   readonly companyID: string;
@@ -324,6 +326,8 @@ type LazyUserDetails = {
   };
   readonly id: string;
   readonly userID?: string | null;
+  readonly firstName?: string | null;
+  readonly lastName?: string | null;
   readonly contactEmail?: string | null;
   readonly contactPhone?: string | null;
   readonly companyID: string;

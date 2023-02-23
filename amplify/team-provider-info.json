@@ -17,6 +17,9 @@
       },
       "api": {
         "spartansystemsmarket": {}
+      },
+      "storage": {
+        "s3spartansystemsmarketplacestorage": {}
       }
     }
   }

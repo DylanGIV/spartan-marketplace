@@ -1000,6 +1000,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "firstName": {
+                    "name": "firstName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "lastName": {
+                    "name": "lastName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "contactEmail": {
                     "name": "contactEmail",
                     "isArray": false,
@@ -1773,5 +1787,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "19df0916438a99c276f89dd50093d377"
+    "version": "bb298a603749e33afd2a6652434cfe89"
 };
