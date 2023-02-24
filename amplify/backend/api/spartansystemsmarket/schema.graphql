@@ -37,8 +37,7 @@ type Rfq @model @auth(rules: [{allow: public}]) {
 }
 
 type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
-  id: ID!
-  userID: ID
+  userID: ID! @primaryKey
   firstName: String
   lastName: String
   contactEmail: AWSEmail

@@ -123,10 +123,8 @@ const Inventory = () => {
   };
   useEffect(() => {
     const queryData = async () => {
-      const userDetails = await DataStore.query(UserDetails, (p) =>
-        p.userID.eq(user.username)
-      );
-      const companyID = userDetails[0].companyID;
+      const userDetails = await DataStore.query(UserDetails, user.username);
+      const companyID = userDetails.companyID;
 
       let company = null;
       try {

@@ -24,8 +24,10 @@ import {
   AddOwnerToCompany,
   AddUserToCompany,
   CreateUserDetails,
+  DeleteAllCountries,
   GetCompanyByID,
   GetCountries,
+  PopulateCountries,
 } from '../../utils/utilsAmplify';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -46,6 +48,10 @@ import CompanyCreateDetails from '../../ui-components/CompanyCreateDetails';
 import CompanyJoinForm from '../../ui-components/CompanyJoinForm';
 import CheckIcon from '@mui/icons-material/Check';
 import { UserContext } from '../../context/user.context';
+import {
+  isPossiblePhoneNumber,
+  isValidPhoneNumber,
+} from 'libphonenumber-js/max';
 
 export default function CompanyAndUserDetailsForm() {
   const [open, setOpen] = useState(false);
@@ -75,11 +81,12 @@ export default function CompanyAndUserDetailsForm() {
   const [userFormDetails, setUserFormDetails] = useState({
     firstName: '',
     lastName: '',
-    contactEmail: '',
-    contactPhone: '',
+    contactEmail: user.attributes.email,
+    contactPhone: user.attributes.phone_number
+      ? user.attributes.phone_number
+      : '',
+    phoneCountry: 'US',
   });
-
-  console.log(selectedCountry);
 
   const { tokens } = useTheme();
 
@@ -125,6 +132,15 @@ export default function CompanyAndUserDetailsForm() {
     getCountries();
   }, []);
 
+  useEffect(() => {
+    if (countries && existingCompanies && user) {
+      setExpanded('panel1');
+    }
+  }, [countries, existingCompanies, user]);
+  // console.log(userFormDetails.contactPhone);
+  // useEffect(() => {
+  // console.log(isPossiblePhoneNumber(userFormDetails.contactPhone));
+  // }, [userFormDetails]);
   // check if user can submit
   useEffect(() => {
     if (
@@ -132,10 +148,11 @@ export default function CompanyAndUserDetailsForm() {
       userFormDetails.contactPhone &&
       userFormDetails.firstName &&
       userFormDetails.lastName &&
-      company &&
-      newCompany.name &&
-      newCompany.email &&
-      newCompany.phone
+      ((companyCreate &&
+        newCompany.name &&
+        newCompany.email &&
+        newCompany.phone) ||
+        company)
     ) {
       setCanSubmit(true);
     } else if (canSubmit) {
@@ -205,40 +222,75 @@ export default function CompanyAndUserDetailsForm() {
     }
   };
 
+  // console.log(company.id);
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     // Code to handle the submission of the new company form
-    try {
-      const response = await AddCompany(
-        newCompany.name,
-        newCompany.description,
-        newCompany.email,
-        newCompany.phone,
-        newCompany.fax,
-        newCompany.logo
-      );
-      console.log(response);
+    if (companyCreate) {
       try {
-        const userResponse = await CreateUserDetails(response.id, true, user);
+        const userResponse = await CreateUserDetails(
+          // response.id,
+          true,
+          user,
+          userFormDetails
+        );
         console.log(userResponse);
         try {
-          const companyResponse = await AddOwnerToCompany(
-            userResponse,
-            response.id
+          const response = await AddCompany(
+            newCompany.name,
+            newCompany.description,
+            newCompany.email,
+            newCompany.phone,
+            newCompany.fax,
+            newCompany.logo,
+            selectedCountry
           );
-          console.log(companyResponse);
-          navigate('/inventory');
+          console.log(response);
+          try {
+            const companyResponse = await AddOwnerToCompany(
+              userResponse,
+              response.id
+            );
+            console.log(companyResponse);
+            // navigate('/inventory');
+          } catch (error) {
+            console.log(error);
+          }
         } catch (error) {
           console.log(error);
+          alert('Failed to create company', error);
         }
       } catch (error) {
-        alert('Failed to Add user to company', error);
+        console.log(error);
+        alert('Failed to create user', error);
       }
-    } catch (error) {
-      console.log(error);
-      alert('Failed to create company', error);
+    } else {
+      try {
+        const userResponse = await CreateUserDetails(
+          company.id,
+          false,
+          user,
+          userFormDetails
+        );
+        console.log(userResponse);
+        try {
+          const companyResponse = await AddUserToCompany(
+            userResponse,
+            company.id
+          );
+          console.log(companyResponse);
+          // navigate('/inventory');
+        } catch (error) {
+          console.log(error);
+          alert('Could not join company');
+        }
+      } catch (error) {
+        console.log('Could not create user');
+      }
     }
   };
+
   const handleLogoClear = (event) => {
     event.preventDefault();
     if (hover) {
@@ -248,14 +300,17 @@ export default function CompanyAndUserDetailsForm() {
   };
 
   return (
-    <div style={{ marginTop: 20 }}>
+    <div style={{ marginTop: 20, height: '100%', width: '100%' }}>
       <UserAndCompanyFormContainer
+        left='50%'
+        transform='translate(-50%, 0%)'
         width={390}
         backgroundColor={tokens.colors.background.secondary}
         borderRadius={15}
         overrides={{
           SubmitButton: {
             isDisabled: !canSubmit,
+            onClick: handleSubmit,
           },
         }}
         // padding={10}
@@ -297,11 +352,11 @@ export default function CompanyAndUserDetailsForm() {
                         autoFocus: true,
                       }}
                       country={'us'}
-                      value={userFormDetails.phone}
+                      value={userFormDetails.contactPhone}
                       onChange={(value) => {
                         setUserFormDetails({
                           ...userFormDetails,
-                          phone: value,
+                          contactPhone: value,
                         });
                       }}
                       countryCodeEditable={false}

@@ -7,7 +7,7 @@ import '@aws-amplify/ui-react/styles.css';
 import Parts from './routes/parts/parts.component';
 import Inventory from './routes/inventory/inventory.component';
 import { useContext, useEffect, useState } from 'react';
-import { RFQItem, UserDetails } from './models';
+import { Company, RFQItem, UserDetails } from './models';
 import { Amplify, Hub } from 'aws-amplify';
 import { DataStore, Predicates } from '@aws-amplify/datastore';
 import UserAuth from './routes/auth/userAuth.component';
@@ -42,7 +42,10 @@ function App() {
 
   useEffect(() => {
     const getUser = async () => {
-      DataStore.observeQuery(UserDetails).subscribe();
+      const response = await DataStore.query(Company);
+
+      console.log(response);
+      // DataStore.observeQuery(UserDetails).subscribe();
       const subscription = DataStore.observeQuery(UserDetails, (p) =>
         p.userID.eq(user.username)
       ).subscribe((snapshot) => {
@@ -87,13 +90,7 @@ function App() {
 
   if (!retrievalComplete) {
     return <div>loading...</div>;
-  } else if (
-    false &&
-    user &&
-    userDetailsExists &&
-    company &&
-    retrievalComplete
-  ) {
+  } else if (user && userDetailsExists && company && retrievalComplete) {
     return (
       <Routes>
         <Route path='/' element={<Navigation />}>

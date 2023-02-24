@@ -21,10 +21,8 @@ const Navigation = () => {
 
   useEffect(() => {
     const getCompany = async () => {
-      const userDetails = await DataStore.query(UserDetails, (p) =>
-        p.userID.eq(user.username)
-      );
-      const companyID = userDetails[0].companyID;
+      const userDetails = await DataStore.query(UserDetails, user.username);
+      const companyID = userDetails.companyID;
       const company = await GetCompanyByID(companyID);
       setCompany(company);
     };

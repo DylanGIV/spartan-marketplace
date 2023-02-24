@@ -1,4 +1,4 @@
-import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
+import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier, CustomIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
 
@@ -127,7 +127,7 @@ type EagerCompany = {
   readonly receivedRfqs?: (Rfq | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly companyCompanyOwnerId?: string | null;
+  readonly companyCompanyOwnerUserID?: string | null;
 }
 
 type LazyCompany = {
@@ -153,7 +153,7 @@ type LazyCompany = {
   readonly receivedRfqs: AsyncCollection<Rfq>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  readonly companyCompanyOwnerId?: string | null;
+  readonly companyCompanyOwnerUserID?: string | null;
 }
 
 export declare type Company = LazyLoading extends LazyLoadingDisabled ? EagerCompany : LazyCompany
@@ -302,11 +302,10 @@ export declare const BillingAddress: (new (init: ModelInit<BillingAddress>) => B
 
 type EagerUserDetails = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserDetails, 'id'>;
+    identifier: CustomIdentifier<UserDetails, 'userID'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
-  readonly userID?: string | null;
+  readonly userID: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
   readonly contactEmail?: string | null;
@@ -321,11 +320,10 @@ type EagerUserDetails = {
 
 type LazyUserDetails = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<UserDetails, 'id'>;
+    identifier: CustomIdentifier<UserDetails, 'userID'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
-  readonly id: string;
-  readonly userID?: string | null;
+  readonly userID: string;
   readonly firstName?: string | null;
   readonly lastName?: string | null;
   readonly contactEmail?: string | null;
@@ -501,7 +499,7 @@ type EagerUserDetailsBillingAddress = {
   };
   readonly id: string;
   readonly billingAddressId?: string | null;
-  readonly userDetailsId?: string | null;
+  readonly userDetailsUserID?: string | null;
   readonly billingAddress: BillingAddress;
   readonly userDetails: UserDetails;
   readonly createdAt?: string | null;
@@ -515,7 +513,7 @@ type LazyUserDetailsBillingAddress = {
   };
   readonly id: string;
   readonly billingAddressId?: string | null;
-  readonly userDetailsId?: string | null;
+  readonly userDetailsUserID?: string | null;
   readonly billingAddress: AsyncItem<BillingAddress>;
   readonly userDetails: AsyncItem<UserDetails>;
   readonly createdAt?: string | null;
@@ -534,7 +532,7 @@ type EagerUserDetailsShippingAddress = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userDetailsId?: string | null;
+  readonly userDetailsUserID?: string | null;
   readonly shippingAddressId?: string | null;
   readonly userDetails: UserDetails;
   readonly shippingAddress: ShippingAddress;
@@ -548,7 +546,7 @@ type LazyUserDetailsShippingAddress = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly userDetailsId?: string | null;
+  readonly userDetailsUserID?: string | null;
   readonly shippingAddressId?: string | null;
   readonly userDetails: AsyncItem<UserDetails>;
   readonly shippingAddress: AsyncItem<ShippingAddress>;

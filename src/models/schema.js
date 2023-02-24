@@ -429,10 +429,10 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_ONE",
                         "associatedWith": [
-                            "id"
+                            "userID"
                         ],
                         "targetNames": [
-                            "companyCompanyOwnerId"
+                            "companyCompanyOwnerUserID"
                         ]
                     }
                 },
@@ -528,8 +528,8 @@ export const schema = {
                     "attributes": [],
                     "isReadOnly": true
                 },
-                "companyCompanyOwnerId": {
-                    "name": "companyCompanyOwnerId",
+                "companyCompanyOwnerUserID": {
+                    "name": "companyCompanyOwnerUserID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
@@ -986,18 +986,11 @@ export const schema = {
         "UserDetails": {
             "name": "UserDetails",
             "fields": {
-                "id": {
-                    "name": "id",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "userID": {
                     "name": "userID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "firstName": {
@@ -1097,6 +1090,14 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "userID"
+                        ]
+                    }
                 },
                 {
                     "type": "key",
@@ -1604,8 +1605,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "userDetailsId": {
-                    "name": "userDetailsId",
+                "userDetailsUserID": {
+                    "name": "userDetailsUserID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
@@ -1637,7 +1638,7 @@ export const schema = {
                     "association": {
                         "connectionType": "BELONGS_TO",
                         "targetNames": [
-                            "userDetailsId"
+                            "userDetailsUserID"
                         ]
                     }
                 },
@@ -1679,7 +1680,7 @@ export const schema = {
                     "properties": {
                         "name": "byUserDetails",
                         "fields": [
-                            "userDetailsId"
+                            "userDetailsUserID"
                         ]
                     }
                 }
@@ -1695,8 +1696,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "userDetailsId": {
-                    "name": "userDetailsId",
+                "userDetailsUserID": {
+                    "name": "userDetailsUserID",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
@@ -1720,7 +1721,7 @@ export const schema = {
                     "association": {
                         "connectionType": "BELONGS_TO",
                         "targetNames": [
-                            "userDetailsId"
+                            "userDetailsUserID"
                         ]
                     }
                 },
@@ -1768,7 +1769,7 @@ export const schema = {
                     "properties": {
                         "name": "byUserDetails",
                         "fields": [
-                            "userDetailsId"
+                            "userDetailsUserID"
                         ]
                     }
                 },
@@ -1787,5 +1788,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "bb298a603749e33afd2a6652434cfe89"
+    "version": "6772d0afd65b131953085b93403f536a"
 };

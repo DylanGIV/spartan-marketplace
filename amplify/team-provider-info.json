@@ -15,11 +15,11 @@
       "auth": {
         "spartansystemsmarketplace": {}
       },
-      "api": {
-        "spartansystemsmarket": {}
-      },
       "storage": {
         "s3spartansystemsmarketplacestorage": {}
+      },
+      "api": {
+        "spartansystemsmarket": {}
       }
     }
   }

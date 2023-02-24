@@ -230,7 +230,7 @@ export type Company = {
   _version: number,
   _deleted?: boolean | null,
   _lastChangedAt: number,
-  companyCompanyOwnerId?: string | null,
+  companyCompanyOwnerUserID?: string | null,
 };
 
 export type ModelItemConnection = {
@@ -338,7 +338,7 @@ export type ModelUserDetailsBillingAddressConnection = {
 export type UserDetailsBillingAddress = {
   __typename: "UserDetailsBillingAddress",
   id: string,
-  userDetailsId: string,
+  userDetailsUserID: string,
   billingAddressId: string,
   userDetails: UserDetails,
   billingAddress: BillingAddress,
@@ -352,8 +352,7 @@ export type UserDetailsBillingAddress = {
 
 export type UserDetails = {
   __typename: "UserDetails",
-  id: string,
-  userID?: string | null,
+  userID: string,
   firstName?: string | null,
   lastName?: string | null,
   contactEmail?: string | null,
@@ -380,7 +379,7 @@ export type ModelUserDetailsShippingAddressConnection = {
 export type UserDetailsShippingAddress = {
   __typename: "UserDetailsShippingAddress",
   id: string,
-  userDetailsId: string,
+  userDetailsUserID: string,
   shippingAddressId: string,
   userDetails: UserDetails,
   shippingAddress: ShippingAddress,
@@ -492,55 +491,6 @@ export type DeleteRfqInput = {
   _version?: number | null,
 };
 
-export type CreateUserDetailsInput = {
-  id?: string | null,
-  userID?: string | null,
-  firstName?: string | null,
-  lastName?: string | null,
-  contactEmail?: string | null,
-  contactPhone?: string | null,
-  companyID: string,
-  isCompanyOwner?: boolean | null,
-  _version?: number | null,
-};
-
-export type ModelUserDetailsConditionInput = {
-  userID?: ModelIDInput | null,
-  firstName?: ModelStringInput | null,
-  lastName?: ModelStringInput | null,
-  contactEmail?: ModelStringInput | null,
-  contactPhone?: ModelStringInput | null,
-  companyID?: ModelIDInput | null,
-  isCompanyOwner?: ModelBooleanInput | null,
-  and?: Array< ModelUserDetailsConditionInput | null > | null,
-  or?: Array< ModelUserDetailsConditionInput | null > | null,
-  not?: ModelUserDetailsConditionInput | null,
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type UpdateUserDetailsInput = {
-  id: string,
-  userID?: string | null,
-  firstName?: string | null,
-  lastName?: string | null,
-  contactEmail?: string | null,
-  contactPhone?: string | null,
-  companyID?: string | null,
-  isCompanyOwner?: boolean | null,
-  _version?: number | null,
-};
-
-export type DeleteUserDetailsInput = {
-  id: string,
-  _version?: number | null,
-};
-
 export type CreateCountryInput = {
   id?: string | null,
   countryName?: string | null,
@@ -625,6 +575,13 @@ export type ModelShippingAddressConditionInput = {
   not?: ModelShippingAddressConditionInput | null,
 };
 
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
 export type UpdateShippingAddressInput = {
   id: string,
   unitNumber?: string | null,
@@ -702,7 +659,7 @@ export type CreateCompanyInput = {
   fax?: string | null,
   companyDescription?: string | null,
   _version?: number | null,
-  companyCompanyOwnerId?: string | null,
+  companyCompanyOwnerUserID?: string | null,
 };
 
 export type ModelCompanyConditionInput = {
@@ -716,7 +673,7 @@ export type ModelCompanyConditionInput = {
   and?: Array< ModelCompanyConditionInput | null > | null,
   or?: Array< ModelCompanyConditionInput | null > | null,
   not?: ModelCompanyConditionInput | null,
-  companyCompanyOwnerId?: ModelIDInput | null,
+  companyCompanyOwnerUserID?: ModelIDInput | null,
 };
 
 export type UpdateCompanyInput = {
@@ -729,7 +686,7 @@ export type UpdateCompanyInput = {
   fax?: string | null,
   companyDescription?: string | null,
   _version?: number | null,
-  companyCompanyOwnerId?: string | null,
+  companyCompanyOwnerUserID?: string | null,
 };
 
 export type DeleteCompanyInput = {
@@ -836,60 +793,6 @@ export type DeleteItemInput = {
   _version?: number | null,
 };
 
-export type CreateUserDetailsBillingAddressInput = {
-  id?: string | null,
-  userDetailsId: string,
-  billingAddressId: string,
-  _version?: number | null,
-};
-
-export type ModelUserDetailsBillingAddressConditionInput = {
-  userDetailsId?: ModelIDInput | null,
-  billingAddressId?: ModelIDInput | null,
-  and?: Array< ModelUserDetailsBillingAddressConditionInput | null > | null,
-  or?: Array< ModelUserDetailsBillingAddressConditionInput | null > | null,
-  not?: ModelUserDetailsBillingAddressConditionInput | null,
-};
-
-export type UpdateUserDetailsBillingAddressInput = {
-  id: string,
-  userDetailsId?: string | null,
-  billingAddressId?: string | null,
-  _version?: number | null,
-};
-
-export type DeleteUserDetailsBillingAddressInput = {
-  id: string,
-  _version?: number | null,
-};
-
-export type CreateUserDetailsShippingAddressInput = {
-  id?: string | null,
-  userDetailsId: string,
-  shippingAddressId: string,
-  _version?: number | null,
-};
-
-export type ModelUserDetailsShippingAddressConditionInput = {
-  userDetailsId?: ModelIDInput | null,
-  shippingAddressId?: ModelIDInput | null,
-  and?: Array< ModelUserDetailsShippingAddressConditionInput | null > | null,
-  or?: Array< ModelUserDetailsShippingAddressConditionInput | null > | null,
-  not?: ModelUserDetailsShippingAddressConditionInput | null,
-};
-
-export type UpdateUserDetailsShippingAddressInput = {
-  id: string,
-  userDetailsId?: string | null,
-  shippingAddressId?: string | null,
-  _version?: number | null,
-};
-
-export type DeleteUserDetailsShippingAddressInput = {
-  id: string,
-  _version?: number | null,
-};
-
 export type CreateCompanyShippingAddressInput = {
   id?: string | null,
   shippingAddressId: string,
@@ -944,6 +847,99 @@ export type DeleteCompanyBillingAddressInput = {
   _version?: number | null,
 };
 
+export type CreateUserDetailsInput = {
+  userID: string,
+  firstName?: string | null,
+  lastName?: string | null,
+  contactEmail?: string | null,
+  contactPhone?: string | null,
+  companyID: string,
+  isCompanyOwner?: boolean | null,
+  _version?: number | null,
+};
+
+export type ModelUserDetailsConditionInput = {
+  firstName?: ModelStringInput | null,
+  lastName?: ModelStringInput | null,
+  contactEmail?: ModelStringInput | null,
+  contactPhone?: ModelStringInput | null,
+  companyID?: ModelIDInput | null,
+  isCompanyOwner?: ModelBooleanInput | null,
+  and?: Array< ModelUserDetailsConditionInput | null > | null,
+  or?: Array< ModelUserDetailsConditionInput | null > | null,
+  not?: ModelUserDetailsConditionInput | null,
+};
+
+export type UpdateUserDetailsInput = {
+  userID: string,
+  firstName?: string | null,
+  lastName?: string | null,
+  contactEmail?: string | null,
+  contactPhone?: string | null,
+  companyID?: string | null,
+  isCompanyOwner?: boolean | null,
+  _version?: number | null,
+};
+
+export type DeleteUserDetailsInput = {
+  userID: string,
+  _version?: number | null,
+};
+
+export type CreateUserDetailsBillingAddressInput = {
+  id?: string | null,
+  userDetailsUserID: string,
+  billingAddressId: string,
+  _version?: number | null,
+};
+
+export type ModelUserDetailsBillingAddressConditionInput = {
+  userDetailsUserID?: ModelIDInput | null,
+  billingAddressId?: ModelIDInput | null,
+  and?: Array< ModelUserDetailsBillingAddressConditionInput | null > | null,
+  or?: Array< ModelUserDetailsBillingAddressConditionInput | null > | null,
+  not?: ModelUserDetailsBillingAddressConditionInput | null,
+};
+
+export type UpdateUserDetailsBillingAddressInput = {
+  id: string,
+  userDetailsUserID?: string | null,
+  billingAddressId?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteUserDetailsBillingAddressInput = {
+  id: string,
+  _version?: number | null,
+};
+
+export type CreateUserDetailsShippingAddressInput = {
+  id?: string | null,
+  userDetailsUserID: string,
+  shippingAddressId: string,
+  _version?: number | null,
+};
+
+export type ModelUserDetailsShippingAddressConditionInput = {
+  userDetailsUserID?: ModelIDInput | null,
+  shippingAddressId?: ModelIDInput | null,
+  and?: Array< ModelUserDetailsShippingAddressConditionInput | null > | null,
+  or?: Array< ModelUserDetailsShippingAddressConditionInput | null > | null,
+  not?: ModelUserDetailsShippingAddressConditionInput | null,
+};
+
+export type UpdateUserDetailsShippingAddressInput = {
+  id: string,
+  userDetailsUserID?: string | null,
+  shippingAddressId?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteUserDetailsShippingAddressInput = {
+  id: string,
+  _version?: number | null,
+};
+
 export type ModelRfqFilterInput = {
   id?: ModelIDInput | null,
   rfqNumber?: ModelStringInput | null,
@@ -984,26 +980,6 @@ export type ModelRfqFilterInput = {
   companySentRfqsId?: ModelIDInput | null,
   companyReceivedRfqsId?: ModelIDInput | null,
 };
-
-export type ModelUserDetailsFilterInput = {
-  id?: ModelIDInput | null,
-  userID?: ModelIDInput | null,
-  firstName?: ModelStringInput | null,
-  lastName?: ModelStringInput | null,
-  contactEmail?: ModelStringInput | null,
-  contactPhone?: ModelStringInput | null,
-  companyID?: ModelIDInput | null,
-  isCompanyOwner?: ModelBooleanInput | null,
-  and?: Array< ModelUserDetailsFilterInput | null > | null,
-  or?: Array< ModelUserDetailsFilterInput | null > | null,
-  not?: ModelUserDetailsFilterInput | null,
-};
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelCountryFilterInput = {
   id?: ModelIDInput | null,
@@ -1065,7 +1041,7 @@ export type ModelCompanyFilterInput = {
   and?: Array< ModelCompanyFilterInput | null > | null,
   or?: Array< ModelCompanyFilterInput | null > | null,
   not?: ModelCompanyFilterInput | null,
-  companyCompanyOwnerId?: ModelIDInput | null,
+  companyCompanyOwnerUserID?: ModelIDInput | null,
 };
 
 export type ModelCompanyConnection = {
@@ -1108,24 +1084,6 @@ export type ModelItemFilterInput = {
   not?: ModelItemFilterInput | null,
 };
 
-export type ModelUserDetailsBillingAddressFilterInput = {
-  id?: ModelIDInput | null,
-  userDetailsId?: ModelIDInput | null,
-  billingAddressId?: ModelIDInput | null,
-  and?: Array< ModelUserDetailsBillingAddressFilterInput | null > | null,
-  or?: Array< ModelUserDetailsBillingAddressFilterInput | null > | null,
-  not?: ModelUserDetailsBillingAddressFilterInput | null,
-};
-
-export type ModelUserDetailsShippingAddressFilterInput = {
-  id?: ModelIDInput | null,
-  userDetailsId?: ModelIDInput | null,
-  shippingAddressId?: ModelIDInput | null,
-  and?: Array< ModelUserDetailsShippingAddressFilterInput | null > | null,
-  or?: Array< ModelUserDetailsShippingAddressFilterInput | null > | null,
-  not?: ModelUserDetailsShippingAddressFilterInput | null,
-};
-
 export type ModelCompanyShippingAddressFilterInput = {
   id?: ModelIDInput | null,
   shippingAddressId?: ModelIDInput | null,
@@ -1142,6 +1100,43 @@ export type ModelCompanyBillingAddressFilterInput = {
   and?: Array< ModelCompanyBillingAddressFilterInput | null > | null,
   or?: Array< ModelCompanyBillingAddressFilterInput | null > | null,
   not?: ModelCompanyBillingAddressFilterInput | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
+export type ModelUserDetailsFilterInput = {
+  userID?: ModelIDInput | null,
+  firstName?: ModelStringInput | null,
+  lastName?: ModelStringInput | null,
+  contactEmail?: ModelStringInput | null,
+  contactPhone?: ModelStringInput | null,
+  companyID?: ModelIDInput | null,
+  isCompanyOwner?: ModelBooleanInput | null,
+  and?: Array< ModelUserDetailsFilterInput | null > | null,
+  or?: Array< ModelUserDetailsFilterInput | null > | null,
+  not?: ModelUserDetailsFilterInput | null,
+};
+
+export type ModelUserDetailsBillingAddressFilterInput = {
+  id?: ModelIDInput | null,
+  userDetailsUserID?: ModelIDInput | null,
+  billingAddressId?: ModelIDInput | null,
+  and?: Array< ModelUserDetailsBillingAddressFilterInput | null > | null,
+  or?: Array< ModelUserDetailsBillingAddressFilterInput | null > | null,
+  not?: ModelUserDetailsBillingAddressFilterInput | null,
+};
+
+export type ModelUserDetailsShippingAddressFilterInput = {
+  id?: ModelIDInput | null,
+  userDetailsUserID?: ModelIDInput | null,
+  shippingAddressId?: ModelIDInput | null,
+  and?: Array< ModelUserDetailsShippingAddressFilterInput | null > | null,
+  or?: Array< ModelUserDetailsShippingAddressFilterInput | null > | null,
+  not?: ModelUserDetailsShippingAddressFilterInput | null,
 };
 
 export type ModelSubscriptionRfqFilterInput = {
@@ -1236,24 +1231,6 @@ export type ModelSubscriptionFloatInput = {
   notIn?: Array< number | null > | null,
 };
 
-export type ModelSubscriptionUserDetailsFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  userID?: ModelSubscriptionIDInput | null,
-  firstName?: ModelSubscriptionStringInput | null,
-  lastName?: ModelSubscriptionStringInput | null,
-  contactEmail?: ModelSubscriptionStringInput | null,
-  contactPhone?: ModelSubscriptionStringInput | null,
-  companyID?: ModelSubscriptionIDInput | null,
-  isCompanyOwner?: ModelSubscriptionBooleanInput | null,
-  and?: Array< ModelSubscriptionUserDetailsFilterInput | null > | null,
-  or?: Array< ModelSubscriptionUserDetailsFilterInput | null > | null,
-};
-
-export type ModelSubscriptionBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-};
-
 export type ModelSubscriptionCountryFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   countryName?: ModelSubscriptionStringInput | null,
@@ -1275,6 +1252,11 @@ export type ModelSubscriptionShippingAddressFilterInput = {
   countryID?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionShippingAddressFilterInput | null > | null,
   or?: Array< ModelSubscriptionShippingAddressFilterInput | null > | null,
+};
+
+export type ModelSubscriptionBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
 };
 
 export type ModelSubscriptionBillingAddressFilterInput = {
@@ -1336,22 +1318,6 @@ export type ModelSubscriptionItemFilterInput = {
   or?: Array< ModelSubscriptionItemFilterInput | null > | null,
 };
 
-export type ModelSubscriptionUserDetailsBillingAddressFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  userDetailsId?: ModelSubscriptionIDInput | null,
-  billingAddressId?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionUserDetailsBillingAddressFilterInput | null > | null,
-  or?: Array< ModelSubscriptionUserDetailsBillingAddressFilterInput | null > | null,
-};
-
-export type ModelSubscriptionUserDetailsShippingAddressFilterInput = {
-  id?: ModelSubscriptionIDInput | null,
-  userDetailsId?: ModelSubscriptionIDInput | null,
-  shippingAddressId?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionUserDetailsShippingAddressFilterInput | null > | null,
-  or?: Array< ModelSubscriptionUserDetailsShippingAddressFilterInput | null > | null,
-};
-
 export type ModelSubscriptionCompanyShippingAddressFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   shippingAddressId?: ModelSubscriptionIDInput | null,
@@ -1366,6 +1332,34 @@ export type ModelSubscriptionCompanyBillingAddressFilterInput = {
   companyId?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionCompanyBillingAddressFilterInput | null > | null,
   or?: Array< ModelSubscriptionCompanyBillingAddressFilterInput | null > | null,
+};
+
+export type ModelSubscriptionUserDetailsFilterInput = {
+  userID?: ModelSubscriptionIDInput | null,
+  firstName?: ModelSubscriptionStringInput | null,
+  lastName?: ModelSubscriptionStringInput | null,
+  contactEmail?: ModelSubscriptionStringInput | null,
+  contactPhone?: ModelSubscriptionStringInput | null,
+  companyID?: ModelSubscriptionIDInput | null,
+  isCompanyOwner?: ModelSubscriptionBooleanInput | null,
+  and?: Array< ModelSubscriptionUserDetailsFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserDetailsFilterInput | null > | null,
+};
+
+export type ModelSubscriptionUserDetailsBillingAddressFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  userDetailsUserID?: ModelSubscriptionIDInput | null,
+  billingAddressId?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionUserDetailsBillingAddressFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserDetailsBillingAddressFilterInput | null > | null,
+};
+
+export type ModelSubscriptionUserDetailsShippingAddressFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  userDetailsUserID?: ModelSubscriptionIDInput | null,
+  shippingAddressId?: ModelSubscriptionIDInput | null,
+  and?: Array< ModelSubscriptionUserDetailsShippingAddressFilterInput | null > | null,
+  or?: Array< ModelSubscriptionUserDetailsShippingAddressFilterInput | null > | null,
 };
 
 export type CreateRfqMutationVariables = {
@@ -1437,8 +1431,7 @@ export type CreateRfqMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -1476,7 +1469,7 @@ export type CreateRfqMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     SendingCompany?:  {
       __typename: "Company",
@@ -1506,8 +1499,7 @@ export type CreateRfqMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -1545,7 +1537,7 @@ export type CreateRfqMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1626,8 +1618,7 @@ export type UpdateRfqMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -1665,7 +1656,7 @@ export type UpdateRfqMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     SendingCompany?:  {
       __typename: "Company",
@@ -1695,8 +1686,7 @@ export type UpdateRfqMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -1734,7 +1724,7 @@ export type UpdateRfqMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1815,8 +1805,7 @@ export type DeleteRfqMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -1854,7 +1843,7 @@ export type DeleteRfqMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     SendingCompany?:  {
       __typename: "Company",
@@ -1884,8 +1873,7 @@ export type DeleteRfqMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -1923,7 +1911,7 @@ export type DeleteRfqMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -1932,183 +1920,6 @@ export type DeleteRfqMutation = {
     _lastChangedAt: number,
     companySentRfqsId?: string | null,
     companyReceivedRfqsId?: string | null,
-  } | null,
-};
-
-export type CreateUserDetailsMutationVariables = {
-  input: CreateUserDetailsInput,
-  condition?: ModelUserDetailsConditionInput | null,
-};
-
-export type CreateUserDetailsMutation = {
-  createUserDetails?:  {
-    __typename: "UserDetails",
-    id: string,
-    userID?: string | null,
-    firstName?: string | null,
-    lastName?: string | null,
-    contactEmail?: string | null,
-    contactPhone?: string | null,
-    companyID: string,
-    BillingAddresses?:  {
-      __typename: "ModelUserDetailsBillingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsBillingAddress",
-        id: string,
-        userDetailsId: string,
-        billingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    ShippingAddresses?:  {
-      __typename: "ModelUserDetailsShippingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsShippingAddress",
-        id: string,
-        userDetailsId: string,
-        shippingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    isCompanyOwner?: boolean | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type UpdateUserDetailsMutationVariables = {
-  input: UpdateUserDetailsInput,
-  condition?: ModelUserDetailsConditionInput | null,
-};
-
-export type UpdateUserDetailsMutation = {
-  updateUserDetails?:  {
-    __typename: "UserDetails",
-    id: string,
-    userID?: string | null,
-    firstName?: string | null,
-    lastName?: string | null,
-    contactEmail?: string | null,
-    contactPhone?: string | null,
-    companyID: string,
-    BillingAddresses?:  {
-      __typename: "ModelUserDetailsBillingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsBillingAddress",
-        id: string,
-        userDetailsId: string,
-        billingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    ShippingAddresses?:  {
-      __typename: "ModelUserDetailsShippingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsShippingAddress",
-        id: string,
-        userDetailsId: string,
-        shippingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    isCompanyOwner?: boolean | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type DeleteUserDetailsMutationVariables = {
-  input: DeleteUserDetailsInput,
-  condition?: ModelUserDetailsConditionInput | null,
-};
-
-export type DeleteUserDetailsMutation = {
-  deleteUserDetails?:  {
-    __typename: "UserDetails",
-    id: string,
-    userID?: string | null,
-    firstName?: string | null,
-    lastName?: string | null,
-    contactEmail?: string | null,
-    contactPhone?: string | null,
-    companyID: string,
-    BillingAddresses?:  {
-      __typename: "ModelUserDetailsBillingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsBillingAddress",
-        id: string,
-        userDetailsId: string,
-        billingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    ShippingAddresses?:  {
-      __typename: "ModelUserDetailsShippingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsShippingAddress",
-        id: string,
-        userDetailsId: string,
-        shippingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    isCompanyOwner?: boolean | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -2330,7 +2141,7 @@ export type CreateShippingAddressMutation = {
       items:  Array< {
         __typename: "UserDetailsShippingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         shippingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -2389,7 +2200,7 @@ export type UpdateShippingAddressMutation = {
       items:  Array< {
         __typename: "UserDetailsShippingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         shippingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -2448,7 +2259,7 @@ export type DeleteShippingAddressMutation = {
       items:  Array< {
         __typename: "UserDetailsShippingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         shippingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -2523,7 +2334,7 @@ export type CreateBillingAddressMutation = {
       items:  Array< {
         __typename: "UserDetailsBillingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         billingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -2582,7 +2393,7 @@ export type UpdateBillingAddressMutation = {
       items:  Array< {
         __typename: "UserDetailsBillingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         billingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -2641,7 +2452,7 @@ export type DeleteBillingAddressMutation = {
       items:  Array< {
         __typename: "UserDetailsBillingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         billingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -2740,8 +2551,7 @@ export type CreateCompanyMutation = {
       __typename: "ModelUserDetailsConnection",
       items:  Array< {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -2760,8 +2570,7 @@ export type CreateCompanyMutation = {
     } | null,
     CompanyOwner?:  {
       __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
+      userID: string,
       firstName?: string | null,
       lastName?: string | null,
       contactEmail?: string | null,
@@ -2906,7 +2715,7 @@ export type CreateCompanyMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    companyCompanyOwnerId?: string | null,
+    companyCompanyOwnerUserID?: string | null,
   } | null,
 };
 
@@ -2989,8 +2798,7 @@ export type UpdateCompanyMutation = {
       __typename: "ModelUserDetailsConnection",
       items:  Array< {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -3009,8 +2817,7 @@ export type UpdateCompanyMutation = {
     } | null,
     CompanyOwner?:  {
       __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
+      userID: string,
       firstName?: string | null,
       lastName?: string | null,
       contactEmail?: string | null,
@@ -3155,7 +2962,7 @@ export type UpdateCompanyMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    companyCompanyOwnerId?: string | null,
+    companyCompanyOwnerUserID?: string | null,
   } | null,
 };
 
@@ -3238,8 +3045,7 @@ export type DeleteCompanyMutation = {
       __typename: "ModelUserDetailsConnection",
       items:  Array< {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -3258,8 +3064,7 @@ export type DeleteCompanyMutation = {
     } | null,
     CompanyOwner?:  {
       __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
+      userID: string,
       firstName?: string | null,
       lastName?: string | null,
       contactEmail?: string | null,
@@ -3404,7 +3209,7 @@ export type DeleteCompanyMutation = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    companyCompanyOwnerId?: string | null,
+    companyCompanyOwnerUserID?: string | null,
   } | null,
 };
 
@@ -3567,456 +3372,6 @@ export type DeleteItemMutation = {
   } | null,
 };
 
-export type CreateUserDetailsBillingAddressMutationVariables = {
-  input: CreateUserDetailsBillingAddressInput,
-  condition?: ModelUserDetailsBillingAddressConditionInput | null,
-};
-
-export type CreateUserDetailsBillingAddressMutation = {
-  createUserDetailsBillingAddress?:  {
-    __typename: "UserDetailsBillingAddress",
-    id: string,
-    userDetailsId: string,
-    billingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    billingAddress:  {
-      __typename: "BillingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      region?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      CompanyBillingAddresses?:  {
-        __typename: "ModelCompanyBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      countryID: string,
-      UserBillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type UpdateUserDetailsBillingAddressMutationVariables = {
-  input: UpdateUserDetailsBillingAddressInput,
-  condition?: ModelUserDetailsBillingAddressConditionInput | null,
-};
-
-export type UpdateUserDetailsBillingAddressMutation = {
-  updateUserDetailsBillingAddress?:  {
-    __typename: "UserDetailsBillingAddress",
-    id: string,
-    userDetailsId: string,
-    billingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    billingAddress:  {
-      __typename: "BillingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      region?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      CompanyBillingAddresses?:  {
-        __typename: "ModelCompanyBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      countryID: string,
-      UserBillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type DeleteUserDetailsBillingAddressMutationVariables = {
-  input: DeleteUserDetailsBillingAddressInput,
-  condition?: ModelUserDetailsBillingAddressConditionInput | null,
-};
-
-export type DeleteUserDetailsBillingAddressMutation = {
-  deleteUserDetailsBillingAddress?:  {
-    __typename: "UserDetailsBillingAddress",
-    id: string,
-    userDetailsId: string,
-    billingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    billingAddress:  {
-      __typename: "BillingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      region?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      CompanyBillingAddresses?:  {
-        __typename: "ModelCompanyBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      countryID: string,
-      UserBillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type CreateUserDetailsShippingAddressMutationVariables = {
-  input: CreateUserDetailsShippingAddressInput,
-  condition?: ModelUserDetailsShippingAddressConditionInput | null,
-};
-
-export type CreateUserDetailsShippingAddressMutation = {
-  createUserDetailsShippingAddress?:  {
-    __typename: "UserDetailsShippingAddress",
-    id: string,
-    userDetailsId: string,
-    shippingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    shippingAddress:  {
-      __typename: "ShippingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      regi?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      countryID: string,
-      UserShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyShippingAddresses?:  {
-        __typename: "ModelCompanyShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type UpdateUserDetailsShippingAddressMutationVariables = {
-  input: UpdateUserDetailsShippingAddressInput,
-  condition?: ModelUserDetailsShippingAddressConditionInput | null,
-};
-
-export type UpdateUserDetailsShippingAddressMutation = {
-  updateUserDetailsShippingAddress?:  {
-    __typename: "UserDetailsShippingAddress",
-    id: string,
-    userDetailsId: string,
-    shippingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    shippingAddress:  {
-      __typename: "ShippingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      regi?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      countryID: string,
-      UserShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyShippingAddresses?:  {
-        __typename: "ModelCompanyShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type DeleteUserDetailsShippingAddressMutationVariables = {
-  input: DeleteUserDetailsShippingAddressInput,
-  condition?: ModelUserDetailsShippingAddressConditionInput | null,
-};
-
-export type DeleteUserDetailsShippingAddressMutation = {
-  deleteUserDetailsShippingAddress?:  {
-    __typename: "UserDetailsShippingAddress",
-    id: string,
-    userDetailsId: string,
-    shippingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    shippingAddress:  {
-      __typename: "ShippingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      regi?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      countryID: string,
-      UserShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyShippingAddresses?:  {
-        __typename: "ModelCompanyShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
 export type CreateCompanyShippingAddressMutationVariables = {
   input: CreateCompanyShippingAddressInput,
   condition?: ModelCompanyShippingAddressConditionInput | null,
@@ -4084,8 +3439,7 @@ export type CreateCompanyShippingAddressMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -4123,7 +3477,7 @@ export type CreateCompanyShippingAddressMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -4200,8 +3554,7 @@ export type UpdateCompanyShippingAddressMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -4239,7 +3592,7 @@ export type UpdateCompanyShippingAddressMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -4316,8 +3669,7 @@ export type DeleteCompanyShippingAddressMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -4355,7 +3707,7 @@ export type DeleteCompanyShippingAddressMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -4432,8 +3784,7 @@ export type CreateCompanyBillingAddressMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -4471,7 +3822,7 @@ export type CreateCompanyBillingAddressMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -4548,8 +3899,7 @@ export type UpdateCompanyBillingAddressMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -4587,7 +3937,7 @@ export type UpdateCompanyBillingAddressMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -4664,8 +4014,7 @@ export type DeleteCompanyBillingAddressMutation = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -4703,13 +4052,631 @@ export type DeleteCompanyBillingAddressMutation = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+  } | null,
+};
+
+export type CreateUserDetailsMutationVariables = {
+  input: CreateUserDetailsInput,
+  condition?: ModelUserDetailsConditionInput | null,
+};
+
+export type CreateUserDetailsMutation = {
+  createUserDetails?:  {
+    __typename: "UserDetails",
+    userID: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    contactEmail?: string | null,
+    contactPhone?: string | null,
+    companyID: string,
+    BillingAddresses?:  {
+      __typename: "ModelUserDetailsBillingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsBillingAddress",
+        id: string,
+        userDetailsUserID: string,
+        billingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    ShippingAddresses?:  {
+      __typename: "ModelUserDetailsShippingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsShippingAddress",
+        id: string,
+        userDetailsUserID: string,
+        shippingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    isCompanyOwner?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateUserDetailsMutationVariables = {
+  input: UpdateUserDetailsInput,
+  condition?: ModelUserDetailsConditionInput | null,
+};
+
+export type UpdateUserDetailsMutation = {
+  updateUserDetails?:  {
+    __typename: "UserDetails",
+    userID: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    contactEmail?: string | null,
+    contactPhone?: string | null,
+    companyID: string,
+    BillingAddresses?:  {
+      __typename: "ModelUserDetailsBillingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsBillingAddress",
+        id: string,
+        userDetailsUserID: string,
+        billingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    ShippingAddresses?:  {
+      __typename: "ModelUserDetailsShippingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsShippingAddress",
+        id: string,
+        userDetailsUserID: string,
+        shippingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    isCompanyOwner?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteUserDetailsMutationVariables = {
+  input: DeleteUserDetailsInput,
+  condition?: ModelUserDetailsConditionInput | null,
+};
+
+export type DeleteUserDetailsMutation = {
+  deleteUserDetails?:  {
+    __typename: "UserDetails",
+    userID: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    contactEmail?: string | null,
+    contactPhone?: string | null,
+    companyID: string,
+    BillingAddresses?:  {
+      __typename: "ModelUserDetailsBillingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsBillingAddress",
+        id: string,
+        userDetailsUserID: string,
+        billingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    ShippingAddresses?:  {
+      __typename: "ModelUserDetailsShippingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsShippingAddress",
+        id: string,
+        userDetailsUserID: string,
+        shippingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    isCompanyOwner?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type CreateUserDetailsBillingAddressMutationVariables = {
+  input: CreateUserDetailsBillingAddressInput,
+  condition?: ModelUserDetailsBillingAddressConditionInput | null,
+};
+
+export type CreateUserDetailsBillingAddressMutation = {
+  createUserDetailsBillingAddress?:  {
+    __typename: "UserDetailsBillingAddress",
+    id: string,
+    userDetailsUserID: string,
+    billingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    billingAddress:  {
+      __typename: "BillingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      region?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      CompanyBillingAddresses?:  {
+        __typename: "ModelCompanyBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      countryID: string,
+      UserBillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateUserDetailsBillingAddressMutationVariables = {
+  input: UpdateUserDetailsBillingAddressInput,
+  condition?: ModelUserDetailsBillingAddressConditionInput | null,
+};
+
+export type UpdateUserDetailsBillingAddressMutation = {
+  updateUserDetailsBillingAddress?:  {
+    __typename: "UserDetailsBillingAddress",
+    id: string,
+    userDetailsUserID: string,
+    billingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    billingAddress:  {
+      __typename: "BillingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      region?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      CompanyBillingAddresses?:  {
+        __typename: "ModelCompanyBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      countryID: string,
+      UserBillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteUserDetailsBillingAddressMutationVariables = {
+  input: DeleteUserDetailsBillingAddressInput,
+  condition?: ModelUserDetailsBillingAddressConditionInput | null,
+};
+
+export type DeleteUserDetailsBillingAddressMutation = {
+  deleteUserDetailsBillingAddress?:  {
+    __typename: "UserDetailsBillingAddress",
+    id: string,
+    userDetailsUserID: string,
+    billingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    billingAddress:  {
+      __typename: "BillingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      region?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      CompanyBillingAddresses?:  {
+        __typename: "ModelCompanyBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      countryID: string,
+      UserBillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type CreateUserDetailsShippingAddressMutationVariables = {
+  input: CreateUserDetailsShippingAddressInput,
+  condition?: ModelUserDetailsShippingAddressConditionInput | null,
+};
+
+export type CreateUserDetailsShippingAddressMutation = {
+  createUserDetailsShippingAddress?:  {
+    __typename: "UserDetailsShippingAddress",
+    id: string,
+    userDetailsUserID: string,
+    shippingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    shippingAddress:  {
+      __typename: "ShippingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      regi?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      countryID: string,
+      UserShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyShippingAddresses?:  {
+        __typename: "ModelCompanyShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateUserDetailsShippingAddressMutationVariables = {
+  input: UpdateUserDetailsShippingAddressInput,
+  condition?: ModelUserDetailsShippingAddressConditionInput | null,
+};
+
+export type UpdateUserDetailsShippingAddressMutation = {
+  updateUserDetailsShippingAddress?:  {
+    __typename: "UserDetailsShippingAddress",
+    id: string,
+    userDetailsUserID: string,
+    shippingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    shippingAddress:  {
+      __typename: "ShippingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      regi?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      countryID: string,
+      UserShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyShippingAddresses?:  {
+        __typename: "ModelCompanyShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteUserDetailsShippingAddressMutationVariables = {
+  input: DeleteUserDetailsShippingAddressInput,
+  condition?: ModelUserDetailsShippingAddressConditionInput | null,
+};
+
+export type DeleteUserDetailsShippingAddressMutation = {
+  deleteUserDetailsShippingAddress?:  {
+    __typename: "UserDetailsShippingAddress",
+    id: string,
+    userDetailsUserID: string,
+    shippingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    shippingAddress:  {
+      __typename: "ShippingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      regi?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      countryID: string,
+      UserShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyShippingAddresses?:  {
+        __typename: "ModelCompanyShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };
 
@@ -4781,8 +4748,7 @@ export type GetRfqQuery = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -4820,7 +4786,7 @@ export type GetRfqQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     SendingCompany?:  {
       __typename: "Company",
@@ -4850,8 +4816,7 @@ export type GetRfqQuery = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -4889,7 +4854,7 @@ export type GetRfqQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -4960,7 +4925,7 @@ export type ListRfqsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
       } | null,
       SendingCompany?:  {
         __typename: "Company",
@@ -4977,7 +4942,7 @@ export type ListRfqsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -5052,7 +5017,7 @@ export type SyncRfqsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
       } | null,
       SendingCompany?:  {
         __typename: "Company",
@@ -5069,7 +5034,7 @@ export type SyncRfqsQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
       } | null,
       createdAt: string,
       updatedAt: string,
@@ -5078,190 +5043,6 @@ export type SyncRfqsQuery = {
       _lastChangedAt: number,
       companySentRfqsId?: string | null,
       companyReceivedRfqsId?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type GetUserDetailsQueryVariables = {
-  id: string,
-};
-
-export type GetUserDetailsQuery = {
-  getUserDetails?:  {
-    __typename: "UserDetails",
-    id: string,
-    userID?: string | null,
-    firstName?: string | null,
-    lastName?: string | null,
-    contactEmail?: string | null,
-    contactPhone?: string | null,
-    companyID: string,
-    BillingAddresses?:  {
-      __typename: "ModelUserDetailsBillingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsBillingAddress",
-        id: string,
-        userDetailsId: string,
-        billingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    ShippingAddresses?:  {
-      __typename: "ModelUserDetailsShippingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsShippingAddress",
-        id: string,
-        userDetailsId: string,
-        shippingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    isCompanyOwner?: boolean | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type ListUserDetailsQueryVariables = {
-  filter?: ModelUserDetailsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListUserDetailsQuery = {
-  listUserDetails?:  {
-    __typename: "ModelUserDetailsConnection",
-    items:  Array< {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncUserDetailsQueryVariables = {
-  filter?: ModelUserDetailsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncUserDetailsQuery = {
-  syncUserDetails?:  {
-    __typename: "ModelUserDetailsConnection",
-    items:  Array< {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type UserDetailsByCompanyIDQueryVariables = {
-  companyID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserDetailsFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UserDetailsByCompanyIDQuery = {
-  userDetailsByCompanyID?:  {
-    __typename: "ModelUserDetailsConnection",
-    items:  Array< {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -5425,7 +5206,7 @@ export type GetShippingAddressQuery = {
       items:  Array< {
         __typename: "UserDetailsShippingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         shippingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -5546,50 +5327,6 @@ export type SyncShippingAddressesQuery = {
   } | null,
 };
 
-export type ShippingAddressesByCountryIDQueryVariables = {
-  countryID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelShippingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ShippingAddressesByCountryIDQuery = {
-  shippingAddressesByCountryID?:  {
-    __typename: "ModelShippingAddressConnection",
-    items:  Array< {
-      __typename: "ShippingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      regi?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      countryID: string,
-      UserShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyShippingAddresses?:  {
-        __typename: "ModelCompanyShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
 export type GetBillingAddressQueryVariables = {
   id: string,
 };
@@ -5628,7 +5365,7 @@ export type GetBillingAddressQuery = {
       items:  Array< {
         __typename: "UserDetailsBillingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         billingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -5699,50 +5436,6 @@ export type SyncBillingAddressesQueryVariables = {
 
 export type SyncBillingAddressesQuery = {
   syncBillingAddresses?:  {
-    __typename: "ModelBillingAddressConnection",
-    items:  Array< {
-      __typename: "BillingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      region?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      CompanyBillingAddresses?:  {
-        __typename: "ModelCompanyBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      countryID: string,
-      UserBillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type BillingAddressesByCountryIDQueryVariables = {
-  countryID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelBillingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type BillingAddressesByCountryIDQuery = {
-  billingAddressesByCountryID?:  {
     __typename: "ModelBillingAddressConnection",
     items:  Array< {
       __typename: "BillingAddress",
@@ -5855,8 +5548,7 @@ export type GetCompanyQuery = {
       __typename: "ModelUserDetailsConnection",
       items:  Array< {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -5875,8 +5567,7 @@ export type GetCompanyQuery = {
     } | null,
     CompanyOwner?:  {
       __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
+      userID: string,
       firstName?: string | null,
       lastName?: string | null,
       contactEmail?: string | null,
@@ -6021,7 +5712,7 @@ export type GetCompanyQuery = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    companyCompanyOwnerId?: string | null,
+    companyCompanyOwnerUserID?: string | null,
   } | null,
 };
 
@@ -6062,8 +5753,7 @@ export type ListCompaniesQuery = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -6101,7 +5791,7 @@ export type ListCompaniesQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -6146,8 +5836,7 @@ export type SyncCompaniesQuery = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -6185,92 +5874,7 @@ export type SyncCompaniesQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type CompaniesByCountryIDQueryVariables = {
-  countryID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelCompanyFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type CompaniesByCountryIDQuery = {
-  companiesByCountryID?:  {
-    __typename: "ModelCompanyConnection",
-    items:  Array< {
-      __typename: "Company",
-      id: string,
-      companyName?: string | null,
-      phone?: string | null,
-      contactEmail?: string | null,
-      Items?:  {
-        __typename: "ModelItemConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ItemMROS?:  {
-        __typename: "ModelItemMROConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      BillingAddresses?:  {
-        __typename: "ModelCompanyBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyMembers?:  {
-        __typename: "ModelUserDetailsConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyOwner?:  {
-        __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
-        firstName?: string | null,
-        lastName?: string | null,
-        contactEmail?: string | null,
-        contactPhone?: string | null,
-        companyID: string,
-        isCompanyOwner?: boolean | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelCompanyShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      countryID?: string | null,
-      profilePictureUrl?: string | null,
-      fax?: string | null,
-      companyDescription?: string | null,
-      sentRfqs?:  {
-        __typename: "ModelRfqConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      receivedRfqs?:  {
-        __typename: "ModelRfqConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -6343,40 +5947,6 @@ export type SyncItemMROSQueryVariables = {
 
 export type SyncItemMROSQuery = {
   syncItemMROS?:  {
-    __typename: "ModelItemMROConnection",
-    items:  Array< {
-      __typename: "ItemMRO",
-      id: string,
-      nsn?: string | null,
-      partNumber?: string | null,
-      altPartNumber?: string | null,
-      description?: string | null,
-      quantity?: number | null,
-      price?: number | null,
-      certification?: string | null,
-      companyID: string,
-      imageUrls?: Array< string | null > | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type ItemMROSByCompanyIDQueryVariables = {
-  companyID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelItemMROFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ItemMROSByCompanyIDQuery = {
-  itemMROSByCompanyID?:  {
     __typename: "ModelItemMROConnection",
     items:  Array< {
       __typename: "ItemMRO",
@@ -6494,687 +6064,6 @@ export type SyncItemsQuery = {
   } | null,
 };
 
-export type ItemsByCompanyIDQueryVariables = {
-  companyID: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelItemFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ItemsByCompanyIDQuery = {
-  itemsByCompanyID?:  {
-    __typename: "ModelItemConnection",
-    items:  Array< {
-      __typename: "Item",
-      id: string,
-      nsn?: string | null,
-      partNumber?: string | null,
-      altPartNumber?: string | null,
-      description?: string | null,
-      quantity?: number | null,
-      condition?: string | null,
-      control?: string | null,
-      price?: number | null,
-      companyID: string,
-      imageUrls?: Array< string | null > | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type GetUserDetailsBillingAddressQueryVariables = {
-  id: string,
-};
-
-export type GetUserDetailsBillingAddressQuery = {
-  getUserDetailsBillingAddress?:  {
-    __typename: "UserDetailsBillingAddress",
-    id: string,
-    userDetailsId: string,
-    billingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    billingAddress:  {
-      __typename: "BillingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      region?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      CompanyBillingAddresses?:  {
-        __typename: "ModelCompanyBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      countryID: string,
-      UserBillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type ListUserDetailsBillingAddressesQueryVariables = {
-  filter?: ModelUserDetailsBillingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListUserDetailsBillingAddressesQuery = {
-  listUserDetailsBillingAddresses?:  {
-    __typename: "ModelUserDetailsBillingAddressConnection",
-    items:  Array< {
-      __typename: "UserDetailsBillingAddress",
-      id: string,
-      userDetailsId: string,
-      billingAddressId: string,
-      userDetails:  {
-        __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
-        firstName?: string | null,
-        lastName?: string | null,
-        contactEmail?: string | null,
-        contactPhone?: string | null,
-        companyID: string,
-        isCompanyOwner?: boolean | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      },
-      billingAddress:  {
-        __typename: "BillingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        region?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncUserDetailsBillingAddressesQueryVariables = {
-  filter?: ModelUserDetailsBillingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncUserDetailsBillingAddressesQuery = {
-  syncUserDetailsBillingAddresses?:  {
-    __typename: "ModelUserDetailsBillingAddressConnection",
-    items:  Array< {
-      __typename: "UserDetailsBillingAddress",
-      id: string,
-      userDetailsId: string,
-      billingAddressId: string,
-      userDetails:  {
-        __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
-        firstName?: string | null,
-        lastName?: string | null,
-        contactEmail?: string | null,
-        contactPhone?: string | null,
-        companyID: string,
-        isCompanyOwner?: boolean | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      },
-      billingAddress:  {
-        __typename: "BillingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        region?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type UserDetailsBillingAddressesByUserDetailsIdQueryVariables = {
-  userDetailsId: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserDetailsBillingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UserDetailsBillingAddressesByUserDetailsIdQuery = {
-  userDetailsBillingAddressesByUserDetailsId?:  {
-    __typename: "ModelUserDetailsBillingAddressConnection",
-    items:  Array< {
-      __typename: "UserDetailsBillingAddress",
-      id: string,
-      userDetailsId: string,
-      billingAddressId: string,
-      userDetails:  {
-        __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
-        firstName?: string | null,
-        lastName?: string | null,
-        contactEmail?: string | null,
-        contactPhone?: string | null,
-        companyID: string,
-        isCompanyOwner?: boolean | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      },
-      billingAddress:  {
-        __typename: "BillingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        region?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type UserDetailsBillingAddressesByBillingAddressIdQueryVariables = {
-  billingAddressId: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserDetailsBillingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UserDetailsBillingAddressesByBillingAddressIdQuery = {
-  userDetailsBillingAddressesByBillingAddressId?:  {
-    __typename: "ModelUserDetailsBillingAddressConnection",
-    items:  Array< {
-      __typename: "UserDetailsBillingAddress",
-      id: string,
-      userDetailsId: string,
-      billingAddressId: string,
-      userDetails:  {
-        __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
-        firstName?: string | null,
-        lastName?: string | null,
-        contactEmail?: string | null,
-        contactPhone?: string | null,
-        companyID: string,
-        isCompanyOwner?: boolean | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      },
-      billingAddress:  {
-        __typename: "BillingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        region?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type GetUserDetailsShippingAddressQueryVariables = {
-  id: string,
-};
-
-export type GetUserDetailsShippingAddressQuery = {
-  getUserDetailsShippingAddress?:  {
-    __typename: "UserDetailsShippingAddress",
-    id: string,
-    userDetailsId: string,
-    shippingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    shippingAddress:  {
-      __typename: "ShippingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      regi?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      countryID: string,
-      UserShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyShippingAddresses?:  {
-        __typename: "ModelCompanyShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type ListUserDetailsShippingAddressesQueryVariables = {
-  filter?: ModelUserDetailsShippingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListUserDetailsShippingAddressesQuery = {
-  listUserDetailsShippingAddresses?:  {
-    __typename: "ModelUserDetailsShippingAddressConnection",
-    items:  Array< {
-      __typename: "UserDetailsShippingAddress",
-      id: string,
-      userDetailsId: string,
-      shippingAddressId: string,
-      userDetails:  {
-        __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
-        firstName?: string | null,
-        lastName?: string | null,
-        contactEmail?: string | null,
-        contactPhone?: string | null,
-        companyID: string,
-        isCompanyOwner?: boolean | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      },
-      shippingAddress:  {
-        __typename: "ShippingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        regi?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncUserDetailsShippingAddressesQueryVariables = {
-  filter?: ModelUserDetailsShippingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncUserDetailsShippingAddressesQuery = {
-  syncUserDetailsShippingAddresses?:  {
-    __typename: "ModelUserDetailsShippingAddressConnection",
-    items:  Array< {
-      __typename: "UserDetailsShippingAddress",
-      id: string,
-      userDetailsId: string,
-      shippingAddressId: string,
-      userDetails:  {
-        __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
-        firstName?: string | null,
-        lastName?: string | null,
-        contactEmail?: string | null,
-        contactPhone?: string | null,
-        companyID: string,
-        isCompanyOwner?: boolean | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      },
-      shippingAddress:  {
-        __typename: "ShippingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        regi?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type UserDetailsShippingAddressesByUserDetailsIdQueryVariables = {
-  userDetailsId: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserDetailsShippingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UserDetailsShippingAddressesByUserDetailsIdQuery = {
-  userDetailsShippingAddressesByUserDetailsId?:  {
-    __typename: "ModelUserDetailsShippingAddressConnection",
-    items:  Array< {
-      __typename: "UserDetailsShippingAddress",
-      id: string,
-      userDetailsId: string,
-      shippingAddressId: string,
-      userDetails:  {
-        __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
-        firstName?: string | null,
-        lastName?: string | null,
-        contactEmail?: string | null,
-        contactPhone?: string | null,
-        companyID: string,
-        isCompanyOwner?: boolean | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      },
-      shippingAddress:  {
-        __typename: "ShippingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        regi?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type UserDetailsShippingAddressesByShippingAddressIdQueryVariables = {
-  shippingAddressId: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelUserDetailsShippingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type UserDetailsShippingAddressesByShippingAddressIdQuery = {
-  userDetailsShippingAddressesByShippingAddressId?:  {
-    __typename: "ModelUserDetailsShippingAddressConnection",
-    items:  Array< {
-      __typename: "UserDetailsShippingAddress",
-      id: string,
-      userDetailsId: string,
-      shippingAddressId: string,
-      userDetails:  {
-        __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
-        firstName?: string | null,
-        lastName?: string | null,
-        contactEmail?: string | null,
-        contactPhone?: string | null,
-        companyID: string,
-        isCompanyOwner?: boolean | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      },
-      shippingAddress:  {
-        __typename: "ShippingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        regi?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
 export type GetCompanyShippingAddressQueryVariables = {
   id: string,
 };
@@ -7241,8 +6130,7 @@ export type GetCompanyShippingAddressQuery = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -7280,7 +6168,7 @@ export type GetCompanyShippingAddressQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -7337,7 +6225,7 @@ export type ListCompanyShippingAddressesQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
       },
       createdAt: string,
       updatedAt: string,
@@ -7398,131 +6286,7 @@ export type SyncCompanyShippingAddressesQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type CompanyShippingAddressesByShippingAddressIdQueryVariables = {
-  shippingAddressId: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelCompanyShippingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type CompanyShippingAddressesByShippingAddressIdQuery = {
-  companyShippingAddressesByShippingAddressId?:  {
-    __typename: "ModelCompanyShippingAddressConnection",
-    items:  Array< {
-      __typename: "CompanyShippingAddress",
-      id: string,
-      shippingAddressId: string,
-      companyId: string,
-      shippingAddress:  {
-        __typename: "ShippingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        regi?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      company:  {
-        __typename: "Company",
-        id: string,
-        companyName?: string | null,
-        phone?: string | null,
-        contactEmail?: string | null,
-        countryID?: string | null,
-        profilePictureUrl?: string | null,
-        fax?: string | null,
-        companyDescription?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
-      },
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type CompanyShippingAddressesByCompanyIdQueryVariables = {
-  companyId: string,
-  sortDirection?: ModelSortDirection | null,
-  filter?: ModelCompanyShippingAddressFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type CompanyShippingAddressesByCompanyIdQuery = {
-  companyShippingAddressesByCompanyId?:  {
-    __typename: "ModelCompanyShippingAddressConnection",
-    items:  Array< {
-      __typename: "CompanyShippingAddress",
-      id: string,
-      shippingAddressId: string,
-      companyId: string,
-      shippingAddress:  {
-        __typename: "ShippingAddress",
-        id: string,
-        unitNumber?: string | null,
-        streetNumber?: string | null,
-        addressLine1?: string | null,
-        addressLine2?: string | null,
-        city?: string | null,
-        regi?: string | null,
-        postalCode?: string | null,
-        isDefault?: boolean | null,
-        countryID: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-      },
-      company:  {
-        __typename: "Company",
-        id: string,
-        companyName?: string | null,
-        phone?: string | null,
-        contactEmail?: string | null,
-        countryID?: string | null,
-        profilePictureUrl?: string | null,
-        fax?: string | null,
-        companyDescription?: string | null,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
       },
       createdAt: string,
       updatedAt: string,
@@ -7601,8 +6365,7 @@ export type GetCompanyBillingAddressQuery = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -7640,7 +6403,7 @@ export type GetCompanyBillingAddressQuery = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -7697,7 +6460,7 @@ export type ListCompanyBillingAddressesQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
       },
       createdAt: string,
       updatedAt: string,
@@ -7758,7 +6521,372 @@ export type SyncCompanyBillingAddressesQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type ShippingAddressesByCountryIDQueryVariables = {
+  countryID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelShippingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ShippingAddressesByCountryIDQuery = {
+  shippingAddressesByCountryID?:  {
+    __typename: "ModelShippingAddressConnection",
+    items:  Array< {
+      __typename: "ShippingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      regi?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      countryID: string,
+      UserShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyShippingAddresses?:  {
+        __typename: "ModelCompanyShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type BillingAddressesByCountryIDQueryVariables = {
+  countryID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelBillingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type BillingAddressesByCountryIDQuery = {
+  billingAddressesByCountryID?:  {
+    __typename: "ModelBillingAddressConnection",
+    items:  Array< {
+      __typename: "BillingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      region?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      CompanyBillingAddresses?:  {
+        __typename: "ModelCompanyBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      countryID: string,
+      UserBillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type CompaniesByCountryIDQueryVariables = {
+  countryID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCompanyFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CompaniesByCountryIDQuery = {
+  companiesByCountryID?:  {
+    __typename: "ModelCompanyConnection",
+    items:  Array< {
+      __typename: "Company",
+      id: string,
+      companyName?: string | null,
+      phone?: string | null,
+      contactEmail?: string | null,
+      Items?:  {
+        __typename: "ModelItemConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ItemMROS?:  {
+        __typename: "ModelItemMROConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      BillingAddresses?:  {
+        __typename: "ModelCompanyBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyMembers?:  {
+        __typename: "ModelUserDetailsConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyOwner?:  {
+        __typename: "UserDetails",
+        userID: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        contactEmail?: string | null,
+        contactPhone?: string | null,
+        companyID: string,
+        isCompanyOwner?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelCompanyShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      countryID?: string | null,
+      profilePictureUrl?: string | null,
+      fax?: string | null,
+      companyDescription?: string | null,
+      sentRfqs?:  {
+        __typename: "ModelRfqConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      receivedRfqs?:  {
+        __typename: "ModelRfqConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      companyCompanyOwnerUserID?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type ItemMROSByCompanyIDQueryVariables = {
+  companyID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelItemMROFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ItemMROSByCompanyIDQuery = {
+  itemMROSByCompanyID?:  {
+    __typename: "ModelItemMROConnection",
+    items:  Array< {
+      __typename: "ItemMRO",
+      id: string,
+      nsn?: string | null,
+      partNumber?: string | null,
+      altPartNumber?: string | null,
+      description?: string | null,
+      quantity?: number | null,
+      price?: number | null,
+      certification?: string | null,
+      companyID: string,
+      imageUrls?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type ItemsByCompanyIDQueryVariables = {
+  companyID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelItemFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ItemsByCompanyIDQuery = {
+  itemsByCompanyID?:  {
+    __typename: "ModelItemConnection",
+    items:  Array< {
+      __typename: "Item",
+      id: string,
+      nsn?: string | null,
+      partNumber?: string | null,
+      altPartNumber?: string | null,
+      description?: string | null,
+      quantity?: number | null,
+      condition?: string | null,
+      control?: string | null,
+      price?: number | null,
+      companyID: string,
+      imageUrls?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type CompanyShippingAddressesByShippingAddressIdQueryVariables = {
+  shippingAddressId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCompanyShippingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CompanyShippingAddressesByShippingAddressIdQuery = {
+  companyShippingAddressesByShippingAddressId?:  {
+    __typename: "ModelCompanyShippingAddressConnection",
+    items:  Array< {
+      __typename: "CompanyShippingAddress",
+      id: string,
+      shippingAddressId: string,
+      companyId: string,
+      shippingAddress:  {
+        __typename: "ShippingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        regi?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      company:  {
+        __typename: "Company",
+        id: string,
+        companyName?: string | null,
+        phone?: string | null,
+        contactEmail?: string | null,
+        countryID?: string | null,
+        profilePictureUrl?: string | null,
+        fax?: string | null,
+        companyDescription?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        companyCompanyOwnerUserID?: string | null,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type CompanyShippingAddressesByCompanyIdQueryVariables = {
+  companyId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelCompanyShippingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type CompanyShippingAddressesByCompanyIdQuery = {
+  companyShippingAddressesByCompanyId?:  {
+    __typename: "ModelCompanyShippingAddressConnection",
+    items:  Array< {
+      __typename: "CompanyShippingAddress",
+      id: string,
+      shippingAddressId: string,
+      companyId: string,
+      shippingAddress:  {
+        __typename: "ShippingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        regi?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      company:  {
+        __typename: "Company",
+        id: string,
+        companyName?: string | null,
+        phone?: string | null,
+        contactEmail?: string | null,
+        countryID?: string | null,
+        profilePictureUrl?: string | null,
+        fax?: string | null,
+        companyDescription?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        companyCompanyOwnerUserID?: string | null,
       },
       createdAt: string,
       updatedAt: string,
@@ -7820,7 +6948,7 @@ export type CompanyBillingAddressesByBillingAddressIdQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
       },
       createdAt: string,
       updatedAt: string,
@@ -7882,13 +7010,831 @@ export type CompanyBillingAddressesByCompanyIdQuery = {
         _version: number,
         _deleted?: boolean | null,
         _lastChangedAt: number,
-        companyCompanyOwnerId?: string | null,
+        companyCompanyOwnerUserID?: string | null,
       },
       createdAt: string,
       updatedAt: string,
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetUserDetailsQueryVariables = {
+  userID: string,
+};
+
+export type GetUserDetailsQuery = {
+  getUserDetails?:  {
+    __typename: "UserDetails",
+    userID: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    contactEmail?: string | null,
+    contactPhone?: string | null,
+    companyID: string,
+    BillingAddresses?:  {
+      __typename: "ModelUserDetailsBillingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsBillingAddress",
+        id: string,
+        userDetailsUserID: string,
+        billingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    ShippingAddresses?:  {
+      __typename: "ModelUserDetailsShippingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsShippingAddress",
+        id: string,
+        userDetailsUserID: string,
+        shippingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    isCompanyOwner?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListUserDetailsQueryVariables = {
+  userID?: string | null,
+  filter?: ModelUserDetailsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListUserDetailsQuery = {
+  listUserDetails?:  {
+    __typename: "ModelUserDetailsConnection",
+    items:  Array< {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncUserDetailsQueryVariables = {
+  filter?: ModelUserDetailsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncUserDetailsQuery = {
+  syncUserDetails?:  {
+    __typename: "ModelUserDetailsConnection",
+    items:  Array< {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type UserDetailsByCompanyIDQueryVariables = {
+  companyID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserDetailsFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserDetailsByCompanyIDQuery = {
+  userDetailsByCompanyID?:  {
+    __typename: "ModelUserDetailsConnection",
+    items:  Array< {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetUserDetailsBillingAddressQueryVariables = {
+  id: string,
+};
+
+export type GetUserDetailsBillingAddressQuery = {
+  getUserDetailsBillingAddress?:  {
+    __typename: "UserDetailsBillingAddress",
+    id: string,
+    userDetailsUserID: string,
+    billingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    billingAddress:  {
+      __typename: "BillingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      region?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      CompanyBillingAddresses?:  {
+        __typename: "ModelCompanyBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      countryID: string,
+      UserBillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListUserDetailsBillingAddressesQueryVariables = {
+  filter?: ModelUserDetailsBillingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUserDetailsBillingAddressesQuery = {
+  listUserDetailsBillingAddresses?:  {
+    __typename: "ModelUserDetailsBillingAddressConnection",
+    items:  Array< {
+      __typename: "UserDetailsBillingAddress",
+      id: string,
+      userDetailsUserID: string,
+      billingAddressId: string,
+      userDetails:  {
+        __typename: "UserDetails",
+        userID: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        contactEmail?: string | null,
+        contactPhone?: string | null,
+        companyID: string,
+        isCompanyOwner?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      billingAddress:  {
+        __typename: "BillingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        region?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncUserDetailsBillingAddressesQueryVariables = {
+  filter?: ModelUserDetailsBillingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncUserDetailsBillingAddressesQuery = {
+  syncUserDetailsBillingAddresses?:  {
+    __typename: "ModelUserDetailsBillingAddressConnection",
+    items:  Array< {
+      __typename: "UserDetailsBillingAddress",
+      id: string,
+      userDetailsUserID: string,
+      billingAddressId: string,
+      userDetails:  {
+        __typename: "UserDetails",
+        userID: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        contactEmail?: string | null,
+        contactPhone?: string | null,
+        companyID: string,
+        isCompanyOwner?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      billingAddress:  {
+        __typename: "BillingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        region?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type UserDetailsBillingAddressesByUserDetailsUserIDQueryVariables = {
+  userDetailsUserID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserDetailsBillingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserDetailsBillingAddressesByUserDetailsUserIDQuery = {
+  userDetailsBillingAddressesByUserDetailsUserID?:  {
+    __typename: "ModelUserDetailsBillingAddressConnection",
+    items:  Array< {
+      __typename: "UserDetailsBillingAddress",
+      id: string,
+      userDetailsUserID: string,
+      billingAddressId: string,
+      userDetails:  {
+        __typename: "UserDetails",
+        userID: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        contactEmail?: string | null,
+        contactPhone?: string | null,
+        companyID: string,
+        isCompanyOwner?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      billingAddress:  {
+        __typename: "BillingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        region?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type UserDetailsBillingAddressesByBillingAddressIdQueryVariables = {
+  billingAddressId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserDetailsBillingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserDetailsBillingAddressesByBillingAddressIdQuery = {
+  userDetailsBillingAddressesByBillingAddressId?:  {
+    __typename: "ModelUserDetailsBillingAddressConnection",
+    items:  Array< {
+      __typename: "UserDetailsBillingAddress",
+      id: string,
+      userDetailsUserID: string,
+      billingAddressId: string,
+      userDetails:  {
+        __typename: "UserDetails",
+        userID: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        contactEmail?: string | null,
+        contactPhone?: string | null,
+        companyID: string,
+        isCompanyOwner?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      billingAddress:  {
+        __typename: "BillingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        region?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetUserDetailsShippingAddressQueryVariables = {
+  id: string,
+};
+
+export type GetUserDetailsShippingAddressQuery = {
+  getUserDetailsShippingAddress?:  {
+    __typename: "UserDetailsShippingAddress",
+    id: string,
+    userDetailsUserID: string,
+    shippingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    shippingAddress:  {
+      __typename: "ShippingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      regi?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      countryID: string,
+      UserShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyShippingAddresses?:  {
+        __typename: "ModelCompanyShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListUserDetailsShippingAddressesQueryVariables = {
+  filter?: ModelUserDetailsShippingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUserDetailsShippingAddressesQuery = {
+  listUserDetailsShippingAddresses?:  {
+    __typename: "ModelUserDetailsShippingAddressConnection",
+    items:  Array< {
+      __typename: "UserDetailsShippingAddress",
+      id: string,
+      userDetailsUserID: string,
+      shippingAddressId: string,
+      userDetails:  {
+        __typename: "UserDetails",
+        userID: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        contactEmail?: string | null,
+        contactPhone?: string | null,
+        companyID: string,
+        isCompanyOwner?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      shippingAddress:  {
+        __typename: "ShippingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        regi?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncUserDetailsShippingAddressesQueryVariables = {
+  filter?: ModelUserDetailsShippingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncUserDetailsShippingAddressesQuery = {
+  syncUserDetailsShippingAddresses?:  {
+    __typename: "ModelUserDetailsShippingAddressConnection",
+    items:  Array< {
+      __typename: "UserDetailsShippingAddress",
+      id: string,
+      userDetailsUserID: string,
+      shippingAddressId: string,
+      userDetails:  {
+        __typename: "UserDetails",
+        userID: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        contactEmail?: string | null,
+        contactPhone?: string | null,
+        companyID: string,
+        isCompanyOwner?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      shippingAddress:  {
+        __typename: "ShippingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        regi?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type UserDetailsShippingAddressesByUserDetailsUserIDQueryVariables = {
+  userDetailsUserID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserDetailsShippingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserDetailsShippingAddressesByUserDetailsUserIDQuery = {
+  userDetailsShippingAddressesByUserDetailsUserID?:  {
+    __typename: "ModelUserDetailsShippingAddressConnection",
+    items:  Array< {
+      __typename: "UserDetailsShippingAddress",
+      id: string,
+      userDetailsUserID: string,
+      shippingAddressId: string,
+      userDetails:  {
+        __typename: "UserDetails",
+        userID: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        contactEmail?: string | null,
+        contactPhone?: string | null,
+        companyID: string,
+        isCompanyOwner?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      shippingAddress:  {
+        __typename: "ShippingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        regi?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type UserDetailsShippingAddressesByShippingAddressIdQueryVariables = {
+  shippingAddressId: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserDetailsShippingAddressFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type UserDetailsShippingAddressesByShippingAddressIdQuery = {
+  userDetailsShippingAddressesByShippingAddressId?:  {
+    __typename: "ModelUserDetailsShippingAddressConnection",
+    items:  Array< {
+      __typename: "UserDetailsShippingAddress",
+      id: string,
+      userDetailsUserID: string,
+      shippingAddressId: string,
+      userDetails:  {
+        __typename: "UserDetails",
+        userID: string,
+        firstName?: string | null,
+        lastName?: string | null,
+        contactEmail?: string | null,
+        contactPhone?: string | null,
+        companyID: string,
+        isCompanyOwner?: boolean | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      },
+      shippingAddress:  {
+        __typename: "ShippingAddress",
+        id: string,
+        unitNumber?: string | null,
+        streetNumber?: string | null,
+        addressLine1?: string | null,
+        addressLine2?: string | null,
+        city?: string | null,
+        regi?: string | null,
+        postalCode?: string | null,
+        isDefault?: boolean | null,
+        countryID: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+      },
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
@@ -7963,8 +7909,7 @@ export type OnCreateRfqSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -8002,7 +7947,7 @@ export type OnCreateRfqSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     SendingCompany?:  {
       __typename: "Company",
@@ -8032,8 +7977,7 @@ export type OnCreateRfqSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -8071,7 +8015,7 @@ export type OnCreateRfqSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -8151,8 +8095,7 @@ export type OnUpdateRfqSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -8190,7 +8133,7 @@ export type OnUpdateRfqSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     SendingCompany?:  {
       __typename: "Company",
@@ -8220,8 +8163,7 @@ export type OnUpdateRfqSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -8259,7 +8201,7 @@ export type OnUpdateRfqSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -8339,8 +8281,7 @@ export type OnDeleteRfqSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -8378,7 +8319,7 @@ export type OnDeleteRfqSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     SendingCompany?:  {
       __typename: "Company",
@@ -8408,8 +8349,7 @@ export type OnDeleteRfqSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -8447,7 +8387,7 @@ export type OnDeleteRfqSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -8456,183 +8396,6 @@ export type OnDeleteRfqSubscription = {
     _lastChangedAt: number,
     companySentRfqsId?: string | null,
     companyReceivedRfqsId?: string | null,
-  } | null,
-};
-
-export type OnCreateUserDetailsSubscriptionVariables = {
-  filter?: ModelSubscriptionUserDetailsFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreateUserDetailsSubscription = {
-  onCreateUserDetails?:  {
-    __typename: "UserDetails",
-    id: string,
-    userID?: string | null,
-    firstName?: string | null,
-    lastName?: string | null,
-    contactEmail?: string | null,
-    contactPhone?: string | null,
-    companyID: string,
-    BillingAddresses?:  {
-      __typename: "ModelUserDetailsBillingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsBillingAddress",
-        id: string,
-        userDetailsId: string,
-        billingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    ShippingAddresses?:  {
-      __typename: "ModelUserDetailsShippingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsShippingAddress",
-        id: string,
-        userDetailsId: string,
-        shippingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    isCompanyOwner?: boolean | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnUpdateUserDetailsSubscriptionVariables = {
-  filter?: ModelSubscriptionUserDetailsFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdateUserDetailsSubscription = {
-  onUpdateUserDetails?:  {
-    __typename: "UserDetails",
-    id: string,
-    userID?: string | null,
-    firstName?: string | null,
-    lastName?: string | null,
-    contactEmail?: string | null,
-    contactPhone?: string | null,
-    companyID: string,
-    BillingAddresses?:  {
-      __typename: "ModelUserDetailsBillingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsBillingAddress",
-        id: string,
-        userDetailsId: string,
-        billingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    ShippingAddresses?:  {
-      __typename: "ModelUserDetailsShippingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsShippingAddress",
-        id: string,
-        userDetailsId: string,
-        shippingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    isCompanyOwner?: boolean | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnDeleteUserDetailsSubscriptionVariables = {
-  filter?: ModelSubscriptionUserDetailsFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeleteUserDetailsSubscription = {
-  onDeleteUserDetails?:  {
-    __typename: "UserDetails",
-    id: string,
-    userID?: string | null,
-    firstName?: string | null,
-    lastName?: string | null,
-    contactEmail?: string | null,
-    contactPhone?: string | null,
-    companyID: string,
-    BillingAddresses?:  {
-      __typename: "ModelUserDetailsBillingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsBillingAddress",
-        id: string,
-        userDetailsId: string,
-        billingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    ShippingAddresses?:  {
-      __typename: "ModelUserDetailsShippingAddressConnection",
-      items:  Array< {
-        __typename: "UserDetailsShippingAddress",
-        id: string,
-        userDetailsId: string,
-        shippingAddressId: string,
-        createdAt: string,
-        updatedAt: string,
-        _version: number,
-        _deleted?: boolean | null,
-        _lastChangedAt: number,
-        owner?: string | null,
-      } | null >,
-      nextToken?: string | null,
-      startedAt?: number | null,
-    } | null,
-    isCompanyOwner?: boolean | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
   } | null,
 };
 
@@ -8850,7 +8613,7 @@ export type OnCreateShippingAddressSubscription = {
       items:  Array< {
         __typename: "UserDetailsShippingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         shippingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -8908,7 +8671,7 @@ export type OnUpdateShippingAddressSubscription = {
       items:  Array< {
         __typename: "UserDetailsShippingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         shippingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -8966,7 +8729,7 @@ export type OnDeleteShippingAddressSubscription = {
       items:  Array< {
         __typename: "UserDetailsShippingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         shippingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -9040,7 +8803,7 @@ export type OnCreateBillingAddressSubscription = {
       items:  Array< {
         __typename: "UserDetailsBillingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         billingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -9098,7 +8861,7 @@ export type OnUpdateBillingAddressSubscription = {
       items:  Array< {
         __typename: "UserDetailsBillingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         billingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -9156,7 +8919,7 @@ export type OnDeleteBillingAddressSubscription = {
       items:  Array< {
         __typename: "UserDetailsBillingAddress",
         id: string,
-        userDetailsId: string,
+        userDetailsUserID: string,
         billingAddressId: string,
         createdAt: string,
         updatedAt: string,
@@ -9254,8 +9017,7 @@ export type OnCreateCompanySubscription = {
       __typename: "ModelUserDetailsConnection",
       items:  Array< {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -9274,8 +9036,7 @@ export type OnCreateCompanySubscription = {
     } | null,
     CompanyOwner?:  {
       __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
+      userID: string,
       firstName?: string | null,
       lastName?: string | null,
       contactEmail?: string | null,
@@ -9420,7 +9181,7 @@ export type OnCreateCompanySubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    companyCompanyOwnerId?: string | null,
+    companyCompanyOwnerUserID?: string | null,
   } | null,
 };
 
@@ -9502,8 +9263,7 @@ export type OnUpdateCompanySubscription = {
       __typename: "ModelUserDetailsConnection",
       items:  Array< {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -9522,8 +9282,7 @@ export type OnUpdateCompanySubscription = {
     } | null,
     CompanyOwner?:  {
       __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
+      userID: string,
       firstName?: string | null,
       lastName?: string | null,
       contactEmail?: string | null,
@@ -9668,7 +9427,7 @@ export type OnUpdateCompanySubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    companyCompanyOwnerId?: string | null,
+    companyCompanyOwnerUserID?: string | null,
   } | null,
 };
 
@@ -9750,8 +9509,7 @@ export type OnDeleteCompanySubscription = {
       __typename: "ModelUserDetailsConnection",
       items:  Array< {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -9770,8 +9528,7 @@ export type OnDeleteCompanySubscription = {
     } | null,
     CompanyOwner?:  {
       __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
+      userID: string,
       firstName?: string | null,
       lastName?: string | null,
       contactEmail?: string | null,
@@ -9916,7 +9673,7 @@ export type OnDeleteCompanySubscription = {
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
-    companyCompanyOwnerId?: string | null,
+    companyCompanyOwnerUserID?: string | null,
   } | null,
 };
 
@@ -10073,456 +9830,6 @@ export type OnDeleteItemSubscription = {
   } | null,
 };
 
-export type OnCreateUserDetailsBillingAddressSubscriptionVariables = {
-  filter?: ModelSubscriptionUserDetailsBillingAddressFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreateUserDetailsBillingAddressSubscription = {
-  onCreateUserDetailsBillingAddress?:  {
-    __typename: "UserDetailsBillingAddress",
-    id: string,
-    userDetailsId: string,
-    billingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    billingAddress:  {
-      __typename: "BillingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      region?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      CompanyBillingAddresses?:  {
-        __typename: "ModelCompanyBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      countryID: string,
-      UserBillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnUpdateUserDetailsBillingAddressSubscriptionVariables = {
-  filter?: ModelSubscriptionUserDetailsBillingAddressFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdateUserDetailsBillingAddressSubscription = {
-  onUpdateUserDetailsBillingAddress?:  {
-    __typename: "UserDetailsBillingAddress",
-    id: string,
-    userDetailsId: string,
-    billingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    billingAddress:  {
-      __typename: "BillingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      region?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      CompanyBillingAddresses?:  {
-        __typename: "ModelCompanyBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      countryID: string,
-      UserBillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnDeleteUserDetailsBillingAddressSubscriptionVariables = {
-  filter?: ModelSubscriptionUserDetailsBillingAddressFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeleteUserDetailsBillingAddressSubscription = {
-  onDeleteUserDetailsBillingAddress?:  {
-    __typename: "UserDetailsBillingAddress",
-    id: string,
-    userDetailsId: string,
-    billingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    billingAddress:  {
-      __typename: "BillingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      region?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      CompanyBillingAddresses?:  {
-        __typename: "ModelCompanyBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      countryID: string,
-      UserBillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnCreateUserDetailsShippingAddressSubscriptionVariables = {
-  filter?: ModelSubscriptionUserDetailsShippingAddressFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnCreateUserDetailsShippingAddressSubscription = {
-  onCreateUserDetailsShippingAddress?:  {
-    __typename: "UserDetailsShippingAddress",
-    id: string,
-    userDetailsId: string,
-    shippingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    shippingAddress:  {
-      __typename: "ShippingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      regi?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      countryID: string,
-      UserShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyShippingAddresses?:  {
-        __typename: "ModelCompanyShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnUpdateUserDetailsShippingAddressSubscriptionVariables = {
-  filter?: ModelSubscriptionUserDetailsShippingAddressFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnUpdateUserDetailsShippingAddressSubscription = {
-  onUpdateUserDetailsShippingAddress?:  {
-    __typename: "UserDetailsShippingAddress",
-    id: string,
-    userDetailsId: string,
-    shippingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    shippingAddress:  {
-      __typename: "ShippingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      regi?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      countryID: string,
-      UserShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyShippingAddresses?:  {
-        __typename: "ModelCompanyShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
-export type OnDeleteUserDetailsShippingAddressSubscriptionVariables = {
-  filter?: ModelSubscriptionUserDetailsShippingAddressFilterInput | null,
-  owner?: string | null,
-};
-
-export type OnDeleteUserDetailsShippingAddressSubscription = {
-  onDeleteUserDetailsShippingAddress?:  {
-    __typename: "UserDetailsShippingAddress",
-    id: string,
-    userDetailsId: string,
-    shippingAddressId: string,
-    userDetails:  {
-      __typename: "UserDetails",
-      id: string,
-      userID?: string | null,
-      firstName?: string | null,
-      lastName?: string | null,
-      contactEmail?: string | null,
-      contactPhone?: string | null,
-      companyID: string,
-      BillingAddresses?:  {
-        __typename: "ModelUserDetailsBillingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      ShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      isCompanyOwner?: boolean | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-      owner?: string | null,
-    },
-    shippingAddress:  {
-      __typename: "ShippingAddress",
-      id: string,
-      unitNumber?: string | null,
-      streetNumber?: string | null,
-      addressLine1?: string | null,
-      addressLine2?: string | null,
-      city?: string | null,
-      regi?: string | null,
-      postalCode?: string | null,
-      isDefault?: boolean | null,
-      countryID: string,
-      UserShippingAddresses?:  {
-        __typename: "ModelUserDetailsShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      CompanyShippingAddresses?:  {
-        __typename: "ModelCompanyShippingAddressConnection",
-        nextToken?: string | null,
-        startedAt?: number | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    },
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
-    owner?: string | null,
-  } | null,
-};
-
 export type OnCreateCompanyShippingAddressSubscriptionVariables = {
   filter?: ModelSubscriptionCompanyShippingAddressFilterInput | null,
 };
@@ -10589,8 +9896,7 @@ export type OnCreateCompanyShippingAddressSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -10628,7 +9934,7 @@ export type OnCreateCompanyShippingAddressSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -10704,8 +10010,7 @@ export type OnUpdateCompanyShippingAddressSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -10743,7 +10048,7 @@ export type OnUpdateCompanyShippingAddressSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -10819,8 +10124,7 @@ export type OnDeleteCompanyShippingAddressSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -10858,7 +10162,7 @@ export type OnDeleteCompanyShippingAddressSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -10934,8 +10238,7 @@ export type OnCreateCompanyBillingAddressSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -10973,7 +10276,7 @@ export type OnCreateCompanyBillingAddressSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -11049,8 +10352,7 @@ export type OnUpdateCompanyBillingAddressSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -11088,7 +10390,7 @@ export type OnUpdateCompanyBillingAddressSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -11164,8 +10466,7 @@ export type OnDeleteCompanyBillingAddressSubscription = {
       } | null,
       CompanyOwner?:  {
         __typename: "UserDetails",
-        id: string,
-        userID?: string | null,
+        userID: string,
         firstName?: string | null,
         lastName?: string | null,
         contactEmail?: string | null,
@@ -11203,12 +10504,630 @@ export type OnDeleteCompanyBillingAddressSubscription = {
       _version: number,
       _deleted?: boolean | null,
       _lastChangedAt: number,
-      companyCompanyOwnerId?: string | null,
+      companyCompanyOwnerUserID?: string | null,
     },
     createdAt: string,
     updatedAt: string,
     _version: number,
     _deleted?: boolean | null,
     _lastChangedAt: number,
+  } | null,
+};
+
+export type OnCreateUserDetailsSubscriptionVariables = {
+  filter?: ModelSubscriptionUserDetailsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateUserDetailsSubscription = {
+  onCreateUserDetails?:  {
+    __typename: "UserDetails",
+    userID: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    contactEmail?: string | null,
+    contactPhone?: string | null,
+    companyID: string,
+    BillingAddresses?:  {
+      __typename: "ModelUserDetailsBillingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsBillingAddress",
+        id: string,
+        userDetailsUserID: string,
+        billingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    ShippingAddresses?:  {
+      __typename: "ModelUserDetailsShippingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsShippingAddress",
+        id: string,
+        userDetailsUserID: string,
+        shippingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    isCompanyOwner?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateUserDetailsSubscriptionVariables = {
+  filter?: ModelSubscriptionUserDetailsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateUserDetailsSubscription = {
+  onUpdateUserDetails?:  {
+    __typename: "UserDetails",
+    userID: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    contactEmail?: string | null,
+    contactPhone?: string | null,
+    companyID: string,
+    BillingAddresses?:  {
+      __typename: "ModelUserDetailsBillingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsBillingAddress",
+        id: string,
+        userDetailsUserID: string,
+        billingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    ShippingAddresses?:  {
+      __typename: "ModelUserDetailsShippingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsShippingAddress",
+        id: string,
+        userDetailsUserID: string,
+        shippingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    isCompanyOwner?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteUserDetailsSubscriptionVariables = {
+  filter?: ModelSubscriptionUserDetailsFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteUserDetailsSubscription = {
+  onDeleteUserDetails?:  {
+    __typename: "UserDetails",
+    userID: string,
+    firstName?: string | null,
+    lastName?: string | null,
+    contactEmail?: string | null,
+    contactPhone?: string | null,
+    companyID: string,
+    BillingAddresses?:  {
+      __typename: "ModelUserDetailsBillingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsBillingAddress",
+        id: string,
+        userDetailsUserID: string,
+        billingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    ShippingAddresses?:  {
+      __typename: "ModelUserDetailsShippingAddressConnection",
+      items:  Array< {
+        __typename: "UserDetailsShippingAddress",
+        id: string,
+        userDetailsUserID: string,
+        shippingAddressId: string,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        owner?: string | null,
+      } | null >,
+      nextToken?: string | null,
+      startedAt?: number | null,
+    } | null,
+    isCompanyOwner?: boolean | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateUserDetailsBillingAddressSubscriptionVariables = {
+  filter?: ModelSubscriptionUserDetailsBillingAddressFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateUserDetailsBillingAddressSubscription = {
+  onCreateUserDetailsBillingAddress?:  {
+    __typename: "UserDetailsBillingAddress",
+    id: string,
+    userDetailsUserID: string,
+    billingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    billingAddress:  {
+      __typename: "BillingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      region?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      CompanyBillingAddresses?:  {
+        __typename: "ModelCompanyBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      countryID: string,
+      UserBillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateUserDetailsBillingAddressSubscriptionVariables = {
+  filter?: ModelSubscriptionUserDetailsBillingAddressFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateUserDetailsBillingAddressSubscription = {
+  onUpdateUserDetailsBillingAddress?:  {
+    __typename: "UserDetailsBillingAddress",
+    id: string,
+    userDetailsUserID: string,
+    billingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    billingAddress:  {
+      __typename: "BillingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      region?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      CompanyBillingAddresses?:  {
+        __typename: "ModelCompanyBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      countryID: string,
+      UserBillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteUserDetailsBillingAddressSubscriptionVariables = {
+  filter?: ModelSubscriptionUserDetailsBillingAddressFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteUserDetailsBillingAddressSubscription = {
+  onDeleteUserDetailsBillingAddress?:  {
+    __typename: "UserDetailsBillingAddress",
+    id: string,
+    userDetailsUserID: string,
+    billingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    billingAddress:  {
+      __typename: "BillingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      region?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      CompanyBillingAddresses?:  {
+        __typename: "ModelCompanyBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      countryID: string,
+      UserBillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateUserDetailsShippingAddressSubscriptionVariables = {
+  filter?: ModelSubscriptionUserDetailsShippingAddressFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateUserDetailsShippingAddressSubscription = {
+  onCreateUserDetailsShippingAddress?:  {
+    __typename: "UserDetailsShippingAddress",
+    id: string,
+    userDetailsUserID: string,
+    shippingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    shippingAddress:  {
+      __typename: "ShippingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      regi?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      countryID: string,
+      UserShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyShippingAddresses?:  {
+        __typename: "ModelCompanyShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateUserDetailsShippingAddressSubscriptionVariables = {
+  filter?: ModelSubscriptionUserDetailsShippingAddressFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateUserDetailsShippingAddressSubscription = {
+  onUpdateUserDetailsShippingAddress?:  {
+    __typename: "UserDetailsShippingAddress",
+    id: string,
+    userDetailsUserID: string,
+    shippingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    shippingAddress:  {
+      __typename: "ShippingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      regi?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      countryID: string,
+      UserShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyShippingAddresses?:  {
+        __typename: "ModelCompanyShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteUserDetailsShippingAddressSubscriptionVariables = {
+  filter?: ModelSubscriptionUserDetailsShippingAddressFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteUserDetailsShippingAddressSubscription = {
+  onDeleteUserDetailsShippingAddress?:  {
+    __typename: "UserDetailsShippingAddress",
+    id: string,
+    userDetailsUserID: string,
+    shippingAddressId: string,
+    userDetails:  {
+      __typename: "UserDetails",
+      userID: string,
+      firstName?: string | null,
+      lastName?: string | null,
+      contactEmail?: string | null,
+      contactPhone?: string | null,
+      companyID: string,
+      BillingAddresses?:  {
+        __typename: "ModelUserDetailsBillingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      ShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      isCompanyOwner?: boolean | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      owner?: string | null,
+    },
+    shippingAddress:  {
+      __typename: "ShippingAddress",
+      id: string,
+      unitNumber?: string | null,
+      streetNumber?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      regi?: string | null,
+      postalCode?: string | null,
+      isDefault?: boolean | null,
+      countryID: string,
+      UserShippingAddresses?:  {
+        __typename: "ModelUserDetailsShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      CompanyShippingAddresses?:  {
+        __typename: "ModelCompanyShippingAddressConnection",
+        nextToken?: string | null,
+        startedAt?: number | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    },
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    owner?: string | null,
   } | null,
 };

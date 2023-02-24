@@ -229,22 +229,36 @@ export const GetAllCompanies = async () => {
   return companies;
 };
 
-export const CreateUserDetails = async (companyID, isOwner, user) => {
+export const CreateUserDetails = async (
+  // companyID,
+  isOwner,
+  user,
+  userDetails
+) => {
   console.log(user.username);
+  const existingUser = await DataStore.query(UserDetails, user.username);
+  console.log(existingUser);
+  if (existingUser) {
+    console.log('enter');
+    return existingUser;
+  }
   const response = await DataStore.save(
     new UserDetails({
-      companyID: companyID,
+      // companyID: companyID,
       isCompanyOwner: isOwner,
       userID: user.username,
+      firstName: userDetails.firstName,
+      lastName: userDetails.lastName,
+      contactEmail: userDetails.contactEmail,
+      contactPhone: userDetails.contactPhone,
     })
   );
+  console.log(response);
   return response;
 };
 
 export const AddUserShippingAddress = async (shippingAddress, user) => {
-  const userDetails = await DataStore.query(UserDetails, (p) =>
-    p.userID.eq(user.username)
-  );
+  const userDetails = await DataStore.query(UserDetails, user.username);
   try {
     const newShippingAddress = await DataStore.save(
       new ShippingAddress({
@@ -262,7 +276,7 @@ export const AddUserShippingAddress = async (shippingAddress, user) => {
       await DataStore.save(
         new UserDetailsShippingAddress({
           shippingAddress: newShippingAddress,
-          userDetails: userDetails[0],
+          userDetails: userDetails,
         })
       );
     } catch (error) {
@@ -342,7 +356,8 @@ export const AddCompany = async (
   email,
   phone,
   fax,
-  profilePictureUrl
+  profilePictureUrl,
+  country
 ) => {
   const response = await DataStore.save(
     new Company({
@@ -352,12 +367,13 @@ export const AddCompany = async (
       phone: phone,
       fax: fax,
       profilePictureUrl: profilePictureUrl,
+      countryID: country.code,
     })
   );
   return response;
 };
 export const AddUserToCompany = async (userDetails, companyID) => {
-  const userToAdd = await DataStore.query(UserDetails, userDetails.id);
+  const userToAdd = await DataStore.query(UserDetails, userDetails.userID);
   const original = await DataStore.query(Company, companyID);
   const response = await DataStore.save(
     Company.copyOf(original, (newCompany) => {
@@ -367,8 +383,13 @@ export const AddUserToCompany = async (userDetails, companyID) => {
   return response;
 };
 export const AddOwnerToCompany = async (userDetails, companyID) => {
-  const userToAdd = await DataStore.query(UserDetails, userDetails.id);
+  const userToAdd = await DataStore.query(UserDetails, userDetails.userID);
   const original = await DataStore.query(Company, companyID);
+  await DataStore.save(
+    UserDetails.copyOf(userToAdd, (user) => {
+      user.companyID = companyID;
+    })
+  );
   const response = await DataStore.save(
     Company.copyOf(original, (newCompany) => {
       newCompany.CompanyOwner = userToAdd;
@@ -420,7 +441,7 @@ export const GetCountries = async () => {
 export const GetUserShippingAddresses = async (userDetails) => {
   try {
     const userShippingAddresses = await DataStore.query(ShippingAddress, (p) =>
-      p.UserShippingAddresses.userDetails.id.eq(userDetails.id)
+      p.UserShippingAddresses.userDetails.userID.eq(userDetails.userID)
     );
     return userShippingAddresses;
   } catch (error) {
@@ -431,9 +452,7 @@ export const GetUserShippingAddresses = async (userDetails) => {
 export const GetCurrentUserDetails = async () => {
   const { user } = useAuthenticator();
   try {
-    const userDetails = await DataStore.query(UserDetails, (p) =>
-      p.userID.eq(user.username)
-    );
+    const userDetails = await DataStore.query(UserDetails, user.username);
     return userDetails;
   } catch (error) {
     console.log(error);
@@ -462,4 +481,8 @@ export const DeleteListOfParts = async (listOfParts) => {
 export const GetAllCompanyUsers = async (companyID) => {
   const response = await DataStore.query(Company, companyID);
   return response.CompanyMembers;
+};
+
+export const DeleteAllCountries = async () => {
+  await DataStore.delete(Country, Predicates.ALL);
 };

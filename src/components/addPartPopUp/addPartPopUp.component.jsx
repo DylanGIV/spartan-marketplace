@@ -33,10 +33,8 @@ const AddPartPopUp = forwardRef((props, ref) => {
       condition.length > 0 &&
       control.length > 0
     ) {
-      const userDetails = await DataStore.query(UserDetails, (p) =>
-        p.userID.eq(user.username)
-      );
-      const companyID = userDetails[0].companyID;
+      const userDetails = await DataStore.query(UserDetails, user.username);
+      const companyID = userDetails.companyID;
 
       const imageUrlStrings = [];
 

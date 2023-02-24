@@ -245,17 +245,15 @@ const Parts = (props) => {
 
   useEffect(() => {
     const getDetails = async () => {
-      const userDetails = await DataStore.query(UserDetails, (p) =>
-        p.userID.eq(user.username)
-      );
+      const userDetails = await DataStore.query(UserDetails, user.username);
       // const user = await Auth.currentAuthenticatedUser();
       setUserDetails({
         user: user,
-        companyID: userDetails[0].companyID,
-        isCompanyOwner: userDetails[0].isCompanyOwner,
-        id: userDetails[0].id,
-        contactEmail: userDetails[0].contactEmail,
-        contactPhone: userDetails[0].contactPhone,
+        companyID: userDetails.companyID,
+        isCompanyOwner: userDetails.isCompanyOwner,
+        id: userDetails.userID,
+        contactEmail: userDetails.contactEmail,
+        contactPhone: userDetails.contactPhone,
       });
       const countries = await GetCountries();
       setCountries(countries);
