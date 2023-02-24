@@ -137,7 +137,7 @@ const Inventory = () => {
       }
 
       if (company) {
-        setCompany(company[0]);
+        setCompany(company);
       }
     };
     queryData();

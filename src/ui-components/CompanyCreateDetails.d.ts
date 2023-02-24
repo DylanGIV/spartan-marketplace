@@ -6,12 +6,13 @@
 
 import * as React from "react";
 import { EscapeHatchProps } from "@aws-amplify/ui-react/internal";
-import { FlexProps, TextFieldProps, ViewProps } from "@aws-amplify/ui-react";
+import { FlexProps, SelectFieldProps, TextFieldProps, ViewProps } from "@aws-amplify/ui-react";
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type CompanyCreateDetailsOverridesProps = {
     CompanyCreateDetails?: PrimitiveOverrideProps<FlexProps>;
     CompanyName?: PrimitiveOverrideProps<TextFieldProps>;
     Description?: PrimitiveOverrideProps<TextFieldProps>;
+    CountrySelect?: PrimitiveOverrideProps<SelectFieldProps>;
     Email?: PrimitiveOverrideProps<TextFieldProps>;
     ContactPhone?: PrimitiveOverrideProps<ViewProps>;
     Fax?: PrimitiveOverrideProps<TextFieldProps>;

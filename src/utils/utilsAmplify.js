@@ -221,7 +221,7 @@ export const GetPartsByCompanyAndSearch = async (
   return parts;
 };
 export const GetCompanyByID = async (companyID) => {
-  const company = await DataStore.query(Company, (p) => p.id.eq(companyID));
+  const company = await DataStore.query(Company, companyID);
   return company;
 };
 export const GetAllCompanies = async () => {

@@ -79,7 +79,7 @@ function App() {
     const getCompany = async () => {
       if (userDetails) {
         const tempCompany = await GetCompanyByID(userDetails.companyID);
-        setCompany(tempCompany[0]);
+        setCompany(tempCompany);
       }
     };
     getCompany();

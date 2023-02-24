@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   FormControl,
   InputLabel,
@@ -24,6 +24,8 @@ import {
   AddOwnerToCompany,
   AddUserToCompany,
   CreateUserDetails,
+  GetCompanyByID,
+  GetCountries,
 } from '../../utils/utilsAmplify';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
@@ -42,16 +44,21 @@ import CompanyDetails from '../../ui-components/CompanyDetails';
 import CompanyCreateJoinType from '../../ui-components/CompanyCreateJoinType';
 import CompanyCreateDetails from '../../ui-components/CompanyCreateDetails';
 import CompanyJoinForm from '../../ui-components/CompanyJoinForm';
+import CheckIcon from '@mui/icons-material/Check';
+import { UserContext } from '../../context/user.context';
 
 export default function CompanyAndUserDetailsForm() {
   const [open, setOpen] = useState(false);
   const [hover, setHover] = useState(false);
   const [isLogoSubmitted, setIsLogoSubmitted] = useState(false);
   const [company, setCompany] = useState(null);
-  const [companySubmitButtonDisabled, setCompanySubmitButtonDisabled] =
-    useState(true);
+  const [companyCode, setCompanyCode] = useState('');
+  const [countries, setCountries] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState('');
 
   const [companyCreate, setCompanyCreate] = useState(true);
+  const [expanded, setExpanded] = useState(false);
+  const [canSubmit, setCanSubmit] = useState(false);
 
   const navigate = useNavigate();
   const { user } = useAuthenticator();
@@ -72,20 +79,29 @@ export default function CompanyAndUserDetailsForm() {
     contactPhone: '',
   });
 
-  console.log(userFormDetails);
+  console.log(selectedCountry);
 
   const { tokens } = useTheme();
 
   const [existingCompanies, setExistingCompanies] = useState([]);
 
+  // validate company code
   useEffect(() => {
-    if (company) {
-      setCompanySubmitButtonDisabled(false);
-    } else {
-      setCompanySubmitButtonDisabled(true);
+    const checkForCompany = async () => {
+      const tempCompany = await GetCompanyByID(companyCode);
+      console.log(tempCompany);
+      if (tempCompany) {
+        setCompany(tempCompany);
+      }
+    };
+    if (companyCode.length === 36) {
+      checkForCompany();
+    } else if (company) {
+      setCompany(null);
     }
-  }, [company]);
+  }, [companyCode]);
 
+  // get existing companies list
   useEffect(() => {
     const getExistingCompanies = async () => {
       try {
@@ -100,10 +116,39 @@ export default function CompanyAndUserDetailsForm() {
     getExistingCompanies();
   }, []);
 
+  // get countries list
+  useEffect(() => {
+    const getCountries = async () => {
+      const countries = await GetCountries();
+      setCountries(countries);
+    };
+    getCountries();
+  }, []);
+
+  // check if user can submit
+  useEffect(() => {
+    if (
+      userFormDetails.contactEmail &&
+      userFormDetails.contactPhone &&
+      userFormDetails.firstName &&
+      userFormDetails.lastName &&
+      company &&
+      newCompany.name &&
+      newCompany.email &&
+      newCompany.phone
+    ) {
+      setCanSubmit(true);
+    } else if (canSubmit) {
+      setCanSubmit(false);
+    }
+  }, [userFormDetails, company, newCompany]);
+
   const handleChange = (event) => {
     setCompany(event.target.value);
   };
-
+  const handlePanelChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -203,39 +248,173 @@ export default function CompanyAndUserDetailsForm() {
   };
 
   return (
-    <div>
-      <div style={{ marginTop: 20 }}>
-        <UserAndCompanyFormContainer
-          width={390}
-          backgroundColor={tokens.colors.background.secondary}
-          borderRadius={15}
-          // padding={10}
-          createQuoteDropdown={
-            <ScrollView height={'100%'} padding={5}>
-              <Accordion
-              // expanded={expanded === 'panel3'}
-              // onChange={handlePanelChange('panel3')}
-              >
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>User Details</Typography>
-                </AccordionSummary>
-                <UserDetailsForm
+    <div style={{ marginTop: 20 }}>
+      <UserAndCompanyFormContainer
+        width={390}
+        backgroundColor={tokens.colors.background.secondary}
+        borderRadius={15}
+        overrides={{
+          SubmitButton: {
+            isDisabled: !canSubmit,
+          },
+        }}
+        // padding={10}
+        createQuoteDropdown={
+          <ScrollView height={'100%'} padding={5}>
+            <Accordion
+              expanded={expanded === 'panel1'}
+              onChange={handlePanelChange('panel1')}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>User Details</Typography>
+              </AccordionSummary>
+              <UserDetailsForm
+                width={'100%'}
+                overrides={{
+                  FirstName: {
+                    name: 'firstName',
+                    value: userFormDetails.firstName,
+                    onChange: handleUserDetailsChange,
+                  },
+                  LastName: {
+                    name: 'lastName',
+                    value: userFormDetails.lastName,
+                    onChange: handleUserDetailsChange,
+                  },
+                  ContactEmail: {
+                    name: 'contactEmail',
+                    value: userFormDetails.contactEmail,
+                    onChange: handleUserDetailsChange,
+                  },
+                }}
+                contactPhone={
+                  <div style={{ marginBottom: 0 }}>
+                    <Text fontSize={14}>Contact Phone</Text>
+                    <PhoneInput
+                      inputProps={{
+                        name: 'phone',
+                        required: true,
+                        autoFocus: true,
+                      }}
+                      country={'us'}
+                      value={userFormDetails.phone}
+                      onChange={(value) => {
+                        setUserFormDetails({
+                          ...userFormDetails,
+                          phone: value,
+                        });
+                      }}
+                      countryCodeEditable={false}
+                      containerStyle={{
+                        width: '100%',
+                        marginTop: '2px',
+                        // marginBottom: '4px',
+                      }}
+                      inputStyle={{
+                        paddingLeft: 60,
+                        width: '100%',
+                        height: '33px',
+                        borderColor: tokens.colors.border.primary,
+                        borderRadius: 4,
+                      }}
+                      buttonStyle={{
+                        backgroundColor: tokens.colors.background.secondary,
+                        borderColor: tokens.colors.border.primary,
+                        paddingRight: 8,
+                        paddingLeft: 8,
+                        borderRadius: 4,
+                      }}
+                    />
+                  </div>
+                }
+              />
+            </Accordion>
+            <Accordion
+              expanded={expanded === 'panel2'}
+              onChange={handlePanelChange('panel2')}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography>Company Details</Typography>
+              </AccordionSummary>
+              <CompanyCreateJoinType
+                overrides={{
+                  Badge37813150: {
+                    onClick: () => {
+                      setCompanyCreate(true);
+                    },
+                    style: {
+                      cursor: 'pointer',
+                      backgroundColor: companyCreate
+                        ? tokens.colors.brand.primary[80]
+                        : null,
+                      color: companyCreate
+                        ? tokens.colors.font.inverse.value
+                        : null,
+                    },
+                  },
+                  Badge37813152: {
+                    onClick: () => {
+                      setCompanyCreate(false);
+                    },
+                    style: {
+                      cursor: 'pointer',
+                      backgroundColor: !companyCreate
+                        ? tokens.colors.brand.primary[80]
+                        : null,
+                      color: !companyCreate
+                        ? tokens.colors.font.inverse.value
+                        : null,
+                    },
+                  },
+                }}
+              />
+              {companyCreate ? (
+                <CompanyCreateDetails
                   width={'100%'}
                   overrides={{
-                    FirstName: {
-                      name: 'firstName',
-                      value: userFormDetails.firstName,
-                      onChange: handleUserDetailsChange,
+                    CompanyName: {
+                      id: 'name',
+                      name: 'name',
+                      value: newCompany.name,
+                      onChange: handleNewCompanyChange,
                     },
-                    LastName: {
-                      name: 'lastName',
-                      value: userFormDetails.lastName,
-                      onChange: handleUserDetailsChange,
+                    Description: {
+                      id: 'description',
+                      name: 'description',
+                      value: newCompany.description,
+                      onChange: handleNewCompanyChange,
                     },
-                    ContactEmail: {
-                      name: 'contactEmail',
-                      value: userFormDetails.contactEmail,
-                      onChange: handleUserDetailsChange,
+                    Email: {
+                      id: 'email',
+                      name: 'email',
+                      value: newCompany.email,
+                      onChange: handleNewCompanyChange,
+                      // paddingBottom: 5,
+                    },
+                    Fax: {
+                      id: 'fax',
+                      name: 'fax',
+                      value: newCompany.fax,
+                      onChange: handleNewCompanyChange,
+                    },
+                    CountrySelect: {
+                      options: countries
+                        ? countries.map((c) => {
+                            return c.countryName;
+                          })
+                        : null,
+                      value: selectedCountry ? selectedCountry.countryName : '',
+                      onChange: (event) => {
+                        console.log(event.target.value);
+                        setSelectedCountry(
+                          event.target.value === ''
+                            ? null
+                            : countries.find(
+                                (c) => c.countryName === event.target.value
+                              )
+                        );
+                      },
+                      placeholder: 'Select Country',
                     },
                   }}
                   contactPhone={
@@ -248,425 +427,138 @@ export default function CompanyAndUserDetailsForm() {
                           autoFocus: true,
                         }}
                         country={'us'}
-                        value={userFormDetails.phone}
-                        onChange={handleUserDetailsChange}
+                        value={newCompany.phone}
+                        onChange={handlePhoneChange}
                         countryCodeEditable={false}
                         containerStyle={{
                           width: '100%',
-                          marginTop: '6px',
-                          marginBottom: '4px',
+                          marginTop: '2px',
+                          // marginBottom: '4px',
                         }}
                         inputStyle={{
                           paddingLeft: 60,
                           width: '100%',
-                          height: '33px',
                           borderColor: tokens.colors.border.primary,
+                          height: '33px',
                           borderRadius: 4,
                         }}
                         buttonStyle={{
                           backgroundColor: tokens.colors.background.secondary,
                           borderColor: tokens.colors.border.primary,
                           paddingRight: 8,
-                          paddingLeft: 8,
                           borderRadius: 4,
+                          paddingLeft: 8,
                         }}
                       />
                     </div>
                   }
-                />
-              </Accordion>
-              <Accordion
-              // expanded={expanded === 'panel3'}
-              // onChange={handlePanelChange('panel3')}
-              >
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Typography>Company Details</Typography>
-                </AccordionSummary>
-                <CompanyCreateJoinType
-                  overrides={{
-                    Badge37813150: {
-                      onClick: () => {
-                        setCompanyCreate(true);
-                      },
-                      style: {
-                        cursor: 'pointer',
-                        backgroundColor: companyCreate
-                          ? tokens.colors.brand.primary[80]
-                          : null,
-                        color: companyCreate
-                          ? tokens.colors.font.inverse.value
-                          : null,
-                      },
-                    },
-                    Badge37813152: {
-                      onClick: () => {
-                        setCompanyCreate(false);
-                      },
-                      style: {
-                        cursor: 'pointer',
-                        backgroundColor: !companyCreate
-                          ? tokens.colors.brand.primary[80]
-                          : null,
-                        color: !companyCreate
-                          ? tokens.colors.font.inverse.value
-                          : null,
-                      },
-                    },
-                  }}
-                />
-                {companyCreate ? (
-                  <CompanyCreateDetails
-                    width={'100%'}
-                    overrides={{
-                      CompanyName: {
-                        id: 'name',
-                        name: 'name',
-                        value: newCompany.name,
-                        onChange: handleNewCompanyChange,
-                      },
-                      Description: {
-                        id: 'description',
-                        name: 'description',
-                        value: newCompany.description,
-                        onChange: handleNewCompanyChange,
-                      },
-                      Email: {
-                        id: 'email',
-                        name: 'email',
-                        value: newCompany.email,
-                        onChange: handleNewCompanyChange,
-                        // paddingBottom: 5,
-                      },
-                      Fax: {
-                        id: 'fax',
-                        name: 'fax',
-                        value: newCompany.fax,
-                        onChange: handleNewCompanyChange,
-                      },
-                    }}
-                    contactPhone={
-                      <div style={{ paddingBottom: 0 }}>
-                        <Text fontSize={14}>Contact Phone</Text>
-                        <PhoneInput
-                          inputProps={{
-                            name: 'phone',
-                            required: true,
-                            autoFocus: true,
-                          }}
-                          country={'us'}
-                          value={newCompany.phone}
-                          onChange={handlePhoneChange}
-                          countryCodeEditable={false}
-                          containerStyle={{
-                            width: '100%',
-                            marginTop: '6px',
-                            marginBottom: '4px',
-                          }}
-                          inputStyle={{
-                            paddingLeft: 60,
-                            width: '100%',
-                            borderColor: tokens.colors.border.primary,
-                            height: '33px',
-                            borderRadius: 4,
-                          }}
-                          buttonStyle={{
-                            backgroundColor: tokens.colors.background.secondary,
-                            borderColor: tokens.colors.border.primary,
-                            paddingRight: 8,
-                            borderRadius: 4,
-                            paddingLeft: 8,
-                          }}
-                        />
+                  logo={
+                    <div>
+                      <input
+                        accept='image/*'
+                        id='logo'
+                        type='file'
+                        name='logo'
+                        onChange={handleLogoChange}
+                        style={{ display: 'none' }}
+                      />
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignContent: 'center',
+                          marginTop: 5,
+                        }}
+                      >
+                        <label htmlFor='logo'>
+                          <Button
+                            component='span'
+                            variant='contained'
+                            color='inherit'
+                          >
+                            Upload Logo
+                          </Button>
+                        </label>
+                        {!isLogoSubmitted ? (
+                          <CheckBoxOutlineBlankIcon
+                            style={{ width: 40, height: 40, marginLeft: 6 }}
+                            color='action'
+                          />
+                        ) : (
+                          <div
+                            onClick={handleLogoClear}
+                            onMouseOver={(e) => {
+                              e.preventDefault();
+                              setHover(true);
+                            }}
+                            onMouseLeave={(e) => {
+                              e.preventDefault();
+                              setHover(false);
+                            }}
+                          >
+                            {hover ? (
+                              <DisabledByDefaultIcon
+                                style={{
+                                  width: 40,
+                                  height: 40,
+                                  marginLeft: 6,
+                                }}
+                                color='action'
+                              />
+                            ) : (
+                              <CheckBoxIcon
+                                style={{
+                                  width: 40,
+                                  height: 40,
+                                  marginLeft: 6,
+                                }}
+                                color='action'
+                              />
+                            )}
+                          </div>
+                        )}
                       </div>
-                    }
-                    logo={
-                      <div>
-                        <input
-                          accept='image/*'
-                          id='logo'
-                          type='file'
-                          name='logo'
-                          onChange={handleLogoChange}
-                          style={{ display: 'none' }}
-                        />
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignContent: 'center',
-                            marginTop: 5,
-                          }}
-                        >
-                          <label htmlFor='logo'>
-                            <Button
-                              component='span'
-                              variant='contained'
-                              color='inherit'
-                            >
-                              Upload Logo
-                            </Button>
-                          </label>
-                          {!isLogoSubmitted ? (
-                            <CheckBoxOutlineBlankIcon
-                              style={{ width: 40, height: 40, marginLeft: 6 }}
-                              color='action'
-                            />
-                          ) : (
-                            <div
-                              onClick={handleLogoClear}
-                              onMouseOver={(e) => {
-                                e.preventDefault();
-                                setHover(true);
-                              }}
-                              onMouseLeave={(e) => {
-                                e.preventDefault();
-                                setHover(false);
-                              }}
-                            >
-                              {hover ? (
-                                <DisabledByDefaultIcon
-                                  style={{
-                                    width: 40,
-                                    height: 40,
-                                    marginLeft: 6,
-                                  }}
-                                  color='action'
-                                />
-                              ) : (
-                                <CheckBoxIcon
-                                  style={{
-                                    width: 40,
-                                    height: 40,
-                                    marginLeft: 6,
-                                  }}
-                                  color='action'
-                                />
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    }
-                  />
-                ) : (
-                  <CompanyJoinForm
-                    overrides={{
-                      SelectField: {
-                        options: existingCompanies.map((c) => {
-                          return c.companyName;
-                        }),
-                        value: company ? company.companyName : '',
-                        onChange: (e) =>
-                          setCompany(
-                            e.target.value !== ''
-                              ? existingCompanies.find(
-                                  (c) => c.companyName === e.target.value
-                                )
-                              : null
-                          ),
-                      },
-                    }}
-                  />
-                )}
-              </Accordion>
-            </ScrollView>
-          }
-        />
-      </div>
-
-      <div style={{ height: '800px' }}>
-        <div style={styles.container}>
-          <div>
-            <div style={styles.existingCompanyText}>
-              Join an existing company?
-            </div>
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                height: 110,
-              }}
-            >
-              <FormControl
-                style={{ margin: 5, minWidth: 120, width: 150 }}
-                variant='standard'
-                fullWidth
-              >
-                <InputLabel id='company-select-label'>Company</InputLabel>
-                <Select
-                  labelId='company-select-label'
-                  id='company-select'
-                  value={company}
-                  onChange={handleChange}
-                >
-                  {existingCompanies
-                    ? existingCompanies.map((c) => {
-                        return (
-                          <MenuItem key={c.id} value={c.id}>
-                            {c.companyName}
-                          </MenuItem>
-                        );
-                      })
-                    : null}
-                </Select>
-              </FormControl>
-              <Button
-                disabled={companySubmitButtonDisabled}
-                onClick={handleJoinCompany}
-              >
-                Join Company
-              </Button>
-            </div>
-          </div>
-          <div>
-            <div style={styles.newCompanyText}>Don't see your company?</div>
-            <Button onClick={handleClickOpen} style={{ margin: 10 }}>
-              Create New Company
-            </Button>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby='form-dialog-title'
-            >
-              <DialogTitle id='form-dialog-title'>
-                Create New Company
-              </DialogTitle>
-              <DialogContent>
-                <TextField
-                  margin='dense'
-                  id='name'
-                  label='Company Name'
-                  type='text'
-                  fullWidth
-                  name='name'
-                  value={newCompany.name}
-                  onChange={handleNewCompanyChange}
-                  required
-                />
-                <TextField
-                  margin='dense'
-                  id='description'
-                  label='Description'
-                  type='text'
-                  fullWidth
-                  name='description'
-                  value={newCompany.description}
-                  onChange={handleNewCompanyChange}
-                  required
-                />
-
-                <PhoneInput
-                  inputProps={{
-                    name: 'phone',
-                    required: true,
-                    autoFocus: true,
-                  }}
-                  country={'us'}
-                  value={newCompany.phone}
-                  onChange={handlePhoneChange}
-                  countryCodeEditable={false}
-                  containerStyle={{
-                    width: '100%',
-                    marginTop: '6px',
-                    marginBottom: '4px',
-                  }}
-                  inputStyle={{
-                    paddingLeft: 60,
-                    width: '100%',
-                    height: '55px',
-                  }}
-                  buttonStyle={{
-                    backgroundColor: '#fff',
-                    paddingRight: 8,
-                    paddingLeft: 8,
-                  }}
-                />
-                <TextField
-                  margin='dense'
-                  id='email'
-                  label='Email'
-                  type='email'
-                  fullWidth
-                  name='email'
-                  value={newCompany.email}
-                  onChange={handleNewCompanyChange}
-                  required
-                />
-                <TextField
-                  margin='dense'
-                  id='fax'
-                  label='Fax'
-                  type='text'
-                  fullWidth
-                  name='fax'
-                  value={newCompany.fax}
-                  onChange={handleNewCompanyChange}
-                />
-                <input
-                  accept='image/*'
-                  id='logo'
-                  type='file'
-                  name='logo'
-                  onChange={handleLogoChange}
-                  style={{ display: 'none' }}
-                />
-                <div
-                  style={{
-                    display: 'flex',
-                    alignContent: 'center',
-                    marginTop: 5,
-                  }}
-                >
-                  <label htmlFor='logo'>
-                    <Button component='span' variant='contained'>
-                      Upload Logo
-                    </Button>
-                  </label>
-                  {!isLogoSubmitted ? (
-                    <CheckBoxOutlineBlankIcon
-                      style={{ width: 40, height: 40, marginLeft: 6 }}
-                      color='primary'
-                    />
-                  ) : (
-                    <div
-                      onClick={handleLogoClear}
-                      onMouseOver={(e) => {
-                        e.preventDefault();
-                        setHover(true);
-                      }}
-                      onMouseLeave={(e) => {
-                        e.preventDefault();
-                        setHover(false);
-                      }}
-                    >
-                      {hover ? (
-                        <DisabledByDefaultIcon
-                          style={{ width: 40, height: 40, marginLeft: 6 }}
-                          color='primary'
-                        />
-                      ) : (
-                        <CheckBoxIcon
-                          style={{ width: 40, height: 40, marginLeft: 6 }}
-                          color='primary'
-                        />
-                      )}
                     </div>
-                  )}
-                </div>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose} color='primary'>
-                  Cancel
-                </Button>
-                <Button onClick={handleSubmit} color='primary'>
-                  Submit
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </div>
-        </div>
-      </div>
+                  }
+                />
+              ) : (
+                <CompanyJoinForm
+                  width={'100%'}
+                  overrides={{
+                    TextField: {
+                      placeholder: 'xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx',
+                      value: companyCode,
+                      onChange: (e) => {
+                        setCompanyCode(e.target.value);
+                      },
+                      maxLength: 36,
+                      outerEndComponent: company ? (
+                        <CheckIcon color='success' style={{ marginLeft: 5 }} />
+                      ) : null,
+                      errorMessage: 'Not Valid',
+                      hasError: companyCode && !company,
+                    },
+                    SelectField: {
+                      options: existingCompanies.map((c) => {
+                        return c.companyName;
+                      }),
+                      value: company ? company.companyName : '',
+                      onChange: (e) =>
+                        setCompany(
+                          e.target.value !== ''
+                            ? existingCompanies.find(
+                                (c) => c.companyName === e.target.value
+                              )
+                            : null
+                        ),
+                      isDisabled: companyCode,
+                    },
+                  }}
+                />
+              )}
+            </Accordion>
+          </ScrollView>
+        }
+      />
     </div>
   );
 }

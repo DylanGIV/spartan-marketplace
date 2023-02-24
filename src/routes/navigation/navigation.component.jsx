@@ -26,7 +26,7 @@ const Navigation = () => {
       );
       const companyID = userDetails[0].companyID;
       const company = await GetCompanyByID(companyID);
-      setCompany(company[0]);
+      setCompany(company);
     };
     getCompany();
   }, []);

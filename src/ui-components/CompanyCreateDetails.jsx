@@ -7,7 +7,7 @@
 /* eslint-disable */
 import * as React from "react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { Flex, TextField, View } from "@aws-amplify/ui-react";
+import { Flex, SelectField, TextField, View } from "@aws-amplify/ui-react";
 export default function CompanyCreateDetails(props) {
   const { contactPhone, logo, overrides, ...rest } = props;
   return (
@@ -49,6 +49,18 @@ export default function CompanyCreateDetails(props) {
         variation="default"
         {...getOverrideProps(overrides, "Description")}
       ></TextField>
+      <SelectField
+        label="Country"
+        width="unset"
+        shrink="0"
+        alignSelf="stretch"
+        placeholder="Placeholder"
+        size="small"
+        isDisabled={false}
+        labelHidden={false}
+        variation="default"
+        {...getOverrideProps(overrides, "CountrySelect")}
+      ></SelectField>
       <TextField
         label="Contact Email"
         width="unset"

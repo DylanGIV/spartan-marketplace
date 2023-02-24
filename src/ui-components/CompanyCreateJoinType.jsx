@@ -26,7 +26,7 @@ export default function CompanyCreateJoinType(props) {
       {...rest}
     >
       <Flex
-        gap="20px"
+        gap="30px"
         direction="row"
         width="unset"
         height="unset"
@@ -40,14 +40,14 @@ export default function CompanyCreateJoinType(props) {
       >
         <Badge
           shrink="0"
-          size="default"
+          size="small"
           variation="default"
           children="Create Company"
           {...getOverrideProps(overrides, "Badge37813150")}
         ></Badge>
         <Badge
           shrink="0"
-          size="default"
+          size="small"
           variation="default"
           children="Join Company"
           {...getOverrideProps(overrides, "Badge37813152")}
