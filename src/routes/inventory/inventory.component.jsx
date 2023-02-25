@@ -275,6 +275,7 @@ const Inventory = () => {
           currentPage={currentPage}
           onChange={(newPageIndex) => setCurrentPage(newPageIndex)}
           // totalPages={Math.ceil(totalItems / itemsPerPage)}
+          totalPages={2}
           onNext={() => setCurrentPage(currentPage + 1)}
           onPrevious={() => setCurrentPage(currentPage - 1)}
         />
@@ -283,7 +284,11 @@ const Inventory = () => {
       <Modal open={isAddPartOpen} onClose={() => setIsAddPartOpen(false)}>
         <AddPartPopUp />
       </Modal>
-      <Modal open={isImportPartOpen} onClose={() => setIsImportPartOpen(false)}>
+      <Modal
+        open={isImportPartOpen}
+        // onClose={() => setIsImportPartOpen(false)}
+        disableEscapeKeyDown={true}
+      >
         <ImportDataPopUp />
       </Modal>
       <Modal
