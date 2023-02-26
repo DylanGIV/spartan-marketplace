@@ -1280,6 +1280,87 @@ export const syncItems = /* GraphQL */ `
     }
   }
 `;
+export const getCompanyItemsImport = /* GraphQL */ `
+  query GetCompanyItemsImport($id: ID!) {
+    getCompanyItemsImport(id: $id) {
+      id
+      companyID
+      importName
+      importStatus
+      importProgress
+      importFileKey
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listCompanyItemsImports = /* GraphQL */ `
+  query ListCompanyItemsImports(
+    $id: ID
+    $filter: ModelCompanyItemsImportFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listCompanyItemsImports(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        companyID
+        importName
+        importStatus
+        importProgress
+        importFileKey
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncCompanyItemsImports = /* GraphQL */ `
+  query SyncCompanyItemsImports(
+    $filter: ModelCompanyItemsImportFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncCompanyItemsImports(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        companyID
+        importName
+        importStatus
+        importProgress
+        importFileKey
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getCompanyShippingAddress = /* GraphQL */ `
   query GetCompanyShippingAddress($id: ID!) {
     getCompanyShippingAddress(id: $id) {

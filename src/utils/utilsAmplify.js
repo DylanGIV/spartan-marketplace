@@ -8,6 +8,7 @@ import {
 } from 'aws-amplify';
 import {
   Company,
+  CompanyItemsImport,
   Country,
   Item,
   Rfq,
@@ -24,7 +25,8 @@ import React from 'react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 // import { ItemsByCompanyIDQuery } from '../API';
 // import {} from '../API.ts';
-// import * as queries from '../graphql/queries';
+import * as queries from '../graphql/queries.ts';
+import * as mutations from '../graphql/mutations.ts';
 
 export const SignOutAuth = async () => {
   return await Auth.signOut();
@@ -485,4 +487,34 @@ export const GetAllCompanyUsers = async (companyID) => {
 
 export const DeleteAllCountries = async () => {
   await DataStore.delete(Country, Predicates.ALL);
+};
+
+export const CreateCompanyItemsImportRequest = async (
+  companyID,
+  fileID,
+  importName
+) => {
+  console.log('anything?');
+  console.log(mutations.createCompanyItemsImport);
+  const response = await API.graphql(
+    graphqlOperation(mutations.createCompanyItemsImport, {
+      input: {
+        companyID: companyID,
+        id: fileID,
+        importName: importName,
+        importProgress: 0,
+        importStatus: 'Pending',
+      },
+    })
+  );
+  // const response = await DataStore.save(
+  //   new CompanyItemsImport({
+  //     companyID: companyID,
+  //     id: fileID,
+  //     importName: importName,
+  //     importProgress: 0,
+  //     importStatus: 'Pending',
+  //   })
+  // );
+  return response;
 };

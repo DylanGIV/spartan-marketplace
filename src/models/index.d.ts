@@ -1,4 +1,4 @@
-import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier, CustomIdentifier } from "@aws-amplify/datastore";
+import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier, CustomIdentifier, OptionallyManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncItem, AsyncCollection } from "@aws-amplify/datastore";
 
@@ -422,6 +422,42 @@ export declare type Country = LazyLoading extends LazyLoadingDisabled ? EagerCou
 
 export declare const Country: (new (init: ModelInit<Country>) => Country) & {
   copyOf(source: Country, mutator: (draft: MutableModel<Country>) => MutableModel<Country> | void): Country;
+}
+
+type EagerCompanyItemsImport = {
+  readonly [__modelMeta__]: {
+    identifier: OptionallyManagedIdentifier<CompanyItemsImport, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly companyID: string;
+  readonly importName?: string | null;
+  readonly importStatus?: string | null;
+  readonly importProgress?: number | null;
+  readonly importFileKey?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyCompanyItemsImport = {
+  readonly [__modelMeta__]: {
+    identifier: OptionallyManagedIdentifier<CompanyItemsImport, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly companyID: string;
+  readonly importName?: string | null;
+  readonly importStatus?: string | null;
+  readonly importProgress?: number | null;
+  readonly importFileKey?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type CompanyItemsImport = LazyLoading extends LazyLoadingDisabled ? EagerCompanyItemsImport : LazyCompanyItemsImport
+
+export declare const CompanyItemsImport: (new (init: ModelInit<CompanyItemsImport>) => CompanyItemsImport) & {
+  copyOf(source: CompanyItemsImport, mutator: (draft: MutableModel<CompanyItemsImport>) => MutableModel<CompanyItemsImport> | void): CompanyItemsImport;
 }
 
 type EagerCompanyBillingAddress = {

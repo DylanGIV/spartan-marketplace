@@ -1829,6 +1829,66 @@ export const deleteItem = /* GraphQL */ `
     }
   }
 `;
+export const createCompanyItemsImport = /* GraphQL */ `
+  mutation CreateCompanyItemsImport(
+    $input: CreateCompanyItemsImportInput!
+    $condition: ModelCompanyItemsImportConditionInput
+  ) {
+    createCompanyItemsImport(input: $input, condition: $condition) {
+      id
+      companyID
+      importName
+      importStatus
+      importProgress
+      importFileKey
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const updateCompanyItemsImport = /* GraphQL */ `
+  mutation UpdateCompanyItemsImport(
+    $input: UpdateCompanyItemsImportInput!
+    $condition: ModelCompanyItemsImportConditionInput
+  ) {
+    updateCompanyItemsImport(input: $input, condition: $condition) {
+      id
+      companyID
+      importName
+      importStatus
+      importProgress
+      importFileKey
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const deleteCompanyItemsImport = /* GraphQL */ `
+  mutation DeleteCompanyItemsImport(
+    $input: DeleteCompanyItemsImportInput!
+    $condition: ModelCompanyItemsImportConditionInput
+  ) {
+    deleteCompanyItemsImport(input: $input, condition: $condition) {
+      id
+      companyID
+      importName
+      importStatus
+      importProgress
+      importFileKey
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const createCompanyShippingAddress = /* GraphQL */ `
   mutation CreateCompanyShippingAddress(
     $input: CreateCompanyShippingAddressInput!

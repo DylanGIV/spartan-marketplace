@@ -793,6 +793,57 @@ export type DeleteItemInput = {
   _version?: number | null,
 };
 
+export type CreateCompanyItemsImportInput = {
+  id?: string | null,
+  companyID: string,
+  importName?: string | null,
+  importStatus?: string | null,
+  importProgress?: number | null,
+  importFileKey?: string | null,
+  _version?: number | null,
+};
+
+export type ModelCompanyItemsImportConditionInput = {
+  companyID?: ModelIDInput | null,
+  importName?: ModelStringInput | null,
+  importStatus?: ModelStringInput | null,
+  importProgress?: ModelFloatInput | null,
+  importFileKey?: ModelStringInput | null,
+  and?: Array< ModelCompanyItemsImportConditionInput | null > | null,
+  or?: Array< ModelCompanyItemsImportConditionInput | null > | null,
+  not?: ModelCompanyItemsImportConditionInput | null,
+};
+
+export type CompanyItemsImport = {
+  __typename: "CompanyItemsImport",
+  id: string,
+  companyID: string,
+  importName?: string | null,
+  importStatus?: string | null,
+  importProgress?: number | null,
+  importFileKey?: string | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type UpdateCompanyItemsImportInput = {
+  id: string,
+  companyID?: string | null,
+  importName?: string | null,
+  importStatus?: string | null,
+  importProgress?: number | null,
+  importFileKey?: string | null,
+  _version?: number | null,
+};
+
+export type DeleteCompanyItemsImportInput = {
+  id: string,
+  _version?: number | null,
+};
+
 export type CreateCompanyShippingAddressInput = {
   id?: string | null,
   shippingAddressId: string,
@@ -1084,6 +1135,31 @@ export type ModelItemFilterInput = {
   not?: ModelItemFilterInput | null,
 };
 
+export type ModelCompanyItemsImportFilterInput = {
+  id?: ModelIDInput | null,
+  companyID?: ModelIDInput | null,
+  importName?: ModelStringInput | null,
+  importStatus?: ModelStringInput | null,
+  importProgress?: ModelFloatInput | null,
+  importFileKey?: ModelStringInput | null,
+  and?: Array< ModelCompanyItemsImportFilterInput | null > | null,
+  or?: Array< ModelCompanyItemsImportFilterInput | null > | null,
+  not?: ModelCompanyItemsImportFilterInput | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
+export type ModelCompanyItemsImportConnection = {
+  __typename: "ModelCompanyItemsImportConnection",
+  items:  Array<CompanyItemsImport | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
 export type ModelCompanyShippingAddressFilterInput = {
   id?: ModelIDInput | null,
   shippingAddressId?: ModelIDInput | null,
@@ -1101,12 +1177,6 @@ export type ModelCompanyBillingAddressFilterInput = {
   or?: Array< ModelCompanyBillingAddressFilterInput | null > | null,
   not?: ModelCompanyBillingAddressFilterInput | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelUserDetailsFilterInput = {
   userID?: ModelIDInput | null,
@@ -1316,6 +1386,17 @@ export type ModelSubscriptionItemFilterInput = {
   imageUrls?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionItemFilterInput | null > | null,
   or?: Array< ModelSubscriptionItemFilterInput | null > | null,
+};
+
+export type ModelSubscriptionCompanyItemsImportFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  companyID?: ModelSubscriptionIDInput | null,
+  importName?: ModelSubscriptionStringInput | null,
+  importStatus?: ModelSubscriptionStringInput | null,
+  importProgress?: ModelSubscriptionFloatInput | null,
+  importFileKey?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionCompanyItemsImportFilterInput | null > | null,
+  or?: Array< ModelSubscriptionCompanyItemsImportFilterInput | null > | null,
 };
 
 export type ModelSubscriptionCompanyShippingAddressFilterInput = {
@@ -3364,6 +3445,72 @@ export type DeleteItemMutation = {
     price?: number | null,
     companyID: string,
     imageUrls?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type CreateCompanyItemsImportMutationVariables = {
+  input: CreateCompanyItemsImportInput,
+  condition?: ModelCompanyItemsImportConditionInput | null,
+};
+
+export type CreateCompanyItemsImportMutation = {
+  createCompanyItemsImport?:  {
+    __typename: "CompanyItemsImport",
+    id: string,
+    companyID: string,
+    importName?: string | null,
+    importStatus?: string | null,
+    importProgress?: number | null,
+    importFileKey?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type UpdateCompanyItemsImportMutationVariables = {
+  input: UpdateCompanyItemsImportInput,
+  condition?: ModelCompanyItemsImportConditionInput | null,
+};
+
+export type UpdateCompanyItemsImportMutation = {
+  updateCompanyItemsImport?:  {
+    __typename: "CompanyItemsImport",
+    id: string,
+    companyID: string,
+    importName?: string | null,
+    importStatus?: string | null,
+    importProgress?: number | null,
+    importFileKey?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type DeleteCompanyItemsImportMutationVariables = {
+  input: DeleteCompanyItemsImportInput,
+  condition?: ModelCompanyItemsImportConditionInput | null,
+};
+
+export type DeleteCompanyItemsImportMutation = {
+  deleteCompanyItemsImport?:  {
+    __typename: "CompanyItemsImport",
+    id: string,
+    companyID: string,
+    importName?: string | null,
+    importStatus?: string | null,
+    importProgress?: number | null,
+    importFileKey?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -6053,6 +6200,86 @@ export type SyncItemsQuery = {
       price?: number | null,
       companyID: string,
       imageUrls?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type GetCompanyItemsImportQueryVariables = {
+  id: string,
+};
+
+export type GetCompanyItemsImportQuery = {
+  getCompanyItemsImport?:  {
+    __typename: "CompanyItemsImport",
+    id: string,
+    companyID: string,
+    importName?: string | null,
+    importStatus?: string | null,
+    importProgress?: number | null,
+    importFileKey?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type ListCompanyItemsImportsQueryVariables = {
+  id?: string | null,
+  filter?: ModelCompanyItemsImportFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
+};
+
+export type ListCompanyItemsImportsQuery = {
+  listCompanyItemsImports?:  {
+    __typename: "ModelCompanyItemsImportConnection",
+    items:  Array< {
+      __typename: "CompanyItemsImport",
+      id: string,
+      companyID: string,
+      importName?: string | null,
+      importStatus?: string | null,
+      importProgress?: number | null,
+      importFileKey?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncCompanyItemsImportsQueryVariables = {
+  filter?: ModelCompanyItemsImportFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncCompanyItemsImportsQuery = {
+  syncCompanyItemsImports?:  {
+    __typename: "ModelCompanyItemsImportConnection",
+    items:  Array< {
+      __typename: "CompanyItemsImport",
+      id: string,
+      companyID: string,
+      importName?: string | null,
+      importStatus?: string | null,
+      importProgress?: number | null,
+      importFileKey?: string | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -9822,6 +10049,69 @@ export type OnDeleteItemSubscription = {
     price?: number | null,
     companyID: string,
     imageUrls?: Array< string | null > | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnCreateCompanyItemsImportSubscriptionVariables = {
+  filter?: ModelSubscriptionCompanyItemsImportFilterInput | null,
+};
+
+export type OnCreateCompanyItemsImportSubscription = {
+  onCreateCompanyItemsImport?:  {
+    __typename: "CompanyItemsImport",
+    id: string,
+    companyID: string,
+    importName?: string | null,
+    importStatus?: string | null,
+    importProgress?: number | null,
+    importFileKey?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnUpdateCompanyItemsImportSubscriptionVariables = {
+  filter?: ModelSubscriptionCompanyItemsImportFilterInput | null,
+};
+
+export type OnUpdateCompanyItemsImportSubscription = {
+  onUpdateCompanyItemsImport?:  {
+    __typename: "CompanyItemsImport",
+    id: string,
+    companyID: string,
+    importName?: string | null,
+    importStatus?: string | null,
+    importProgress?: number | null,
+    importFileKey?: string | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+  } | null,
+};
+
+export type OnDeleteCompanyItemsImportSubscriptionVariables = {
+  filter?: ModelSubscriptionCompanyItemsImportFilterInput | null,
+};
+
+export type OnDeleteCompanyItemsImportSubscription = {
+  onDeleteCompanyItemsImport?:  {
+    __typename: "CompanyItemsImport",
+    id: string,
+    companyID: string,
+    importName?: string | null,
+    importStatus?: string | null,
+    importProgress?: number | null,
+    importFileKey?: string | null,
     createdAt: string,
     updatedAt: string,
     _version: number,

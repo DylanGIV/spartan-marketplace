@@ -4,7 +4,7 @@ import { schema } from './schema';
 
 
 
-const { Rfq, Company, Item, ItemMRO, BillingAddress, UserDetails, ShippingAddress, Country, CompanyBillingAddress, CompanyShippingAddress, UserDetailsBillingAddress, UserDetailsShippingAddress } = initSchema(schema);
+const { Rfq, Company, Item, ItemMRO, BillingAddress, UserDetails, ShippingAddress, Country, CompanyItemsImport, CompanyBillingAddress, CompanyShippingAddress, UserDetailsBillingAddress, UserDetailsShippingAddress } = initSchema(schema);
 
 export {
   Rfq,
@@ -15,6 +15,7 @@ export {
   UserDetails,
   ShippingAddress,
   Country,
+  CompanyItemsImport,
   CompanyBillingAddress,
   CompanyShippingAddress,
   UserDetailsBillingAddress,

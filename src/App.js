@@ -7,7 +7,7 @@ import '@aws-amplify/ui-react/styles.css';
 import Parts from './routes/parts/parts.component';
 import Inventory from './routes/inventory/inventory.component';
 import { useContext, useEffect, useState } from 'react';
-import { Company, RFQItem, UserDetails } from './models';
+import { Company, Item, RFQItem, UserDetails } from './models';
 import { Amplify, Hub } from 'aws-amplify';
 import { DataStore, Predicates } from '@aws-amplify/datastore';
 import UserAuth from './routes/auth/userAuth.component';
@@ -44,8 +44,6 @@ function App() {
     const getUser = async () => {
       const response = await DataStore.query(Company);
 
-      console.log(response);
-      // DataStore.observeQuery(UserDetails).subscribe();
       const subscription = DataStore.observeQuery(UserDetails, (p) =>
         p.userID.eq(user.username)
       ).subscribe((snapshot) => {
@@ -82,6 +80,8 @@ function App() {
     const getCompany = async () => {
       if (userDetails) {
         const tempCompany = await GetCompanyByID(userDetails.companyID);
+        const items = await DataStore.query(Item);
+        console.log(items);
         setCompany(tempCompany);
       }
     };

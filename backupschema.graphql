@@ -131,3 +131,12 @@ type Item @model @auth(rules: [{allow: public}]) {
   companyID: ID! @index(name: "byCompany")
   imageUrls: [String]
 } 
+
+type CompanyItemsImport @model @auth(rules: [{allow: public}]) {
+  id: ID! @primaryKey
+  companyID: ID!
+  importName: String
+  importStatus: String
+  importProgress: Float
+  importFileKey: String
+}

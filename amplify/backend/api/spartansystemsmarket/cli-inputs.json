@@ -4,10 +4,7 @@
     "apiName": "spartansystemsmarket",
     "serviceName": "AppSync",
     "defaultAuthType": {
-      "mode": "API_KEY",
-      "expirationTime": 365,
-      "apiKeyExpirationDate": "2024-02-24T08:30:16.780Z",
-      "keyDescription": ""
+      "mode": "AWS_IAM"
     },
     "conflictResolution": {
       "defaultResolutionStrategy": {

@@ -1,0 +1,170 @@
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using Amazon.Lambda.APIGatewayEvents;
+using Amazon.Lambda.Core;
+using Amazon.S3;
+using Amazon.S3.Model;
+using CsvHelper;
+using CsvHelper.Configuration;
+using Newtonsoft.Json;
+
+using Amazon.Lambda.Core;
+using Amazon.Lambda.APIGatewayEvents;
+
+// Assembly attribute to enable the Lambda function's JSON input to be converted into a .NET class.
+[assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.Json.JsonSerializer))]
+
+// If you rename this namespace, you will need to update the invocation shim
+// to match if you intend to test the function with 'amplify mock function'
+namespace ImportCompanyItems
+{
+    // If you rename this class, you will need to update the invocation shim
+    // to match if you intend to test the function with 'amplify mock function'
+    public class ImportCompanyItems
+    {
+        /// <summary>
+        /// A Lambda function to respond to HTTP Get methods from API Gateway
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns>The list of blogs</returns>
+        /// <remarks>
+        /// If you rename this function, you will need to update the invocation shim
+        /// to match if you intend to test the function with 'amplify mock function'
+        /// </remarks>
+#pragma warning disable CS1998
+        public async Task<APIGatewayProxyResponse> LambdaHandler(APIGatewayProxyRequest request, ILambdaContext context)
+        {
+            var s3Client = new AmazonS3Client();
+            var s3Request = new GetObjectRequest
+            {
+                BucketName = "company-items-csv-upload",
+                Key = "path/to/file.csv"
+            };
+
+            using var s3Response = await s3Client.GetObjectAsync(s3Request);
+            using var streamReader = new StreamReader(s3Response.ResponseStream);
+            var csvString = await streamReader.ReadToEndAsync();
+
+            using var csvReader = new CsvReader(new StringReader(csvString), CultureInfo.InvariantCulture);
+            csvReader.Configuration.HasHeaderRecord = true;
+            csvReader.Configuration.HeaderValidated = null;
+            csvReader.Configuration.MissingFieldFound = null;
+            var records = csvReader.GetRecords<MyCsvRecord>().ToArray();
+
+            var dynamoDbClient = new AmazonDynamoDBClient();
+            var tableName = "Item";
+
+            foreach (var recordBatch in records.Batch(25)) // Batch size of 25 for performance
+            {
+                var writeRequests = recordBatch.Select(r => new WriteRequest(new Dictionary<string, AttributeValue>
+                {
+                    // {"Id", new AttributeValue {S = r.Id}},
+                    // {"nsn", new AttributeValue {S = r.NSN}},
+                    {"partNumber", new AttributeValue {S = r.PARTNUMBER}},
+                    {"altPartNumber", new AttributeValue {S = r.ALTPARTNUMBER}},
+                    {"description", new AttributeValue {S = r.DESCRIPTION}},
+                    {"quantity", int.TryParse(r.QUANTITY, out var intValue) ? new AttributeValue {N = intValue.ToString()} : new AttributeValue {S = r.QUANTITY}},
+                    {"condition", new AttributeValue {S = r.CONDITIONCD}},
+                    {"control", new AttributeValue {S = r.CONTROL}},
+                    {"price", decimal.TryParse(r.PRICE, out var decimalValue) ? new AttributeValue {N = decimalValue.ToString()} : new AttributeValue {S = r.PRICE}},
+                    {"companyID", new AttributeValue {S = r.NSN}},
+                    // add more attributes as needed
+                })).ToList();
+
+                var requestItems = new Dictionary<string, List<WriteRequest>>
+                {
+                    {tableName, writeRequests}
+                };
+
+                var batchWriteRequest = new BatchWriteItemRequest {RequestItems = requestItems};
+                await dynamoDbClient.BatchWriteItemAsync(batchWriteRequest);
+            }
+
+            var responseBody = new
+            {
+                message = "DynamoDB batch write completed successfully",
+                recordCount = records.Length
+            };
+            var response = new APIGatewayProxyResponse
+            {
+                StatusCode = 200,
+                Body = JsonConvert.SerializeObject(responseBody),
+                Headers = new Dictionary<string, string> {{"Content-Type", "application/json"}}
+            };
+            return response;
+        }
+        
+
+
+
+            // var response = new APIGatewayProxyResponse {
+            //     Headers = new Dictionary<string, string> {
+            //         { "Access-Control-Allow-Origin", "*" },
+            //         { "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept" }
+            //     }
+            // };
+
+            // string contentType = null;
+            // request.Headers?.TryGetValue("Content-Type", out contentType);
+
+            // switch (request.HttpMethod) {
+            //     case "GET":
+            //         context.Logger.LogLine($"Get Request: {request.Path}\n");
+            //         response.StatusCode = (int)HttpStatusCode.OK;
+            //         response.Body = "{ \"message\": \"Hello AWS Serverless\" }";
+            //         response.Headers["Content-Type"] = "application/json";
+            //         break;
+            //     case "POST":
+            //         context.Logger.LogLine($"Post Request: {request.Path}\n");
+            //         if (!String.IsNullOrEmpty(contentType)) {
+            //             context.Logger.LogLine($"Content type: {contentType}");
+            //         }
+            //         context.Logger.LogLine($"Body: {request.Body}");
+            //         response.StatusCode = (int)HttpStatusCode.OK;
+            //         break;
+            //     case "PUT":
+            //         context.Logger.LogLine($"Put Request: {request.Path}\n");
+            //         if (!String.IsNullOrEmpty(contentType)) {
+            //             context.Logger.LogLine($"Content type: {contentType}");
+            //         }
+            //         context.Logger.LogLine($"Body: {request.Body}");
+            //         response.StatusCode = (int)HttpStatusCode.OK;
+            //         break;
+            //     case "DELETE":
+            //         context.Logger.LogLine($"Delete Request: {request.Path}\n");
+            //         response.StatusCode = (int)HttpStatusCode.OK;
+            //         break;
+            //     default:
+            //         context.Logger.LogLine($"Unrecognized verb {request.HttpMethod}\n");
+            //         response.StatusCode = (int)HttpStatusCode.BadRequest;
+            //         break;
+            // }
+
+            // return response;
+    }
+    public class MyCsvRecord
+    {
+        public string ITEMNUMBER { get; set; }
+        public string COMPANYID { get; set; }
+        public string PARTNUMBER { get; set; }
+        public string ALTERNATEPARTNUMBER { get; set; }
+        public string CONDITIONCD { get; set; }
+        public string ILSLISTCD { get; set; }
+        public string PARTVALUE { get; set; }
+        public string DESCRIPTION { get; set; }
+        public string CAGE { get; set; }
+        public string QUANTITY { get; set; }
+        public string UNITOFMEASURE { get; set; }
+        public string PRICE { get; set; }
+        public string PARTCATEGORY { get; set; }
+        public string CONTROL { get; set; }
+        public string EXCHANGESEL { get; set; }
+        // add more properties as needed
+    }
+}
+
