@@ -80,8 +80,6 @@ function App() {
     const getCompany = async () => {
       if (userDetails) {
         const tempCompany = await GetCompanyByID(userDetails.companyID);
-        const items = await DataStore.query(Item);
-        console.log(items);
         setCompany(tempCompany);
       }
     };

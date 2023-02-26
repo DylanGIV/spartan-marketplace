@@ -42,7 +42,7 @@ type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
   lastName: String
   contactEmail: AWSEmail
   contactPhone: AWSPhone
-  companyID: ID! @index(name: "byCompany")
+  companyID: ID @index(name: "byCompany")
   BillingAddresses: [BillingAddress] @manyToMany(relationName: "UserDetailsBillingAddress")
   ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "UserDetailsShippingAddress")
   isCompanyOwner: Boolean

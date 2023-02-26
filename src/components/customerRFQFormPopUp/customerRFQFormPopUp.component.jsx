@@ -461,6 +461,8 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     },
   };
 
+  console.log(dataRFQ.rfqs[0].company.id);
+
   return (
     <div
       style={{

@@ -8,7 +8,7 @@ import {
   useAuthenticator,
   useTheme,
 } from '@aws-amplify/ui-react';
-import { Box, Modal } from '@mui/material';
+import { Box, LinearProgress, Modal } from '@mui/material';
 import { DataStore } from 'aws-amplify';
 import { useContext, useEffect, useState } from 'react';
 import AddPartPopUp from '../../components/addPartPopUp/addPartPopUp.component';
@@ -16,7 +16,7 @@ import DeleteAllPartsPopUp from '../../components/deleteAllPartsPopUp/deleteAllP
 import ImportDataPopUp from '../../components/importDataPopUp/importDataPopUp.component';
 import { InventoryContext } from '../../context/inventory.context';
 import { UserContext } from '../../context/user.context';
-import { Item, UserDetails } from '../../models';
+import { CompanyItemsImport, Item, UserDetails } from '../../models';
 import {
   InventoryHeader,
   InventoryKey,
@@ -31,7 +31,7 @@ import {
 
 const Inventory = () => {
   const [data, setData] = useState({ company: null, parts: null });
-  const [company, setCompany] = useState(null);
+  // const [company, setCompany] = useState(null);
   const [allCheckboxValue, setAllCheckboxValue] = useState(false);
   const [checkboxValues, setCheckboxValues] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(25);
@@ -39,12 +39,17 @@ const Inventory = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [deletePartsList, setDeletePartsList] = useState(null);
   const [allowDelete, setAllowDelete] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const [importProgress, setImportProgress] = useState(0);
+  const [unsubscribeImport, setUnsubscribeImport] = useState(false);
+  const [importSubscription, setImportSubscription] = useState(null);
 
   const { user } = useAuthenticator();
   const { tokens } = useTheme();
 
-  const { refreshPage } = useContext(UserContext);
+  const { refreshPage, company, userDetails } = useContext(UserContext);
 
+  console.log(userDetails);
   const handleCheckboxChange = (index) => {
     let allTrue = true;
     let allFalse = true;
@@ -121,25 +126,25 @@ const Inventory = () => {
       },
     },
   };
-  useEffect(() => {
-    const queryData = async () => {
-      const userDetails = await DataStore.query(UserDetails, user.username);
-      const companyID = userDetails.companyID;
+  // useEffect(() => {
+  //   const queryData = async () => {
+  //     const userDetails = await DataStore.query(UserDetails, user.username);
+  //     const companyID = userDetails.companyID;
 
-      let company = null;
-      try {
-        company = await GetCompanyByID(companyID);
-      } catch (error) {
-        alert('There was an error retrieving Company.');
-        console.log(error);
-      }
+  //     let company = null;
+  //     try {
+  //       company = await GetCompanyByID(companyID);
+  //     } catch (error) {
+  //       alert('There was an error retrieving Company.');
+  //       console.log(error);
+  //     }
 
-      if (company) {
-        setCompany(company);
-      }
-    };
-    queryData();
-  }, [refreshPage]);
+  //     if (company) {
+  //       setCompany(company);
+  //     }
+  //   };
+  //   queryData();
+  // }, [refreshPage]);
 
   useEffect(() => {
     const asyncGetData = async () => {
@@ -169,6 +174,28 @@ const Inventory = () => {
     setAllCheckboxValue(false);
   }, [currentPage]);
 
+  useEffect(() => {
+    const subscribeToImport = async () => {
+      const subscription = DataStore.observeQuery(CompanyItemsImport, (p) =>
+        p.and((p) => [
+          p.companyID.eq(company.id),
+          p.importStatus.eq('IMPORTING'),
+        ])
+      ).subscribe((snapshot) => {
+        const { items, isSynced } = snapshot;
+        if (items.length > 0) {
+          if (!importing) setImporting(true);
+          console.log('importing', items);
+          setImportProgress(items[0].importProgress);
+        } else if (items.length === 0) {
+          setImporting(false);
+        }
+      });
+      return subscription;
+    };
+    const subscription = subscribeToImport();
+  }, []);
+
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ padding: 10 }}>
@@ -176,18 +203,34 @@ const Inventory = () => {
           overrides={inventoryHeaderOverrides}
           width={1444}
           itemCount={
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'flex-end',
-                alignItems: 'flex-end',
-                height: '100%',
-              }}
-            >
-              <Text>
-                {'Total Items: '} {totalItems}
-              </Text>
-            </div>
+            importing ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  height: '100%',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'space-around',
+                  }}
+                >
+                  <Text fontSize={14}>Import Progress</Text>
+                  <LinearProgress
+                    variant='determinate'
+                    value={importProgress}
+                    style={{ height: 5, borderRadius: 5, width: '85%' }}
+                  />
+                </div>
+                <Text>{importProgress + '%'}</Text>
+              </div>
+            ) : null
           }
         />
         <div style={{ paddingBottom: 10 }}>

@@ -18,6 +18,14 @@
               "userPoolConfig": {
                 "userPoolId": "authspartansystemsmarketplace"
               }
+            },
+            {
+              "apiKeyConfig": {
+                "apiKeyExpirationDate": "2024-02-26T09:39:01.457Z",
+                "apiKeyExpirationDays": 365,
+                "description": ""
+              },
+              "authenticationType": "API_KEY"
             }
           ],
           "defaultAuthentication": {

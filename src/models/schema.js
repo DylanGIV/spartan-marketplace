@@ -1025,7 +1025,7 @@ export const schema = {
                     "name": "companyID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "BillingAddresses": {
@@ -1883,5 +1883,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "7926689f87258e2024abbf61b1bfa898"
+    "version": "23eb4a6ee3dcc45c76bf0458601e8b8b"
 };

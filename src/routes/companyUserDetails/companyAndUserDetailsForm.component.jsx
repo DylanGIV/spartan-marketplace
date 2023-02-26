@@ -259,7 +259,7 @@ export default function CompanyAndUserDetailsForm() {
           }
         } catch (error) {
           console.log(error);
-          alert('Failed to create company', error);
+          alert('Failed to create company, try submitting again', error);
         }
       } catch (error) {
         console.log(error);
@@ -268,7 +268,7 @@ export default function CompanyAndUserDetailsForm() {
     } else {
       try {
         const userResponse = await CreateUserDetails(
-          company.id,
+          // company.id,
           false,
           user,
           userFormDetails
@@ -283,7 +283,7 @@ export default function CompanyAndUserDetailsForm() {
           // navigate('/inventory');
         } catch (error) {
           console.log(error);
-          alert('Could not join company');
+          alert('Could not join company, try submitting again');
         }
       } catch (error) {
         console.log('Could not create user');

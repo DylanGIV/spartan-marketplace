@@ -59,6 +59,8 @@ export { default as CompanyDetails } from "./CompanyDetails";
 export { default as studioTheme } from "./studioTheme";
 export { default as CompanyCreateForm } from "./CompanyCreateForm";
 export { default as CompanyUpdateForm } from "./CompanyUpdateForm";
+export { default as UserDetailsCreateForm } from "./UserDetailsCreateForm";
+export { default as UserDetailsUpdateForm } from "./UserDetailsUpdateForm";
 export { default as CountryCreateForm } from "./CountryCreateForm";
 export { default as CountryUpdateForm } from "./CountryUpdateForm";
 export { default as CompanyItemsImportCreateForm } from "./CompanyItemsImportCreateForm";

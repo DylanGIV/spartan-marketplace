@@ -494,6 +494,162 @@ export const onDeleteRfq = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserDetails = /* GraphQL */ `
+  subscription OnCreateUserDetails(
+    $filter: ModelSubscriptionUserDetailsFilterInput
+    $owner: String
+  ) {
+    onCreateUserDetails(filter: $filter, owner: $owner) {
+      userID
+      firstName
+      lastName
+      contactEmail
+      contactPhone
+      companyID
+      BillingAddresses {
+        items {
+          id
+          userDetailsUserID
+          billingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      ShippingAddresses {
+        items {
+          id
+          userDetailsUserID
+          shippingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      isCompanyOwner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onUpdateUserDetails = /* GraphQL */ `
+  subscription OnUpdateUserDetails(
+    $filter: ModelSubscriptionUserDetailsFilterInput
+    $owner: String
+  ) {
+    onUpdateUserDetails(filter: $filter, owner: $owner) {
+      userID
+      firstName
+      lastName
+      contactEmail
+      contactPhone
+      companyID
+      BillingAddresses {
+        items {
+          id
+          userDetailsUserID
+          billingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      ShippingAddresses {
+        items {
+          id
+          userDetailsUserID
+          shippingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      isCompanyOwner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onDeleteUserDetails = /* GraphQL */ `
+  subscription OnDeleteUserDetails(
+    $filter: ModelSubscriptionUserDetailsFilterInput
+    $owner: String
+  ) {
+    onDeleteUserDetails(filter: $filter, owner: $owner) {
+      userID
+      firstName
+      lastName
+      contactEmail
+      contactPhone
+      companyID
+      BillingAddresses {
+        items {
+          id
+          userDetailsUserID
+          billingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      ShippingAddresses {
+        items {
+          id
+          userDetailsUserID
+          shippingAddressId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        nextToken
+        startedAt
+      }
+      isCompanyOwner
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
 export const onCreateCountry = /* GraphQL */ `
   subscription OnCreateCountry($filter: ModelSubscriptionCountryFilterInput) {
     onCreateCountry(filter: $filter) {
@@ -1835,6 +1991,402 @@ export const onDeleteCompanyItemsImport = /* GraphQL */ `
     }
   }
 `;
+export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
+  subscription OnCreateUserDetailsBillingAddress(
+    $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
+    $owner: String
+  ) {
+    onCreateUserDetailsBillingAddress(filter: $filter, owner: $owner) {
+      id
+      userDetailsUserID
+      billingAddressId
+      userDetails {
+        userID
+        firstName
+        lastName
+        contactEmail
+        contactPhone
+        companyID
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        isCompanyOwner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      billingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        region
+        postalCode
+        isDefault
+        CompanyBillingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        UserBillingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
+  subscription OnUpdateUserDetailsBillingAddress(
+    $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
+    $owner: String
+  ) {
+    onUpdateUserDetailsBillingAddress(filter: $filter, owner: $owner) {
+      id
+      userDetailsUserID
+      billingAddressId
+      userDetails {
+        userID
+        firstName
+        lastName
+        contactEmail
+        contactPhone
+        companyID
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        isCompanyOwner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      billingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        region
+        postalCode
+        isDefault
+        CompanyBillingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        UserBillingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
+  subscription OnDeleteUserDetailsBillingAddress(
+    $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
+    $owner: String
+  ) {
+    onDeleteUserDetailsBillingAddress(filter: $filter, owner: $owner) {
+      id
+      userDetailsUserID
+      billingAddressId
+      userDetails {
+        userID
+        firstName
+        lastName
+        contactEmail
+        contactPhone
+        companyID
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        isCompanyOwner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      billingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        region
+        postalCode
+        isDefault
+        CompanyBillingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        UserBillingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
+  subscription OnCreateUserDetailsShippingAddress(
+    $filter: ModelSubscriptionUserDetailsShippingAddressFilterInput
+    $owner: String
+  ) {
+    onCreateUserDetailsShippingAddress(filter: $filter, owner: $owner) {
+      id
+      userDetailsUserID
+      shippingAddressId
+      userDetails {
+        userID
+        firstName
+        lastName
+        contactEmail
+        contactPhone
+        companyID
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        isCompanyOwner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      shippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        isDefault
+        countryID
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
+  subscription OnUpdateUserDetailsShippingAddress(
+    $filter: ModelSubscriptionUserDetailsShippingAddressFilterInput
+    $owner: String
+  ) {
+    onUpdateUserDetailsShippingAddress(filter: $filter, owner: $owner) {
+      id
+      userDetailsUserID
+      shippingAddressId
+      userDetails {
+        userID
+        firstName
+        lastName
+        contactEmail
+        contactPhone
+        companyID
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        isCompanyOwner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      shippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        isDefault
+        countryID
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
+export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
+  subscription OnDeleteUserDetailsShippingAddress(
+    $filter: ModelSubscriptionUserDetailsShippingAddressFilterInput
+    $owner: String
+  ) {
+    onDeleteUserDetailsShippingAddress(filter: $filter, owner: $owner) {
+      id
+      userDetailsUserID
+      shippingAddressId
+      userDetails {
+        userID
+        firstName
+        lastName
+        contactEmail
+        contactPhone
+        companyID
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        isCompanyOwner
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
+      }
+      shippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        isDefault
+        countryID
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
 export const onCreateCompanyShippingAddress = /* GraphQL */ `
   subscription OnCreateCompanyShippingAddress(
     $filter: ModelSubscriptionCompanyShippingAddressFilterInput
@@ -2432,558 +2984,6 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-    }
-  }
-`;
-export const onCreateUserDetails = /* GraphQL */ `
-  subscription OnCreateUserDetails(
-    $filter: ModelSubscriptionUserDetailsFilterInput
-    $owner: String
-  ) {
-    onCreateUserDetails(filter: $filter, owner: $owner) {
-      userID
-      firstName
-      lastName
-      contactEmail
-      contactPhone
-      companyID
-      BillingAddresses {
-        items {
-          id
-          userDetailsUserID
-          billingAddressId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      ShippingAddresses {
-        items {
-          id
-          userDetailsUserID
-          shippingAddressId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      isCompanyOwner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onUpdateUserDetails = /* GraphQL */ `
-  subscription OnUpdateUserDetails(
-    $filter: ModelSubscriptionUserDetailsFilterInput
-    $owner: String
-  ) {
-    onUpdateUserDetails(filter: $filter, owner: $owner) {
-      userID
-      firstName
-      lastName
-      contactEmail
-      contactPhone
-      companyID
-      BillingAddresses {
-        items {
-          id
-          userDetailsUserID
-          billingAddressId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      ShippingAddresses {
-        items {
-          id
-          userDetailsUserID
-          shippingAddressId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      isCompanyOwner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onDeleteUserDetails = /* GraphQL */ `
-  subscription OnDeleteUserDetails(
-    $filter: ModelSubscriptionUserDetailsFilterInput
-    $owner: String
-  ) {
-    onDeleteUserDetails(filter: $filter, owner: $owner) {
-      userID
-      firstName
-      lastName
-      contactEmail
-      contactPhone
-      companyID
-      BillingAddresses {
-        items {
-          id
-          userDetailsUserID
-          billingAddressId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      ShippingAddresses {
-        items {
-          id
-          userDetailsUserID
-          shippingAddressId
-          createdAt
-          updatedAt
-          _version
-          _deleted
-          _lastChangedAt
-          owner
-        }
-        nextToken
-        startedAt
-      }
-      isCompanyOwner
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
-  subscription OnCreateUserDetailsBillingAddress(
-    $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
-    $owner: String
-  ) {
-    onCreateUserDetailsBillingAddress(filter: $filter, owner: $owner) {
-      id
-      userDetailsUserID
-      billingAddressId
-      userDetails {
-        userID
-        firstName
-        lastName
-        contactEmail
-        contactPhone
-        companyID
-        BillingAddresses {
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          nextToken
-          startedAt
-        }
-        isCompanyOwner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      billingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        region
-        postalCode
-        isDefault
-        CompanyBillingAddresses {
-          nextToken
-          startedAt
-        }
-        countryID
-        UserBillingAddresses {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
-  subscription OnUpdateUserDetailsBillingAddress(
-    $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
-    $owner: String
-  ) {
-    onUpdateUserDetailsBillingAddress(filter: $filter, owner: $owner) {
-      id
-      userDetailsUserID
-      billingAddressId
-      userDetails {
-        userID
-        firstName
-        lastName
-        contactEmail
-        contactPhone
-        companyID
-        BillingAddresses {
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          nextToken
-          startedAt
-        }
-        isCompanyOwner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      billingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        region
-        postalCode
-        isDefault
-        CompanyBillingAddresses {
-          nextToken
-          startedAt
-        }
-        countryID
-        UserBillingAddresses {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
-  subscription OnDeleteUserDetailsBillingAddress(
-    $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
-    $owner: String
-  ) {
-    onDeleteUserDetailsBillingAddress(filter: $filter, owner: $owner) {
-      id
-      userDetailsUserID
-      billingAddressId
-      userDetails {
-        userID
-        firstName
-        lastName
-        contactEmail
-        contactPhone
-        companyID
-        BillingAddresses {
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          nextToken
-          startedAt
-        }
-        isCompanyOwner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      billingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        region
-        postalCode
-        isDefault
-        CompanyBillingAddresses {
-          nextToken
-          startedAt
-        }
-        countryID
-        UserBillingAddresses {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
-  subscription OnCreateUserDetailsShippingAddress(
-    $filter: ModelSubscriptionUserDetailsShippingAddressFilterInput
-    $owner: String
-  ) {
-    onCreateUserDetailsShippingAddress(filter: $filter, owner: $owner) {
-      id
-      userDetailsUserID
-      shippingAddressId
-      userDetails {
-        userID
-        firstName
-        lastName
-        contactEmail
-        contactPhone
-        companyID
-        BillingAddresses {
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          nextToken
-          startedAt
-        }
-        isCompanyOwner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      shippingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        regi
-        postalCode
-        isDefault
-        countryID
-        UserShippingAddresses {
-          nextToken
-          startedAt
-        }
-        CompanyShippingAddresses {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
-  subscription OnUpdateUserDetailsShippingAddress(
-    $filter: ModelSubscriptionUserDetailsShippingAddressFilterInput
-    $owner: String
-  ) {
-    onUpdateUserDetailsShippingAddress(filter: $filter, owner: $owner) {
-      id
-      userDetailsUserID
-      shippingAddressId
-      userDetails {
-        userID
-        firstName
-        lastName
-        contactEmail
-        contactPhone
-        companyID
-        BillingAddresses {
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          nextToken
-          startedAt
-        }
-        isCompanyOwner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      shippingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        regi
-        postalCode
-        isDefault
-        countryID
-        UserShippingAddresses {
-          nextToken
-          startedAt
-        }
-        CompanyShippingAddresses {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
-    }
-  }
-`;
-export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
-  subscription OnDeleteUserDetailsShippingAddress(
-    $filter: ModelSubscriptionUserDetailsShippingAddressFilterInput
-    $owner: String
-  ) {
-    onDeleteUserDetailsShippingAddress(filter: $filter, owner: $owner) {
-      id
-      userDetailsUserID
-      shippingAddressId
-      userDetails {
-        userID
-        firstName
-        lastName
-        contactEmail
-        contactPhone
-        companyID
-        BillingAddresses {
-          nextToken
-          startedAt
-        }
-        ShippingAddresses {
-          nextToken
-          startedAt
-        }
-        isCompanyOwner
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        owner
-      }
-      shippingAddress {
-        id
-        unitNumber
-        streetNumber
-        addressLine1
-        addressLine2
-        city
-        regi
-        postalCode
-        isDefault
-        countryID
-        UserShippingAddresses {
-          nextToken
-          startedAt
-        }
-        CompanyShippingAddresses {
-          nextToken
-          startedAt
-        }
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-      }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      owner
     }
   }
 `;

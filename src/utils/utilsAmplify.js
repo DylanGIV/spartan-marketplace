@@ -5,6 +5,7 @@ import {
   graphqlOperation,
   Predicates,
   SortDirection,
+  Storage,
 } from 'aws-amplify';
 import {
   Company,
@@ -21,6 +22,7 @@ import { DataStore } from 'aws-amplify';
 import { useContext } from 'react';
 import { InventoryContext } from '../context/inventory.context';
 import countryList from '../countryList.json';
+import { v4 as uuidv4 } from 'uuid';
 import React from 'react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 // import { ItemsByCompanyIDQuery } from '../API';
@@ -132,6 +134,7 @@ export const GetPartsByCompanySubscribe = async (
     page: page - 1,
     limit: itemsPerPage,
   });
+  // console.log(parts);
   setData({ company: company, parts: parts });
 };
 export const GetRFQByCompany = async (
@@ -377,6 +380,11 @@ export const AddCompany = async (
 export const AddUserToCompany = async (userDetails, companyID) => {
   const userToAdd = await DataStore.query(UserDetails, userDetails.userID);
   const original = await DataStore.query(Company, companyID);
+  await DataStore.save(
+    UserDetails.copyOf(userToAdd, (user) => {
+      user.companyID = companyID;
+    })
+  );
   const response = await DataStore.save(
     Company.copyOf(original, (newCompany) => {
       newCompany.CompanyMembers.push(userToAdd);
@@ -489,32 +497,35 @@ export const DeleteAllCountries = async () => {
   await DataStore.delete(Country, Predicates.ALL);
 };
 
-export const CreateCompanyItemsImportRequest = async (
-  companyID,
-  fileID,
-  importName
-) => {
-  console.log('anything?');
-  console.log(mutations.createCompanyItemsImport);
-  const response = await API.graphql(
-    graphqlOperation(mutations.createCompanyItemsImport, {
-      input: {
-        companyID: companyID,
-        id: fileID,
-        importName: importName,
-        importProgress: 0,
-        importStatus: 'Pending',
-      },
-    })
-  );
-  // const response = await DataStore.save(
-  //   new CompanyItemsImport({
-  //     companyID: companyID,
-  //     id: fileID,
-  //     importName: importName,
-  //     importProgress: 0,
-  //     importStatus: 'Pending',
-  //   })
-  // );
+export const CreateCompanyItemsImportRequest = async (companyID, file) => {
+  const fileID = uuidv4();
+  const name = file.name;
+  console.log(fileID);
+  let response = '';
+  try {
+    const graphqlResponse = await API.graphql(
+      graphqlOperation(mutations.createCompanyItemsImport, {
+        input: {
+          companyID: companyID,
+          id: fileID,
+          importName: name,
+          importProgress: 0,
+          importStatus: 'PENDING',
+        },
+      })
+    );
+    console.log(graphqlResponse);
+    try {
+      const storageResponse = await Storage.put('csv/' + fileID, file, {
+        contentType: file.type,
+      });
+      console.log(storageResponse);
+      response = storageResponse;
+    } catch (err) {
+      console.log(err);
+    }
+  } catch (err) {
+    console.log(err);
+  }
   return response;
 };

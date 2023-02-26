@@ -10,8 +10,12 @@ import { Box } from '@mui/system';
 import { DataStore } from 'aws-amplify';
 import React, { forwardRef, useContext, useState } from 'react';
 import { InventoryContext } from '../../context/inventory.context';
+import { UserContext } from '../../context/user.context';
 import { Company, Item, UserDetails } from '../../models';
-import { BatchAddPartsToInventoryILS } from '../../utils/utilsAmplify';
+import {
+  BatchAddPartsToInventoryILS,
+  CreateCompanyItemsImportRequest,
+} from '../../utils/utilsAmplify';
 import './importDataPopUp.styles.scss';
 
 const ImportDataPopUp = forwardRef((props, ref) => {
@@ -21,9 +25,15 @@ const ImportDataPopUp = forwardRef((props, ref) => {
   const { setIsImportPartOpen } = useContext(InventoryContext);
   const { user } = useAuthenticator();
   const [allowClose, setAllowClose] = useState(true);
+  const [importFile, setImportFile] = useState(null);
+
+  const { company } = useContext(UserContext);
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0];
+    console.log(file);
+
+    setImportFile(file);
     const reader = new FileReader();
 
     reader.onload = (event) => {
@@ -32,7 +42,7 @@ const ImportDataPopUp = forwardRef((props, ref) => {
       const result = [];
       const headers = lines[0].split(',');
 
-      for (let i = 1; i < lines.length; i++) {
+      for (let i = 1; i < lines.length && 20; i++) {
         if (lines[i].trim() === '') continue;
         const obj = {};
         const currentline = lines[i].split(',');
@@ -50,19 +60,27 @@ const ImportDataPopUp = forwardRef((props, ref) => {
     reader.readAsText(file);
   };
 
-  const batchAddHandler = async () => {
-    const userDetails = await DataStore.query(UserDetails, user.username);
-    const companyID = userDetails.companyID;
-    try {
-      await TestFunctionBatch(
-        data,
-        companyID,
-        setIsImportPartOpen,
-        setProgress
-      );
-    } catch (error) {
-      console.log(error);
-    }
+  // const batchAddHandler = async () => {
+  //   const userDetails = await DataStore.query(UserDetails, user.username);
+  //   const companyID = userDetails.companyID;
+  //   try {
+  //     await TestFunctionBatch(
+  //       data,
+  //       companyID,
+  //       setIsImportPartOpen,
+  //       setProgress
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  const handleImport = async () => {
+    const response = await CreateCompanyItemsImportRequest(
+      company.id,
+      importFile
+    );
+    console.log(response);
   };
 
   return (
@@ -99,17 +117,18 @@ const ImportDataPopUp = forwardRef((props, ref) => {
       ) : null}
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <DialogContent>
-          If you proceed you must wait until all parts have successfully been
-          synced to the database before continuing. This may take a few minutes.
-          Are you sure you want to continue?
+          Continuing will add {data.length} parts to your inventory. This may
+          take a few minutes to hours depending on the part count. This process
+          will occur in the background and you may leave the page. Are you sure
+          you want to continue?
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setDialogOpen(false)}>Cancel</Button>
           <Button
             onClick={() => {
-              setAllowClose(false);
+              // setAllowClose(false);
               setDialogOpen(false);
-              batchAddHandler();
+              handleImport();
             }}
           >
             Continue
@@ -119,58 +138,58 @@ const ImportDataPopUp = forwardRef((props, ref) => {
     </div>
   );
 });
-const TestFunctionBatch = async (
-  items,
-  companyID,
-  setIsImportPartOpen,
-  setProgress
-) => {
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i];
-    let newPrice = parseFloat(item.PRICE);
-    let newQuantity = parseInt(item.QUANTITY);
+// const TestFunctionBatch = async (
+//   items,
+//   companyID,
+//   setIsImportPartOpen,
+//   setProgress
+// ) => {
+//   for (let i = 0; i < items.length; i++) {
+//     const item = items[i];
+//     let newPrice = parseFloat(item.PRICE);
+//     let newQuantity = parseInt(item.QUANTITY);
 
-    if (i % 1000 === 0) {
-      setProgress((i / items.length) * 100);
-      console.log('getting there');
-    }
+//     if (i % 1000 === 0) {
+//       setProgress((i / items.length) * 100);
+//       console.log('getting there');
+//     }
 
-    if (isNaN(newPrice)) {
-      newPrice = null;
-    }
-    if (isNaN(newQuantity)) {
-      newQuantity = null;
-    }
-    try {
-      await DataStore.save(
-        new Item({
-          nsn: '',
-          partNumber: item.PARTNUMBER,
-          altPartNumber: item.ALTERNATEPARTNUMBER,
-          description: item.DESCRIPTION,
-          quantity: newQuantity,
-          condition: item.CONDITIONCD,
-          imageUrls: [],
-          control: item.CONTROL,
-          price: newPrice,
-          companyID: companyID,
-        })
-      );
-    } catch (error) {
-      console.log(error);
-      continue;
-    }
-  }
-  alert('Successfully saved items to database.');
-  setIsImportPartOpen(false);
-  //   await Promise.all(promises)
-  //     .then(() => {
-  //       alert('Successfully saved all items to database.');
-  //       setIsImportPartOpen(false);
-  //     })
-  //     .catch((err) => {
-  //       console.log('Error while batch saving:', err);
-  //     });
-};
+//     if (isNaN(newPrice)) {
+//       newPrice = null;
+//     }
+//     if (isNaN(newQuantity)) {
+//       newQuantity = null;
+//     }
+//     try {
+//       await DataStore.save(
+//         new Item({
+//           nsn: '',
+//           partNumber: item.PARTNUMBER,
+//           altPartNumber: item.ALTERNATEPARTNUMBER,
+//           description: item.DESCRIPTION,
+//           quantity: newQuantity,
+//           condition: item.CONDITIONCD,
+//           imageUrls: [],
+//           control: item.CONTROL,
+//           price: newPrice,
+//           companyID: companyID,
+//         })
+//       );
+//     } catch (error) {
+//       console.log(error);
+//       continue;
+//     }
+//   }
+//   alert('Successfully saved items to database.');
+//   setIsImportPartOpen(false);
+//   await Promise.all(promises)
+//     .then(() => {
+//       alert('Successfully saved all items to database.');
+//       setIsImportPartOpen(false);
+//     })
+//     .catch((err) => {
+//       console.log('Error while batch saving:', err);
+//     });
+// };
 
 export default ImportDataPopUp;

@@ -310,7 +310,7 @@ type EagerUserDetails = {
   readonly lastName?: string | null;
   readonly contactEmail?: string | null;
   readonly contactPhone?: string | null;
-  readonly companyID: string;
+  readonly companyID?: string | null;
   readonly BillingAddresses?: (UserDetailsBillingAddress | null)[] | null;
   readonly ShippingAddresses?: (UserDetailsShippingAddress | null)[] | null;
   readonly isCompanyOwner?: boolean | null;
@@ -328,7 +328,7 @@ type LazyUserDetails = {
   readonly lastName?: string | null;
   readonly contactEmail?: string | null;
   readonly contactPhone?: string | null;
-  readonly companyID: string;
+  readonly companyID?: string | null;
   readonly BillingAddresses: AsyncCollection<UserDetailsBillingAddress>;
   readonly ShippingAddresses: AsyncCollection<UserDetailsShippingAddress>;
   readonly isCompanyOwner?: boolean | null;
