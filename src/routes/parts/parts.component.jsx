@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Item, UserDetails } from '../../models';
+import { UserDetails } from '../../models';
 import {
   PartKey,
   PartSearchForm,
@@ -7,12 +7,8 @@ import {
   PartsListCompanyDetails,
   PartsListDetails,
 } from '../../ui-components';
-import {
-  GetAllCompanies,
-  GetCountries,
-  GetPartsByCompany,
-} from '../../utils/utilsAmplify';
-import { API, Auth, DataStore, graphqlOperation } from 'aws-amplify';
+import { GetAllCompanies } from '../../utils/utilsAmplify';
+import { API, DataStore, graphqlOperation } from 'aws-amplify';
 
 import './parts.styles.scss';
 import { Modal } from '@mui/material';
@@ -23,12 +19,10 @@ import {
   Button,
   useAuthenticator,
   CheckboxField,
-  ScrollView,
 } from '@aws-amplify/ui-react';
 import CustomerRFQFormPopUp from '../../components/customerRFQFormPopUp/customerRFQFormPopUp.component';
 import { useLocation } from 'react-router';
 import { UserContext } from '../../context/user.context';
-// import { itemsByCompanyID } from '../../graphql/queries';
 import * as queries from '../../graphql/queries.ts';
 
 const Parts = (props) => {
@@ -47,7 +41,7 @@ const Parts = (props) => {
     rfqs: [],
   });
   const [userDetails, setUserDetails] = useState(false);
-  const [countries, setCountries] = useState([]);
+  // const [countries, setCountries] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [partSearchTextAreaField, setPartSearchTextAreaField] = useState('');
   const [allowRFQ, setAllowRFQ] = useState(false);
@@ -56,7 +50,7 @@ const Parts = (props) => {
   const { user } = useAuthenticator();
 
   const [isHovering, setIsHovering] = useState(null);
-  const { company } = useContext(UserContext);
+  const { company, countries } = useContext(UserContext);
 
   // console.log(selectedCountry);
 
@@ -144,7 +138,7 @@ const Parts = (props) => {
       },
     },
     CountrySelect: {
-      options: countries.map((c) => c.countryName),
+      options: countries ? countries.map((c) => c.countryName) : [],
       value: selectedCountry ? selectedCountry.countryName : '',
       onChange: (e) =>
         setSelectedCountry(
@@ -211,36 +205,36 @@ const Parts = (props) => {
       ],
     };
 
-    const queryParts = await DataStore.query(
-      Item,
-      (p) =>
-        p.and((p) => [
-          p.companyID.eq(companyID),
-          p.or((p) => [
-            p.altPartNumber.contains(normalizedSearch),
-            p.nsn.contains(normalizedSearch),
-            p.partNumber.contains(normalizedSearch),
-            p.description.contains(normalizedSearch),
-          ]),
-        ]),
-      {
-        page: 0,
-        limit: 5,
-      }
-    );
-
-    // const queryParts = await API.graphql(
-    //   graphqlOperation(queries.itemsByCompanyID, {
-    //     companyID: companyID,
-    //     filter: filter,
+    // const queryParts = await DataStore.query(
+    //   Item,
+    //   (p) =>
+    //     p.and((p) => [
+    //       p.companyID.eq(companyID),
+    //       p.or((p) => [
+    //         p.altPartNumber.contains(normalizedSearch),
+    //         p.nsn.contains(normalizedSearch),
+    //         p.partNumber.contains(normalizedSearch),
+    //         p.description.contains(normalizedSearch),
+    //       ]),
+    //     ]),
+    //   {
+    //     page: 0,
     //     limit: 5,
-    //   })
+    //   }
     // );
+
+    const queryParts = await API.graphql(
+      graphqlOperation(queries.itemsByCompanyID, {
+        companyID: companyID,
+        filter: filter,
+        limit: 5,
+      })
+    );
 
     // console.log(queryParts.data.itemsByCompanyID.items);
     // console.log(queryParts.data.itemsByCompanyID.nextToken);
-    // return queryParts.data.itemsByCompanyID.items;
-    return queryParts;
+    return queryParts.data.itemsByCompanyID.items;
+    // return queryParts;
   };
 
   useEffect(() => {
@@ -255,8 +249,8 @@ const Parts = (props) => {
         contactEmail: userDetails.contactEmail,
         contactPhone: userDetails.contactPhone,
       });
-      const countries = await GetCountries();
-      setCountries(countries);
+      // const countries = await GetCountries();
+      // setCountries(countries);
     };
     getDetails();
   }, []);
@@ -285,8 +279,6 @@ const Parts = (props) => {
           try {
             if (partSearch) {
               parts = await TestFunction(companies[i].id, partSearch);
-            } else {
-              parts = await GetPartsByCompany(companies[i].id);
             }
           } catch (error) {
             console.log(error);

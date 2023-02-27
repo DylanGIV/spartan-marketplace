@@ -1,33 +1,17 @@
-import { Fragment, useContext, useEffect, useState } from 'react';
-import { Routes, Route, Outlet, Link, useNavigate } from 'react-router-dom';
-import ProfileDropDown from '../../components/profileDropDown/profileDropDown.component';
-import { NavBar, SideBar } from '../../ui-components';
+import { useContext, useState } from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { SideBar } from '../../ui-components';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
-import { GetCompanyByID } from '../../utils/utilsAmplify';
-import { UserDetails } from '../../models';
-import { DataStore } from 'aws-amplify';
-import TextTruncate from 'react-text-truncate';
 
 import './navigation.styles.scss';
-import { useAuthenticator } from '@aws-amplify/ui-react';
+import { UserContext } from '../../context/user.context';
 
 const Navigation = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSideBarCollapsed, setIsSideBarCollapsed] = useState(false);
-  const [company, setCompany] = useState(null);
 
-  const { user } = useAuthenticator();
-
-  useEffect(() => {
-    const getCompany = async () => {
-      const userDetails = await DataStore.query(UserDetails, user.username);
-      const companyID = userDetails.companyID;
-      const company = await GetCompanyByID(companyID);
-      setCompany(company);
-    };
-    getCompany();
-  }, []);
+  const { company } = useContext(UserContext);
 
   const navigate = useNavigate();
   const navOverrides = {

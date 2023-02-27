@@ -6,6 +6,7 @@ import { UserDetails } from '../../models';
 import { DataStore, Storage } from 'aws-amplify';
 import { InventoryContext } from '../../context/inventory.context';
 import { useAuthenticator } from '@aws-amplify/ui-react';
+import { UserContext } from '../../context/user.context';
 
 const AddPartPopUp = forwardRef((props, ref) => {
   const [nsn, setNsn] = useState('');
@@ -21,6 +22,8 @@ const AddPartPopUp = forwardRef((props, ref) => {
 
   const { setIsAddPartOpen } = useContext(InventoryContext);
   const { user } = useAuthenticator();
+  const { company } = useContext(UserContext);
+  const companyID = company.id;
 
   const handlePartSubmit = async () => {
     const newPrice = parseFloat(price);
@@ -28,14 +31,11 @@ const AddPartPopUp = forwardRef((props, ref) => {
     if (
       // nsn.length > 0 &&
       partNumber.length > 0 &&
-      description.length > 0 &&
-      newQuantity > -1 &&
-      condition.length > 0 &&
-      control.length > 0
+      // description.length > 0 &&
+      newQuantity > -1
+      // condition.length > 0 &&
+      // control.length > 0
     ) {
-      const userDetails = await DataStore.query(UserDetails, user.username);
-      const companyID = userDetails.companyID;
-
       const imageUrlStrings = [];
 
       for (let i = 0; i < images.length; i++) {
@@ -95,22 +95,6 @@ const AddPartPopUp = forwardRef((props, ref) => {
       console.log('Error saving file: ', error);
     }
   }
-
-  // useEffect(() => {
-  //   // on dismount
-  //   const cleanUpStorage = async () => {
-  //     for (let i = 0; i < imageUrls.length; i++) {
-  //       const response = await Storage.remove(imageUrls[i].imageKey);
-  //       console.log(response);
-  //     }
-  //   };
-  //   return () => {
-  //     console.log(submitted);
-  //     if (!submitted) {
-  //       window.addEventListener('beforeunload', cleanUpStorage);
-  //     }
-  //   };
-  // }, []);
 
   return (
     <div className='add-part-pop-up-container'>

@@ -8,22 +8,29 @@ import Parts from './routes/parts/parts.component';
 import Inventory from './routes/inventory/inventory.component';
 import { useContext, useEffect, useState } from 'react';
 import { Company, Item, RFQItem, UserDetails } from './models';
-import { Amplify, Hub } from 'aws-amplify';
+import { Amplify, Hub, Storage } from 'aws-amplify';
 import { DataStore, Predicates } from '@aws-amplify/datastore';
 import UserAuth from './routes/auth/userAuth.component';
 import Settings from './routes/settings/settings.component';
 import { UserContext } from './context/user.context';
-import { GetCompanyByID } from './utils/utilsAmplify';
+import { GetCompanyByID, GetCountries } from './utils/utilsAmplify';
 import RFQ from './routes/rfq/rfq.component';
 import CompanyAndUserDetailsForm from './routes/companyUserDetails/companyAndUserDetailsForm.component';
+// import { csv } from 'fast-csv';
 
 function App() {
   const [userDetailsExists, setUserDetailsExists] = useState(false);
   const [retrievalComplete, setRetrievalComplete] = useState(false);
   const { user } = useAuthenticator();
 
-  const { userDetails, company, setCompany, setUser, setUserDetails } =
-    useContext(UserContext);
+  const {
+    userDetails,
+    company,
+    setCompany,
+    setUser,
+    setUserDetails,
+    setCountries,
+  } = useContext(UserContext);
 
   Hub.listen('auth', async (data) => {
     if (data.payload.event === 'signOut') {
@@ -75,6 +82,29 @@ function App() {
       });
     });
   };
+  // test get storage
+  useEffect(() => {
+    // const testGetStorage = async () => {
+    //   const response = await Storage.get(
+    //     'csv/1d3182fa-e515-40c9-a30b-b85ed590ac18',
+    //     {
+    //       level: 'public',
+    //       download: true,
+    //     }
+    //   );
+    //   console.log(response);
+    //   const stream = response.Body.createReadStream();
+    //   csv
+    //     .parseStream(stream, { headers: true, strict: true })
+    //     .on('data', (data) => records.push(data))
+    //     .on('error', (error) => console.error(error))
+    //     .on('end', (rowCount) => {
+    //       console.log(`Parsed ${rowCount} rows`);
+    //       console.log(records);
+    //     });
+    // };
+    // testGetStorage();
+  }, []);
 
   useEffect(() => {
     const getCompany = async () => {
@@ -85,6 +115,14 @@ function App() {
     };
     getCompany();
   }, [userDetails, retrievalComplete]);
+
+  useEffect(() => {
+    const getCountries = async () => {
+      const countries = await GetCountries();
+      setCountries(countries);
+    };
+    getCountries();
+  }, []);
 
   if (!retrievalComplete) {
     return <div>loading...</div>;

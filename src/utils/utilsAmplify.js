@@ -1,12 +1,4 @@
-import { Alert } from '@mui/material';
-import {
-  API,
-  Auth,
-  graphqlOperation,
-  Predicates,
-  SortDirection,
-  Storage,
-} from 'aws-amplify';
+import { API, Auth, graphqlOperation, Predicates, Storage } from 'aws-amplify';
 import {
   Company,
   CompanyItemsImport,
@@ -19,14 +11,10 @@ import {
   UserDetailsShippingAddress,
 } from '../models';
 import { DataStore } from 'aws-amplify';
-import { useContext } from 'react';
-import { InventoryContext } from '../context/inventory.context';
 import countryList from '../countryList.json';
 import { v4 as uuidv4 } from 'uuid';
 import React from 'react';
 import { useAuthenticator } from '@aws-amplify/ui-react';
-// import { ItemsByCompanyIDQuery } from '../API';
-// import {} from '../API.ts';
 import * as queries from '../graphql/queries.ts';
 import * as mutations from '../graphql/mutations.ts';
 
@@ -46,96 +34,64 @@ export const AddPartToInventory = async (
   price,
   companyID
 ) => {
-  return await DataStore.save(
-    new Item({
-      nsn: nsn,
-      partNumber: partNumber,
-      altPartNumber: altPartNumber,
-      description: description,
-      quantity: quantity,
-      condition: condition,
-      imageUrls: imageUrls,
-      control: control,
-      price: price,
-      companyID: companyID,
+  const response = await API.graphql(
+    graphqlOperation(mutations.createItem, {
+      input: {
+        nsn: nsn,
+        partNumber: partNumber,
+        altPartNumber: altPartNumber,
+        description: description,
+        quantity: quantity,
+        condition: condition,
+        imageUrls: imageUrls,
+        control: control,
+        price: price,
+        companyID: companyID,
+      },
     })
   );
+  return response;
 };
 
-export const BatchAddPartsToInventoryILS = async (
-  items,
-  companyID,
-  setIsImportPartOpen
-) => {
-  // const { setIsImportPartOpen } = useContext(InventoryContext);
-  const promises = items.map(async (item) => {
-    let newPrice = null;
-    console.log(item.PRICE);
-
-    if (item.PRICE !== '') {
-      newPrice = parseFloat(item.PRICE);
-      console.log(newPrice);
-    }
-    const newQuantity = parseInt(item.QUANTITY);
-    try {
-      const response = await DataStore.save(
-        new Item({
-          nsn: '',
-          partNumber: item.PARTNUMBER,
-          altPartNumber: item.ALTERNATEPARTNUMBER,
-          description: item.DESCRIPTION,
-          quantity: newQuantity,
-          condition: item.CONDITIONCD,
-          imageUrls: [],
-          control: item.CONTROL,
-          price: newPrice,
-          companyID: companyID,
-        })
-      );
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
-  });
-  await Promise.all(promises)
-    .then(() => {
-      alert('Successfully saved all items to database.');
-      setIsImportPartOpen(false);
-    })
-    .catch((err) => {
-      console.log('Error while batch saving:', err);
-    });
-};
-
-export const GetPartsByCompany = async (companyID) => {
-  const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
-  return parts;
-};
+// export const GetPartsByCompany = async (companyID) => {
+//   const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
+//   return parts;
+// };
 
 export const GetPartsByCompanySubscribe = async (
   company,
   setData,
   page,
-  itemsPerPage
+  itemsPerPage,
+  nextToken,
+  search
 ) => {
-  // const subscription = DataStore.observeQuery(
-  //   Item,
-  //   (p) => p.companyID.eq(company.id),
-  //   { page: page, limit: itemsPerPage }
-  // ).subscribe((snapshot) => {
-  //   const { items, isSynced } = snapshot;
-  //   setData({
-  //     company: company,
-  //     parts: items,
-  //   });
-  // });
-  // return subscription;
-  const parts = await DataStore.query(Item, (p) => p.companyID.eq(company.id), {
-    page: page - 1,
+  const variables = {
+    companyID: company.id,
     limit: itemsPerPage,
-  });
+  };
+
+  if (nextToken) {
+    variables.nextToken = nextToken;
+  }
+  // if (search) {
+  //   variables.filter = {
+  //     nsn: { contains: search },
+  //     partNumber: { contains: search },
+  //     altPartNumber: { contains: search },
+  //     description: { contains: search },
+  //   };
+  // }
+
+  const response = await API.graphql(
+    graphqlOperation(queries.itemsByCompanyID, variables)
+  );
+
+  const parts = response.data.itemsByCompanyID.items;
+
   // console.log(parts);
-  setData({ company: company, parts: parts });
+  setData({ company: company, parts: parts, nextToken: null });
+  return response.data.itemsByCompanyID.nextToken;
 };
 export const GetRFQByCompany = async (
   company,
@@ -196,10 +152,6 @@ export const GetRFQByCompany = async (
     count: Math.ceil(count.length / itemsPerPage),
   });
 };
-export const GetPartCountByCompany = async (company) => {
-  const parts = await DataStore.query(Item, (p) => p.companyID.eq(company.id));
-  return parts.length;
-};
 export const GetPartsByCompanyAndSearch = async (
   companyID,
   search,
@@ -226,12 +178,14 @@ export const GetPartsByCompanyAndSearch = async (
   return parts;
 };
 export const GetCompanyByID = async (companyID) => {
-  const company = await DataStore.query(Company, companyID);
-  return company;
+  const company = await API.graphql(
+    graphqlOperation(queries.getCompany, { id: companyID })
+  );
+  return company.data.getCompany;
 };
 export const GetAllCompanies = async () => {
-  const companies = await DataStore.query(Company);
-  return companies;
+  const companies = await API.graphql(graphqlOperation(queries.listCompanies));
+  return companies.data.listCompanies.items;
 };
 
 export const CreateUserDetails = async (
@@ -305,12 +259,6 @@ export const CreateRFQ = async (rfqDetails) => {
         zip: rfqDetails.zip,
         phone: rfqDetails.phone,
         email: rfqDetails.email,
-        attr1: rfqDetails.attr1,
-        attr2: rfqDetails.attr2,
-        attr3: rfqDetails.attr3,
-        attr4: rfqDetails.attr4,
-        attr5: rfqDetails.attr5,
-        attr6: rfqDetails.attr6,
         uom: rfqDetails.uom,
         discount: rfqDetails.discount,
         companyName: rfqDetails.companyName,
@@ -419,30 +367,26 @@ export const DeleteAllParts = async () => {
 export const PopulateCountries = async () => {
   countryList = countryList;
   countryList.forEach(async (c) => {
-    const response = await DataStore.save(
-      new Country({
-        countryName: c.name,
-        code: c.code,
+    await API.graphql(
+      graphqlOperation(mutations.createCountry, {
+        input: {
+          countryName: c.name,
+          code: c.code,
+        },
       })
     );
-    console.log(response);
-    // const original = await DataStore.query(Country, (p) =>
-    //   p.countryName.eq(c.name)
-    // );
-    // const response = await DataStore.save(
-    //   Country.copyOf(original[0], (item) => {
-    //     item.code = c.code;
-    //   })
-    // );
   });
 };
 
 export const GetCountries = async () => {
   try {
-    const countries = await DataStore.query(Country, Predicates.ALL, {
-      sort: (s) => s.countryName(SortDirection.ASCENDING),
-    });
-    return countries;
+    const countries = await API.graphql(
+      graphqlOperation(queries.listCountries)
+    );
+    const sortedCountries = countries.data.listCountries.items.sort((a, b) =>
+      a.countryName > b.countryName ? 1 : -1
+    );
+    return sortedCountries;
   } catch (error) {
     console.log(error);
   }
@@ -459,20 +403,12 @@ export const GetUserShippingAddresses = async (userDetails) => {
   }
 };
 
-export const GetCurrentUserDetails = async () => {
-  const { user } = useAuthenticator();
-  try {
-    const userDetails = await DataStore.query(UserDetails, user.username);
-    return userDetails;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export const DeleteListOfParts = async (listOfParts) => {
   const promises = listOfParts.map(async (item) => {
     try {
-      const response = await DataStore.delete(Item, (p) => p.id.eq(item.id));
+      const response = await API.graphql(
+        graphqlOperation(mutations.deleteItem, { input: { id: item.id } })
+      );
       return response;
     } catch (error) {
       console.log(error);
@@ -494,13 +430,13 @@ export const GetAllCompanyUsers = async (companyID) => {
 };
 
 export const DeleteAllCountries = async () => {
-  await DataStore.delete(Country, Predicates.ALL);
+  // await DataStore.delete(Country, Predicates.ALL);
+  // await API.graphql(graphqlOperation(mutations.deleteAllCountries));
 };
 
 export const CreateCompanyItemsImportRequest = async (companyID, file) => {
   const fileID = uuidv4();
   const name = file.name;
-  console.log(fileID);
   let response = '';
   try {
     const graphqlResponse = await API.graphql(
@@ -523,6 +459,11 @@ export const CreateCompanyItemsImportRequest = async (companyID, file) => {
       response = storageResponse;
     } catch (err) {
       console.log(err);
+      await API.graphql(
+        graphqlOperation(mutations.deleteCompanyItemsImport, {
+          input: { id: fileID },
+        })
+      );
     }
   } catch (err) {
     console.log(err);

@@ -60,21 +60,6 @@ const ImportDataPopUp = forwardRef((props, ref) => {
     reader.readAsText(file);
   };
 
-  // const batchAddHandler = async () => {
-  //   const userDetails = await DataStore.query(UserDetails, user.username);
-  //   const companyID = userDetails.companyID;
-  //   try {
-  //     await TestFunctionBatch(
-  //       data,
-  //       companyID,
-  //       setIsImportPartOpen,
-  //       setProgress
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const handleImport = async () => {
     const response = await CreateCompanyItemsImportRequest(
       company.id,
@@ -138,58 +123,5 @@ const ImportDataPopUp = forwardRef((props, ref) => {
     </div>
   );
 });
-// const TestFunctionBatch = async (
-//   items,
-//   companyID,
-//   setIsImportPartOpen,
-//   setProgress
-// ) => {
-//   for (let i = 0; i < items.length; i++) {
-//     const item = items[i];
-//     let newPrice = parseFloat(item.PRICE);
-//     let newQuantity = parseInt(item.QUANTITY);
-
-//     if (i % 1000 === 0) {
-//       setProgress((i / items.length) * 100);
-//       console.log('getting there');
-//     }
-
-//     if (isNaN(newPrice)) {
-//       newPrice = null;
-//     }
-//     if (isNaN(newQuantity)) {
-//       newQuantity = null;
-//     }
-//     try {
-//       await DataStore.save(
-//         new Item({
-//           nsn: '',
-//           partNumber: item.PARTNUMBER,
-//           altPartNumber: item.ALTERNATEPARTNUMBER,
-//           description: item.DESCRIPTION,
-//           quantity: newQuantity,
-//           condition: item.CONDITIONCD,
-//           imageUrls: [],
-//           control: item.CONTROL,
-//           price: newPrice,
-//           companyID: companyID,
-//         })
-//       );
-//     } catch (error) {
-//       console.log(error);
-//       continue;
-//     }
-//   }
-//   alert('Successfully saved items to database.');
-//   setIsImportPartOpen(false);
-//   await Promise.all(promises)
-//     .then(() => {
-//       alert('Successfully saved all items to database.');
-//       setIsImportPartOpen(false);
-//     })
-//     .catch((err) => {
-//       console.log('Error while batch saving:', err);
-//     });
-// };
 
 export default ImportDataPopUp;

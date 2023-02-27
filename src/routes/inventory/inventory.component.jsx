@@ -1,14 +1,12 @@
 import {
-  Alert,
   CheckboxField,
   Collection,
   Pagination,
-  SelectField,
   Text,
   useAuthenticator,
   useTheme,
 } from '@aws-amplify/ui-react';
-import { Box, LinearProgress, Modal } from '@mui/material';
+import { LinearProgress, Modal } from '@mui/material';
 import { DataStore } from 'aws-amplify';
 import { useContext, useEffect, useState } from 'react';
 import AddPartPopUp from '../../components/addPartPopUp/addPartPopUp.component';
@@ -16,21 +14,20 @@ import DeleteAllPartsPopUp from '../../components/deleteAllPartsPopUp/deleteAllP
 import ImportDataPopUp from '../../components/importDataPopUp/importDataPopUp.component';
 import { InventoryContext } from '../../context/inventory.context';
 import { UserContext } from '../../context/user.context';
-import { CompanyItemsImport, Item, UserDetails } from '../../models';
+import { CompanyItemsImport } from '../../models';
 import {
   InventoryHeader,
   InventoryKey,
   InventoryPartsDetails,
 } from '../../ui-components';
-import {
-  GetCompanyByID,
-  GetPartCountByCompany,
-  GetPartsByCompany,
-  GetPartsByCompanySubscribe,
-} from '../../utils/utilsAmplify';
+import { GetPartsByCompanySubscribe } from '../../utils/utilsAmplify';
 
 const Inventory = () => {
-  const [data, setData] = useState({ company: null, parts: null });
+  const [data, setData] = useState({
+    company: null,
+    parts: null,
+    nextToken: null,
+  });
   // const [company, setCompany] = useState(null);
   const [allCheckboxValue, setAllCheckboxValue] = useState(false);
   const [checkboxValues, setCheckboxValues] = useState([]);
@@ -43,13 +40,13 @@ const Inventory = () => {
   const [importProgress, setImportProgress] = useState(0);
   const [unsubscribeImport, setUnsubscribeImport] = useState(false);
   const [importSubscription, setImportSubscription] = useState(null);
+  const [totalPages, setTotalPages] = useState(1);
 
   const { user } = useAuthenticator();
   const { tokens } = useTheme();
 
   const { refreshPage, company, userDetails } = useContext(UserContext);
 
-  console.log(userDetails);
   const handleCheckboxChange = (index) => {
     let allTrue = true;
     let allFalse = true;
@@ -126,37 +123,18 @@ const Inventory = () => {
       },
     },
   };
-  // useEffect(() => {
-  //   const queryData = async () => {
-  //     const userDetails = await DataStore.query(UserDetails, user.username);
-  //     const companyID = userDetails.companyID;
-
-  //     let company = null;
-  //     try {
-  //       company = await GetCompanyByID(companyID);
-  //     } catch (error) {
-  //       alert('There was an error retrieving Company.');
-  //       console.log(error);
-  //     }
-
-  //     if (company) {
-  //       setCompany(company);
-  //     }
-  //   };
-  //   queryData();
-  // }, [refreshPage]);
 
   useEffect(() => {
     const asyncGetData = async () => {
       // const count = await GetPartCountByCompany(company);
-      const count = 1;
       await GetPartsByCompanySubscribe(
         company,
         setData,
         currentPage,
-        itemsPerPage
+        itemsPerPage,
+        null,
+        'P'
       );
-      setTotalItems(count);
     };
     if (company) {
       asyncGetData();
@@ -318,7 +296,7 @@ const Inventory = () => {
           currentPage={currentPage}
           onChange={(newPageIndex) => setCurrentPage(newPageIndex)}
           // totalPages={Math.ceil(totalItems / itemsPerPage)}
-          totalPages={2}
+          totalPages={1}
           onNext={() => setCurrentPage(currentPage + 1)}
           onPrevious={() => setCurrentPage(currentPage - 1)}
         />
