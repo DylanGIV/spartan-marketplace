@@ -18,12 +18,12 @@ import {
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import DisabledByDefaultIcon from '@mui/icons-material/DisabledByDefault';
-import { DataStore } from 'aws-amplify';
 import {
   AddCompany,
   AddOwnerToCompany,
   AddUserToCompany,
   CreateUserDetails,
+  GetAllCompanies,
   GetCompanyByID,
   GetCountries,
 } from '../../utils/utilsAmplify';
@@ -109,14 +109,8 @@ export default function CompanyAndUserDetailsForm() {
   // get existing companies list
   useEffect(() => {
     const getExistingCompanies = async () => {
-      try {
-        DataStore.observeQuery(Company).subscribe((snapshot) => {
-          const { items, isSynced } = snapshot;
-          setExistingCompanies(items);
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      const companies = await GetAllCompanies();
+      setExistingCompanies(companies);
     };
     getExistingCompanies();
   }, []);
@@ -233,6 +227,12 @@ export default function CompanyAndUserDetailsForm() {
           user,
           userFormDetails
         );
+        if (userResponse.companyID) {
+          alert(
+            'User already has a company, please refresh the page. If this issue persists, please contact support.'
+          );
+          return;
+        }
         console.log(userResponse);
         try {
           const response = await AddCompany(

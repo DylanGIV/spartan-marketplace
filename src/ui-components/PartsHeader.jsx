@@ -43,6 +43,8 @@ export default function PartsHeader(props) {
         {...getOverrideProps(overrides, "Frame 428")}
       >
         <Heading
+          width="unset"
+          height="unset"
           shrink="0"
           level="1"
           children="Parts"
@@ -84,6 +86,8 @@ export default function PartsHeader(props) {
           {...getOverrideProps(overrides, "Frame 429")}
         >
           <Button
+            width="unset"
+            height="unset"
             shrink="0"
             size="small"
             isDisabled={false}
@@ -110,8 +114,9 @@ export default function PartsHeader(props) {
           {...getOverrideProps(overrides, "Frame 430")}
         >
           <SelectField
-            placeholder="Items..."
             width="121px"
+            height="unset"
+            placeholder="Items..."
             shrink="0"
             size="small"
             isDisabled={false}

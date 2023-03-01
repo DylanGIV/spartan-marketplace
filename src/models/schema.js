@@ -306,6 +306,24 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "name": "byReceivingCompany",
+                        "fields": [
+                            "receivingCompanyID"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "bySendingCompany",
+                        "fields": [
+                            "sendingCompanyID"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
@@ -671,6 +689,10 @@ export const schema = {
             "syncable": true,
             "pluralName": "Items",
             "attributes": [
+                {
+                    "type": "searchable",
+                    "properties": {}
+                },
                 {
                     "type": "model",
                     "properties": {}

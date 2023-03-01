@@ -64,6 +64,8 @@ export default function UserAndCompanyFormContainer(props) {
         {...getOverrideProps(overrides, "CreateQuoteDropdown")}
       ></View>
       <Button
+        width="unset"
+        height="unset"
         shrink="0"
         size="small"
         isDisabled={false}

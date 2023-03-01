@@ -11,6 +11,7 @@ import {
   Button,
   Flex,
   Heading,
+  SearchField,
   SelectField,
   View,
 } from "@aws-amplify/ui-react";
@@ -50,6 +51,8 @@ export default function InventoryHeader(props) {
         {...getOverrideProps(overrides, "Frame 428")}
       >
         <Heading
+          width="unset"
+          height="unset"
           shrink="0"
           level="1"
           children="Your Inventory"
@@ -57,7 +60,7 @@ export default function InventoryHeader(props) {
         ></Heading>
       </Flex>
       <Flex
-        gap="135px"
+        gap="0"
         direction="row"
         width="unset"
         height="unset"
@@ -91,6 +94,8 @@ export default function InventoryHeader(props) {
           {...getOverrideProps(overrides, "Frame 429")}
         >
           <Button
+            width="unset"
+            height="unset"
             shrink="0"
             size="small"
             isDisabled={false}
@@ -99,6 +104,8 @@ export default function InventoryHeader(props) {
             {...getOverrideProps(overrides, "AddButton")}
           ></Button>
           <Button
+            width="unset"
+            height="unset"
             shrink="0"
             size="small"
             isDisabled={false}
@@ -123,6 +130,44 @@ export default function InventoryHeader(props) {
           ></View>
         </Flex>
         <Flex
+          gap="10px"
+          direction="row"
+          width="590px"
+          height="unset"
+          justifyContent="center"
+          alignItems="flex-end"
+          overflow="hidden"
+          shrink="0"
+          alignSelf="stretch"
+          position="relative"
+          padding="10px 10px 10px 10px"
+          backgroundColor="rgba(255,255,255,1)"
+          {...getOverrideProps(overrides, "Frame 437")}
+        >
+          <SelectField
+            width="120px"
+            height="unset"
+            placeholder="All fields..."
+            shrink="0"
+            size="small"
+            isDisabled={false}
+            labelHidden={true}
+            variation="default"
+            {...getOverrideProps(overrides, "PartSearchTypeSelect")}
+          ></SelectField>
+          <SearchField
+            width="unset"
+            height="unset"
+            shrink="0"
+            placeholder="Placeholder"
+            size="small"
+            isDisabled={false}
+            labelHidden={true}
+            variation="default"
+            {...getOverrideProps(overrides, "PartSearch")}
+          ></SearchField>
+        </Flex>
+        <Flex
           gap="20px"
           direction="row"
           width="unset"
@@ -140,8 +185,9 @@ export default function InventoryHeader(props) {
           {...getOverrideProps(overrides, "Frame 430")}
         >
           <SelectField
-            placeholder="Items..."
             width="121px"
+            height="unset"
+            placeholder="Items..."
             shrink="0"
             size="small"
             isDisabled={false}

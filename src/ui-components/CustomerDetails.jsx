@@ -25,8 +25,9 @@ export default function CustomerDetails(props) {
       {...rest}
     >
       <TextField
-        label="Contact Email"
         width="unset"
+        height="unset"
+        label="Contact Email"
         shrink="0"
         alignSelf="stretch"
         placeholder="Placeholder"

@@ -25,8 +25,9 @@ export default function CompanyDetails(props) {
       {...rest}
     >
       <TextField
-        label="Company Name"
         width="unset"
+        height="unset"
+        label="Company Name"
         shrink="0"
         alignSelf="stretch"
         placeholder="Placeholder"
@@ -37,8 +38,9 @@ export default function CompanyDetails(props) {
         {...getOverrideProps(overrides, "CompanyName")}
       ></TextField>
       <TextField
-        label="Company Contact Email"
         width="unset"
+        height="unset"
+        label="Company Contact Email"
         shrink="0"
         alignSelf="stretch"
         placeholder="Placeholder"
@@ -49,8 +51,9 @@ export default function CompanyDetails(props) {
         {...getOverrideProps(overrides, "CompanyContactEmail")}
       ></TextField>
       <TextField
-        label="Quotation Number"
         width="unset"
+        height="unset"
+        label="Quotation Number"
         shrink="0"
         alignSelf="stretch"
         placeholder="Placeholder"
@@ -61,8 +64,9 @@ export default function CompanyDetails(props) {
         {...getOverrideProps(overrides, "QuotationNumber")}
       ></TextField>
       <TextField
-        label="Quotation Date"
         width="unset"
+        height="unset"
+        label="Quotation Date"
         shrink="0"
         alignSelf="stretch"
         placeholder="Placeholder"
@@ -73,8 +77,9 @@ export default function CompanyDetails(props) {
         {...getOverrideProps(overrides, "QuotationDate")}
       ></TextField>
       <TextField
-        label="Part Number"
         width="unset"
+        height="unset"
+        label="Part Number"
         shrink="0"
         alignSelf="stretch"
         placeholder="Placeholder"
@@ -85,8 +90,9 @@ export default function CompanyDetails(props) {
         {...getOverrideProps(overrides, "PartNumber")}
       ></TextField>
       <TextField
-        label="Alternate Part Number"
         width="unset"
+        height="unset"
+        label="Alternate Part Number"
         shrink="0"
         alignSelf="stretch"
         placeholder="Placeholder"
@@ -97,8 +103,9 @@ export default function CompanyDetails(props) {
         {...getOverrideProps(overrides, "AlternatePartNumber")}
       ></TextField>
       <TextField
-        label="Condition"
         width="unset"
+        height="unset"
+        label="Condition"
         shrink="0"
         alignSelf="stretch"
         placeholder="Placeholder"
@@ -109,8 +116,9 @@ export default function CompanyDetails(props) {
         {...getOverrideProps(overrides, "Condition")}
       ></TextField>
       <TextField
-        label="Description"
         width="unset"
+        height="unset"
+        label="Description"
         shrink="0"
         alignSelf="stretch"
         placeholder="Placeholder"

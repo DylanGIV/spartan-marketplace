@@ -26,11 +26,12 @@ export default function UserDetailsForm(props) {
       {...rest}
     >
       <TextField
-        label="First Name"
         width="unset"
+        height="unset"
+        label="First Name"
+        placeholder="First Name"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}
@@ -38,11 +39,12 @@ export default function UserDetailsForm(props) {
         {...getOverrideProps(overrides, "FirstName")}
       ></TextField>
       <TextField
-        label="Last Name"
         width="unset"
+        height="unset"
+        label="Last Name"
+        placeholder="Last Name"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}
@@ -50,11 +52,12 @@ export default function UserDetailsForm(props) {
         {...getOverrideProps(overrides, "LastName")}
       ></TextField>
       <TextField
-        label="Contact Email"
         width="unset"
+        height="unset"
+        label="Contact Email"
+        placeholder="Email"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}

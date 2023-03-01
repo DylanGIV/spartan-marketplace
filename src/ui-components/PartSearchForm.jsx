@@ -48,6 +48,8 @@ export default function PartSearchForm(props) {
         {...getOverrideProps(overrides, "Header")}
       >
         <Badge
+          width="unset"
+          height="unset"
           shrink="0"
           size="default"
           variation="default"
@@ -55,6 +57,8 @@ export default function PartSearchForm(props) {
           {...getOverrideProps(overrides, "Part")}
         ></Badge>
         <Badge
+          width="unset"
+          height="unset"
           shrink="0"
           size="default"
           variation="default"
@@ -77,9 +81,10 @@ export default function PartSearchForm(props) {
         {...getOverrideProps(overrides, "TextEntry")}
       >
         <SelectField
+          width="unset"
+          height="unset"
           label="Labe"
           placeholder="Country"
-          width="unset"
           shrink="0"
           alignSelf="stretch"
           size="default"
@@ -89,8 +94,9 @@ export default function PartSearchForm(props) {
           {...getOverrideProps(overrides, "CountrySelect")}
         ></SelectField>
         <TextAreaField
-          placeholder="Part # or Description"
           width="unset"
+          height="unset"
+          placeholder="Part # or Description"
           grow="1"
           shrink="1"
           basis="0"
@@ -120,6 +126,8 @@ export default function PartSearchForm(props) {
         {...getOverrideProps(overrides, "Submit")}
       >
         <Button
+          width="unset"
+          height="unset"
           shrink="0"
           size="default"
           isDisabled={false}

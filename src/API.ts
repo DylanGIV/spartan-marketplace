@@ -1032,6 +1032,12 @@ export type ModelRfqFilterInput = {
   companyReceivedRfqsId?: ModelIDInput | null,
 };
 
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ModelUserDetailsFilterInput = {
   userID?: ModelIDInput | null,
   firstName?: ModelStringInput | null,
@@ -1044,12 +1050,6 @@ export type ModelUserDetailsFilterInput = {
   or?: Array< ModelUserDetailsFilterInput | null > | null,
   not?: ModelUserDetailsFilterInput | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelCountryFilterInput = {
   id?: ModelIDInput | null,
@@ -1152,6 +1152,186 @@ export type ModelItemFilterInput = {
   and?: Array< ModelItemFilterInput | null > | null,
   or?: Array< ModelItemFilterInput | null > | null,
   not?: ModelItemFilterInput | null,
+};
+
+export type SearchableItemFilterInput = {
+  id?: SearchableIDFilterInput | null,
+  nsn?: SearchableStringFilterInput | null,
+  partNumber?: SearchableStringFilterInput | null,
+  altPartNumber?: SearchableStringFilterInput | null,
+  description?: SearchableStringFilterInput | null,
+  quantity?: SearchableIntFilterInput | null,
+  condition?: SearchableStringFilterInput | null,
+  control?: SearchableStringFilterInput | null,
+  price?: SearchableFloatFilterInput | null,
+  companyID?: SearchableIDFilterInput | null,
+  imageUrls?: SearchableStringFilterInput | null,
+  createdAt?: SearchableStringFilterInput | null,
+  updatedAt?: SearchableStringFilterInput | null,
+  _version?: SearchableIntFilterInput | null,
+  _deleted?: SearchableBooleanFilterInput | null,
+  _lastChangedAt?: SearchableIntFilterInput | null,
+  and?: Array< SearchableItemFilterInput | null > | null,
+  or?: Array< SearchableItemFilterInput | null > | null,
+  not?: SearchableItemFilterInput | null,
+};
+
+export type SearchableIDFilterInput = {
+  ne?: string | null,
+  gt?: string | null,
+  lt?: string | null,
+  gte?: string | null,
+  lte?: string | null,
+  eq?: string | null,
+  match?: string | null,
+  matchPhrase?: string | null,
+  matchPhrasePrefix?: string | null,
+  multiMatch?: string | null,
+  exists?: boolean | null,
+  wildcard?: string | null,
+  regexp?: string | null,
+  range?: Array< string | null > | null,
+};
+
+export type SearchableStringFilterInput = {
+  ne?: string | null,
+  gt?: string | null,
+  lt?: string | null,
+  gte?: string | null,
+  lte?: string | null,
+  eq?: string | null,
+  match?: string | null,
+  matchPhrase?: string | null,
+  matchPhrasePrefix?: string | null,
+  multiMatch?: string | null,
+  exists?: boolean | null,
+  wildcard?: string | null,
+  regexp?: string | null,
+  range?: Array< string | null > | null,
+};
+
+export type SearchableIntFilterInput = {
+  ne?: number | null,
+  gt?: number | null,
+  lt?: number | null,
+  gte?: number | null,
+  lte?: number | null,
+  eq?: number | null,
+  range?: Array< number | null > | null,
+};
+
+export type SearchableFloatFilterInput = {
+  ne?: number | null,
+  gt?: number | null,
+  lt?: number | null,
+  gte?: number | null,
+  lte?: number | null,
+  eq?: number | null,
+  range?: Array< number | null > | null,
+};
+
+export type SearchableBooleanFilterInput = {
+  eq?: boolean | null,
+  ne?: boolean | null,
+};
+
+export type SearchableItemSortInput = {
+  field?: SearchableItemSortableFields | null,
+  direction?: SearchableSortDirection | null,
+};
+
+export enum SearchableItemSortableFields {
+  id = "id",
+  nsn = "nsn",
+  partNumber = "partNumber",
+  altPartNumber = "altPartNumber",
+  description = "description",
+  quantity = "quantity",
+  condition = "condition",
+  control = "control",
+  price = "price",
+  companyID = "companyID",
+  imageUrls = "imageUrls",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+  _version = "_version",
+  _deleted = "_deleted",
+  _lastChangedAt = "_lastChangedAt",
+}
+
+
+export enum SearchableSortDirection {
+  asc = "asc",
+  desc = "desc",
+}
+
+
+export type SearchableItemAggregationInput = {
+  name: string,
+  type: SearchableAggregateType,
+  field: SearchableItemAggregateField,
+};
+
+export enum SearchableAggregateType {
+  terms = "terms",
+  avg = "avg",
+  min = "min",
+  max = "max",
+  sum = "sum",
+}
+
+
+export enum SearchableItemAggregateField {
+  id = "id",
+  nsn = "nsn",
+  partNumber = "partNumber",
+  altPartNumber = "altPartNumber",
+  description = "description",
+  quantity = "quantity",
+  condition = "condition",
+  control = "control",
+  price = "price",
+  companyID = "companyID",
+  imageUrls = "imageUrls",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+  _version = "_version",
+  _deleted = "_deleted",
+  _lastChangedAt = "_lastChangedAt",
+}
+
+
+export type SearchableItemConnection = {
+  __typename: "SearchableItemConnection",
+  items:  Array<Item | null >,
+  nextToken?: string | null,
+  total?: number | null,
+  aggregateItems:  Array<SearchableAggregateResult | null >,
+};
+
+export type SearchableAggregateResult = {
+  __typename: "SearchableAggregateResult",
+  name: string,
+  result?: SearchableAggregateGenericResult | null,
+};
+
+export type SearchableAggregateGenericResult = SearchableAggregateScalarResult | SearchableAggregateBucketResult
+
+
+export type SearchableAggregateScalarResult = {
+  __typename: "SearchableAggregateScalarResult",
+  value: number,
+};
+
+export type SearchableAggregateBucketResult = {
+  __typename: "SearchableAggregateBucketResult",
+  buckets?:  Array<SearchableAggregateBucketResultItem | null > | null,
+};
+
+export type SearchableAggregateBucketResultItem = {
+  __typename: "SearchableAggregateBucketResultItem",
+  key: string,
+  doc_count: number,
 };
 
 export type ModelCompanyItemsImportFilterInput = {
@@ -5196,6 +5376,192 @@ export type SyncRfqsQuery = {
   } | null,
 };
 
+export type RfqsByReceivingCompanyIDQueryVariables = {
+  receivingCompanyID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelRfqFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type RfqsByReceivingCompanyIDQuery = {
+  rfqsByReceivingCompanyID?:  {
+    __typename: "ModelRfqConnection",
+    items:  Array< {
+      __typename: "Rfq",
+      id: string,
+      rfqNumber?: string | null,
+      dateSent?: string | null,
+      custRefNum?: string | null,
+      companyName?: string | null,
+      contact?: string | null,
+      phone?: string | null,
+      email?: string | null,
+      shippingTerms?: string | null,
+      shippingMethod?: string | null,
+      leadTime?: number | null,
+      paymentTerms?: string | null,
+      dueDate?: string | null,
+      quantityRequested?: Array< number | null > | null,
+      quantityQuoted?: Array< number | null > | null,
+      uom?: string | null,
+      urgency?: string | null,
+      discount?: number | null,
+      lineTotal?: number | null,
+      subtotal?: number | null,
+      salesTax?: number | null,
+      total?: number | null,
+      internalComments?: string | null,
+      emailComments?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      state?: string | null,
+      zip?: string | null,
+      country?: string | null,
+      itemIDs?: Array< string | null > | null,
+      receivingCompanyID: string,
+      sendingCompanyID: string,
+      ReceivingCompany?:  {
+        __typename: "Company",
+        id: string,
+        companyName?: string | null,
+        phone?: string | null,
+        contactEmail?: string | null,
+        countryID?: string | null,
+        profilePictureUrl?: string | null,
+        fax?: string | null,
+        companyDescription?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        companyCompanyOwnerUserID?: string | null,
+      } | null,
+      SendingCompany?:  {
+        __typename: "Company",
+        id: string,
+        companyName?: string | null,
+        phone?: string | null,
+        contactEmail?: string | null,
+        countryID?: string | null,
+        profilePictureUrl?: string | null,
+        fax?: string | null,
+        companyDescription?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        companyCompanyOwnerUserID?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      companySentRfqsId?: string | null,
+      companyReceivedRfqsId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type RfqsBySendingCompanyIDQueryVariables = {
+  sendingCompanyID: string,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelRfqFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type RfqsBySendingCompanyIDQuery = {
+  rfqsBySendingCompanyID?:  {
+    __typename: "ModelRfqConnection",
+    items:  Array< {
+      __typename: "Rfq",
+      id: string,
+      rfqNumber?: string | null,
+      dateSent?: string | null,
+      custRefNum?: string | null,
+      companyName?: string | null,
+      contact?: string | null,
+      phone?: string | null,
+      email?: string | null,
+      shippingTerms?: string | null,
+      shippingMethod?: string | null,
+      leadTime?: number | null,
+      paymentTerms?: string | null,
+      dueDate?: string | null,
+      quantityRequested?: Array< number | null > | null,
+      quantityQuoted?: Array< number | null > | null,
+      uom?: string | null,
+      urgency?: string | null,
+      discount?: number | null,
+      lineTotal?: number | null,
+      subtotal?: number | null,
+      salesTax?: number | null,
+      total?: number | null,
+      internalComments?: string | null,
+      emailComments?: string | null,
+      addressLine1?: string | null,
+      addressLine2?: string | null,
+      city?: string | null,
+      state?: string | null,
+      zip?: string | null,
+      country?: string | null,
+      itemIDs?: Array< string | null > | null,
+      receivingCompanyID: string,
+      sendingCompanyID: string,
+      ReceivingCompany?:  {
+        __typename: "Company",
+        id: string,
+        companyName?: string | null,
+        phone?: string | null,
+        contactEmail?: string | null,
+        countryID?: string | null,
+        profilePictureUrl?: string | null,
+        fax?: string | null,
+        companyDescription?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        companyCompanyOwnerUserID?: string | null,
+      } | null,
+      SendingCompany?:  {
+        __typename: "Company",
+        id: string,
+        companyName?: string | null,
+        phone?: string | null,
+        contactEmail?: string | null,
+        countryID?: string | null,
+        profilePictureUrl?: string | null,
+        fax?: string | null,
+        companyDescription?: string | null,
+        createdAt: string,
+        updatedAt: string,
+        _version: number,
+        _deleted?: boolean | null,
+        _lastChangedAt: number,
+        companyCompanyOwnerUserID?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      companySentRfqsId?: string | null,
+      companyReceivedRfqsId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
 export type GetUserDetailsQueryVariables = {
   userID: string,
 };
@@ -6631,6 +6997,58 @@ export type ItemsByCompanyIDQuery = {
     } | null >,
     nextToken?: string | null,
     startedAt?: number | null,
+  } | null,
+};
+
+export type SearchItemsQueryVariables = {
+  filter?: SearchableItemFilterInput | null,
+  sort?: Array< SearchableItemSortInput | null > | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  from?: number | null,
+  aggregates?: Array< SearchableItemAggregationInput | null > | null,
+};
+
+export type SearchItemsQuery = {
+  searchItems?:  {
+    __typename: "SearchableItemConnection",
+    items:  Array< {
+      __typename: "Item",
+      id: string,
+      nsn?: string | null,
+      partNumber?: string | null,
+      altPartNumber?: string | null,
+      description?: string | null,
+      quantity?: number | null,
+      condition?: string | null,
+      control?: string | null,
+      price?: number | null,
+      companyID: string,
+      imageUrls?: Array< string | null > | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null >,
+    nextToken?: string | null,
+    total?: number | null,
+    aggregateItems:  Array< {
+      __typename: "SearchableAggregateResult",
+      name: string,
+      result: ( {
+          __typename: "SearchableAggregateScalarResult",
+          value: number,
+        } | {
+          __typename: "SearchableAggregateBucketResult",
+          buckets?:  Array< {
+            __typename: string,
+            key: string,
+            doc_count: number,
+          } | null > | null,
+        }
+      ) | null,
+    } | null >,
   } | null,
 };
 

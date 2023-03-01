@@ -1,13 +1,14 @@
 import {
+  Button,
   CheckboxField,
   Collection,
   Pagination,
+  Placeholder,
   Text,
   useAuthenticator,
   useTheme,
 } from '@aws-amplify/ui-react';
 import { LinearProgress, Modal } from '@mui/material';
-import { DataStore } from 'aws-amplify';
 import { useContext, useEffect, useState } from 'react';
 import AddPartPopUp from '../../components/addPartPopUp/addPartPopUp.component';
 import DeleteAllPartsPopUp from '../../components/deleteAllPartsPopUp/deleteAllPartsPopUp.component';
@@ -20,7 +21,12 @@ import {
   InventoryKey,
   InventoryPartsDetails,
 } from '../../ui-components';
-import { GetPartsByCompanySubscribe } from '../../utils/utilsAmplify';
+import {
+  GetCompanyItemsImport,
+  GetPartsByCompanySubscribe,
+  SubscribeToCompanyItemsImport,
+  UpdateCompanyItemsImport,
+} from '../../utils/utilsAmplify';
 
 const Inventory = () => {
   const [data, setData] = useState({
@@ -36,11 +42,15 @@ const Inventory = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [deletePartsList, setDeletePartsList] = useState(null);
   const [allowDelete, setAllowDelete] = useState(false);
-  const [importing, setImporting] = useState(false);
+  const [importing, setImporting] = useState(true);
   const [importProgress, setImportProgress] = useState(0);
   const [unsubscribeImport, setUnsubscribeImport] = useState(false);
   const [importSubscription, setImportSubscription] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
+  const [pendingImport, setPendingImport] = useState(true);
+  const [partSearch, setPartSearch] = useState('');
+  const [normalizedSearch, setNormalizedSearch] = useState('');
+  const [beginSearch, setBeginSearch] = useState(false);
 
   const { user } = useAuthenticator();
   const { tokens } = useTheme();
@@ -107,10 +117,12 @@ const Inventory = () => {
     },
     ImportButton: {
       onClick: () => setIsImportPartOpen(true),
+      isDisabled: pendingImport,
     },
     ItemSelect: {
       onChange: (e) => {
         const value = parseInt(e.target.value);
+        setData({ ...data, parts: null, nextToken: null });
         setItemsPerPage(isNaN(value) ? 25 : value);
         setCurrentPage(1);
       },
@@ -120,6 +132,30 @@ const Inventory = () => {
       onClick: () => (allowDelete ? handleDeleteParts() : null),
       style: {
         cursor: allowDelete ? 'pointer' : 'not-allowed',
+      },
+    },
+    PartSearch: {
+      onChange: (e) => {
+        const value = e.target.value;
+        if (value === '') {
+          setPartSearch('');
+        } else {
+          setPartSearch(value);
+        }
+      },
+      value: partSearch,
+      onSubmit: (e) => {
+        setNormalizedSearch(partSearch.toUpperCase());
+        setCurrentPage(1);
+        setBeginSearch(!beginSearch);
+        setData({ ...data, parts: null, nextToken: null });
+      },
+      onClear: () => {
+        setPartSearch('');
+        setNormalizedSearch('');
+        setCurrentPage(1);
+        setBeginSearch(!beginSearch);
+        setData({ ...data, parts: null, nextToken: null });
       },
     },
   };
@@ -132,14 +168,14 @@ const Inventory = () => {
         setData,
         currentPage,
         itemsPerPage,
-        null,
-        'P'
+        data.nextToken,
+        normalizedSearch ? normalizedSearch : null
       );
     };
     if (company) {
       asyncGetData();
     }
-  }, [company, currentPage, itemsPerPage]);
+  }, [company, currentPage, itemsPerPage, beginSearch]);
 
   useEffect(() => {
     if (data.parts) {
@@ -154,26 +190,45 @@ const Inventory = () => {
 
   useEffect(() => {
     const subscribeToImport = async () => {
-      const subscription = DataStore.observeQuery(CompanyItemsImport, (p) =>
-        p.and((p) => [
-          p.companyID.eq(company.id),
-          p.importStatus.eq('IMPORTING'),
-        ])
-      ).subscribe((snapshot) => {
-        const { items, isSynced } = snapshot;
-        if (items.length > 0) {
-          if (!importing) setImporting(true);
-          console.log('importing', items);
-          setImportProgress(items[0].importProgress);
-        } else if (items.length === 0) {
-          setImporting(false);
-        }
-      });
-      return subscription;
+      // const subscription = .observeQuery(CompanyItemsImport, (p) =>
+      //   p.and((p) => [
+      //     p.companyID.eq(company.id),
+      //     p.importStatus.eq('IMPORTING'),
+      //   ])
+      // ).subscribe((snapshot) => {
+      //   const { items, isSynced } = snapshot;
+      //   if (items.length > 0) {
+      //     if (!importing) setImporting(true);
+      //     console.log('importing', items);
+      //     setImportProgress(items[0].importProgress);
+      //   } else if (items.length === 0) {
+      //     setImporting(false);
+      //   }
+      // });
+      // return subscription;
+      const response = await SubscribeToCompanyItemsImport(
+        company.id,
+        setImporting,
+        setImportProgress,
+        importing
+      );
+      console.log(response);
+      return response;
     };
     const subscription = subscribeToImport();
   }, []);
 
+  useEffect(() => {
+    const asyncGetCompanyItemsImport = async () => {
+      const response = await GetCompanyItemsImport(company.id);
+      if (response.length > 0) {
+        setPendingImport(true);
+      } else {
+        setPendingImport(false);
+      }
+    };
+    asyncGetCompanyItemsImport();
+  }, []);
   return (
     <div style={{ display: 'flex' }}>
       <div style={{ padding: 10 }}>
@@ -207,6 +262,27 @@ const Inventory = () => {
                   />
                 </div>
                 <Text>{importProgress + '%'}</Text>
+              </div>
+            ) : pendingImport ? (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  alignItems: 'flex-end',
+                  height: '100%',
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                    height: '100%',
+                    justifyContent: 'space-around',
+                  }}
+                >
+                  <Text fontSize={18}>Import Pending...</Text>
+                </div>
               </div>
             ) : null
           }
@@ -246,52 +322,60 @@ const Inventory = () => {
           />
         </div>
 
-        <Collection
-          items={data.parts}
-          type='grid'
-          itemsPerPage={itemsPerPage}
-          style={{
-            paddingLeft: 12,
-            paddingBottom: 12,
-            paddingTop: 12,
-            backgroundColor: tokens.colors.background.tertiary,
-            width: 1444,
-            borderRadius: 10,
-            marginBottom: 10,
-          }}
-        >
-          {(item, index) => (
-            <div
-              key={item.id}
-              style={{
-                display: 'flex',
-                width: 1444,
-              }}
-            >
+        {!data.parts ? (
+          new Array(itemsPerPage).fill(0).map((_, index) => (
+            <div key={index} style={{ marginBottom: 4 }}>
+              <Placeholder style={{ height: 30 }} />
+            </div>
+          ))
+        ) : (
+          <Collection
+            items={data.parts}
+            type='grid'
+            itemsPerPage={itemsPerPage}
+            style={{
+              paddingLeft: 12,
+              paddingBottom: 12,
+              paddingTop: 12,
+              backgroundColor: tokens.colors.background.tertiary,
+              width: 1444,
+              borderRadius: 10,
+              marginBottom: 10,
+            }}
+          >
+            {(item, index) => (
               <div
+                key={item.id}
                 style={{
-                  width: 69,
+                  display: 'flex',
+                  width: 1444,
                 }}
               >
-                <CheckboxField
-                  checked={checkboxValues[index] || false}
-                  onChange={() => handleCheckboxChange(index)}
-                  size='large'
-                  // marginLeft={2}
-                  // marginTop={2}
-                  // backgroundColor: 'white',
-                  // color: tokens.colors.brand.primary[80],
-                  // color='white'
+                <div
+                  style={{
+                    width: 69,
+                  }}
+                >
+                  <CheckboxField
+                    checked={checkboxValues[index] || false}
+                    onChange={() => handleCheckboxChange(index)}
+                    size='large'
+                    // marginLeft={2}
+                    // marginTop={2}
+                    // backgroundColor: 'white',
+                    // color: tokens.colors.brand.primary[80],
+                    // color='white'
+                  />
+                </div>
+                <InventoryPartsDetails
+                  item={item}
+                  width={1360}
+                  marginBottom={4}
                 />
               </div>
-              <InventoryPartsDetails
-                item={item}
-                width={1360}
-                marginBottom={4}
-              />
-            </div>
-          )}
-        </Collection>
+            )}
+          </Collection>
+        )}
         <Pagination
           currentPage={currentPage}
           onChange={(newPageIndex) => setCurrentPage(newPageIndex)}
@@ -299,6 +383,7 @@ const Inventory = () => {
           totalPages={1}
           onNext={() => setCurrentPage(currentPage + 1)}
           onPrevious={() => setCurrentPage(currentPage - 1)}
+          hasMorePages={data ? (data.nextToken ? true : false) : false}
         />
       </div>
 
@@ -310,7 +395,7 @@ const Inventory = () => {
         // onClose={() => setIsImportPartOpen(false)}
         disableEscapeKeyDown={true}
       >
-        <ImportDataPopUp />
+        <ImportDataPopUp setPendingImport={setPendingImport} />
       </Modal>
       <Modal
         open={isDeleteAllPartOpen}

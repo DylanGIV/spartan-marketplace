@@ -1,6 +1,5 @@
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { Button, TextField } from '@mui/material';
-import { DataStore } from 'aws-amplify';
 import { forwardRef, useContext, useEffect } from 'react';
 import { useState } from 'react';
 import { InventoryContext } from '../../context/inventory.context';

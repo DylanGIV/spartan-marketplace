@@ -7,17 +7,16 @@ import {
   UserDetails,
   UserDetailsShippingAddress,
 } from '../models';
-import { DataStore } from 'aws-amplify';
 import countryList from '../countryList.json';
 import { v4 as uuidv4 } from 'uuid';
 import React from 'react';
 import * as queries from '../graphql/queries.ts';
 import * as mutations from '../graphql/mutations.ts';
+import * as subscriptions from '../graphql/subscriptions.ts';
 
 export const SignOutAuth = async () => {
   return await Auth.signOut();
 };
-
 export const AddPartToInventory = async (
   nsn,
   partNumber,
@@ -48,12 +47,6 @@ export const AddPartToInventory = async (
   );
   return response;
 };
-
-// export const GetPartsByCompany = async (companyID) => {
-//   const parts = await DataStore.query(Item, (p) => p.companyID.eq(companyID));
-//   return parts;
-// };
-
 export const GetPartsByCompanySubscribe = async (
   company,
   setData,
@@ -64,36 +57,42 @@ export const GetPartsByCompanySubscribe = async (
 ) => {
   const variables = {
     companyID: company.id,
-    limit: itemsPerPage,
+    limit: 25,
   };
 
   if (nextToken) {
     variables.nextToken = nextToken;
   }
-  // if (search) {
-  //   variables.filter = {
-  //     nsn: { contains: search },
-  //     partNumber: { contains: search },
-  //     altPartNumber: { contains: search },
-  //     description: { contains: search },
-  //   };
-  // }
+  if (search) {
+    variables.filter = {
+      or: [
+        { nsn: { matchPhrasePrefix: search } },
+        { partNumber: { matchPhrasePrefix: search } },
+        { altPartNumber: { matchPhrasePrefix: search } },
+        { description: { matchPhrasePrefix: search } },
+        { control: { matchPhrasePrefix: search } },
+      ],
+    };
+  }
+  try {
+    const response = await API.graphql(
+      graphqlOperation(queries.searchItems, variables)
+    );
 
-  const response = await API.graphql(
-    graphqlOperation(queries.itemsByCompanyID, variables)
-  );
+    const parts = response.data.searchItems.items;
 
-  const parts = response.data.itemsByCompanyID.items;
-
-  // console.log(parts);
-  setData({
-    company: company,
-    parts: parts,
-    nextToken: response.data.itemsByCompanyID.nextToken
-      ? response.data.itemsByCompanyID.nextToken
-      : null,
-  });
-  return response.data.itemsByCompanyID.nextToken;
+    // console.log(parts);
+    setData({
+      company: company,
+      parts: parts,
+      nextToken: response.data.searchItems.nextToken
+        ? response.data.searchItems.nextToken
+        : null,
+    });
+    return response.data.searchItems.nextToken;
+  } catch (error) {
+    console.log(error);
+  }
 };
 export const GetRFQByCompany = async (
   company,
@@ -175,7 +174,6 @@ export const CreateUserDetails = async (isOwner, user, userDetails) => {
   console.log(response.data.createUserDetails);
   return response.data.createUserDetails;
 };
-
 export const AddUserShippingAddress = async (shippingAddress, user) => {
   const userDetailsResponse = await API.graphql(
     graphqlOperation(queries.getUserDetails, { id: user.username })
@@ -229,7 +227,6 @@ export const AddUserShippingAddress = async (shippingAddress, user) => {
     console.log(error);
   }
 };
-
 export const CreateRFQ = async (rfqDetails) => {
   try {
     const rfqResponse = await API.graphql(
@@ -278,7 +275,6 @@ export const CreateRFQ = async (rfqDetails) => {
     alert('failed');
   }
 };
-
 export const AddCompany = async (
   companyName,
   companyDescription,
@@ -353,7 +349,6 @@ export const AddOwnerToCompany = async (userDetails, companyID) => {
   );
   return response;
 };
-
 export const PopulateCountries = async () => {
   countryList = countryList;
   countryList.forEach(async (c) => {
@@ -367,7 +362,6 @@ export const PopulateCountries = async () => {
     );
   });
 };
-
 export const GetCountries = async () => {
   try {
     const countries = await API.graphql(
@@ -381,7 +375,6 @@ export const GetCountries = async () => {
     console.log(error);
   }
 };
-
 export const GetUserShippingAddresses = async (userDetails) => {
   try {
     const userShippingAddressesResponse = await API.graphql(
@@ -403,7 +396,6 @@ export const GetUserShippingAddresses = async (userDetails) => {
     console.log(error);
   }
 };
-
 export const DeleteListOfParts = async (listOfParts) => {
   const promises = listOfParts.map(async (item) => {
     try {
@@ -424,17 +416,6 @@ export const DeleteListOfParts = async (listOfParts) => {
       console.log(err);
     });
 };
-
-export const GetAllCompanyUsers = async (companyID) => {
-  const response = await DataStore.query(Company, companyID);
-  return response.CompanyMembers;
-};
-
-export const DeleteAllCountries = async () => {
-  // await DataStore.delete(Country, Predicates.ALL);
-  // await API.graphql(graphqlOperation(mutations.deleteAllCountries));
-};
-
 export const CreateCompanyItemsImportRequest = async (companyID, file) => {
   const fileID = uuidv4();
   const name = file.name;
@@ -471,3 +452,103 @@ export const CreateCompanyItemsImportRequest = async (companyID, file) => {
   }
   return response;
 };
+export const SubscribeToUserDetails = async (
+  userID,
+  setUser,
+  setUserDetails,
+  setUserDetailsExists
+) => {
+  const subscription = await API.graphql(
+    graphqlOperation(subscriptions.onCreateUserDetails)
+  ).subscribe({
+    next: ({ provider, value }) => {
+      console.log('entered');
+      console.log({ provider, value });
+      const userDetails = value.data.onCreateUserDetails;
+      setUserDetails(userDetails);
+      setUserDetailsExists(true);
+    },
+    error: (error) => console.warn(error),
+  });
+  return subscription;
+};
+export const GetUserDetails = async (userID) => {
+  try {
+    const userDetailsResponse = await API.graphql(
+      graphqlOperation(queries.getUserDetails, { userID: userID })
+    );
+    const userDetails = userDetailsResponse.data.getUserDetails;
+    return userDetails;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const SubscribeToCompanyItemsImport = async (
+  companyID,
+  setImporting,
+  setImportProgress,
+  importing
+) => {
+  const subscription = await API.graphql({
+    query: subscriptions.onUpdateCompanyItemsImport,
+    variables: {
+      filter: {
+        companyID: {
+          contains: companyID,
+        },
+        importStatus: {
+          contains: 'IMPORTING',
+        },
+      },
+    },
+  }).subscribe({
+    next: ({ provider, value }) => {
+      if (value.data.onUpdateCompanyItemsImport) {
+        console.log(value.data.onUpdateCompanyItemsImport);
+        if (!importing) {
+          setImporting(true);
+        }
+        setImportProgress(value.data.onUpdateCompanyItemsImport.importProgress);
+      } else if (value.data.onUpdateCompanyItemsImport === null) {
+        // setImporting(false);
+      }
+      // const companyItemsImport = value.data.onUpdateCompanyItemsImport;
+    },
+    error: (error) => console.warn(error),
+  });
+  return subscription;
+};
+export const GetCompanyItemsImport = async (companyID) => {
+  try {
+    const companyItemsImportResponse = await API.graphql(
+      graphqlOperation(queries.listCompanyItemsImports, {
+        filter: {
+          companyID: {
+            eq: companyID,
+          },
+          importStatus: {
+            eq: 'PENDING',
+          },
+        },
+      })
+    );
+    return companyItemsImportResponse.data.listCompanyItemsImports.items;
+  } catch (error) {
+    console.log(error);
+  }
+};
+// export const UpdateCompanyItemsImport = async (id) => {
+//   try {
+//     const response = await API.graphql(
+//       graphqlOperation(mutations.updateCompanyItemsImport, {
+//         input: {
+//           id: id,
+//           importProgress: 99 % 100,
+//         },
+//       })
+//     );
+//     // console.log(response);
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

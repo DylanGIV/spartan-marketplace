@@ -6,7 +6,6 @@ import {
   useTheme,
 } from '@aws-amplify/ui-react';
 import { Accordion, AccordionSummary, Typography } from '@mui/material';
-import { DataStore } from 'aws-amplify';
 import React, { useContext, useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 import { UserContext } from '../../context/user.context';

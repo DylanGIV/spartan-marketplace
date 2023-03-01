@@ -85,8 +85,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "Create Quotation")}
           ></Text>
           <TextField
-            label="Company Name"
             width="unset"
+            height="unset"
+            label="Company Name"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"
@@ -97,8 +98,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "CompanyName")}
           ></TextField>
           <TextField
-            label="Company Contact Email"
             width="unset"
+            height="unset"
+            label="Company Contact Email"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"
@@ -109,8 +111,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "CompanyContactEmail")}
           ></TextField>
           <TextField
-            label="Quotation Number"
             width="unset"
+            height="unset"
+            label="Quotation Number"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"
@@ -121,8 +124,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "QuotationNumber")}
           ></TextField>
           <TextField
-            label="Quotation Date"
             width="unset"
+            height="unset"
+            label="Quotation Date"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"
@@ -133,8 +137,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "QuotationDate")}
           ></TextField>
           <TextField
-            label="Part Number"
             width="unset"
+            height="unset"
+            label="Part Number"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"
@@ -145,8 +150,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "PartNumber")}
           ></TextField>
           <TextField
-            label="Alternate Part Number"
             width="unset"
+            height="unset"
+            label="Alternate Part Number"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"
@@ -157,8 +163,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "AlternatePartNumber")}
           ></TextField>
           <TextField
-            label="Condition"
             width="unset"
+            height="unset"
+            label="Condition"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"
@@ -169,8 +176,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "Condition")}
           ></TextField>
           <TextField
-            label="Description"
             width="unset"
+            height="unset"
+            label="Description"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"
@@ -181,6 +189,8 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "Description")}
           ></TextField>
           <StepperField
+            width="unset"
+            height="unset"
             label="Quantity Requested"
             alignItems="center"
             shrink="0"
@@ -247,8 +257,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "Customer Details")}
           ></Text>
           <TextField
-            label="Contact Email"
             width="unset"
+            height="unset"
+            label="Contact Email"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"
@@ -289,8 +300,9 @@ export default function CustomerRFQForm(props) {
             {...getOverrideProps(overrides, "Frame 426")}
           >
             <SelectField
-              label="Saved Addresses"
               width="493.5px"
+              height="unset"
+              label="Saved Addresses"
               shrink="0"
               placeholder="Placeholder"
               size="default"
@@ -300,8 +312,9 @@ export default function CustomerRFQForm(props) {
               {...getOverrideProps(overrides, "SavedAddresses")}
             ></SelectField>
             <SelectField
-              label="Country"
               width="493.5px"
+              height="unset"
+              label="Country"
               shrink="0"
               placeholder="Placeholder"
               size="default"
@@ -311,8 +324,9 @@ export default function CustomerRFQForm(props) {
               {...getOverrideProps(overrides, "Country")}
             ></SelectField>
             <TextField
-              label="State/Region"
               width="493.5px"
+              height="unset"
+              label="State/Region"
               padding="0px 2px 0px 0px"
               shrink="0"
               placeholder="Placeholder"
@@ -323,8 +337,9 @@ export default function CustomerRFQForm(props) {
               {...getOverrideProps(overrides, "State")}
             ></TextField>
             <TextField
-              label="City"
               width="493.5px"
+              height="unset"
+              label="City"
               padding="0px 2px 0px 0px"
               shrink="0"
               placeholder="Placeholder"
@@ -363,8 +378,9 @@ export default function CustomerRFQForm(props) {
                 {...getOverrideProps(overrides, "Frame 423")}
               >
                 <TextField
-                  label="Unit Number"
                   width="145px"
+                  height="unset"
+                  label="Unit Number"
                   padding="0px 1px 1px 1px"
                   shrink="0"
                   placeholder="Placeholder"
@@ -375,8 +391,9 @@ export default function CustomerRFQForm(props) {
                   {...getOverrideProps(overrides, "UnitNumber")}
                 ></TextField>
                 <TextField
-                  label="Street Number"
                   width="145px"
+                  height="unset"
+                  label="Street Number"
                   padding="0px 1px 1px 1px"
                   shrink="0"
                   placeholder="Placeholder"
@@ -402,8 +419,9 @@ export default function CustomerRFQForm(props) {
                 {...getOverrideProps(overrides, "Frame 424")}
               >
                 <TextField
-                  label="Address Line 1"
                   width="343px"
+                  height="unset"
+                  label="Address Line 1"
                   padding="0px 7px 1px 1px"
                   shrink="0"
                   placeholder="Placeholder"
@@ -414,8 +432,9 @@ export default function CustomerRFQForm(props) {
                   {...getOverrideProps(overrides, "AddressLine1")}
                 ></TextField>
                 <TextField
-                  label="Address Line 2"
                   width="343px"
+                  height="unset"
+                  label="Address Line 2"
                   padding="0px 7px 1px 1px"
                   shrink="0"
                   placeholder="Placeholder"
@@ -442,8 +461,9 @@ export default function CustomerRFQForm(props) {
               {...getOverrideProps(overrides, "Frame 425")}
             >
               <TextField
-                label="Postal Code"
                 width="268px"
+                height="unset"
+                label="Postal Code"
                 padding="0px 1px 1px 1px"
                 shrink="0"
                 placeholder="Placeholder"
@@ -471,8 +491,9 @@ export default function CustomerRFQForm(props) {
             </Flex>
           </Flex>
           <TextAreaField
-            label="Additional Comments"
             width="unset"
+            height="unset"
+            label="Additional Comments"
             shrink="0"
             alignSelf="stretch"
             placeholder="Placeholder"

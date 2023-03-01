@@ -1,29 +1,6 @@
 import { Button, SearchField, SelectField } from '@aws-amplify/ui-react';
-import { DataStore } from 'aws-amplify';
-import { UserDetails } from '../../models';
-import { AddOwnerToCompany, populateCountries } from '../../utils/utilsAmplify';
 
 const Home = () => {
-  // const [items, setItems] = useState([]);
-
-  // useEffect(() => {
-  //   const itemquery = async () => {
-  //     // DeleteAllParts();
-  //     // const items = await DataStore.query(Item);
-  //     // setItems(items);
-  //   };
-  //   itemquery();
-  // }, []);
-
-  // const handleClick = async () => {
-  //   const userDetails = await DataStore.query(UserDetails);
-  //   // console.log(userDetails[0]);
-  //   const companyResponse = await AddOwnerToCompany(
-  //     userDetails[0],
-  //     'edb8e4ba-7b13-404e-94d5-bc16bf2bc810'
-  //   );
-  //   console.log(companyResponse);
-  // };
   return (
     <div
       style={{

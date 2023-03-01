@@ -344,6 +344,194 @@ export const syncRfqs = /* GraphQL */ `
     }
   }
 `;
+export const rfqsByReceivingCompanyID = /* GraphQL */ `
+  query RfqsByReceivingCompanyID(
+    $receivingCompanyID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRfqFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rfqsByReceivingCompanyID(
+      receivingCompanyID: $receivingCompanyID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        rfqNumber
+        dateSent
+        custRefNum
+        companyName
+        contact
+        phone
+        email
+        shippingTerms
+        shippingMethod
+        leadTime
+        paymentTerms
+        dueDate
+        quantityRequested
+        quantityQuoted
+        uom
+        urgency
+        discount
+        lineTotal
+        subtotal
+        salesTax
+        total
+        internalComments
+        emailComments
+        addressLine1
+        addressLine2
+        city
+        state
+        zip
+        country
+        itemIDs
+        receivingCompanyID
+        sendingCompanyID
+        ReceivingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        SendingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companySentRfqsId
+        companyReceivedRfqsId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const rfqsBySendingCompanyID = /* GraphQL */ `
+  query RfqsBySendingCompanyID(
+    $sendingCompanyID: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRfqFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rfqsBySendingCompanyID(
+      sendingCompanyID: $sendingCompanyID
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        rfqNumber
+        dateSent
+        custRefNum
+        companyName
+        contact
+        phone
+        email
+        shippingTerms
+        shippingMethod
+        leadTime
+        paymentTerms
+        dueDate
+        quantityRequested
+        quantityQuoted
+        uom
+        urgency
+        discount
+        lineTotal
+        subtotal
+        salesTax
+        total
+        internalComments
+        emailComments
+        addressLine1
+        addressLine2
+        city
+        state
+        zip
+        country
+        itemIDs
+        receivingCompanyID
+        sendingCompanyID
+        ReceivingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        SendingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companySentRfqsId
+        companyReceivedRfqsId
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getUserDetails = /* GraphQL */ `
   query GetUserDetails($userID: ID!) {
     getUserDetails(userID: $userID) {
@@ -1697,6 +1885,60 @@ export const itemsByCompanyID = /* GraphQL */ `
       }
       nextToken
       startedAt
+    }
+  }
+`;
+export const searchItems = /* GraphQL */ `
+  query SearchItems(
+    $filter: SearchableItemFilterInput
+    $sort: [SearchableItemSortInput]
+    $limit: Int
+    $nextToken: String
+    $from: Int
+    $aggregates: [SearchableItemAggregationInput]
+  ) {
+    searchItems(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+      aggregates: $aggregates
+    ) {
+      items {
+        id
+        nsn
+        partNumber
+        altPartNumber
+        description
+        quantity
+        condition
+        control
+        price
+        companyID
+        imageUrls
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      total
+      aggregateItems {
+        name
+        result {
+          ... on SearchableAggregateScalarResult {
+            value
+          }
+          ... on SearchableAggregateBucketResult {
+            buckets {
+              key
+              doc_count
+            }
+          }
+        }
+      }
     }
   }
 `;

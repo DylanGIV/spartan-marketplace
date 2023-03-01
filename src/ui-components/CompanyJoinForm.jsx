@@ -26,11 +26,12 @@ export default function CompanyJoinForm(props) {
       {...rest}
     >
       <TextField
-        label="Enter Company Code"
         width="unset"
+        height="unset"
+        label="Enter Company Code"
+        placeholder="xxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxxx"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}
@@ -60,11 +61,12 @@ export default function CompanyJoinForm(props) {
         {...getOverrideProps(overrides, "OR")}
       ></Text>
       <SelectField
-        label="Request To Join Company"
         width="unset"
+        height="unset"
+        label="Request To Join Company"
+        placeholder="Select Company"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}

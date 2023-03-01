@@ -26,11 +26,12 @@ export default function CompanyCreateDetails(props) {
       {...rest}
     >
       <TextField
-        label="Company Name"
         width="unset"
+        height="unset"
+        label="Company Name"
+        placeholder="Company Name"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}
@@ -38,11 +39,12 @@ export default function CompanyCreateDetails(props) {
         {...getOverrideProps(overrides, "CompanyName")}
       ></TextField>
       <TextField
-        label="Description"
         width="unset"
+        height="unset"
+        label="Description"
+        placeholder="Description"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}
@@ -50,11 +52,12 @@ export default function CompanyCreateDetails(props) {
         {...getOverrideProps(overrides, "Description")}
       ></TextField>
       <SelectField
-        label="Country"
         width="unset"
+        height="unset"
+        label="Country"
+        placeholder="Select Country"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}
@@ -62,11 +65,12 @@ export default function CompanyCreateDetails(props) {
         {...getOverrideProps(overrides, "CountrySelect")}
       ></SelectField>
       <TextField
-        label="Contact Email"
         width="unset"
+        height="unset"
+        label="Contact Email"
+        placeholder="Email"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}
@@ -89,11 +93,12 @@ export default function CompanyCreateDetails(props) {
         {...getOverrideProps(overrides, "ContactPhone")}
       ></View>
       <TextField
-        label="Fax"
         width="unset"
+        height="unset"
+        label="Fax"
+        placeholder="Fax"
         shrink="0"
         alignSelf="stretch"
-        placeholder="Placeholder"
         size="small"
         isDisabled={false}
         labelHidden={false}

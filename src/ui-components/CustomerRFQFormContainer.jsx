@@ -58,9 +58,9 @@ export default function CustomerRFQFormContainer(props) {
         {...getOverrideProps(overrides, "Footer")}
       >
         <TextAreaField
-          label="Additional Comments"
           width="527.5px"
           height="125px"
+          label="Additional Comments"
           shrink="0"
           placeholder="Placeholder"
           size="small"
@@ -83,6 +83,7 @@ export default function CustomerRFQFormContainer(props) {
           {...getOverrideProps(overrides, "ButtonContainer")}
         >
           <Button
+            width="unset"
             height="33px"
             borderRadius="10px"
             shrink="0"
@@ -93,6 +94,7 @@ export default function CustomerRFQFormContainer(props) {
             {...getOverrideProps(overrides, "PrevButton")}
           ></Button>
           <Button
+            width="unset"
             height="33px"
             borderRadius="10px"
             shrink="0"
@@ -103,6 +105,7 @@ export default function CustomerRFQFormContainer(props) {
             {...getOverrideProps(overrides, "NextButton")}
           ></Button>
           <Button
+            width="unset"
             height="33px"
             borderRadius="10px"
             shrink="0"

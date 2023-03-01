@@ -25,8 +25,9 @@ export default function RfqCustomerAddress(props) {
       {...rest}
     >
       <SelectField
-        label="Saved Addresses"
         width="493.5px"
+        height="unset"
+        label="Saved Addresses"
         shrink="0"
         placeholder="Placeholder"
         size="small"
@@ -36,8 +37,9 @@ export default function RfqCustomerAddress(props) {
         {...getOverrideProps(overrides, "SavedAddresses")}
       ></SelectField>
       <SelectField
-        label="Country"
         width="493.5px"
+        height="unset"
+        label="Country"
         shrink="0"
         placeholder="Placeholder"
         size="small"
@@ -47,8 +49,9 @@ export default function RfqCustomerAddress(props) {
         {...getOverrideProps(overrides, "Country")}
       ></SelectField>
       <TextField
-        label="State/Region"
         width="493.5px"
+        height="unset"
+        label="State/Region"
         padding="0px 2px 0px 0px"
         shrink="0"
         placeholder="Placeholder"
@@ -59,8 +62,9 @@ export default function RfqCustomerAddress(props) {
         {...getOverrideProps(overrides, "State")}
       ></TextField>
       <TextField
-        label="City"
         width="493.5px"
+        height="unset"
+        label="City"
         padding="0px 2px 0px 0px"
         shrink="0"
         placeholder="Placeholder"
@@ -99,8 +103,9 @@ export default function RfqCustomerAddress(props) {
           {...getOverrideProps(overrides, "Frame 423")}
         >
           <TextField
-            label="Unit Number"
             width="145px"
+            height="unset"
+            label="Unit Number"
             padding="0px 1px 1px 1px"
             shrink="0"
             placeholder="Placeholder"
@@ -111,8 +116,9 @@ export default function RfqCustomerAddress(props) {
             {...getOverrideProps(overrides, "UnitNumber")}
           ></TextField>
           <TextField
-            label="Street Number"
             width="145px"
+            height="unset"
+            label="Street Number"
             padding="0px 1px 1px 1px"
             shrink="0"
             placeholder="Placeholder"
@@ -138,8 +144,9 @@ export default function RfqCustomerAddress(props) {
           {...getOverrideProps(overrides, "Frame 424")}
         >
           <TextField
-            label="Address Line 1"
             width="343px"
+            height="unset"
+            label="Address Line 1"
             padding="0px 7px 1px 1px"
             shrink="0"
             placeholder="Placeholder"
@@ -150,8 +157,9 @@ export default function RfqCustomerAddress(props) {
             {...getOverrideProps(overrides, "AddressLine1")}
           ></TextField>
           <TextField
-            label="Address Line 2"
             width="343px"
+            height="unset"
+            label="Address Line 2"
             padding="0px 7px 1px 1px"
             shrink="0"
             placeholder="Placeholder"
@@ -178,8 +186,9 @@ export default function RfqCustomerAddress(props) {
         {...getOverrideProps(overrides, "Frame 425")}
       >
         <TextField
-          label="Postal Code"
           width="268px"
+          height="unset"
+          label="Postal Code"
           padding="0px 1px 1px 1px"
           shrink="0"
           placeholder="Placeholder"

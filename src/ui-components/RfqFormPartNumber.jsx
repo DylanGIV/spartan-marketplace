@@ -26,8 +26,9 @@ export default function RfqFormPartNumber(props) {
       {...rest}
     >
       <TextField
-        label="Part Number"
         width="412px"
+        height="unset"
+        label="Part Number"
         padding="1px 32px 1px 32px"
         shrink="0"
         placeholder="Placeholder"
@@ -38,8 +39,9 @@ export default function RfqFormPartNumber(props) {
         {...getOverrideProps(overrides, "PartNumber")}
       ></TextField>
       <StepperField
-        label="Quantity Requested"
         width="120px"
+        height="unset"
+        label="Quantity Requested"
         alignItems="center"
         padding="1px 0px 1px 0px"
         shrink="0"

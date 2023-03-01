@@ -39,6 +39,8 @@ export default function CompanyCreateJoinType(props) {
         {...getOverrideProps(overrides, "BadgeContainer")}
       >
         <Badge
+          width="unset"
+          height="unset"
           shrink="0"
           size="small"
           variation="default"
@@ -46,6 +48,8 @@ export default function CompanyCreateJoinType(props) {
           {...getOverrideProps(overrides, "Badge37813150")}
         ></Badge>
         <Badge
+          width="unset"
+          height="unset"
           shrink="0"
           size="small"
           variation="default"

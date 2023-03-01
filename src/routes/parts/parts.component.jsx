@@ -8,7 +8,7 @@ import {
   PartsListDetails,
 } from '../../ui-components';
 import { GetAllCompanies } from '../../utils/utilsAmplify';
-import { API, DataStore, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 
 import './parts.styles.scss';
 import { Modal } from '@mui/material';
@@ -40,7 +40,7 @@ const Parts = (props) => {
     isOpen: false,
     rfqs: [],
   });
-  const [userDetails, setUserDetails] = useState(false);
+  // const [userDetails, setUserDetails] = useState(false);
   // const [countries, setCountries] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [partSearchTextAreaField, setPartSearchTextAreaField] = useState('');
@@ -50,7 +50,7 @@ const Parts = (props) => {
   const { user } = useAuthenticator();
 
   const [isHovering, setIsHovering] = useState(null);
-  const { company, countries } = useContext(UserContext);
+  const { company, countries, userDetails } = useContext(UserContext);
 
   // console.log(selectedCountry);
 
@@ -239,16 +239,16 @@ const Parts = (props) => {
 
   useEffect(() => {
     const getDetails = async () => {
-      const userDetails = await DataStore.query(UserDetails, user.username);
+      // const userDetails = await DataStore.query(UserDetails, user.username);
       // const user = await Auth.currentAuthenticatedUser();
-      setUserDetails({
-        user: user,
-        companyID: userDetails.companyID,
-        isCompanyOwner: userDetails.isCompanyOwner,
-        id: userDetails.userID,
-        contactEmail: userDetails.contactEmail,
-        contactPhone: userDetails.contactPhone,
-      });
+      // setUserDetails({
+      //   user: user,
+      //   companyID: userDetails.companyID,
+      //   isCompanyOwner: userDetails.isCompanyOwner,
+      //   id: userDetails.userID,
+      //   contactEmail: userDetails.contactEmail,
+      //   contactPhone: userDetails.contactPhone,
+      // });
       // const countries = await GetCountries();
       // setCountries(countries);
     };

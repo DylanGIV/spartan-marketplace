@@ -6,12 +6,9 @@ import {
   DialogContent,
   LinearProgress,
 } from '@mui/material';
-import { Box } from '@mui/system';
-import { DataStore } from 'aws-amplify';
 import React, { forwardRef, useContext, useState } from 'react';
 import { InventoryContext } from '../../context/inventory.context';
 import { UserContext } from '../../context/user.context';
-import { Company, Item, UserDetails } from '../../models';
 import {
   BatchAddPartsToInventoryILS,
   CreateCompanyItemsImportRequest,
@@ -26,7 +23,7 @@ const ImportDataPopUp = forwardRef((props, ref) => {
   const { user } = useAuthenticator();
   const [allowClose, setAllowClose] = useState(true);
   const [importFile, setImportFile] = useState(null);
-
+  const { setPendingImport } = props;
   const { company } = useContext(UserContext);
 
   const handleFileSelect = (event) => {
@@ -65,6 +62,8 @@ const ImportDataPopUp = forwardRef((props, ref) => {
       company.id,
       importFile
     );
+    setPendingImport(true);
+    setIsImportPartOpen(false);
     console.log(response);
   };
 

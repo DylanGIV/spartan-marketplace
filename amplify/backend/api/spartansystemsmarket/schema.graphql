@@ -1,4 +1,4 @@
-type Rfq @model @auth(rules: [{allow: public}]) {
+type Rfq @model @auth(rules: [{ allow: public }]) {
   id: ID!
   rfqNumber: String
   dateSent: AWSDateTime
@@ -30,33 +30,37 @@ type Rfq @model @auth(rules: [{allow: public}]) {
   zip: String
   country: String
   itemIDs: [ID]
-  receivingCompanyID: ID!
-  sendingCompanyID: ID!
+  receivingCompanyID: ID! @index(name: "byReceivingCompany")
+  sendingCompanyID: ID! @index(name: "bySendingCompany")
   ReceivingCompany: Company @belongsTo(fields: ["receivingCompanyID"])
   SendingCompany: Company @belongsTo(fields: ["sendingCompanyID"])
 }
 
-type UserDetails @model @auth(rules: [{allow: owner}, {allow: public}]) {
+type UserDetails @model @auth(rules: [{ allow: owner }, { allow: public }]) {
   userID: ID! @primaryKey
   firstName: String
   lastName: String
   contactEmail: AWSEmail
   contactPhone: AWSPhone
   companyID: ID @index(name: "byCompany")
-  BillingAddresses: [BillingAddress] @manyToMany(relationName: "UserDetailsBillingAddress")
-  ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "UserDetailsShippingAddress")
+  BillingAddresses: [BillingAddress]
+    @manyToMany(relationName: "UserDetailsBillingAddress")
+  ShippingAddresses: [ShippingAddress]
+    @manyToMany(relationName: "UserDetailsShippingAddress")
   isCompanyOwner: Boolean
 }
 
-type Country @model @auth(rules: [{allow: public}]) {
+type Country @model @auth(rules: [{ allow: public }]) {
   id: ID!
   countryName: String
   code: String
-  BillingAddresses: [BillingAddress] @hasMany(indexName: "byCountry", fields: ["id"])
-  ShippingAddresses: [ShippingAddress] @hasMany(indexName: "byCountry", fields: ["id"])
+  BillingAddresses: [BillingAddress]
+    @hasMany(indexName: "byCountry", fields: ["id"])
+  ShippingAddresses: [ShippingAddress]
+    @hasMany(indexName: "byCountry", fields: ["id"])
 }
 
-type ShippingAddress @model @auth(rules: [{allow: public}]) {
+type ShippingAddress @model @auth(rules: [{ allow: public }]) {
   id: ID!
   unitNumber: String
   streetNumber: String
@@ -67,11 +71,13 @@ type ShippingAddress @model @auth(rules: [{allow: public}]) {
   postalCode: String
   isDefault: Boolean
   countryID: ID! @index(name: "byCountry")
-  UserShippingAddresses: [UserDetails] @manyToMany(relationName: "UserDetailsShippingAddress")
-  CompanyShippingAddresses: [Company] @manyToMany(relationName: "CompanyShippingAddress")
+  UserShippingAddresses: [UserDetails]
+    @manyToMany(relationName: "UserDetailsShippingAddress")
+  CompanyShippingAddresses: [Company]
+    @manyToMany(relationName: "CompanyShippingAddress")
 }
 
-type BillingAddress @model @auth(rules: [{allow: public}]) {
+type BillingAddress @model @auth(rules: [{ allow: public }]) {
   id: ID!
   unitNumber: String
   streetNumber: String
@@ -81,22 +87,26 @@ type BillingAddress @model @auth(rules: [{allow: public}]) {
   region: String
   postalCode: String
   isDefault: Boolean
-  CompanyBillingAddresses: [Company] @manyToMany(relationName: "CompanyBillingAddress")
+  CompanyBillingAddresses: [Company]
+    @manyToMany(relationName: "CompanyBillingAddress")
   countryID: ID! @index(name: "byCountry")
-  UserBillingAddresses: [UserDetails] @manyToMany(relationName: "UserDetailsBillingAddress")
+  UserBillingAddresses: [UserDetails]
+    @manyToMany(relationName: "UserDetailsBillingAddress")
 }
 
-type Company @model @auth(rules: [{allow: public}]) {
+type Company @model @auth(rules: [{ allow: public }]) {
   id: ID!
   companyName: String
   phone: AWSPhone
   contactEmail: AWSEmail
   Items: [Item] @hasMany(indexName: "byCompany", fields: ["id"])
   ItemMROS: [ItemMRO] @hasMany(indexName: "byCompany", fields: ["id"])
-  BillingAddresses: [BillingAddress] @manyToMany(relationName: "CompanyBillingAddress")
+  BillingAddresses: [BillingAddress]
+    @manyToMany(relationName: "CompanyBillingAddress")
   CompanyMembers: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
   CompanyOwner: UserDetails @hasOne
-  ShippingAddresses: [ShippingAddress] @manyToMany(relationName: "CompanyShippingAddress")
+  ShippingAddresses: [ShippingAddress]
+    @manyToMany(relationName: "CompanyShippingAddress")
   countryID: ID @index(name: "byCountry")
   profilePictureUrl: String
   fax: String
@@ -105,7 +115,7 @@ type Company @model @auth(rules: [{allow: public}]) {
   receivedRfqs: [Rfq] @hasMany
 }
 
-type ItemMRO @model @auth(rules: [{allow: public}]) {
+type ItemMRO @model @auth(rules: [{ allow: public }]) {
   id: ID!
   nsn: String
   partNumber: String
@@ -118,7 +128,7 @@ type ItemMRO @model @auth(rules: [{allow: public}]) {
   imageUrls: [String]
 }
 
-type Item @model @auth(rules: [{allow: public}]) {
+type Item @searchable @model @auth(rules: [{ allow: public }]) {
   id: ID!
   nsn: String
   partNumber: String
@@ -130,9 +140,9 @@ type Item @model @auth(rules: [{allow: public}]) {
   price: Float
   companyID: ID! @index(name: "byCompany")
   imageUrls: [String]
-} 
+}
 
-type CompanyItemsImport @model @auth(rules: [{allow: public}]) {
+type CompanyItemsImport @model @auth(rules: [{ allow: public }]) {
   id: ID! @primaryKey
   companyID: ID!
   importName: String

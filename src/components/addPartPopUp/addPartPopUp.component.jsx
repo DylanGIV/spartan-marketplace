@@ -3,7 +3,7 @@ import { forwardRef, useContext, useEffect, useState } from 'react';
 import './addPartPopUp.styles.scss';
 import { AddPartToInventory } from '../../utils/utilsAmplify';
 import { UserDetails } from '../../models';
-import { DataStore, Storage } from 'aws-amplify';
+import { Storage } from 'aws-amplify';
 import { InventoryContext } from '../../context/inventory.context';
 import { useAuthenticator } from '@aws-amplify/ui-react';
 import { UserContext } from '../../context/user.context';
