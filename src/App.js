@@ -65,7 +65,6 @@ function App() {
           setUserDetails,
           setUserDetailsExists
         );
-        console.log(subscriptionResponse);
 
         setSubscription(subscriptionResponse);
       }

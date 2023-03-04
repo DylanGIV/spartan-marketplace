@@ -1,0 +1,8 @@
+{
+  "Source": "Spartan Systems <spartansystemsmarketplace@gmail.com>",
+  "Template": "TestTemplate",
+  "Destination": {
+    "ToAddresses": ["dylangiv123@gmail.com"]
+  },
+  "TemplateData": "{ \"name\":\"Genaro\", \"favoriteanimal\": \"alligator\" }"
+}

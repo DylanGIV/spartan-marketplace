@@ -40,8 +40,6 @@ const Parts = (props) => {
     isOpen: false,
     rfqs: [],
   });
-  // const [userDetails, setUserDetails] = useState(false);
-  // const [countries, setCountries] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [partSearchTextAreaField, setPartSearchTextAreaField] = useState('');
   const [allowRFQ, setAllowRFQ] = useState(false);
@@ -51,8 +49,6 @@ const Parts = (props) => {
 
   const [isHovering, setIsHovering] = useState(null);
   const { company, countries, userDetails } = useContext(UserContext);
-
-  // console.log(selectedCountry);
 
   const handleMouseEnter = (id) => {
     setIsHovering(id);
@@ -205,24 +201,6 @@ const Parts = (props) => {
       ],
     };
 
-    // const queryParts = await DataStore.query(
-    //   Item,
-    //   (p) =>
-    //     p.and((p) => [
-    //       p.companyID.eq(companyID),
-    //       p.or((p) => [
-    //         p.altPartNumber.contains(normalizedSearch),
-    //         p.nsn.contains(normalizedSearch),
-    //         p.partNumber.contains(normalizedSearch),
-    //         p.description.contains(normalizedSearch),
-    //       ]),
-    //     ]),
-    //   {
-    //     page: 0,
-    //     limit: 5,
-    //   }
-    // );
-
     const queryParts = await API.graphql(
       graphqlOperation(queries.itemsByCompanyID, {
         companyID: companyID,
@@ -231,29 +209,8 @@ const Parts = (props) => {
       })
     );
 
-    // console.log(queryParts.data.itemsByCompanyID.items);
-    // console.log(queryParts.data.itemsByCompanyID.nextToken);
     return queryParts.data.itemsByCompanyID.items;
-    // return queryParts;
   };
-
-  useEffect(() => {
-    const getDetails = async () => {
-      // const userDetails = await DataStore.query(UserDetails, user.username);
-      // const user = await Auth.currentAuthenticatedUser();
-      // setUserDetails({
-      //   user: user,
-      //   companyID: userDetails.companyID,
-      //   isCompanyOwner: userDetails.isCompanyOwner,
-      //   id: userDetails.userID,
-      //   contactEmail: userDetails.contactEmail,
-      //   contactPhone: userDetails.contactPhone,
-      // });
-      // const countries = await GetCountries();
-      // setCountries(countries);
-    };
-    getDetails();
-  }, []);
 
   useEffect(() => {
     const queryData = async () => {

@@ -2,6 +2,57 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateCustomerRfqEmail = /* GraphQL */ `
+  subscription OnCreateCustomerRfqEmail(
+    $filter: ModelSubscriptionCustomerRfqEmailFilterInput
+  ) {
+    onCreateCustomerRfqEmail(filter: $filter) {
+      id
+      email
+      dateSent
+      htmlBody
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateCustomerRfqEmail = /* GraphQL */ `
+  subscription OnUpdateCustomerRfqEmail(
+    $filter: ModelSubscriptionCustomerRfqEmailFilterInput
+  ) {
+    onUpdateCustomerRfqEmail(filter: $filter) {
+      id
+      email
+      dateSent
+      htmlBody
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteCustomerRfqEmail = /* GraphQL */ `
+  subscription OnDeleteCustomerRfqEmail(
+    $filter: ModelSubscriptionCustomerRfqEmailFilterInput
+  ) {
+    onDeleteCustomerRfqEmail(filter: $filter) {
+      id
+      email
+      dateSent
+      htmlBody
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateRfq = /* GraphQL */ `
   subscription OnCreateRfq($filter: ModelSubscriptionRfqFilterInput) {
     onCreateRfq(filter: $filter) {
@@ -35,7 +86,20 @@ export const onCreateRfq = /* GraphQL */ `
       state
       zip
       country
-      itemIDs
+      Items {
+        items {
+          id
+          rfqId
+          itemId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       receivingCompanyID
       sendingCompanyID
       ReceivingCompany {
@@ -89,6 +153,33 @@ export const onCreateRfq = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -148,6 +239,33 @@ export const onCreateRfq = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -199,7 +317,20 @@ export const onUpdateRfq = /* GraphQL */ `
       state
       zip
       country
-      itemIDs
+      Items {
+        items {
+          id
+          rfqId
+          itemId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       receivingCompanyID
       sendingCompanyID
       ReceivingCompany {
@@ -253,6 +384,33 @@ export const onUpdateRfq = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -312,6 +470,33 @@ export const onUpdateRfq = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -363,7 +548,20 @@ export const onDeleteRfq = /* GraphQL */ `
       state
       zip
       country
-      itemIDs
+      Items {
+        items {
+          id
+          rfqId
+          itemId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       receivingCompanyID
       sendingCompanyID
       ReceivingCompany {
@@ -417,6 +615,33 @@ export const onDeleteRfq = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -476,6 +701,33 @@ export const onDeleteRfq = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -698,6 +950,92 @@ export const onCreateCountry = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          userID
+          firstName
+          lastName
+          contactEmail
+          contactPhone
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRfqs {
+          nextToken
+          startedAt
+        }
+        receivedRfqs {
+          nextToken
+          startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerUserID
+      }
       createdAt
       updatedAt
       _version
@@ -753,6 +1091,92 @@ export const onUpdateCountry = /* GraphQL */ `
         }
         nextToken
         startedAt
+      }
+      Company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          userID
+          firstName
+          lastName
+          contactEmail
+          contactPhone
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRfqs {
+          nextToken
+          startedAt
+        }
+        receivedRfqs {
+          nextToken
+          startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerUserID
       }
       createdAt
       updatedAt
@@ -810,6 +1234,92 @@ export const onDeleteCountry = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          userID
+          firstName
+          lastName
+          contactEmail
+          contactPhone
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRfqs {
+          nextToken
+          startedAt
+        }
+        receivedRfqs {
+          nextToken
+          startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerUserID
+      }
       createdAt
       updatedAt
       _version
@@ -833,6 +1343,40 @@ export const onCreateShippingAddress = /* GraphQL */ `
       postalCode
       isDefault
       countryID
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       UserShippingAddresses {
         items {
           id
@@ -885,6 +1429,40 @@ export const onUpdateShippingAddress = /* GraphQL */ `
       postalCode
       isDefault
       countryID
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       UserShippingAddresses {
         items {
           id
@@ -937,6 +1515,40 @@ export const onDeleteShippingAddress = /* GraphQL */ `
       postalCode
       isDefault
       countryID
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       UserShippingAddresses {
         items {
           id
@@ -1003,6 +1615,40 @@ export const onCreateBillingAddress = /* GraphQL */ `
         startedAt
       }
       countryID
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       UserBillingAddresses {
         items {
           id
@@ -1055,6 +1701,40 @@ export const onUpdateBillingAddress = /* GraphQL */ `
         startedAt
       }
       countryID
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       UserBillingAddresses {
         items {
           id
@@ -1107,6 +1787,40 @@ export const onDeleteBillingAddress = /* GraphQL */ `
         startedAt
       }
       countryID
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       UserBillingAddresses {
         items {
           id
@@ -1286,7 +2000,6 @@ export const onCreateCompany = /* GraphQL */ `
           state
           zip
           country
-          itemIDs
           receivingCompanyID
           sendingCompanyID
           createdAt
@@ -1332,7 +2045,6 @@ export const onCreateCompany = /* GraphQL */ `
           state
           zip
           country
-          itemIDs
           receivingCompanyID
           sendingCompanyID
           createdAt
@@ -1345,6 +2057,75 @@ export const onCreateCompany = /* GraphQL */ `
         }
         nextToken
         startedAt
+      }
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      firstShippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        isDefault
+        countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
@@ -1511,7 +2292,6 @@ export const onUpdateCompany = /* GraphQL */ `
           state
           zip
           country
-          itemIDs
           receivingCompanyID
           sendingCompanyID
           createdAt
@@ -1557,7 +2337,6 @@ export const onUpdateCompany = /* GraphQL */ `
           state
           zip
           country
-          itemIDs
           receivingCompanyID
           sendingCompanyID
           createdAt
@@ -1570,6 +2349,75 @@ export const onUpdateCompany = /* GraphQL */ `
         }
         nextToken
         startedAt
+      }
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      firstShippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        isDefault
+        countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
@@ -1736,7 +2584,6 @@ export const onDeleteCompany = /* GraphQL */ `
           state
           zip
           country
-          itemIDs
           receivingCompanyID
           sendingCompanyID
           createdAt
@@ -1782,7 +2629,6 @@ export const onDeleteCompany = /* GraphQL */ `
           state
           zip
           country
-          itemIDs
           receivingCompanyID
           sendingCompanyID
           createdAt
@@ -1795,6 +2641,75 @@ export const onDeleteCompany = /* GraphQL */ `
         }
         nextToken
         startedAt
+      }
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      firstShippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        isDefault
+        countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
@@ -1882,6 +2797,20 @@ export const onCreateItem = /* GraphQL */ `
       price
       companyID
       imageUrls
+      Rfqs {
+        items {
+          id
+          rfqId
+          itemId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -1904,6 +2833,20 @@ export const onUpdateItem = /* GraphQL */ `
       price
       companyID
       imageUrls
+      Rfqs {
+        items {
+          id
+          rfqId
+          itemId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -1926,6 +2869,20 @@ export const onDeleteItem = /* GraphQL */ `
       price
       companyID
       imageUrls
+      Rfqs {
+        items {
+          id
+          rfqId
+          itemId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -1991,6 +2948,345 @@ export const onDeleteCompanyItemsImport = /* GraphQL */ `
     }
   }
 `;
+export const onCreateRfqItems = /* GraphQL */ `
+  subscription OnCreateRfqItems($filter: ModelSubscriptionRfqItemsFilterInput) {
+    onCreateRfqItems(filter: $filter) {
+      id
+      rfqId
+      itemId
+      rfq {
+        id
+        rfqNumber
+        dateSent
+        custRefNum
+        companyName
+        contact
+        phone
+        email
+        shippingTerms
+        shippingMethod
+        leadTime
+        paymentTerms
+        dueDate
+        quantityRequested
+        quantityQuoted
+        uom
+        urgency
+        discount
+        lineTotal
+        subtotal
+        salesTax
+        total
+        internalComments
+        emailComments
+        addressLine1
+        addressLine2
+        city
+        state
+        zip
+        country
+        Items {
+          nextToken
+          startedAt
+        }
+        receivingCompanyID
+        sendingCompanyID
+        ReceivingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        SendingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companySentRfqsId
+        companyReceivedRfqsId
+      }
+      item {
+        id
+        nsn
+        partNumber
+        altPartNumber
+        description
+        quantity
+        condition
+        control
+        price
+        companyID
+        imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onUpdateRfqItems = /* GraphQL */ `
+  subscription OnUpdateRfqItems($filter: ModelSubscriptionRfqItemsFilterInput) {
+    onUpdateRfqItems(filter: $filter) {
+      id
+      rfqId
+      itemId
+      rfq {
+        id
+        rfqNumber
+        dateSent
+        custRefNum
+        companyName
+        contact
+        phone
+        email
+        shippingTerms
+        shippingMethod
+        leadTime
+        paymentTerms
+        dueDate
+        quantityRequested
+        quantityQuoted
+        uom
+        urgency
+        discount
+        lineTotal
+        subtotal
+        salesTax
+        total
+        internalComments
+        emailComments
+        addressLine1
+        addressLine2
+        city
+        state
+        zip
+        country
+        Items {
+          nextToken
+          startedAt
+        }
+        receivingCompanyID
+        sendingCompanyID
+        ReceivingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        SendingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companySentRfqsId
+        companyReceivedRfqsId
+      }
+      item {
+        id
+        nsn
+        partNumber
+        altPartNumber
+        description
+        quantity
+        condition
+        control
+        price
+        companyID
+        imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const onDeleteRfqItems = /* GraphQL */ `
+  subscription OnDeleteRfqItems($filter: ModelSubscriptionRfqItemsFilterInput) {
+    onDeleteRfqItems(filter: $filter) {
+      id
+      rfqId
+      itemId
+      rfq {
+        id
+        rfqNumber
+        dateSent
+        custRefNum
+        companyName
+        contact
+        phone
+        email
+        shippingTerms
+        shippingMethod
+        leadTime
+        paymentTerms
+        dueDate
+        quantityRequested
+        quantityQuoted
+        uom
+        urgency
+        discount
+        lineTotal
+        subtotal
+        salesTax
+        total
+        internalComments
+        emailComments
+        addressLine1
+        addressLine2
+        city
+        state
+        zip
+        country
+        Items {
+          nextToken
+          startedAt
+        }
+        receivingCompanyID
+        sendingCompanyID
+        ReceivingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        SendingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companySentRfqsId
+        companyReceivedRfqsId
+      }
+      item {
+        id
+        nsn
+        partNumber
+        altPartNumber
+        description
+        quantity
+        condition
+        control
+        price
+        companyID
+        imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
 export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
   subscription OnCreateUserDetailsBillingAddress(
     $filter: ModelSubscriptionUserDetailsBillingAddressFilterInput
@@ -2038,6 +3334,16 @@ export const onCreateUserDetailsBillingAddress = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -2104,6 +3410,16 @@ export const onUpdateUserDetailsBillingAddress = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -2170,6 +3486,16 @@ export const onDeleteUserDetailsBillingAddress = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -2232,6 +3558,16 @@ export const onCreateUserDetailsShippingAddress = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -2298,6 +3634,16 @@ export const onUpdateUserDetailsShippingAddress = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -2364,6 +3710,16 @@ export const onDeleteUserDetailsShippingAddress = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -2406,6 +3762,16 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -2471,6 +3837,33 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -2506,6 +3899,16 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -2571,6 +3974,33 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -2606,6 +4036,16 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -2671,6 +4111,33 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -2710,6 +4177,16 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -2771,6 +4248,33 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -2810,6 +4314,16 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -2871,6 +4385,33 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -2910,6 +4451,16 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -2971,6 +4522,33 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt

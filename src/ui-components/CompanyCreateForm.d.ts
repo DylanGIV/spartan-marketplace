@@ -16,7 +16,6 @@ export declare type CompanyCreateFormInputValues = {
     companyName?: string;
     phone?: string;
     contactEmail?: string;
-    countryID?: string;
     profilePictureUrl?: string;
     fax?: string;
     companyDescription?: string;
@@ -25,7 +24,6 @@ export declare type CompanyCreateFormValidationValues = {
     companyName?: ValidationFunction<string>;
     phone?: ValidationFunction<string>;
     contactEmail?: ValidationFunction<string>;
-    countryID?: ValidationFunction<string>;
     profilePictureUrl?: ValidationFunction<string>;
     fax?: ValidationFunction<string>;
     companyDescription?: ValidationFunction<string>;
@@ -36,7 +34,6 @@ export declare type CompanyCreateFormOverridesProps = {
     companyName?: PrimitiveOverrideProps<TextFieldProps>;
     phone?: PrimitiveOverrideProps<TextFieldProps>;
     contactEmail?: PrimitiveOverrideProps<TextFieldProps>;
-    countryID?: PrimitiveOverrideProps<TextFieldProps>;
     profilePictureUrl?: PrimitiveOverrideProps<TextFieldProps>;
     fax?: PrimitiveOverrideProps<TextFieldProps>;
     companyDescription?: PrimitiveOverrideProps<TextFieldProps>;

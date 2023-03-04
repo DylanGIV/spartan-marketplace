@@ -56,8 +56,8 @@ export const GetPartsByCompanySubscribe = async (
   search
 ) => {
   const variables = {
-    companyID: company.id,
-    limit: 25,
+    // companyID: company.id,
+    limit: itemsPerPage,
   };
 
   if (nextToken) {
@@ -65,13 +65,22 @@ export const GetPartsByCompanySubscribe = async (
   }
   if (search) {
     variables.filter = {
-      or: [
-        { nsn: { matchPhrasePrefix: search } },
-        { partNumber: { matchPhrasePrefix: search } },
-        { altPartNumber: { matchPhrasePrefix: search } },
-        { description: { matchPhrasePrefix: search } },
-        { control: { matchPhrasePrefix: search } },
+      and: [
+        { companyID: { match: company.id } },
+        {
+          or: [
+            { nsn: { matchPhrasePrefix: search } },
+            { partNumber: { matchPhrasePrefix: search } },
+            { altPartNumber: { matchPhrasePrefix: search } },
+            { description: { matchPhrasePrefix: search } },
+            { control: { matchPhrasePrefix: search } },
+          ],
+        },
       ],
+    };
+  } else {
+    variables.filter = {
+      companyID: { match: company.id },
     };
   }
   try {
@@ -138,6 +147,7 @@ export const GetRFQByCompany = async (
     items: rfqs,
     count: 1,
   });
+  return rfqs;
 };
 export const GetCompanyByID = async (companyID) => {
   const company = await API.graphql(
@@ -176,7 +186,7 @@ export const CreateUserDetails = async (isOwner, user, userDetails) => {
 };
 export const AddUserShippingAddress = async (shippingAddress, user) => {
   const userDetailsResponse = await API.graphql(
-    graphqlOperation(queries.getUserDetails, { id: user.username })
+    graphqlOperation(queries.getUserDetails, { userID: user.username })
   );
   const userDetails = userDetailsResponse.data.getUserDetails;
   if (!userDetails) {
@@ -212,10 +222,66 @@ export const AddUserShippingAddress = async (shippingAddress, user) => {
       const response = await API.graphql(
         graphqlOperation(mutations.createUserDetailsShippingAddress, {
           input: {
-            shippingAddressID: newShippingAddress.id,
-            userDetailsID: userDetails.id,
-            shippingAddress: newShippingAddress,
-            userDetails: userDetails,
+            shippingAddressId: newShippingAddress.id,
+            userDetailsUserID: userDetails.userID,
+            // shippingAddress: newShippingAddress,
+            // userDetails: userDetails,
+          },
+        })
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const AddCompanyShippingAddress = async (
+  shippingAddress,
+  companyPass
+) => {
+  const companyResponse = await API.graphql(
+    graphqlOperation(queries.getCompany, { id: companyPass.id })
+  );
+  const company = companyResponse.data.getCompany;
+  if (!company) {
+    alert(
+      'Company not found, could not add shipping address. If this issue persists, please contact support.'
+    );
+    return;
+  }
+  try {
+    const newShippingAddressResponse = await API.graphql(
+      graphqlOperation(mutations.createShippingAddress, {
+        input: {
+          addressLine1: shippingAddress.addressLine1,
+          addressLine2: shippingAddress.addressLine2,
+          city: shippingAddress.city,
+          postalCode: shippingAddress.postalCode,
+          state: shippingAddress.state,
+          streetNumber: shippingAddress.streetNumber,
+          unitNumber: shippingAddress.unitNumber,
+          countryID: shippingAddress.countryID,
+        },
+      })
+    );
+    const newShippingAddress =
+      newShippingAddressResponse.data.createShippingAddress;
+    if (!newShippingAddress) {
+      alert(
+        'Could not add shipping address. If this issue persists, please contact support.'
+      );
+      return;
+    }
+    try {
+      const response = await API.graphql(
+        graphqlOperation(mutations.createCompanyShippingAddress, {
+          input: {
+            shippingAddressId: newShippingAddress.id,
+            companyId: company.id,
+            // shippingAddress: newShippingAddress,
+            // company: company,
           },
         })
       );
@@ -249,7 +315,7 @@ export const CreateRFQ = async (rfqDetails) => {
           dateSent: rfqDetails.dateSent,
           dueDate: rfqDetails.dueDate,
           emailComments: rfqDetails.emailComments,
-          imageUrls: rfqDetails.imageUrls,
+          // imageUrls: rfqDetails.imageUrls,
           internalComments: rfqDetails.internalComments,
           leadTime: rfqDetails.leadTime,
           lineTotal: rfqDetails.lineTotal,
@@ -264,7 +330,7 @@ export const CreateRFQ = async (rfqDetails) => {
           receivingCompanyID: rfqDetails.receivingCompanyID,
           sendingCompanyID: rfqDetails.sendingCompanyID,
           urgency: rfqDetails.urgency,
-          itemIDs: rfqDetails.itemIDs,
+          Items: rfqDetails.Items,
         },
       })
     );
@@ -365,7 +431,7 @@ export const PopulateCountries = async () => {
 export const GetCountries = async () => {
   try {
     const countries = await API.graphql(
-      graphqlOperation(queries.listCountries)
+      graphqlOperation(queries.listCountries, { limit: 1000 })
     );
     const sortedCountries = countries.data.listCountries.items.sort((a, b) =>
       a.countryName > b.countryName ? 1 : -1
@@ -375,21 +441,18 @@ export const GetCountries = async () => {
     console.log(error);
   }
 };
-export const GetUserShippingAddresses = async (userDetails) => {
+export const GetCompanyShippingAddresses = async (company) => {
   try {
-    const userShippingAddressesResponse = await API.graphql(
-      graphqlOperation(queries.listUserDetailsShippingAddresses, {
+    const companyShippingAddressesResponse = await API.graphql(
+      graphqlOperation(queries.listCompanyShippingAddresses, {
         filter: {
-          userDetailsUserID: {
-            eq: userDetails.userID,
+          companyId: {
+            eq: company.id,
           },
         },
       })
     );
-    console.log(
-      userShippingAddressesResponse.data.listUserDetailsShippingAddresses.items
-    );
-    return userShippingAddressesResponse.data.listUserDetailsShippingAddresses.items.map(
+    return companyShippingAddressesResponse.data.listCompanyShippingAddresses.items.map(
       (item) => item.shippingAddress
     );
   } catch (error) {
@@ -552,3 +615,19 @@ export const GetCompanyItemsImport = async (companyID) => {
 //     console.log(error);
 //   }
 // };
+export const CreateCustomerRfqEmail = async (htmlBody, email) => {
+  try {
+    const response = await API.graphql(
+      graphqlOperation(mutations.createCustomerRfqEmail, {
+        input: {
+          htmlBody: htmlBody,
+          email: email,
+          dateSent: new Date().toISOString(),
+        },
+      })
+    );
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};

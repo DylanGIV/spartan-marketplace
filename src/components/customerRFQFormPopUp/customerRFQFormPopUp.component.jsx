@@ -21,10 +21,11 @@ import {
   RfqFormPartNumber,
 } from '../../ui-components';
 import {
+  AddCompanyShippingAddress,
   AddUserShippingAddress,
   CreateRFQ,
   GetCountries,
-  GetUserShippingAddresses,
+  GetCompanyShippingAddresses,
 } from '../../utils/utilsAmplify';
 
 const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
@@ -43,7 +44,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const [additionalComments, setAdditionalComments] = useState([]);
   const { tokens } = useTheme();
   const [customerDetails, setCustomerDetails] = useState({
-    contactEmail: userDetails.user.attributes.email,
+    contactEmail: userDetails.contactEmail,
     contactPhone: userDetails.contactPhone,
     additionalComments: '',
     quantity: 1,
@@ -127,10 +128,10 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     event.stopPropagation();
     const rfqDetails = [];
     dataRFQ.rfqs.forEach((r, rIndex) => {
-      const partIDs = [];
-      r.parts.forEach((p) => {
-        partIDs.push(p.id);
-      });
+      // const partIDs = [];
+      // r.parts.forEach((p) => {
+      //   partIDs.push(p.id);
+      // });
       const tempRfqDetails = {
         rfqNumber: quotationNumber[rIndex],
         addressLine1: shippingAddress.addressLine1,
@@ -166,11 +167,20 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
         subtotal: null,
         salesTax: null,
         total: null,
-        imageUrls: null,
         receivingCompanyID: r.company.id,
         sendingCompanyID: company.id,
         urgency: '',
-        itemIDs: r.partIDs,
+        Items: r.parts,
+        sendingCompany: {
+          ...company,
+          companyOwner: company.CompanyOwner,
+          address: company.ShippingAddresses[0],
+        },
+        receivingCompany: {
+          ...r.company,
+          companyOwner: r.company.CompanyOwner,
+          address: r.company.ShippingAddresses[0],
+        },
       };
       rfqDetails.push(tempRfqDetails);
     });
@@ -180,7 +190,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     });
 
     if (saveAddressChecked) {
-      await AddUserShippingAddress(shippingAddress, user);
+      await AddCompanyShippingAddress(shippingAddress, company);
     }
 
     setDataRFQ({ isOpen: false, company: {}, item: {} });
@@ -257,22 +267,28 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   }, []);
   // get saved addresses
   useEffect(() => {
-    const handleGetUserAddresses = async () => {
-      const userShippingAddressesResponse = await GetUserShippingAddresses(
-        userDetails
-      );
-      setUserShippingAddresses(userShippingAddressesResponse);
-      if (userShippingAddressesResponse.length > 0) {
+    const handleGetCompanyAddresses = async () => {
+      const companyShippingAddressesResponse =
+        await GetCompanyShippingAddresses(company);
+      setUserShippingAddresses(companyShippingAddressesResponse);
+      if (companyShippingAddressesResponse.length > 0) {
         const e = {
           target: {
-            value: '1. ' + userShippingAddressesResponse[0].addressLine1,
+            value: '1. ' + companyShippingAddressesResponse[0].addressLine1,
           },
         };
-        handleSavedAddressChange(e, userShippingAddressesResponse[0]);
+        handleSavedAddressChange(e, companyShippingAddressesResponse[0]);
+      } else {
+        const e = {
+          target: {
+            value: '',
+          },
+        };
+        handleSavedAddressChange(e, null);
       }
     };
     if (countries) {
-      handleGetUserAddresses();
+      handleGetCompanyAddresses();
     }
   }, [countries]);
   // fill quantities with part count per company
@@ -645,27 +661,6 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
           </ScrollView>
         }
       />
-      {/* <CustomerRFQForm
-        style={{
-          position: 'absolute',
-          height: '50vh',
-          display: 'flex',
-          flexDirection: 'column',
-          padding: '20px',
-          border: '2px solid black',
-          backgroundColor: '#eff0f0',
-          left: '50%',
-          top: '50%',
-          minHeight: '500px',
-          minWidth: '700px',
-          maxWidth: '1000px',
-          borderRadius: '15px',
-          transform: 'translate(-50%, -50%) scale(0.8 , 0.8)',
-        }}
-        as='form'
-        overrides={rfqOverrides}
-        }
-      /> */}
     </div>
   );
 });

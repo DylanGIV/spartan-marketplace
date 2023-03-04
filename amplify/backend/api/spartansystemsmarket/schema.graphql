@@ -29,7 +29,7 @@ type Rfq @model @auth(rules: [{ allow: public }]) {
   state: String
   zip: String
   country: String
-  itemIDs: [ID]
+  Items: [Item] @manyToMany(relationName: "RfqItems")
   receivingCompanyID: ID! @index(name: "byReceivingCompany")
   sendingCompanyID: ID! @index(name: "bySendingCompany")
   ReceivingCompany: Company @belongsTo(fields: ["receivingCompanyID"])
@@ -58,6 +58,7 @@ type Country @model @auth(rules: [{ allow: public }]) {
     @hasMany(indexName: "byCountry", fields: ["id"])
   ShippingAddresses: [ShippingAddress]
     @hasMany(indexName: "byCountry", fields: ["id"])
+  Company: Company @hasOne(fields: ["id"])
 }
 
 type ShippingAddress @model @auth(rules: [{ allow: public }]) {
@@ -71,6 +72,7 @@ type ShippingAddress @model @auth(rules: [{ allow: public }]) {
   postalCode: String
   isDefault: Boolean
   countryID: ID! @index(name: "byCountry")
+  country: Country @belongsTo(fields: ["countryID"])
   UserShippingAddresses: [UserDetails]
     @manyToMany(relationName: "UserDetailsShippingAddress")
   CompanyShippingAddresses: [Company]
@@ -90,6 +92,7 @@ type BillingAddress @model @auth(rules: [{ allow: public }]) {
   CompanyBillingAddresses: [Company]
     @manyToMany(relationName: "CompanyBillingAddress")
   countryID: ID! @index(name: "byCountry")
+  country: Country @belongsTo(fields: ["countryID"])
   UserBillingAddresses: [UserDetails]
     @manyToMany(relationName: "UserDetailsBillingAddress")
 }
@@ -113,6 +116,8 @@ type Company @model @auth(rules: [{ allow: public }]) {
   companyDescription: String
   sentRfqs: [Rfq] @hasMany
   receivedRfqs: [Rfq] @hasMany
+  country: Country @belongsTo(fields: ["countryID"])
+  firstShippingAddress: ShippingAddress
 }
 
 type ItemMRO @model @auth(rules: [{ allow: public }]) {
@@ -140,6 +145,7 @@ type Item @searchable @model @auth(rules: [{ allow: public }]) {
   price: Float
   companyID: ID! @index(name: "byCompany")
   imageUrls: [String]
+  Rfqs: [Rfq] @manyToMany(relationName: "RfqItems")
 }
 
 type CompanyItemsImport @model @auth(rules: [{ allow: public }]) {
@@ -149,4 +155,13 @@ type CompanyItemsImport @model @auth(rules: [{ allow: public }]) {
   importStatus: String
   importProgress: Float
   importFileKey: String
+}
+
+type CustomerRfqEmail
+  @model
+  @auth(rules: [{ allow: public, operations: [create] }]) {
+  id: ID!
+  email: AWSEmail!
+  dateSent: AWSDateTime!
+  htmlBody: String!
 }

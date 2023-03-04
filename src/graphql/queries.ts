@@ -2,6 +2,77 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getCustomerRfqEmail = /* GraphQL */ `
+  query GetCustomerRfqEmail($id: ID!) {
+    getCustomerRfqEmail(id: $id) {
+      id
+      email
+      dateSent
+      htmlBody
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listCustomerRfqEmails = /* GraphQL */ `
+  query ListCustomerRfqEmails(
+    $filter: ModelCustomerRfqEmailFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCustomerRfqEmails(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        email
+        dateSent
+        htmlBody
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncCustomerRfqEmails = /* GraphQL */ `
+  query SyncCustomerRfqEmails(
+    $filter: ModelCustomerRfqEmailFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncCustomerRfqEmails(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        email
+        dateSent
+        htmlBody
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getRfq = /* GraphQL */ `
   query GetRfq($id: ID!) {
     getRfq(id: $id) {
@@ -35,7 +106,20 @@ export const getRfq = /* GraphQL */ `
       state
       zip
       country
-      itemIDs
+      Items {
+        items {
+          id
+          rfqId
+          itemId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       receivingCompanyID
       sendingCompanyID
       ReceivingCompany {
@@ -89,6 +173,33 @@ export const getRfq = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -149,6 +260,33 @@ export const getRfq = /* GraphQL */ `
           nextToken
           startedAt
         }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         createdAt
         updatedAt
         _version
@@ -204,7 +342,10 @@ export const listRfqs = /* GraphQL */ `
         state
         zip
         country
-        itemIDs
+        Items {
+          nextToken
+          startedAt
+        }
         receivingCompanyID
         sendingCompanyID
         ReceivingCompany {
@@ -296,7 +437,10 @@ export const syncRfqs = /* GraphQL */ `
         state
         zip
         country
-        itemIDs
+        Items {
+          nextToken
+          startedAt
+        }
         receivingCompanyID
         sendingCompanyID
         ReceivingCompany {
@@ -390,7 +534,10 @@ export const rfqsByReceivingCompanyID = /* GraphQL */ `
         state
         zip
         country
-        itemIDs
+        Items {
+          nextToken
+          startedAt
+        }
         receivingCompanyID
         sendingCompanyID
         ReceivingCompany {
@@ -484,7 +631,10 @@ export const rfqsBySendingCompanyID = /* GraphQL */ `
         state
         zip
         country
-        itemIDs
+        Items {
+          nextToken
+          startedAt
+        }
         receivingCompanyID
         sendingCompanyID
         ReceivingCompany {
@@ -756,6 +906,92 @@ export const getCountry = /* GraphQL */ `
         nextToken
         startedAt
       }
+      Company {
+        id
+        companyName
+        phone
+        contactEmail
+        Items {
+          nextToken
+          startedAt
+        }
+        ItemMROS {
+          nextToken
+          startedAt
+        }
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyMembers {
+          nextToken
+          startedAt
+        }
+        CompanyOwner {
+          userID
+          firstName
+          lastName
+          contactEmail
+          contactPhone
+          companyID
+          isCompanyOwner
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          owner
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        countryID
+        profilePictureUrl
+        fax
+        companyDescription
+        sentRfqs {
+          nextToken
+          startedAt
+        }
+        receivedRfqs {
+          nextToken
+          startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companyCompanyOwnerUserID
+      }
       createdAt
       updatedAt
       _version
@@ -782,6 +1018,22 @@ export const listCountries = /* GraphQL */ `
         ShippingAddresses {
           nextToken
           startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
         }
         createdAt
         updatedAt
@@ -819,6 +1071,22 @@ export const syncCountries = /* GraphQL */ `
           nextToken
           startedAt
         }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
         createdAt
         updatedAt
         _version
@@ -843,6 +1111,40 @@ export const getShippingAddress = /* GraphQL */ `
       postalCode
       isDefault
       countryID
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       UserShippingAddresses {
         items {
           id
@@ -902,6 +1204,16 @@ export const listShippingAddresses = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -945,6 +1257,16 @@ export const syncShippingAddresses = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -990,6 +1312,16 @@ export const shippingAddressesByCountryID = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -1036,6 +1368,40 @@ export const getBillingAddress = /* GraphQL */ `
         startedAt
       }
       countryID
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
       UserBillingAddresses {
         items {
           id
@@ -1085,6 +1451,16 @@ export const listBillingAddresses = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -1128,6 +1504,16 @@ export const syncBillingAddresses = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -1173,6 +1559,16 @@ export const billingAddressesByCountryID = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -1344,7 +1740,6 @@ export const getCompany = /* GraphQL */ `
           state
           zip
           country
-          itemIDs
           receivingCompanyID
           sendingCompanyID
           createdAt
@@ -1390,7 +1785,6 @@ export const getCompany = /* GraphQL */ `
           state
           zip
           country
-          itemIDs
           receivingCompanyID
           sendingCompanyID
           createdAt
@@ -1403,6 +1797,75 @@ export const getCompany = /* GraphQL */ `
         }
         nextToken
         startedAt
+      }
+      country {
+        id
+        countryName
+        code
+        BillingAddresses {
+          nextToken
+          startedAt
+        }
+        ShippingAddresses {
+          nextToken
+          startedAt
+        }
+        Company {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      firstShippingAddress {
+        id
+        unitNumber
+        streetNumber
+        addressLine1
+        addressLine2
+        city
+        regi
+        postalCode
+        isDefault
+        countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        UserShippingAddresses {
+          nextToken
+          startedAt
+        }
+        CompanyShippingAddresses {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
       }
       createdAt
       updatedAt
@@ -1471,6 +1934,33 @@ export const listCompanies = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -1548,6 +2038,33 @@ export const syncCompanies = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -1627,6 +2144,33 @@ export const companiesByCountryID = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -1776,6 +2320,20 @@ export const getItem = /* GraphQL */ `
       price
       companyID
       imageUrls
+      Rfqs {
+        items {
+          id
+          rfqId
+          itemId
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        nextToken
+        startedAt
+      }
       createdAt
       updatedAt
       _version
@@ -1803,6 +2361,10 @@ export const listItems = /* GraphQL */ `
         price
         companyID
         imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1839,6 +2401,10 @@ export const syncItems = /* GraphQL */ `
         price
         companyID
         imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1877,6 +2443,10 @@ export const itemsByCompanyID = /* GraphQL */ `
         price
         companyID
         imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -1917,6 +2487,10 @@ export const searchItems = /* GraphQL */ `
         price
         companyID
         imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
         createdAt
         updatedAt
         _version
@@ -2023,6 +2597,465 @@ export const syncCompanyItemsImports = /* GraphQL */ `
     }
   }
 `;
+export const getRfqItems = /* GraphQL */ `
+  query GetRfqItems($id: ID!) {
+    getRfqItems(id: $id) {
+      id
+      rfqId
+      itemId
+      rfq {
+        id
+        rfqNumber
+        dateSent
+        custRefNum
+        companyName
+        contact
+        phone
+        email
+        shippingTerms
+        shippingMethod
+        leadTime
+        paymentTerms
+        dueDate
+        quantityRequested
+        quantityQuoted
+        uom
+        urgency
+        discount
+        lineTotal
+        subtotal
+        salesTax
+        total
+        internalComments
+        emailComments
+        addressLine1
+        addressLine2
+        city
+        state
+        zip
+        country
+        Items {
+          nextToken
+          startedAt
+        }
+        receivingCompanyID
+        sendingCompanyID
+        ReceivingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        SendingCompany {
+          id
+          companyName
+          phone
+          contactEmail
+          countryID
+          profilePictureUrl
+          fax
+          companyDescription
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companyCompanyOwnerUserID
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        companySentRfqsId
+        companyReceivedRfqsId
+      }
+      item {
+        id
+        nsn
+        partNumber
+        altPartNumber
+        description
+        quantity
+        condition
+        control
+        price
+        companyID
+        imageUrls
+        Rfqs {
+          nextToken
+          startedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+    }
+  }
+`;
+export const listRfqItems = /* GraphQL */ `
+  query ListRfqItems(
+    $filter: ModelRfqItemsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRfqItems(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        rfqId
+        itemId
+        rfq {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRfqsId
+          companyReceivedRfqsId
+        }
+        item {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const syncRfqItems = /* GraphQL */ `
+  query SyncRfqItems(
+    $filter: ModelRfqItemsFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncRfqItems(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        rfqId
+        itemId
+        rfq {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRfqsId
+          companyReceivedRfqsId
+        }
+        item {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const rfqItemsByRfqId = /* GraphQL */ `
+  query RfqItemsByRfqId(
+    $rfqId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRfqItemsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rfqItemsByRfqId(
+      rfqId: $rfqId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        rfqId
+        itemId
+        rfq {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRfqsId
+          companyReceivedRfqsId
+        }
+        item {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const rfqItemsByItemId = /* GraphQL */ `
+  query RfqItemsByItemId(
+    $itemId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelRfqItemsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    rfqItemsByItemId(
+      itemId: $itemId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        rfqId
+        itemId
+        rfq {
+          id
+          rfqNumber
+          dateSent
+          custRefNum
+          companyName
+          contact
+          phone
+          email
+          shippingTerms
+          shippingMethod
+          leadTime
+          paymentTerms
+          dueDate
+          quantityRequested
+          quantityQuoted
+          uom
+          urgency
+          discount
+          lineTotal
+          subtotal
+          salesTax
+          total
+          internalComments
+          emailComments
+          addressLine1
+          addressLine2
+          city
+          state
+          zip
+          country
+          receivingCompanyID
+          sendingCompanyID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+          companySentRfqsId
+          companyReceivedRfqsId
+        }
+        item {
+          id
+          nsn
+          partNumber
+          altPartNumber
+          description
+          quantity
+          condition
+          control
+          price
+          companyID
+          imageUrls
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const getUserDetailsBillingAddress = /* GraphQL */ `
   query GetUserDetailsBillingAddress($id: ID!) {
     getUserDetailsBillingAddress(id: $id) {
@@ -2067,6 +3100,16 @@ export const getUserDetailsBillingAddress = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -2372,6 +3415,16 @@ export const getUserDetailsShippingAddress = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -2658,6 +3711,16 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         postalCode
         isDefault
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserShippingAddresses {
           nextToken
           startedAt
@@ -2723,6 +3786,33 @@ export const getCompanyShippingAddress = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
@@ -3006,6 +4096,16 @@ export const getCompanyBillingAddress = /* GraphQL */ `
           startedAt
         }
         countryID
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
         UserBillingAddresses {
           nextToken
           startedAt
@@ -3067,6 +4167,33 @@ export const getCompanyBillingAddress = /* GraphQL */ `
         receivedRfqs {
           nextToken
           startedAt
+        }
+        country {
+          id
+          countryName
+          code
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
+        }
+        firstShippingAddress {
+          id
+          unitNumber
+          streetNumber
+          addressLine1
+          addressLine2
+          city
+          regi
+          postalCode
+          isDefault
+          countryID
+          createdAt
+          updatedAt
+          _version
+          _deleted
+          _lastChangedAt
         }
         createdAt
         updatedAt
