@@ -330,7 +330,7 @@ export const CreateRFQ = async (rfqDetails) => {
           receivingCompanyID: rfqDetails.receivingCompanyID,
           sendingCompanyID: rfqDetails.sendingCompanyID,
           urgency: rfqDetails.urgency,
-          Items: rfqDetails.Items,
+          // Items: rfqDetails.Items,
         },
       })
     );
@@ -444,15 +444,11 @@ export const GetCountries = async () => {
 export const GetCompanyShippingAddresses = async (company) => {
   try {
     const companyShippingAddressesResponse = await API.graphql(
-      graphqlOperation(queries.listCompanyShippingAddresses, {
-        filter: {
-          companyId: {
-            eq: company.id,
-          },
-        },
+      graphqlOperation(queries.companyShippingAddressesByCompanyId, {
+        companyId: company.id,
       })
     );
-    return companyShippingAddressesResponse.data.listCompanyShippingAddresses.items.map(
+    return companyShippingAddressesResponse.data.companyShippingAddressesByCompanyId.items.map(
       (item) => item.shippingAddress
     );
   } catch (error) {
@@ -623,6 +619,29 @@ export const CreateCustomerRfqEmail = async (htmlBody, email) => {
           htmlBody: htmlBody,
           email: email,
           dateSent: new Date().toISOString(),
+        },
+      })
+    );
+    console.log(response);
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const UpdateCompanyFirstAddress = async (company) => {
+  const addresses = await GetCompanyShippingAddresses(company);
+  const address = await API.graphql(
+    graphqlOperation(queries.getShippingAddress, {
+      id: addresses[0].id,
+    })
+  );
+  console.log(address.data.getShippingAddress);
+  console.log();
+  try {
+    const response = await API.graphql(
+      graphqlOperation(mutations.updateCompany, {
+        input: {
+          id: company.id,
+          firstShippingAddress: address.data.getShippingAddress,
         },
       })
     );

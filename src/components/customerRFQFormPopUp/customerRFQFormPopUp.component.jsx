@@ -26,13 +26,16 @@ import {
   CreateRFQ,
   GetCountries,
   GetCompanyShippingAddresses,
+  CreateCustomerRfqEmail,
 } from '../../utils/utilsAmplify';
+import CustomerRfqEmail from '../customerRfqEmail/customerRfqEmail';
+import { render } from '@react-email/render';
 
 const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
   const { userDetails, dataRFQ, setDataRFQ } = props;
   const date = new Date();
   const [quotationNumber, setQuotationNumber] = useState([]);
-  const [countries, setCountries] = useState(null);
+  // const [countries, setCountries] = useState(null);
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [saveAddressChecked, setSaveAddressChecked] = useState(false);
   const [userShippingAddresses, setUserShippingAddresses] = useState(null);
@@ -61,7 +64,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     countryID: '',
   });
 
-  const { company } = useContext(UserContext);
+  const { company, countries } = useContext(UserContext);
 
   const { user } = useAuthenticator();
 
@@ -122,6 +125,10 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     }
     setExpanded('panel2');
   };
+
+  console.log(dataRFQ.rfqs[0].company);
+  // console.log(company);
+  // console.log(userShippingAddresses);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -186,6 +193,7 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     });
 
     rfqDetails.forEach(async (r) => {
+      await handleEmailSend(r, countries);
       await CreateRFQ(r);
     });
 
@@ -207,6 +215,13 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     if (rfqIndex > 0) {
       setRfqIndex(rfqIndex - 1);
     }
+  };
+  const handleEmailSend = async (rfq, countriesPass) => {
+    const emailHtml = render(
+      <CustomerRfqEmail rfqDetails={rfq} countries={countriesPass} />
+    );
+    await CreateCustomerRfqEmail(emailHtml, rfq.receivingCompany.contactEmail);
+    // await CreateCustomerRfqEmail(emailHtml, 'dylangiv123@gmail.com');
   };
 
   //generate quotation number
@@ -258,20 +273,23 @@ const CustomerRFQFormPopUp = React.forwardRef((props, ref) => {
     setQuotationNumber(quotationNumbers);
   }, []);
   // get countries
-  useEffect(() => {
-    const handleGetCountries = async () => {
-      const data = await GetCountries();
-      setCountries(data);
-    };
-    handleGetCountries();
-  }, []);
+  // useEffect(() => {
+  //   const handleGetCountries = async () => {
+  //     const data = await GetCountries();
+  //     setCountries(data);
+  //   };
+  //   handleGetCountries();
+  // }, []);
   // get saved addresses
   useEffect(() => {
     const handleGetCompanyAddresses = async () => {
       const companyShippingAddressesResponse =
         await GetCompanyShippingAddresses(company);
       setUserShippingAddresses(companyShippingAddressesResponse);
-      if (companyShippingAddressesResponse.length > 0) {
+      if (
+        companyShippingAddressesResponse &&
+        companyShippingAddressesResponse.length > 0
+      ) {
         const e = {
           target: {
             value: '1. ' + companyShippingAddressesResponse[0].addressLine1,

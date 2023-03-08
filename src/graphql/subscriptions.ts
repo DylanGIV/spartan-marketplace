@@ -145,6 +145,8 @@ export const onCreateRfq = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -164,7 +166,8 @@ export const onCreateRfq = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -231,6 +234,8 @@ export const onCreateRfq = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -250,7 +255,8 @@ export const onCreateRfq = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -376,6 +382,8 @@ export const onUpdateRfq = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -395,7 +403,8 @@ export const onUpdateRfq = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -462,6 +471,8 @@ export const onUpdateRfq = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -481,7 +492,8 @@ export const onUpdateRfq = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -607,6 +619,8 @@ export const onDeleteRfq = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -626,7 +640,8 @@ export const onDeleteRfq = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -693,6 +708,8 @@ export const onDeleteRfq = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -712,7 +729,8 @@ export const onDeleteRfq = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -993,6 +1011,8 @@ export const onCreateCountry = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -1012,7 +1032,8 @@ export const onCreateCountry = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -1135,6 +1156,8 @@ export const onUpdateCountry = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -1154,7 +1177,8 @@ export const onUpdateCountry = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -1277,6 +1301,8 @@ export const onDeleteCountry = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -1296,7 +1322,8 @@ export const onDeleteCountry = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -1363,7 +1390,10 @@ export const onCreateShippingAddress = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -1449,7 +1479,10 @@ export const onUpdateShippingAddress = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -1535,7 +1568,10 @@ export const onDeleteShippingAddress = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -1635,7 +1671,10 @@ export const onCreateBillingAddress = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -1721,7 +1760,10 @@ export const onUpdateBillingAddress = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -1807,7 +1849,10 @@ export const onDeleteBillingAddress = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -1862,6 +1907,11 @@ export const onCreateCompany = /* GraphQL */ `
           condition
           control
           price
+          demilitarizationCode
+          scheduleB
+          eccn
+          isExportControlled
+          usml
           companyID
           imageUrls
           createdAt
@@ -1967,6 +2017,8 @@ export const onCreateCompany = /* GraphQL */ `
       countryID
       profilePictureUrl
       fax
+      cageCode
+      qualityCertifications
       companyDescription
       sentRfqs {
         items {
@@ -2078,7 +2130,10 @@ export const onCreateCompany = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -2092,7 +2147,8 @@ export const onCreateCompany = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      firstShippingAddress {
+      addressId
+      address {
         id
         unitNumber
         streetNumber
@@ -2154,6 +2210,11 @@ export const onUpdateCompany = /* GraphQL */ `
           condition
           control
           price
+          demilitarizationCode
+          scheduleB
+          eccn
+          isExportControlled
+          usml
           companyID
           imageUrls
           createdAt
@@ -2259,6 +2320,8 @@ export const onUpdateCompany = /* GraphQL */ `
       countryID
       profilePictureUrl
       fax
+      cageCode
+      qualityCertifications
       companyDescription
       sentRfqs {
         items {
@@ -2370,7 +2433,10 @@ export const onUpdateCompany = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -2384,7 +2450,8 @@ export const onUpdateCompany = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      firstShippingAddress {
+      addressId
+      address {
         id
         unitNumber
         streetNumber
@@ -2446,6 +2513,11 @@ export const onDeleteCompany = /* GraphQL */ `
           condition
           control
           price
+          demilitarizationCode
+          scheduleB
+          eccn
+          isExportControlled
+          usml
           companyID
           imageUrls
           createdAt
@@ -2551,6 +2623,8 @@ export const onDeleteCompany = /* GraphQL */ `
       countryID
       profilePictureUrl
       fax
+      cageCode
+      qualityCertifications
       companyDescription
       sentRfqs {
         items {
@@ -2662,7 +2736,10 @@ export const onDeleteCompany = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -2676,7 +2753,8 @@ export const onDeleteCompany = /* GraphQL */ `
         _deleted
         _lastChangedAt
       }
-      firstShippingAddress {
+      addressId
+      address {
         id
         unitNumber
         streetNumber
@@ -2795,6 +2873,11 @@ export const onCreateItem = /* GraphQL */ `
       condition
       control
       price
+      demilitarizationCode
+      scheduleB
+      eccn
+      isExportControlled
+      usml
       companyID
       imageUrls
       Rfqs {
@@ -2831,6 +2914,11 @@ export const onUpdateItem = /* GraphQL */ `
       condition
       control
       price
+      demilitarizationCode
+      scheduleB
+      eccn
+      isExportControlled
+      usml
       companyID
       imageUrls
       Rfqs {
@@ -2867,6 +2955,11 @@ export const onDeleteItem = /* GraphQL */ `
       condition
       control
       price
+      demilitarizationCode
+      scheduleB
+      eccn
+      isExportControlled
+      usml
       companyID
       imageUrls
       Rfqs {
@@ -2999,7 +3092,10 @@ export const onCreateRfqItems = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -3015,7 +3111,10 @@ export const onCreateRfqItems = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -3041,6 +3140,11 @@ export const onCreateRfqItems = /* GraphQL */ `
         condition
         control
         price
+        demilitarizationCode
+        scheduleB
+        eccn
+        isExportControlled
+        usml
         companyID
         imageUrls
         Rfqs {
@@ -3112,7 +3216,10 @@ export const onUpdateRfqItems = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -3128,7 +3235,10 @@ export const onUpdateRfqItems = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -3154,6 +3264,11 @@ export const onUpdateRfqItems = /* GraphQL */ `
         condition
         control
         price
+        demilitarizationCode
+        scheduleB
+        eccn
+        isExportControlled
+        usml
         companyID
         imageUrls
         Rfqs {
@@ -3225,7 +3340,10 @@ export const onDeleteRfqItems = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -3241,7 +3359,10 @@ export const onDeleteRfqItems = /* GraphQL */ `
           countryID
           profilePictureUrl
           fax
+          cageCode
+          qualityCertifications
           companyDescription
+          addressId
           createdAt
           updatedAt
           _version
@@ -3267,6 +3388,11 @@ export const onDeleteRfqItems = /* GraphQL */ `
         condition
         control
         price
+        demilitarizationCode
+        scheduleB
+        eccn
+        isExportControlled
+        usml
         companyID
         imageUrls
         Rfqs {
@@ -3829,6 +3955,8 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -3848,7 +3976,8 @@ export const onCreateCompanyShippingAddress = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -3966,6 +4095,8 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -3985,7 +4116,8 @@ export const onUpdateCompanyShippingAddress = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -4103,6 +4235,8 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -4122,7 +4256,8 @@ export const onDeleteCompanyShippingAddress = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -4240,6 +4375,8 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -4259,7 +4396,8 @@ export const onCreateCompanyBillingAddress = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -4377,6 +4515,8 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -4396,7 +4536,8 @@ export const onUpdateCompanyBillingAddress = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber
@@ -4514,6 +4655,8 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
         countryID
         profilePictureUrl
         fax
+        cageCode
+        qualityCertifications
         companyDescription
         sentRfqs {
           nextToken
@@ -4533,7 +4676,8 @@ export const onDeleteCompanyBillingAddress = /* GraphQL */ `
           _deleted
           _lastChangedAt
         }
-        firstShippingAddress {
+        addressId
+        address {
           id
           unitNumber
           streetNumber

@@ -88,120 +88,137 @@ export const CustomerRfqEmail = ({ rfqDetails, countries }) => {
               <div
                 style={{
                   display: 'flex',
-                  flexDirection: 'row',
-                  paddingRight: 10,
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
                 }}
               >
                 <div
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    width: '300px',
+                    flexBasis: '49%',
+                    // marginLeft: '2%',
+                    // width: '300px',
+
+                    // marginLeft: 80,
                   }}
                 >
-                  <h3 style={{ color: '#047D95' }}>To:</h3>
-                  <Hr />
-                  <p>
-                    {rfqDetails.receivingCompany.companyName} <br />
-                    {rfqDetails.receivingCompany.companyOwner.firstName +
-                      ' ' +
-                      rfqDetails.receivingCompany.companyOwner.lastName}{' '}
-                    <br />
-                    {rfqDetails.receivingCompany.address.addressLine1} <br />
-                    {rfqDetails.receivingCompany.address.city},{' '}
-                    {rfqDetails.receivingCompany.address.regi}{' '}
-                    {rfqDetails.receivingCompany.address.postalCode} <br />
-                    {
-                      countries.find(
-                        (country) =>
-                          country.code === rfqDetails.receivingCompany.countryID
-                      ).countryName
-                    }{' '}
-                    <br />
-                    Phone: {rfqDetails.receivingCompany.phone} <br />
-                    Fax: {rfqDetails.receivingCompany.fax} <br />
-                    Email: {rfqDetails.receivingCompany.contactEmail}
-                  </p>
+                  <div>
+                    <h3 style={{ color: '#047D95' }}>Quote Details:</h3>
+                    <Hr />
+                    <p>
+                      Quote Number: <br />
+                      {rfqDetails.rfqNumber}
+                    </p>
+                    <h4>
+                      Quote Date: {new Date(rfqDetails.dateSent).toString()}
+                      <br />
+                      Expiration Date:{' '}
+                      {rfqDetails.dueDate
+                        ? new Date(rfqDetails.dueDate).toString()
+                        : 'N/A'}
+                    </h4>
+                  </div>
                 </div>
                 <div
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    width: '300px',
-
-                    // marginLeft: 80,
+                    flexBasis: '49%',
+                    // marginRight: '2%',
+                    // width: '300px',
                   }}
                 >
-                  <h3 style={{ color: '#047D95' }}>Quote Details:</h3>
-                  <Hr />
-                  <p>
-                    Quote Number: <br />
-                    {rfqDetails.rfqNumber}
-                  </p>
-                  <h4>
-                    Quote Date: {new Date(rfqDetails.dateSent).toString()}
-                    <br />
-                    Expiration Date:{' '}
-                    {rfqDetails.dueDate
-                      ? new Date(rfqDetails.dueDate).toString()
-                      : 'N/A'}
-                  </h4>
+                  <div>
+                    <h3 style={{ color: '#047D95' }}>To:</h3>
+                    <Hr />
+                    <p>
+                      {rfqDetails.receivingCompany.companyName} <br />
+                      {rfqDetails.receivingCompany.companyOwner.firstName +
+                        ' ' +
+                        rfqDetails.receivingCompany.companyOwner.lastName}{' '}
+                      <br />
+                      {rfqDetails.receivingCompany.address.addressLine1} <br />
+                      {rfqDetails.receivingCompany.address.city},{' '}
+                      {rfqDetails.receivingCompany.address.regi}{' '}
+                      {rfqDetails.receivingCompany.address.postalCode} <br />
+                      {
+                        countries.find(
+                          (country) =>
+                            country.code ===
+                            rfqDetails.receivingCompany.countryID
+                        ).countryName
+                      }{' '}
+                      <br />
+                      Phone: {rfqDetails.receivingCompany.phone} <br />
+                      Fax: {rfqDetails.receivingCompany.fax} <br />
+                      Email: {rfqDetails.receivingCompany.contactEmail}
+                    </p>
+                  </div>
                 </div>
               </div>
               <div
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
                 }}
               >
                 <div
                   style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    width: '300px',
+                    flexBasis: '49%',
+                    // width: '300px',
                   }}
                 >
-                  <h3 style={{ color: '#047D95' }}>From:</h3>
-                  <Hr />
-                  <p>
-                    {rfqDetails.sendingCompany.companyName} <br />
-                    {rfqDetails.sendingCompany.companyOwner.firstName +
-                      ' ' +
-                      rfqDetails.sendingCompany.companyOwner.lastName}{' '}
-                    <br />
-                    {rfqDetails.sendingCompany.address.addressLine1} <br />
-                    {rfqDetails.sendingCompany.address.city},{' '}
-                    {rfqDetails.sendingCompany.address.regi}{' '}
-                    {rfqDetails.sendingCompany.address.postalCode} <br />
-                    {
-                      countries.find(
-                        (country) =>
-                          country.code === rfqDetails.sendingCompany.countryID
-                      ).countryName
-                    }{' '}
-                    <br />
-                    Phone: {rfqDetails.sendingCompany.phone} <br />
-                    Fax: {rfqDetails.sendingCompany.fax} <br />
-                    Email: {rfqDetails.sendingCompany.contactEmail}
-                  </p>
+                  <div>
+                    <h3 style={{ color: '#047D95' }}>From:</h3>
+                    <Hr />
+                    <p>
+                      {rfqDetails.sendingCompany.companyName} <br />
+                      {rfqDetails.sendingCompany.companyOwner.firstName +
+                        ' ' +
+                        rfqDetails.sendingCompany.companyOwner.lastName}{' '}
+                      <br />
+                      {rfqDetails.sendingCompany.address.addressLine1} <br />
+                      {rfqDetails.sendingCompany.address.city},{' '}
+                      {rfqDetails.sendingCompany.address.regi}{' '}
+                      {rfqDetails.sendingCompany.address.postalCode} <br />
+                      {
+                        countries.find(
+                          (country) =>
+                            country.code === rfqDetails.sendingCompany.countryID
+                        ).countryName
+                      }{' '}
+                      <br />
+                      Phone: {rfqDetails.sendingCompany.phone} <br />
+                      Fax: {rfqDetails.sendingCompany.fax} <br />
+                      Email: {rfqDetails.sendingCompany.contactEmail}
+                    </p>
+                  </div>
                 </div>
                 <div
                   style={{
                     display: 'flex',
+                    flexBasis: '49%',
                     flexDirection: 'column',
-                    width: '300px',
+                    // width: '300px',
                   }}
                 >
-                  <h3 style={{ color: '#047D95' }}>Deliver to:</h3>
-                  <Hr />
+                  <div>
+                    <h3 style={{ color: '#047D95' }}>Deliver to:</h3>
+                    <Hr />
 
-                  <p>
-                    {rfqDetails.receivingCompany.companyName} <br />
-                    {rfqDetails.addressLine1} <br />
-                    {rfqDetails.city}, {rfqDetails.state} {rfqDetails.zip}{' '}
-                    <br />
-                    {rfqDetails.country}
-                  </p>
+                    <p>
+                      {rfqDetails.receivingCompany.companyName} <br />
+                      {rfqDetails.addressLine1} <br />
+                      {rfqDetails.city}, {rfqDetails.state} {rfqDetails.zip}{' '}
+                      <br />
+                      {rfqDetails.country}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -6,11 +6,169 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
+import {
+  Badge,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  Icon,
+  ScrollView,
+  Text,
+  TextField,
+  useTheme,
+} from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Company } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const { tokens } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button
+            size="small"
+            variation="link"
+            color={tokens.colors.brand.primary[80]}
+            isDisabled={hasError}
+            onClick={addItem}
+          >
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function CompanyCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -28,6 +186,8 @@ export default function CompanyCreateForm(props) {
     contactEmail: "",
     profilePictureUrl: "",
     fax: "",
+    cageCode: "",
+    qualityCertifications: [],
     companyDescription: "",
   };
   const [companyName, setCompanyName] = React.useState(
@@ -41,6 +201,10 @@ export default function CompanyCreateForm(props) {
     initialValues.profilePictureUrl
   );
   const [fax, setFax] = React.useState(initialValues.fax);
+  const [cageCode, setCageCode] = React.useState(initialValues.cageCode);
+  const [qualityCertifications, setQualityCertifications] = React.useState(
+    initialValues.qualityCertifications
+  );
   const [companyDescription, setCompanyDescription] = React.useState(
     initialValues.companyDescription
   );
@@ -51,15 +215,25 @@ export default function CompanyCreateForm(props) {
     setContactEmail(initialValues.contactEmail);
     setProfilePictureUrl(initialValues.profilePictureUrl);
     setFax(initialValues.fax);
+    setCageCode(initialValues.cageCode);
+    setQualityCertifications(initialValues.qualityCertifications);
+    setCurrentQualityCertificationsValue("");
     setCompanyDescription(initialValues.companyDescription);
     setErrors({});
   };
+  const [
+    currentQualityCertificationsValue,
+    setCurrentQualityCertificationsValue,
+  ] = React.useState("");
+  const qualityCertificationsRef = React.createRef();
   const validations = {
     companyName: [],
     phone: [{ type: "Phone" }],
     contactEmail: [{ type: "Email" }],
     profilePictureUrl: [],
     fax: [],
+    cageCode: [],
+    qualityCertifications: [],
     companyDescription: [],
   };
   const runValidationTasks = async (
@@ -92,6 +266,8 @@ export default function CompanyCreateForm(props) {
           contactEmail,
           profilePictureUrl,
           fax,
+          cageCode,
+          qualityCertifications,
           companyDescription,
         };
         const validationResponses = await Promise.all(
@@ -152,6 +328,8 @@ export default function CompanyCreateForm(props) {
               contactEmail,
               profilePictureUrl,
               fax,
+              cageCode,
+              qualityCertifications,
               companyDescription,
             };
             const result = onChange(modelFields);
@@ -182,6 +360,8 @@ export default function CompanyCreateForm(props) {
               contactEmail,
               profilePictureUrl,
               fax,
+              cageCode,
+              qualityCertifications,
               companyDescription,
             };
             const result = onChange(modelFields);
@@ -211,6 +391,8 @@ export default function CompanyCreateForm(props) {
               contactEmail: value,
               profilePictureUrl,
               fax,
+              cageCode,
+              qualityCertifications,
               companyDescription,
             };
             const result = onChange(modelFields);
@@ -240,6 +422,8 @@ export default function CompanyCreateForm(props) {
               contactEmail,
               profilePictureUrl: value,
               fax,
+              cageCode,
+              qualityCertifications,
               companyDescription,
             };
             const result = onChange(modelFields);
@@ -271,6 +455,8 @@ export default function CompanyCreateForm(props) {
               contactEmail,
               profilePictureUrl,
               fax: value,
+              cageCode,
+              qualityCertifications,
               companyDescription,
             };
             const result = onChange(modelFields);
@@ -287,6 +473,90 @@ export default function CompanyCreateForm(props) {
         {...getOverrideProps(overrides, "fax")}
       ></TextField>
       <TextField
+        label="Cage code"
+        isRequired={false}
+        isReadOnly={false}
+        value={cageCode}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              companyName,
+              phone,
+              contactEmail,
+              profilePictureUrl,
+              fax,
+              cageCode: value,
+              qualityCertifications,
+              companyDescription,
+            };
+            const result = onChange(modelFields);
+            value = result?.cageCode ?? value;
+          }
+          if (errors.cageCode?.hasError) {
+            runValidationTasks("cageCode", value);
+          }
+          setCageCode(value);
+        }}
+        onBlur={() => runValidationTasks("cageCode", cageCode)}
+        errorMessage={errors.cageCode?.errorMessage}
+        hasError={errors.cageCode?.hasError}
+        {...getOverrideProps(overrides, "cageCode")}
+      ></TextField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              companyName,
+              phone,
+              contactEmail,
+              profilePictureUrl,
+              fax,
+              cageCode,
+              qualityCertifications: values,
+              companyDescription,
+            };
+            const result = onChange(modelFields);
+            values = result?.qualityCertifications ?? values;
+          }
+          setQualityCertifications(values);
+          setCurrentQualityCertificationsValue("");
+        }}
+        currentFieldValue={currentQualityCertificationsValue}
+        label={"Quality certifications"}
+        items={qualityCertifications}
+        hasError={errors.qualityCertifications?.hasError}
+        setFieldValue={setCurrentQualityCertificationsValue}
+        inputFieldRef={qualityCertificationsRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Quality certifications"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentQualityCertificationsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.qualityCertifications?.hasError) {
+              runValidationTasks("qualityCertifications", value);
+            }
+            setCurrentQualityCertificationsValue(value);
+          }}
+          onBlur={() =>
+            runValidationTasks(
+              "qualityCertifications",
+              currentQualityCertificationsValue
+            )
+          }
+          errorMessage={errors.qualityCertifications?.errorMessage}
+          hasError={errors.qualityCertifications?.hasError}
+          ref={qualityCertificationsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "qualityCertifications")}
+        ></TextField>
+      </ArrayField>
+      <TextField
         label="Company description"
         isRequired={false}
         isReadOnly={false}
@@ -300,6 +570,8 @@ export default function CompanyCreateForm(props) {
               contactEmail,
               profilePictureUrl,
               fax,
+              cageCode,
+              qualityCertifications,
               companyDescription: value,
             };
             const result = onChange(modelFields);

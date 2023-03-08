@@ -415,6 +415,41 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "demilitarizationCode": {
+                    "name": "demilitarizationCode",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "scheduleB": {
+                    "name": "scheduleB",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "eccn": {
+                    "name": "eccn",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "isExportControlled": {
+                    "name": "isExportControlled",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "usml": {
+                    "name": "usml",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "companyID": {
                     "name": "companyID",
                     "isArray": false,
@@ -651,6 +686,21 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "cageCode": {
+                    "name": "cageCode",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "qualityCertifications": {
+                    "name": "qualityCertifications",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
                 "companyDescription": {
                     "name": "companyDescription",
                     "isArray": false,
@@ -702,6 +752,31 @@ export const schema = {
                         "connectionType": "BELONGS_TO",
                         "targetNames": [
                             "countryID"
+                        ]
+                    }
+                },
+                "addressId": {
+                    "name": "addressId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "address": {
+                    "name": "address",
+                    "isArray": false,
+                    "type": {
+                        "model": "ShippingAddress"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
+                        "targetNames": [
+                            "addressId"
                         ]
                     }
                 },
@@ -2160,5 +2235,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.5",
-    "version": "13f596f255d4197b683506673c2f4bd7"
+    "version": "5ea55ed75e09d653a61d4147d6a05651"
 };

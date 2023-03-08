@@ -113,11 +113,14 @@ type Company @model @auth(rules: [{ allow: public }]) {
   countryID: ID @index(name: "byCountry")
   profilePictureUrl: String
   fax: String
+  cageCode: String
+  qualityCertifications: [String]
   companyDescription: String
   sentRfqs: [Rfq] @hasMany
   receivedRfqs: [Rfq] @hasMany
   country: Country @belongsTo(fields: ["countryID"])
-  firstShippingAddress: ShippingAddress
+  addressId: ID
+  address: ShippingAddress @hasOne(fields: ["addressId"])
 }
 
 type ItemMRO @model @auth(rules: [{ allow: public }]) {
@@ -143,6 +146,11 @@ type Item @searchable @model @auth(rules: [{ allow: public }]) {
   condition: String
   control: String
   price: Float
+  demilitarizationCode: String
+  scheduleB: String
+  eccn: String
+  isExportControlled: Boolean
+  usml: Boolean
   companyID: ID! @index(name: "byCompany")
   imageUrls: [String]
   Rfqs: [Rfq] @manyToMany(relationName: "RfqItems")

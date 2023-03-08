@@ -18,6 +18,8 @@ export declare type CompanyCreateFormInputValues = {
     contactEmail?: string;
     profilePictureUrl?: string;
     fax?: string;
+    cageCode?: string;
+    qualityCertifications?: string[];
     companyDescription?: string;
 };
 export declare type CompanyCreateFormValidationValues = {
@@ -26,6 +28,8 @@ export declare type CompanyCreateFormValidationValues = {
     contactEmail?: ValidationFunction<string>;
     profilePictureUrl?: ValidationFunction<string>;
     fax?: ValidationFunction<string>;
+    cageCode?: ValidationFunction<string>;
+    qualityCertifications?: ValidationFunction<string>;
     companyDescription?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -36,6 +40,8 @@ export declare type CompanyCreateFormOverridesProps = {
     contactEmail?: PrimitiveOverrideProps<TextFieldProps>;
     profilePictureUrl?: PrimitiveOverrideProps<TextFieldProps>;
     fax?: PrimitiveOverrideProps<TextFieldProps>;
+    cageCode?: PrimitiveOverrideProps<TextFieldProps>;
+    qualityCertifications?: PrimitiveOverrideProps<TextFieldProps>;
     companyDescription?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type CompanyCreateFormProps = React.PropsWithChildren<{

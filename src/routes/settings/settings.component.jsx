@@ -12,6 +12,7 @@ import {
   GetRFQByCompany,
   PopulateCountries,
   SignOutAuth,
+  UpdateCompanyFirstAddress,
 } from '../../utils/utilsAmplify';
 
 const Settings = () => {
@@ -45,61 +46,61 @@ const Settings = () => {
       <CustomerRfqEmail rfqDetails={rfq} countries={countries} />
     );
     // await CreateCustomerRfqEmail(emailHtml, rfq.receivingCompany.contactEmail);
-    await CreateCustomerRfqEmail(emailHtml, 'genarogonzaleziv@gmail.com');
+    await CreateCustomerRfqEmail(emailHtml, 'dylangiv123@gmail.com');
     console.log(emailHtml);
   };
 
-  useEffect(() => {
-    const getRfq = async () => {
-      const rAddress = await GetCompanyShippingAddresses(company);
-      const sAddress = await GetCompanyShippingAddresses(company);
-      const rfqs = await GetRFQByCompany(
-        company.id,
-        setRfqItems,
-        0,
-        0,
-        'sent',
-        null
-      );
-      setRfq({
-        ...rfqs[0],
-        sendingCompany: {
-          ...company,
-          companyOwner: company.CompanyOwner,
-          address: rAddress[0],
-        },
-        receivingCompany: {
-          ...company,
-          companyOwner: company.CompanyOwner,
-          address: sAddress[0],
-        },
-        Items: [
-          {
-            partNumber: 'BQYGU01',
-            quantity: 1,
-            altPartNumber: 'BQYGU01',
-            description: 'BQYGU01',
-            condition: 'NS',
-          },
-          {
-            partNumber: 'BQYf201',
-            quantity: 1,
-            altPartNumber: 'Bf2GU01',
-            description: 'BQYcas01',
-            condition: 'NS',
-          },
-          {
-            partNumber: 'BQYcewc',
-            quantity: 1,
-            altPartNumber: 'B2r3r21',
-            description: 'cvnas01',
-            condition: 'NS',
-          },
-        ],
-      });
-    };
-    getRfq();
-  }, []);
+  // useEffect(() => {
+  //   const getRfq = async () => {
+  //     const rAddress = await GetCompanyShippingAddresses(company);
+  //     const sAddress = await GetCompanyShippingAddresses(company);
+  //     const rfqs = await GetRFQByCompany(
+  //       company.id,
+  //       setRfqItems,
+  //       0,
+  //       0,
+  //       'sent',
+  //       null
+  //     );
+  //     setRfq({
+  //       ...rfqs[0],
+  //       sendingCompany: {
+  //         ...company,
+  //         companyOwner: company.CompanyOwner,
+  //         address: rAddress[0],
+  //       },
+  //       receivingCompany: {
+  //         ...company,
+  //         companyOwner: company.CompanyOwner,
+  //         address: sAddress[0],
+  //       },
+  //       Items: [
+  //         {
+  //           partNumber: 'BQYGU01',
+  //           quantity: 1,
+  //           altPartNumber: 'BQYGU01',
+  //           description: 'BQYGU01',
+  //           condition: 'NS',
+  //         },
+  //         {
+  //           partNumber: 'BQYf201',
+  //           quantity: 1,
+  //           altPartNumber: 'Bf2GU01',
+  //           description: 'BQYcas01',
+  //           condition: 'NS',
+  //         },
+  //         {
+  //           partNumber: 'BQYcewc',
+  //           quantity: 1,
+  //           altPartNumber: 'B2r3r21',
+  //           description: 'cvnas01',
+  //           condition: 'NS',
+  //         },
+  //       ],
+  //     });
+  //   };
+  //   getRfq();
+  // }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -107,16 +108,19 @@ const Settings = () => {
       <Button onClick={() => PopulateCountries()}>
         Populate all Countries
       </Button>
-      <Button onClick={clickHandler}>Create import request</Button>
-      <Button onClick={() => signOutHandler()}>SIGN OUT</Button> */}
-      <Button onClick={handleEmailSend}>Send test email</Button>
-      <div>
+      <Button onClick={clickHandler}>Create import request</Button>*/}
+      <Button onClick={() => UpdateCompanyFirstAddress(company)}>
+        Update Company Address
+      </Button>
+      <Button onClick={() => signOutHandler()}>SIGN OUT</Button>
+      {/* <Button onClick={handleEmailSend}>Send test email</Button> */}
+      {/* <div>
         {rfq ? (
           <CustomerRfqEmail rfqDetails={rfq} countries={countries} />
         ) : (
           <div>loading</div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
